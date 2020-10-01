@@ -2,19 +2,24 @@
   "type": "minecraft:crafting_shaped",
   "pattern":
   [
-    "x",
-    "x"
+    "xx",
+    " y",
+    " y"
   ],
   "key":
   {
     "x":
+    {
+      "item": "medievalworlds:tin_ingot"
+    },
+    "y":
     {
       "item": "minecraft:stick"
     }
   },
   "result":
   {
-    "item": "medievalworlds:long_stick",
+    "item": "medievalworlds:tin_hoe",
     "count": 1
   }
 }

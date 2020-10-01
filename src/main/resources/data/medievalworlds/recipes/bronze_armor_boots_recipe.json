@@ -7,7 +7,7 @@
   ],
   "key": {
     "0": {
-      "tag": "forge:ingots/bronze_ingot"
+      "item": "medievalworlds:bronze_ingot"
     }
   },
   "result": {

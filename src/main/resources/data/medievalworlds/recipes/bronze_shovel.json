@@ -3,18 +3,23 @@
   "pattern":
   [
     "x",
-    "x"
+    "y",
+    "y"
   ],
   "key":
   {
     "x":
+    {
+      "item": "medievalworlds:bronze_ingot"
+    },
+    "y":
     {
       "item": "minecraft:stick"
     }
   },
   "result":
   {
-    "item": "medievalworlds:long_stick",
+    "item": "medievalworlds:bronze_shovel",
     "count": 1
   }
 }

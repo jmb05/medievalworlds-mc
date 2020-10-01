@@ -2,19 +2,24 @@
   "type": "minecraft:crafting_shaped",
   "pattern":
   [
-    "x",
-    "x"
+    "xx",
+    "xy",
+    " y"
   ],
   "key":
   {
     "x":
+    {
+      "item": "medievalworlds:copper_ingot"
+    },
+    "y":
     {
       "item": "minecraft:stick"
     }
   },
   "result":
   {
-    "item": "medievalworlds:long_stick",
+    "item": "medievalworlds:copper_axe",
     "count": 1
   }
 }

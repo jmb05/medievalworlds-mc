@@ -2,17 +2,17 @@
   "group": "medievalworlds",
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "0 0",
     "000",
+    "0 0",
     "000"
   ],
   "key": {
     "0": {
-      "item": "medievalworlds:bronze_ingot"
+      "item": "minecraft:brick"
     }
   },
   "result": {
-    "item": "medievalworlds:bronze_chestplate",
+    "item": "medievalworlds:alloy_furnace",
     "count": 1
   }
 }
