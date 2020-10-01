@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "xxx",
+    " y ",
+    " y "
+  ],
+  "key":
+  {
+    "x":
+    {
+      "item": "medievalworlds:bronze_ingot"
+    },
+    "y":
+    {
+      "item": "minecraft:stick"
+    }
+  },
+  "result":
+  {
+    "item": "medievalworlds:bronze_pickaxe",
+    "count": 1
+  }
+}

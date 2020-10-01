@@ -1,0 +1,21 @@
+{
+  "group": "medievalworlds",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "111",
+    "101",
+    "111"
+  ],
+  "key": {
+    "0": {
+      "item": "minecraft:iron_helmet"
+    },
+    "1": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:iron_knight_helmet",
+    "count": 1
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:string",
+      "count": 2
+    }
+  ],
+  "result":
+  {
+    "item": "medievalworlds:long_string",
+    "count": 1
+  }
+}

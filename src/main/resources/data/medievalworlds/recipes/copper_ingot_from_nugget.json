@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "xxx",
+    "xxx",
+    "xxx"
+  ],
+  "key":
+  {
+    "x":
+    {
+      "item": "medievalworlds:copper_nugget"
+    }
+  },
+  "result":
+  {
+    "item": "medievalworlds:copper_ingot",
+    "count": 1
+  }
+}

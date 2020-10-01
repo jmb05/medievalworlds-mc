@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "xxx",
+    "zyz",
+    " y "
+  ],
+  "key":
+  {
+    "x":
+    {
+      "item": "medievalworlds:silver_block"
+    },
+    "y":
+    {
+      "item": "medievalworlds:long_stick"
+    },
+    "z":
+    {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "result":
+  {
+    "item": "medievalworlds:silver_hammer",
+    "count": 1
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "medievalworlds:alloy",
+  "output": {
+    "item": "medievalworlds:steel_ingot",
+    "count": 1
+  },
+  "input1": {
+    "item": "minecraft:iron_ingot",
+    "count": 1
+  },
+  "input2": {
+    "item": "minecraft:coal",
+    "count": 2
+  }
+}

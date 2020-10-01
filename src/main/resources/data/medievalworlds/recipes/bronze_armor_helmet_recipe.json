@@ -1,0 +1,17 @@
+{
+  "group": "medievalworlds",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "000",
+    "0 0"
+  ],
+  "key": {
+    "0": {
+      "tag": "forge:ingots/bronze_ingot"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:bronze_helmet",
+    "count": 1
+  }
+}
