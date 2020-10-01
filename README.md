@@ -20,7 +20,7 @@ for a full walkthrough please refer to our wiki.
     * Choose "Install Client"
     * Choose your "minecraft" folder (on Windows usually "%appdata%\\.minecraft") 
     * Click "OK"
-* Download the mod from [github](https://github.com/jmb05/medievalworlds/tree/master/jars) or curseforge
+* Download the mod from [github](https://github.com/jmb05/medievalworlds/releases) or curseforge
 * Navigate to your "minecraft" folder
 * Create a folder called "mods" (if it doesn't exist yet)
 * Move the downloaded .jar file to the respective folder
