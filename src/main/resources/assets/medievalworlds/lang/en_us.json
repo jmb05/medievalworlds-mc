@@ -12,7 +12,6 @@
   "block.medievalworlds.silver_block": "Block of Silver",
   "block.medievalworlds.silver_ore": "Silver Ore",
 
-
   "item.medievalworlds.copper_pickaxe": "Copper Pickaxe",
   "item.medievalworlds.tin_pickaxe": "Tin Pickaxe",
   "item.medievalworlds.bronze_pickaxe": "Bronze Pickaxe",
@@ -84,32 +83,47 @@
   "item.medievalworlds.long_stick": "Long Stick",
   "item.medievalworlds.long_string": "Long String",
 
-  "item.medievalworlds.crown": "Crown",
   "item.medievalworlds.tin_helmet": "Tin Helmet",
-  "item.medievalworlds.copper_leggings": "Copper Leggings",
   "item.medievalworlds.tin_chestplate": "Tin Chestplate",
   "item.medievalworlds.tin_leggings": "Tin Leggings",
-  "item.medievalworlds.copper_chestplate": "Copper Chestplate",
-  "item.medievalworlds.warrior_boots": "Warrior Armor Boots",
   "item.medievalworlds.tin_boots": "Tin Boots",
-  "item.medievalworlds.copper_boots": "Copper Boots",
-  "item.medievalworlds.bronze_boots": "Bronze Boots",
-  "item.medievalworlds.warrior_leggings": "Warrior Armor Leggings",
-  "item.medievalworlds.bronze_leggings": "Bronze Leggings",
-  "item.medievalworlds.warrior_helmet": "Warrior Armor Helmet",
-  "item.medievalworlds.warrior_chestplate": "Warrior Armor Body",
-  "item.medievalworlds.bronze_helmet": "Bronze Helmet",
+
   "item.medievalworlds.copper_helmet": "Copper Helmet",
+  "item.medievalworlds.copper_chestplate": "Copper Chestplate",
+  "item.medievalworlds.copper_leggings": "Copper Leggings",
+  "item.medievalworlds.copper_boots": "Copper Boots",
+
+  "item.medievalworlds.bronze_helmet": "Bronze Helmet",
   "item.medievalworlds.bronze_chestplate": "Bronze Chestplate",
+  "item.medievalworlds.bronze_leggings": "Bronze Leggings",
+  "item.medievalworlds.bronze_boots": "Bronze Boots",
+
+  "item.medievalworlds.silver_helmet": "Silver Helmet",
+  "item.medievalworlds.silver_chestplate": "Silver Chestplate",
+  "item.medievalworlds.silver_leggings": "Silver Leggings",
+  "item.medievalworlds.silver_boots": "Silver Boots",
+
+  "item.medievalworlds.steel_helmet": "Steel Helmet",
+  "item.medievalworlds.steel_chestplate": "Steel Chestplate",
+  "item.medievalworlds.steel_leggings": "Steel Leggings",
+  "item.medievalworlds.steel_boots": "Steel Boots",
+
   "item.medievalworlds.iron_knight_helmet": "Iron Knight Helmet",
   "item.medievalworlds.iron_knight_chestplate": "Iron Knight Chestplate",
   "item.medievalworlds.iron_knight_leggings": "Iron Knight Leggings",
   "item.medievalworlds.iron_knight_boots": "Iron Knight Boots",
+
   "item.medievalworlds.diamond_knight_helmet": "Diamond Knight Helmet",
   "item.medievalworlds.diamond_knight_chestplate": "Diamond Knight Chestplate",
   "item.medievalworlds.diamond_knight_leggings": "Diamond Knight Leggings",
   "item.medievalworlds.diamond_knight_boots": "Diamond Knight Boots",
 
+  "item.medievalworlds.warrior_helmet": "Warrior Armor Helmet",
+  "item.medievalworlds.warrior_chestplate": "Warrior Armor Chestplate",
+  "item.medievalworlds.warrior_leggings": "Warrior Armor Leggings",
+  "item.medievalworlds.warrior_boots": "Warrior Armor Boots",
+
+  "item.medievalworlds.crown": "Crown",
 
   "container.medievalworlds.alloy_furnace": "Alloy Furnace",
 
@@ -117,4 +131,5 @@
   "enchantment.medievalworlds.mega_miner": "Mega Miner",
 
   "item.hammer.hit": "Hammer Hits"
+
 }
