@@ -18,7 +18,7 @@ for a full walkthrough please refer to our wiki.
 * First download the Forge Installer from the [Forge Website](https://files.minecraftforge.net/) make sure to download a [version that](#technologies) is compatible with the mod
 * Then run the forge installer 
     * Choose "Install Client"
-    * Choose your 'minecraft' folder on Windows usually "C:\Users\YourUserName\AppData\Roaming\.minecraft" (the 'AppData' folder is hidden you can navigate to the Roaming folder by typing '%appdata%' into the Explorer) 
+    * Choose your 'minecraft' folder on Windows usually "C:\Users\YourUserName\AppData\Roaming\ .minecraft" (the 'AppData' folder is hidden you can navigate to the Roaming folder by typing '%appdata%' into the Explorer) 
     * Click "OK"
 * Download the mod from [github](https://github.com/jmb05/medievalworlds/releases) (to find the download link you may have to expand the 'Assets' section of the version you want to Download)
 * Navigate to your 'minecraft' folder
