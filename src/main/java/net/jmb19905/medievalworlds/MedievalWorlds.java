@@ -30,9 +30,4 @@ public class MedievalWorlds {
         RecipeSerializerRegistryHandler.RECIPE_SERIALIZERS.register(modEventBus);
     }
 
-    @SubscribeEvent
-    public static void loadCompleteEvent(FMLLoadCompleteEvent evt){
-        OreGenerator.generateOre();
-    }
-
 }
