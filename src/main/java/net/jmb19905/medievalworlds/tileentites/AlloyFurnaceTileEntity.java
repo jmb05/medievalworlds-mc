@@ -49,10 +49,12 @@ import java.util.stream.Collectors;
 public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
     private ITextComponent customName;
-    public int currentSmeltTime = 0;
-    public final int maxSmeltTime = 200;
+    public int currentAlloyTime = 0;
+    //TODO: check why alloy time and burn time do not align
+    public final int maxAlloyTime = 200 - 2;
     public int currentBurnTime = 0;
     public int currentMaxBurnTime = 0;
+    private int lastValidMaxBurnTime = -1;
     public boolean fuelConsumed = false;
     private final AlloyFurnaceItemHandler inventory;
 
@@ -76,65 +78,60 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
         return new AlloyFurnaceContainer(windowID, playerInv, this);
     }
 
-    //TODO: There is a full flame seen when fuel is burnt up for a tick
     @Override
     public void tick() {
         boolean dirty = false;
-        if(world != null && !world.isRemote){
-            if(!fuelConsumed) {
-                currentMaxBurnTime = ForgeHooks.getBurnTime(this.inventory.getStackInSlot(2));
-            }
-            if(currentMaxBurnTime > 0){
-                ItemStack inv0 = this.inventory.getStackInSlot(0);
-                ItemStack inv1 = this.inventory.getStackInSlot(1);
-                AlloyRecipe recipe = this.getRecipe(inv0 ,inv1);
-                if(recipe != null){
-                    if(!fuelConsumed){
+        if(world != null && !world.isRemote) {
+            ItemStack inv0 = this.inventory.getStackInSlot(0);
+            ItemStack inv1 = this.inventory.getStackInSlot(1);
+            AlloyRecipe recipe = this.getRecipe(inv0, inv1);
+            if (recipe != null) {
+                if (currentBurnTime < currentMaxBurnTime && currentBurnTime >= 0 && inventory.getStackInSlot(3).getCount() < 64){
+                    if (!fuelConsumed) {
                         this.inventory.decrStackSize(2, 1);
                         fuelConsumed = true;
                     }
-                    if(currentBurnTime <= (currentMaxBurnTime + 7)) {
-                        if(this.inventory.getStackInSlot(3).getCount() < 64) {
-                            if (this.currentSmeltTime < this.maxSmeltTime) {
-                                this.world.setBlockState(this.getPos(), this.getBlockState().with(AlloyFurnaceBlock.LIT, true));
-                                this.currentSmeltTime++;
-                            } else {
-                                currentSmeltTime = 0;
-                                ItemStack output = Objects.requireNonNull(recipe).getRecipeOutput();
-                                this.inventory.insertItem(3, output.copy(), false);
-                                this.inventory.decrStackSize(0, recipe.getInput1().getCount());
-                                this.inventory.decrStackSize(1, recipe.getInput2().getCount());
-                            }
-                            currentBurnTime++;
+                    if (currentAlloyTime < maxAlloyTime) {
+                        if (!world.getBlockState(this.getPos()).get(AlloyFurnaceBlock.LIT)) {
+                            this.world.setBlockState(this.getPos(), this.getBlockState().with(AlloyFurnaceBlock.LIT, true));
                         }
-                    }else{
-                        fuelConsumed = false;
-                        currentMaxBurnTime = ForgeHooks.getBurnTime(this.inventory.getStackInSlot(2));
-                        if(world.getBlockState(this.getPos()).get(AlloyFurnaceBlock.LIT) && currentMaxBurnTime == 0) {
-                            this.world.setBlockState(this.getPos(), this.getBlockState().with(AlloyFurnaceBlock.LIT, false));
-                        }
-                        currentBurnTime = 0;
+                        currentAlloyTime++;
+                    } else {
+                        currentAlloyTime = 0;
+                        ItemStack output = Objects.requireNonNull(recipe).getRecipeOutput();
+                        this.inventory.insertItem(3, output.copy(), false);
+                        this.inventory.decrStackSize(0, recipe.getInput1().getCount());
+                        this.inventory.decrStackSize(1, recipe.getInput2().getCount());
                     }
                     dirty = true;
-                }else{
-                    if(this.currentSmeltTime > 0) {
-                        currentSmeltTime -= 2;
-                        dirty = true;
-                    }if(world.getBlockState(this.getPos()).get(AlloyFurnaceBlock.LIT)) {
-                        this.world.setBlockState(this.getPos(), this.getBlockState().with(AlloyFurnaceBlock.LIT, false));
-                        dirty = true;
+                } else if (ForgeHooks.getBurnTime(this.inventory.getStackInSlot(2)) > 0 && inventory.getStackInSlot(3).getCount() < 64) {
+                    currentBurnTime = 0;
+                    fuelConsumed = false;
+                    currentMaxBurnTime = ForgeHooks.getBurnTime(this.inventory.getStackInSlot(2));
+                    dirty = true;
+                } else{
+                    currentBurnTime = -1;
+                    fuelConsumed = false;
+                    this.world.setBlockState(this.getPos(), this.getBlockState().with(AlloyFurnaceBlock.LIT, false));
+                    if(currentAlloyTime > 0) {
+                        currentAlloyTime -= 2;
                     }
+                    dirty = true;
                 }
-            }else if(this.currentSmeltTime > 0){
-                 currentSmeltTime-=2;
-                 dirty = true;
+            }else if(this.world.getBlockState(this.getPos()).get(AlloyFurnaceBlock.LIT) && currentBurnTime >= currentMaxBurnTime){
+                System.out.println("CurrentBurnTime: " + currentBurnTime);
+                this.world.setBlockState(this.getPos(), this.getBlockState().with(AlloyFurnaceBlock.LIT, false));
+            }
+            if(currentBurnTime < currentMaxBurnTime && currentBurnTime >= 0){
+                currentBurnTime++;
+                dirty = true;
+            }
+            if(currentAlloyTime < 0){
+                currentAlloyTime = 0;
+                dirty = true;
             }
         }
 
-        if(this.currentSmeltTime < 0){
-            this.currentSmeltTime = 0;
-            dirty = true;
-        }
 
         if(dirty){
             this.markDirty();
@@ -170,7 +167,7 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
         ItemStackHelper.loadAllItems(compound, inv);
         this.inventory.setNonNullList(inv);
 
-        this.currentSmeltTime = compound.getInt("CurrentSmeltTime");
+        this.currentAlloyTime = compound.getInt("CurrentAlloyTime");
         this.currentBurnTime = compound.getInt("CurrentBurnTime");
     }
 
@@ -183,7 +180,7 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
         }
         ItemStackHelper.saveAllItems(compound, this.inventory.toNonNullList());
 
-        compound.putInt("CurrentSmeltTime", currentSmeltTime);
+        compound.putInt("CurrentAlloyTime", currentAlloyTime);
         compound.putInt("CurrentBurnTime", currentBurnTime);
 
         return compound;

@@ -25,7 +25,7 @@ public class AlloyFurnaceContainer extends Container {
 
     private final AlloyFurnaceTileEntity tileEntity;
     private final IWorldPosCallable canInteractWithCallable;
-    public FunctionalIntReferenceHolder currentSmeltTime;
+    public FunctionalIntReferenceHolder currentAlloyTime;
     public FunctionalIntReferenceHolder currentBurnTime;
     public FunctionalIntReferenceHolder currentMaxBurnTime;
 
@@ -61,8 +61,8 @@ public class AlloyFurnaceContainer extends Container {
         //Output
         this.addSlot(new OutputSlot(tile.getInventory(), 3, 116, 35));
 
-        this.trackInt(currentSmeltTime = new FunctionalIntReferenceHolder(() -> this.tileEntity.currentSmeltTime, val -> this.tileEntity.currentSmeltTime = val));
-        this.trackInt(currentBurnTime = new FunctionalIntReferenceHolder(() -> this.tileEntity.currentBurnTime, val -> this.tileEntity.currentBurnTime = val));
+        this.trackInt(currentAlloyTime = new FunctionalIntReferenceHolder(() -> this.tileEntity.currentAlloyTime, val -> this.tileEntity.currentAlloyTime = val));
+        this.trackInt(currentBurnTime = new FunctionalIntReferenceHolder(() -> this.tileEntity.currentBurnTime >= 0 ? this.tileEntity.currentBurnTime : this.tileEntity.currentMaxBurnTime, val -> this.tileEntity.currentBurnTime = val));
         this.trackInt(currentMaxBurnTime = new FunctionalIntReferenceHolder(() -> this.tileEntity.currentMaxBurnTime, val -> this.tileEntity.currentMaxBurnTime = val));
     }
 
@@ -117,7 +117,7 @@ public class AlloyFurnaceContainer extends Container {
 
     @OnlyIn(Dist.CLIENT)
     public int getSmeltProgressionScaled(){
-        return this.currentSmeltTime.get() != 0 ? this.currentSmeltTime.get() * 24 / this.tileEntity.maxSmeltTime : 0;
+        return this.currentAlloyTime.get() != 0 ? this.currentAlloyTime.get() * 24 / this.tileEntity.maxAlloyTime : 0;
     }
 
     @OnlyIn(Dist.CLIENT)
