@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.function.Supplier;
 
 public enum CopperArmorMaterial implements IArmorMaterial {
-    MATERIAL("medievalworlds:copper", 10, new int[]{2, 5, 4, 1}, 7, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0, () -> {
+    MATERIAL("medievalworlds:copper", 10, new int[]{2, 4, 5, 1}, 7, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0, () -> {
         return Ingredient.fromItems(ItemRegistryHandler.COPPER_INGOT.get());
     });
 

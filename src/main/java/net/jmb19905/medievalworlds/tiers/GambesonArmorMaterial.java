@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public enum GambesonArmorMaterial implements IArmorMaterial {
 
-    MATERIAL("medievalworlds:bronze", 10, new int[]{2, 4, 5, 2}, 5, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.2f, 0, () -> {
+    MATERIAL("medievalworlds:bronze", 10, new int[]{2, 5, 4, 2}, 5, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.2f, 0, () -> {
         return Ingredient.fromItems(Items.WHITE_WOOL);
     });
 

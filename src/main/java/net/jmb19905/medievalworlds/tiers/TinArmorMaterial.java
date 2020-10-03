@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 
 public enum TinArmorMaterial implements IArmorMaterial {
 
-    MATERIAL("medievalworlds:tin", 10, new int[]{2, 5, 4, 1}, 7, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0, () -> {
+    MATERIAL("medievalworlds:tin", 10, new int[]{2, 4, 5, 1}, 7, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0, () -> {
         return Ingredient.fromItems(ItemRegistryHandler.TIN_INGOT.get());
     });
 

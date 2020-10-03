@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 
 public enum SteelArmorMaterial implements IArmorMaterial {
 
-    MATERIAL("medievalworlds:steel", 10, new int[]{3, 7, 6, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.5f, 0, () -> {
+    MATERIAL("medievalworlds:steel", 10, new int[]{3, 6, 7, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.5f, 0, () -> {
         return Ingredient.fromItems(ItemRegistryHandler.STEEL_INGOT.get());
     });
 

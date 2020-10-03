@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public enum DiamondKnightArmorMaterial implements IArmorMaterial {
 
-    MATERIAL("medievalworlds:iron_knight", 33, new int[]{4, 9, 7, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2, 0, () -> {
+    MATERIAL("medievalworlds:iron_knight", 33, new int[]{4, 7, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2, 0, () -> {
         return Ingredient.fromItems(Items.DIAMOND);
     });
 
