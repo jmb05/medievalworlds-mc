@@ -3,7 +3,7 @@ loaderVersion="[31,)" #mandatory This is typically bumped every Minecraft versio
 issueTrackerURL="http://my.issue.tracker/" #optional
 [[mods]] #mandatory
 modId="medievalworlds" #mandatory
-version="a1.0.2" #mandatory
+version="a1.0.3" #mandatory
 displayName="MedievalWorlds" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
 #displayURL="http://example.com/" #optional
