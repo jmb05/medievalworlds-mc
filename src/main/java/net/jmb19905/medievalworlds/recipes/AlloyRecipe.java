@@ -13,7 +13,6 @@ import javax.annotation.Nonnull;
 
 public class AlloyRecipe implements IAlloyRecipe{
 
-
     private final ResourceLocation id;
     private final ItemStack input1;
     private final ItemStack input2;
@@ -27,15 +26,28 @@ public class AlloyRecipe implements IAlloyRecipe{
         this.output = output;
     }
 
+
+    public boolean matchesUniversally(RecipeWrapper inv, @Nonnull World worldIn, boolean flipped){
+        if(flipped){
+            return matchesFlipped(inv);
+        }else{
+            return matches(inv, worldIn);
+        }
+    }
+
+    public boolean matchesFlipped(RecipeWrapper inv){
+        ItemStack stackInSlot0 = inv.getStackInSlot(1);
+        ItemStack stackInSlot1 = inv.getStackInSlot(0);
+        return (stackInSlot0.getItem() == input1.getItem() && stackInSlot0.getCount() >= input1.getCount() &&
+                stackInSlot1.getItem() == input2.getItem() && stackInSlot1.getCount() >= input2.getCount());
+    }
+
     @Override
     public boolean matches(RecipeWrapper inv, @Nonnull World worldIn) {
         ItemStack stackInSlot0 = inv.getStackInSlot(0);
         ItemStack stackInSlot1 = inv.getStackInSlot(1);
         return (stackInSlot0.getItem() == input1.getItem() && stackInSlot0.getCount() >= input1.getCount() &&
-                stackInSlot1.getItem() == input2.getItem() && stackInSlot1.getCount() >= input2.getCount()) ||
-
-                (stackInSlot0.getItem() == input2.getItem() && stackInSlot0.getCount() >= input2.getCount() &&
-                stackInSlot1.getItem() == input1.getItem() && stackInSlot1.getCount() >= input1.getCount());
+                stackInSlot1.getItem() == input2.getItem() && stackInSlot1.getCount() >= input2.getCount());
     }
 
     @Nonnull

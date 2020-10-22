@@ -82,9 +82,18 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
     public void tick() {
         boolean dirty = false;
         if(world != null && !world.isRemote) {
+            boolean flipped = false;
             ItemStack inv0 = this.inventory.getStackInSlot(0);
             ItemStack inv1 = this.inventory.getStackInSlot(1);
-            AlloyRecipe recipe = this.getRecipe(inv0, inv1);
+            AlloyRecipe recipe = this.getRecipe(inv0, inv1, false);
+            if(recipe == null){
+                AlloyRecipe flippedRecipe = this.getRecipe(inv1, inv0, true);
+                System.out.println(flippedRecipe);
+                if(flippedRecipe != null){
+                    recipe = flippedRecipe;
+                    flipped = true;
+                }
+            }
             if (recipe != null) {
                 if (currentBurnTime < currentMaxBurnTime && currentBurnTime >= 0 && inventory.getStackInSlot(3).getCount() < 64){
                     if (!fuelConsumed) {
@@ -100,8 +109,13 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
                         currentAlloyTime = 0;
                         ItemStack output = Objects.requireNonNull(recipe).getRecipeOutput();
                         this.inventory.insertItem(3, output.copy(), false);
-                        this.inventory.decrStackSize(0, recipe.getInput1().getCount());
-                        this.inventory.decrStackSize(1, recipe.getInput2().getCount());
+                        if(flipped) {
+                            this.inventory.decrStackSize(1, recipe.getInput1().getCount());
+                            this.inventory.decrStackSize(0, recipe.getInput2().getCount());
+                        }else{
+                            this.inventory.decrStackSize(0, recipe.getInput1().getCount());
+                            this.inventory.decrStackSize(1, recipe.getInput2().getCount());
+                        }
                     }
                     dirty = true;
                 } else if (ForgeHooks.getBurnTime(this.inventory.getStackInSlot(2)) > 0 && inventory.getStackInSlot(3).getCount() < 64) {
@@ -118,9 +132,13 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
                     }
                     dirty = true;
                 }
-            }else if(this.world.getBlockState(this.getPos()).get(AlloyFurnaceBlock.LIT) && currentBurnTime >= currentMaxBurnTime){
-                System.out.println("CurrentBurnTime: " + currentBurnTime);
-                this.world.setBlockState(this.getPos(), this.getBlockState().with(AlloyFurnaceBlock.LIT, false));
+            }else {
+                if(this.world.getBlockState(this.getPos()).get(AlloyFurnaceBlock.LIT) && currentBurnTime >= currentMaxBurnTime) {
+                    this.world.setBlockState(this.getPos(), this.getBlockState().with(AlloyFurnaceBlock.LIT, false));
+                }
+                if(currentAlloyTime < maxAlloyTime && currentAlloyTime > 0){
+                    currentAlloyTime-=2;
+                }
             }
             if(currentBurnTime < currentMaxBurnTime && currentBurnTime >= 0){
                 currentBurnTime++;
@@ -187,7 +205,7 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
     }
 
     @Nullable
-    private AlloyRecipe getRecipe(ItemStack input1, ItemStack input2){
+    private AlloyRecipe getRecipe(ItemStack input1, ItemStack input2, boolean flipped){
         if(input1 == null || input2 == null){
             return null;
         }
@@ -195,7 +213,7 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
         for(IRecipe<?> iRecipe : recipes){
             AlloyRecipe recipe = (AlloyRecipe)iRecipe;
             assert this.world != null;
-            if(recipe.matches(new RecipeWrapper(this.inventory), this.world)){
+            if(recipe.matchesUniversally(new RecipeWrapper(inventory), this.world, flipped)){
                 return recipe;
             }
         }
