@@ -49,8 +49,8 @@ public class OreGenerator {
             ConfiguredPlacement<CountRangeConfig> copperTinConfig = Placement.COUNT_RANGE.configure(new CountRangeConfig(15, 5, 5, 255));
             biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlockRegistryHandler.COPPER_ORE_BLOCK.get().getDefaultState(), 13)).withPlacement(copperTinConfig));
             biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlockRegistryHandler.TIN_ORE_BLOCK.get().getDefaultState(), 13)).withPlacement(copperTinConfig));
-            ConfiguredPlacement<CountRangeConfig> silverConfig = Placement.COUNT_RANGE.configure(new CountRangeConfig(4, 5, 5, 36));
-            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlockRegistryHandler.SILVER_ORE_BLOCK.get().getDefaultState(), 9)).withPlacement(silverConfig));
+            ConfiguredPlacement<CountRangeConfig> silverConfig = Placement.COUNT_RANGE.configure(new CountRangeConfig(3, 5, 5, 36));
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlockRegistryHandler.SILVER_ORE_BLOCK.get().getDefaultState(), 8)).withPlacement(silverConfig));
         }
     }
 
