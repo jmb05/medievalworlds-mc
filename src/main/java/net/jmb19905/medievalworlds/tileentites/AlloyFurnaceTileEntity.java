@@ -88,7 +88,6 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
             AlloyRecipe recipe = this.getRecipe(inv0, inv1, false);
             if(recipe == null){
                 AlloyRecipe flippedRecipe = this.getRecipe(inv1, inv0, true);
-                System.out.println(flippedRecipe);
                 if(flippedRecipe != null){
                     recipe = flippedRecipe;
                     flipped = true;
