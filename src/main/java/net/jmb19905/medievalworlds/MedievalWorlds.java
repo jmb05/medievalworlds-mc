@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import static net.jmb19905.medievalworlds.MedievalWorlds.MOD_ID;
 
+//Jared is cool
 @Mod(MOD_ID)
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MedievalWorlds {
