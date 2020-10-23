@@ -1,0 +1,154 @@
+{
+  "block.medievalworlds.alloy_furnace": "Legierungsofen",
+  "block.medievalworlds.copper_block": "Kupferblock",
+  "block.medievalworlds.copper_ore": "Kupfererz",
+  "block.medievalworlds.tin_block": "Zinnblock",
+  "block.medievalworlds.tin_ore": "Zinnerz",
+  "block.medievalworlds.bronze_block": "Bronzeblock",
+  "block.medievalworlds.ruby_block": "Rubinblock",
+  "block.medievalworlds.ruby_ore": "Rubinerz",
+  "block.medievalworlds.steel_block": "Stahlblock",
+  "block.medievalworlds.gate_block": "Fallgitter",
+  "block.medievalworlds.silver_block": "Silberblock",
+  "block.medievalworlds.silver_ore": "Silbererz",
+
+  "item.medievalworlds.copper_pickaxe": "Kupferspitzhacke",
+  "item.medievalworlds.tin_pickaxe": "Zinnspitzhacke",
+  "item.medievalworlds.bronze_pickaxe": "Bronzespitzhacke",
+  "item.medievalworlds.steel_pickaxe": "Stahlspitzhacke",
+  "item.medievalworlds.silver_pickaxe": "Silberspitzhacke",
+
+  "item.medievalworlds.copper_axe": "Kupferaxt",
+  "item.medievalworlds.tin_axe": "Zinnaxt",
+  "item.medievalworlds.bronze_axe": "Bronzeaxt",
+  "item.medievalworlds.steel_axe": "Stahlaxt",
+  "item.medievalworlds.silver_axe": "Silberaxt",
+
+  "item.medievalworlds.copper_shovel": "Kupferschaufel",
+  "item.medievalworlds.tin_shovel": "Zinnschaufel",
+  "item.medievalworlds.bronze_shovel": "Bronzeschaufel",
+  "item.medievalworlds.steel_shovel": "Stahlschaufel",
+  "item.medievalworlds.silver_shovel": "Silberschaufel",
+
+  "item.medievalworlds.copper_hoe": "Kupferhacke",
+  "item.medievalworlds.tin_hoe": "Zinnhacke",
+  "item.medievalworlds.bronze_hoe": "Bronzehacke",
+  "item.medievalworlds.steel_hoe": "Stahlhacke",
+  "item.medievalworlds.silver_hoe": "Silberhacke",
+
+  "item.medievalworlds.copper_sword": "Kupferschwert",
+  "item.medievalworlds.tin_sword": "Zinnschwert",
+  "item.medievalworlds.bronze_sword": "Bronzeschwert",
+  "item.medievalworlds.steel_sword": "Stahlschwert",
+  "item.medievalworlds.silver_sword": "Silberschwert",
+
+  "item.medievalworlds.iron_hammer": "Eisenhammer",
+  "item.medievalworlds.silver_hammer": "Silberhammer",
+  "item.medievalworlds.steel_hammer": "Stahlhammer",
+  "item.medievalworlds.diamond_hammer": "Diamanthammer",
+
+  "item.medievalworlds.iron_longsword": "Eisenlangschwert",
+  "item.medievalworlds.silver_longsword": "Silberlangschwert",
+  "item.medievalworlds.steel_longsword": "Stahllangschwert",
+  "item.medievalworlds.diamond_longsword": "Diamantlangschwert",
+
+  "item.medievalworlds.iron_mace": "Eiserner Morgenstern",
+  "item.medievalworlds.diamond_mace": "Diamantener Morgenstern",
+
+  "item.medievalworlds.iron_battle_axe": "Eisenstreitaxt",
+  "item.medievalworlds.silver_battle_axe": "Silberstreitaxt",
+  "item.medievalworlds.steel_battle_axe": "Stahlstreitaxt",
+  "item.medievalworlds.diamond_battle_axe": "Diamantstreitaxt",
+
+  "item.medievalworlds.iron_dagger": "Eisendolch",
+  "item.medievalworlds.silver_dagger": "Silberdolch",
+  "item.medievalworlds.steel_dagger": "Stahldolch",
+  "item.medievalworlds.diamond_dagger": "Diamantdolch",
+
+  "item.medievalworlds.iron_lance": "Eisenlanze",
+  "item.medievalworlds.diamond_lance": "Diamantlanze",
+
+  "item.medievalworlds.spear": "Speer",
+
+  "item.minecraft.bow": "Bogen",
+  "item.medievalworlds.longbow": "Langbogen",
+
+
+  "item.medievalworlds.key": "Schlüssel",
+  "item.medievalworlds.lock": "Schloss",
+
+  "item.medievalworlds.copper_ingot": "Kupferbarren",
+  "item.medievalworlds.bronze_ingot": "Bronzebarren",
+  "item.medievalworlds.tin_ingot": "Zinnbarren",
+  "item.medievalworlds.tin_nugget": "Zinnklumpen",
+  "item.medievalworlds.copper_nugget": "Kupferklumpen",
+  "item.medievalworlds.bronze_nugget": "Bronzeklumpen",
+  "item.medievalworlds.steel_ingot": "Stahlbarren",
+  "item.medievalworlds.steel_nugget": "Stahlklumpen",
+  "item.medievalworlds.silver_ingot": "Silberbarren",
+  "item.medievalworlds.silver_nugget": "Silberklumpen",
+  "item.medievalworlds.ruby": "Rubin",
+
+  "item.medievalworlds.long_stick": "Langer Stock",
+  "item.medievalworlds.long_string": "Langer Strick",
+
+  "item.medievalworlds.tin_helmet": "Zinnhelm",
+  "item.medievalworlds.tin_chestplate": "Zinnharnisch",
+  "item.medievalworlds.tin_leggings": "Zinnbeinschutz",
+  "item.medievalworlds.tin_boots": "Zinnstiefel",
+
+  "item.medievalworlds.copper_helmet": "Kupferhelm",
+  "item.medievalworlds.copper_chestplate": "Kupferharnisch",
+  "item.medievalworlds.copper_leggings": "Kupferbeinschutz",
+  "item.medievalworlds.copper_boots": "Kupferstiefel",
+
+  "item.medievalworlds.bronze_helmet": "Bronzehelm",
+  "item.medievalworlds.bronze_chestplate": "Bronzeharnisch",
+  "item.medievalworlds.bronze_leggings": "Bronzebeinschutz",
+  "item.medievalworlds.bronze_boots": "Bronzestiefel",
+
+  "item.medievalworlds.silver_helmet": "Silberhelm",
+  "item.medievalworlds.silver_chestplate": "Silberharnisch",
+  "item.medievalworlds.silver_leggings": "Silberbeinschutz",
+  "item.medievalworlds.silver_boots": "Silberstiefel",
+
+  "item.medievalworlds.steel_helmet": "Stahlhelm",
+  "item.medievalworlds.steel_chestplate": "Stahlharnisch",
+  "item.medievalworlds.steel_leggings": "Stahlbeinschutz",
+  "item.medievalworlds.steel_boots": "Stahlstiefel",
+
+  "item.medievalworlds.iron_knight_helmet": "Eiserner Ritterhelm",
+  "item.medievalworlds.iron_knight_chestplate": "Eiserner Ritterharnisch",
+  "item.medievalworlds.iron_knight_leggings": "Eiserner Ritterbeinschutz",
+  "item.medievalworlds.iron_knight_boots": "Eiserne Ritterstiefel",
+
+  "item.medievalworlds.silver_knight_helmet": "Silberner Ritterhelm",
+  "item.medievalworlds.silver_knight_chestplate": "Silberner Ritterharnisch",
+  "item.medievalworlds.silver_knight_leggings": "Silberner Ritterbeinschutz",
+  "item.medievalworlds.silver_knight_boots": "Silberne Ritterstiefel",
+
+  "item.medievalworlds.steel_knight_helmet": "Stählerner Ritterhelm",
+  "item.medievalworlds.steel_knight_chestplate": "Stählerner Ritterharnisch",
+  "item.medievalworlds.steel_knight_leggings": "Stählerner Ritterbeinschutz",
+  "item.medievalworlds.steel_knight_boots": "Stählerne Ritterstiefel",
+
+  "item.medievalworlds.diamond_knight_helmet": "Diamantener Ritterhelm",
+  "item.medievalworlds.diamond_knight_chestplate": "Diamantener Ritterharnisch",
+  "item.medievalworlds.diamond_knight_leggings": "Diamantener Ritterbeinschutz",
+  "item.medievalworlds.diamond_knight_boots": "Diamantene Ritterstiefel",
+
+  "item.medievalworlds.warrior_helmet": "Kriegerhelm",
+  "item.medievalworlds.warrior_chestplate": "Kriegerharnisch",
+  "item.medievalworlds.warrior_leggings": "Kriegerbeinschutz",
+  "item.medievalworlds.warrior_boots": "Kriegerstiefel",
+
+  "item.medievalworlds.crown": "Krone",
+
+  "container.medievalworlds.alloy_furnace": "Legierungsofen",
+
+  "enchantment.medievalworlds.lightning_strike": "Blitzschlag",
+  "enchantment.medievalworlds.mega_miner": "Mega Miner",
+
+  "item.hammer.hit": "Hammer schlägt"
+
+}
