@@ -1,5 +1,6 @@
 package net.jmb19905.medievalworlds.tiers;
 
+import net.jmb19905.medievalworlds.registries.ItemRegistryHandler;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Items;
@@ -13,10 +14,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-public enum DiamondKnightArmorMaterial implements IArmorMaterial {
+public enum SteelKnightArmorMaterial implements IArmorMaterial {
 
-    MATERIAL("medievalworlds:diamond_knight", 60, new int[]{4, 7, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2, 0, () -> {
-        return Ingredient.fromItems(Items.DIAMOND);
+    MATERIAL("medievalworlds:steel_knight", 45, new int[]{3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1, 0, () -> {
+        return Ingredient.fromItems(ItemRegistryHandler.STEEL_INGOT.get());
     });
 
     private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 18, 17, 15};
@@ -29,7 +30,7 @@ public enum DiamondKnightArmorMaterial implements IArmorMaterial {
     private final float knockbackResistance;
     private final LazyValue<Ingredient> repairMaterial;
 
-    DiamondKnightArmorMaterial(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {
+    SteelKnightArmorMaterial(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {
         this.name = name;
         this.maxDamageFactor = maxDamageFactor;
         this.damageReductionAmountArray = damageReductionAmountArray;
