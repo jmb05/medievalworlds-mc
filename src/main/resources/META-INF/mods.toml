@@ -7,7 +7,7 @@ version="a1.0.3" #mandatory
 displayName="MedievalWorlds" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
 #displayURL="http://example.com/" #optional
-logoFile="icon.png" #optional
+logoFile="pack.png" #optional
 credits="Thanks for everyone who participated!" #optional
 authors="jmb19905" #optional
 # The description text for the mod (multi line!) (#mandatory)
