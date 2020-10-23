@@ -2,9 +2,11 @@ package net.jmb19905.medievalworlds.client.entity.model.armor;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.ArmorStandArmorModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.ArmorStandEntity;
 
 import javax.annotation.Nonnull;
 
@@ -27,11 +29,19 @@ public class KnightArmorHelmetModel extends EntityModel<Entity> {
 
 	@Override
 	public void setRotationAngles(@Nonnull Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		//previously the render function, render code was moved to a method below
+		if(entity instanceof ArmorStandEntity) {
+			ArmorStandEntity armorStandEntity = (ArmorStandEntity) entity;
+			this.Helmet.rotateAngleX = ((float) Math.PI / 180F) * armorStandEntity.getHeadRotation().getX();
+			this.Helmet.rotateAngleY = ((float) Math.PI / 180F) * armorStandEntity.getHeadRotation().getY();
+			this.Helmet.rotateAngleZ = ((float) Math.PI / 180F) * armorStandEntity.getHeadRotation().getZ();
+			this.Helmet.setRotationPoint(0.0F, 1.0F, 0.0F);
+			this.Overlay.copyModelAngles(this.Helmet);
+		}
 	}
 
 	@Override
 	public void render(@Nonnull MatrixStack matrixStack, @Nonnull IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+
 		Helmet.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
