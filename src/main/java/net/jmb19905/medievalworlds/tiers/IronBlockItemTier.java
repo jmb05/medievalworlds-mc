@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public enum IronBlockItemTier implements IItemTier {
 
-    IRON_BLOCK_ITEM_TIER(2, 1000, 6f, 6f, 8, () -> {
+    IRON_BLOCK_ITEM_TIER(2, 1000, 6f, 3f, 8, () -> {
         return Ingredient.fromItems(Items.IRON_BLOCK);
     });
 

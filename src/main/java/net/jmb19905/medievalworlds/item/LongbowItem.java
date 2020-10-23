@@ -69,14 +69,12 @@ public class LongbowItem extends BowItem {
                             abstractarrowentity.setFire(100);
                         }
 
-                        stack.damageItem(1, playerentity, (p_220009_1_) -> {
-                            p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
-                        });
+                        stack.damageItem(1, playerentity, (p_220009_1_) -> p_220009_1_.sendBreakAnimation(playerentity.getActiveHand()));
                         if (flag1 || playerentity.abilities.isCreativeMode && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW)) {
                             abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
                         }
 
-                        abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 1);
+                        abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 0.25);
                         worldIn.addEntity(abstractarrowentity);
                     }
 

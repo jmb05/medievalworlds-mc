@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "medievalworlds:items/iron_item_base",
-		"particle": "medievalworlds:items/iron_item_base"
+		"0": "medievalworlds:items/iron_longsword",
+		"particle": "medievalworlds:items/iron_longsword"
 	},
 	"elements": [
 		{

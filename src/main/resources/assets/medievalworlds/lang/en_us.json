@@ -48,13 +48,22 @@
   "item.medievalworlds.diamond_hammer": "Diamond Hammer",
 
   "item.medievalworlds.iron_longsword": "Iron Longsword",
+  "item.medievalworlds.silver_longsword": "Silver Longsword",
+  "item.medievalworlds.steel_longsword": "Steel Longsword",
   "item.medievalworlds.diamond_longsword": "Diamond Longsword",
 
   "item.medievalworlds.iron_mace": "Iron Mace",
   "item.medievalworlds.diamond_mace": "Diamond Mace",
 
   "item.medievalworlds.iron_battle_axe": "Iron Battle Axe",
+  "item.medievalworlds.silver_battle_axe": "Silver Battle Axe",
+  "item.medievalworlds.steel_battle_axe": "Steel Battle Axe",
   "item.medievalworlds.diamond_battle_axe": "Diamond Battle Axe",
+
+  "item.medievalworlds.iron_dagger": "Iron Dagger",
+  "item.medievalworlds.silver_dagger": "Silver Dagger",
+  "item.medievalworlds.steel_dagger": "Steel Dagger",
+  "item.medievalworlds.diamond_dagger": "Diamond Dagger",
 
   "item.medievalworlds.iron_lance": "Iron Lance",
   "item.medievalworlds.diamond_lance": "Diamond Lance",

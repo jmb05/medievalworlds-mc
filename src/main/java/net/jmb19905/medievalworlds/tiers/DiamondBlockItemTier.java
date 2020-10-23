@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public enum DiamondBlockItemTier implements IItemTier {
 
-    DIAMOND_BLOCK_ITEM_TIER(3, 1750, 8f, 8f, 9, () -> {
+    DIAMOND_BLOCK_ITEM_TIER(3, 1750, 8f, 6f, 9, () -> {
         return Ingredient.fromItems(Items.DIAMOND_BLOCK);
     });
 

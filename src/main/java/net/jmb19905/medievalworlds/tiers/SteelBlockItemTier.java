@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public enum SteelBlockItemTier implements IItemTier {
 
-    STEEL_BLOCK_ITEM_TIER(2, 1500, 8f, 8f, 8, () -> {
+    STEEL_BLOCK_ITEM_TIER(2, 1500, 8f, 5f, 8, () -> {
         return Ingredient.fromItems(BlockRegistryHandler.STEEL_BLOCK_ITEM.get());
     });
 

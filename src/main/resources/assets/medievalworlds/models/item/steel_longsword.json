@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "medievalworlds:items/diamond_longsword",
-		"particle": "medievalworlds:items/diamond_longsword"
+		"0": "medievalworlds:items/steel_longsword",
+		"particle": "medievalworlds:items/steel_longsword"
 	},
 	"elements": [
 		{

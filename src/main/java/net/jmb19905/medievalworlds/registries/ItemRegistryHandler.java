@@ -79,10 +79,19 @@ public class ItemRegistryHandler {
     public static final RegistryObject<Item> DIAMOND_HAMMER = ITEMS.register("diamond_hammer", () -> new HammerItem(DiamondBlockItemTier.DIAMOND_BLOCK_ITEM_TIER, 10, -3.2f, new Item.Properties().group(ItemGroup.COMBAT)));
 
     public static final RegistryObject<Item> IRON_BATTLE_AXE = ITEMS.register("iron_battle_axe", () -> new AxeItem(IronBlockItemTier.IRON_BLOCK_ITEM_TIER, 8, -3, new Item.Properties().group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> SILVER_BATTLE_AXE = ITEMS.register("silver_battle_axe", () -> new AxeItem(SilverBlockItemTier.SILVER_BLOCK_ITEM_TIER, 8, -3, new Item.Properties().group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> STEEL_BATTLE_AXE = ITEMS.register("steel_battle_axe", () -> new AxeItem(SteelBlockItemTier.STEEL_BLOCK_ITEM_TIER, 8, -3, new Item.Properties().group(ItemGroup.COMBAT)));
     public static final RegistryObject<Item> DIAMOND_BATTLE_AXE = ITEMS.register("diamond_battle_axe", () -> new AxeItem(DiamondBlockItemTier.DIAMOND_BLOCK_ITEM_TIER, 8, -2.9f, new Item.Properties().group(ItemGroup.COMBAT)));
 
     public static final RegistryObject<Item> IRON_LONGSWORD = ITEMS.register("iron_longsword", () -> new SwordItem(IronBlockItemTier.IRON_BLOCK_ITEM_TIER, 6, -2.8f, new Item.Properties().group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> SILVER_LONGSWORD = ITEMS.register("silver_longsword", () -> new SwordItem(SteelBlockItemTier.STEEL_BLOCK_ITEM_TIER, 5, -2.8f, new Item.Properties().group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> STEEL_LONGSWORD = ITEMS.register("steel_longsword", () -> new SwordItem(SteelBlockItemTier.STEEL_BLOCK_ITEM_TIER, 6, -2.8f, new Item.Properties().group(ItemGroup.COMBAT)));
     public static final RegistryObject<Item> DIAMOND_LONGSWORD = ITEMS.register("diamond_longsword", () -> new SwordItem(DiamondBlockItemTier.DIAMOND_BLOCK_ITEM_TIER, 6, -2.7f, new Item.Properties().group(ItemGroup.COMBAT)));
+
+    public static final RegistryObject<Item> IRON_DAGGER = ITEMS.register("iron_dagger", () -> new SwordItem(ItemTier.IRON, 0, 0, new Item.Properties().maxDamage(800).group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> SILVER_DAGGER = ITEMS.register("silver_dagger", () -> new SwordItem(SilverItemTier.SILVER_ITEM_TIER, -1, 0, new Item.Properties().maxDamage(600).group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> STEEL_DAGGER = ITEMS.register("steel_dagger", () -> new SwordItem(SteelItemTier.STEEL_ITEM_TIER, 0, 0, new Item.Properties().maxDamage(1000).group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> DIAMOND_DAGGER = ITEMS.register("diamond_dagger", () -> new SwordItem(ItemTier.DIAMOND, 0, 0, new Item.Properties().maxDamage(1500).group(ItemGroup.COMBAT)));
 
     public static final RegistryObject<Item> LONGBOW = ITEMS.register("longbow", () -> new LongbowItem(new Item.Properties().group(ItemGroup.COMBAT).maxDamage(1200)));
 
@@ -126,6 +135,5 @@ public class ItemRegistryHandler {
     public static final RegistryObject<Item> STEEL_CHESTPLATE = ITEMS.register("steel_chestplate", () -> new ArmorItem(SteelArmorMaterial.MATERIAL, EquipmentSlotType.CHEST, new Item.Properties().group(ItemGroup.COMBAT)));
     public static final RegistryObject<Item> STEEL_LEGGINGS = ITEMS.register("steel_leggings", () -> new ArmorItem(SteelArmorMaterial.MATERIAL, EquipmentSlotType.LEGS, new Item.Properties().group(ItemGroup.COMBAT)));
     public static final RegistryObject<Item> STEEL_BOOTS = ITEMS.register("steel_boots", () -> new ArmorItem(SteelArmorMaterial.MATERIAL, EquipmentSlotType.FEET, new Item.Properties().group(ItemGroup.COMBAT)));
-
 
 }

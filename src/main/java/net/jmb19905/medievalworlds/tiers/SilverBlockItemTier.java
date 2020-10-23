@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public enum SilverBlockItemTier implements IItemTier {
 
-    SILVER_BLOCK_ITEM_TIER(2, 750, 7f, 7f, 8, () -> {
+    SILVER_BLOCK_ITEM_TIER(2, 750, 7f, 4f, 8, () -> {
         return Ingredient.fromItems(BlockRegistryHandler.SILVER_BLOCK_ITEM.get());
     });
 
