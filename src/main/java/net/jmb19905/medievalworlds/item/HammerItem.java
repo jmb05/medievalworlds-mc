@@ -2,6 +2,7 @@ package net.jmb19905.medievalworlds.item;
 
 import net.jmb19905.medievalworlds.item.enchantment.LightningStrikeEnchantment;
 import net.jmb19905.medievalworlds.item.enchantment.MegaMinerEnchantment;
+import net.jmb19905.medievalworlds.registries.EnchantmentRegistryHandler;
 import net.jmb19905.medievalworlds.util.Util;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -16,7 +17,6 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -25,26 +25,25 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Map;
 
 public class HammerItem extends SwordItem {
 
+    private final IItemTier tier;
+
     public HammerItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
         super(tier, attackDamageIn, attackSpeedIn, builder);
+        this.tier = tier;
     }
 
     public float getDestroySpeed(@Nonnull ItemStack stack, BlockState state) {
         Material material = state.getMaterial();
-        for(Enchantment enchantment:EnchantmentHelper.getEnchantments(stack).keySet()){
-            if(enchantment instanceof MegaMinerEnchantment){
-                return material == Material.ROCK || material == Material.IRON ? 15 : 1;
-            }
-        }
-        return 1;
+        return material == Material.ROCK || material == Material.IRON ? tier.getEfficiency() + 7 : (EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistryHandler.MEGA_MINER.get(), stack) >= 1) ? 1.5f : 1;
     }
 
     public boolean canHarvestBlock(@Nonnull BlockState blockIn) {
-        return blockIn.getMaterial() == Material.ROCK;
+        return blockIn.getMaterial() == Material.ROCK && blockIn.getHarvestLevel() <= tier.getHarvestLevel();
     }
 
     @Nonnull
@@ -67,59 +66,20 @@ public class HammerItem extends SwordItem {
 
     @Override
     public boolean onBlockDestroyed(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull BlockState state, @Nonnull BlockPos pos, @Nonnull LivingEntity entityLiving) {
-        int harvestedBlockCount = 0;
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(entityLiving.getHeldItemMainhand());
         for (Enchantment enchantment : enchantments.keySet()) {
             if (enchantment instanceof MegaMinerEnchantment) {
                 if (!worldIn.isRemote && stack.canHarvestBlock(state) && state.getBlock() != Blocks.BEDROCK) {
                     ServerWorld world = (ServerWorld) worldIn;
                     world.setBlockState(pos, state);
-                    Direction direction = ((BlockRayTraceResult) Util.rayTrace(worldIn, entityLiving, RayTraceContext.FluidMode.ANY, 50)).getFace();
-                    if (direction == Direction.DOWN || direction == Direction.UP) {
-                        BlockPos newPos = new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ() - 1);
-                        for (int i = 0; i < 3; i++) {
-                            for (int j = 0; j < 3; j++) {
-                                BlockPos currentPos = new BlockPos(newPos.getX() + i, newPos.getY(), newPos.getZ() + j);
-                                if (stack.canHarvestBlock(world.getBlockState(currentPos)) && world.getBlockState(currentPos).getBlock() != Blocks.BEDROCK) {
-                                    if (currentPos != pos) {
-                                        world.getBlockState(currentPos).getBlock().harvestBlock(worldIn, (PlayerEntity) entityLiving, currentPos, world.getBlockState(currentPos), world.getTileEntity(currentPos), stack);
-                                    }
-                                    world.setBlockState(currentPos, Blocks.AIR.getDefaultState());
-                                    harvestedBlockCount++;
-                                }
-                            }
+                    List<BlockPos> blocks = Util.calcMegaMinerBreaking(world, (PlayerEntity) entityLiving, stack, pos);
+                    for(BlockPos pos1 : blocks){
+                        if (pos1 != pos) {
+                            world.getBlockState(pos1).getBlock().harvestBlock(world, (PlayerEntity) entityLiving, pos1, world.getBlockState(pos1), world.getTileEntity(pos1), stack);
                         }
-                    } else if (direction == Direction.NORTH || direction == Direction.SOUTH) {
-                        BlockPos newPos = new BlockPos(pos.getX() - 1, pos.getY() - 1, pos.getZ());
-                        for (int i = 0; i < 3; i++) {
-                            for (int j = 0; j < 3; j++) {
-                                BlockPos currentPos = new BlockPos(newPos.getX() + i, newPos.getY() + j, newPos.getZ());
-                                if (stack.canHarvestBlock(world.getBlockState(currentPos)) && world.getBlockState(currentPos).getBlock() != Blocks.BEDROCK) {
-                                    if (currentPos != pos) {
-                                        world.getBlockState(currentPos).getBlock().harvestBlock(worldIn, (PlayerEntity) entityLiving, currentPos, world.getBlockState(currentPos), world.getTileEntity(currentPos), stack);
-                                    }
-                                    world.setBlockState(currentPos, Blocks.AIR.getDefaultState());
-                                    harvestedBlockCount++;
-                                }
-                            }
-                        }
-                    } else {
-                        BlockPos newPos = new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ() - 1);
-                        for (int i = 0; i < 3; i++) {
-                            for (int j = 0; j < 3; j++) {
-                                BlockPos currentPos = new BlockPos(newPos.getX(), newPos.getY() + j, newPos.getZ() + i);
-                                if (stack.canHarvestBlock(world.getBlockState(currentPos)) && world.getBlockState(currentPos).getBlock() != Blocks.BEDROCK) {
-                                    if (currentPos != pos) {
-                                        world.getBlockState(currentPos).getBlock().harvestBlock(worldIn, (PlayerEntity) entityLiving, currentPos, world.getBlockState(currentPos), world.getTileEntity(currentPos), stack);
-                                        //System.out.println("harvesting Extra Block: " + world.getBlockState(currentPos));
-                                    }
-                                    world.setBlockState(currentPos, Blocks.AIR.getDefaultState());
-                                    harvestedBlockCount++;
-                                }
-                            }
-                        }
+                        world.setBlockState(pos1, Blocks.AIR.getDefaultState());
                     }
-                    entityLiving.getHeldItemMainhand().damageItem(harvestedBlockCount-1, entityLiving, (living) -> living.sendBreakAnimation(EquipmentSlotType.MAINHAND));
+                    entityLiving.getHeldItemMainhand().damageItem(blocks.size() - 1, entityLiving, (living) -> living.sendBreakAnimation(EquipmentSlotType.MAINHAND));
                 }
                 break;
             }
