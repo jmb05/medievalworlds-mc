@@ -6,6 +6,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -16,6 +18,10 @@ import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements IArmorMaterial {
+
+    GAMBESON_MATERIAL("medievalworlds:gambeson",                new int[]{70, 90, 100, 80}, new int[]{2, 3, 3, 1}, 7, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0, () -> {
+        return Ingredient.fromItems((IItemProvider) ItemTags.WOOL);
+    }),
 
     COPPER_MATERIAL("medievalworlds:copper",                    new int[]{145, 200, 170, 150}, new int[]{2, 4, 4, 1}, 7, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0, () -> {
         return Ingredient.fromItems(ItemRegistryHandler.COPPER_INGOT.get());

@@ -6,9 +6,9 @@ modId="medievalworlds" #mandatory
 version="a1.0.3" #mandatory
 displayName="MedievalWorlds" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
-#displayURL="http://example.com/" #optional
+displayURL="http://www.github.com/jmb05/medievalworlds/" #optional
 logoFile="pack.png" #optional
-credits="Thanks for everyone who participated!" #optional
+credits="" #optional
 authors="jmb19905" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
