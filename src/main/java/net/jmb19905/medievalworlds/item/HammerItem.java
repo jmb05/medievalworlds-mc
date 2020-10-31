@@ -53,8 +53,12 @@ public class HammerItem extends SwordItem {
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(playerIn.getHeldItem(handIn));
             for (Enchantment enchantment : enchantments.keySet()) {
                 if (enchantment instanceof LightningStrikeEnchantment) {
-                    playerIn.getCooldownTracker().setCooldown(this, (-(enchantments.get(enchantment) * 10) + 40) * 20);
-                    BlockRayTraceResult rayTrace = (BlockRayTraceResult) Util.rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.NONE, enchantments.get(enchantment) * 10);
+                    if(!playerIn.isCreative()) {
+                        playerIn.getCooldownTracker().setCooldown(this, (-(enchantments.get(enchantment) * 10) + 40) * 20);
+                    }else{
+                        playerIn.getCooldownTracker().setCooldown(this, ((-(enchantments.get(enchantment) * 10) + 40) * 20) / 2);
+                    }
+                    BlockRayTraceResult rayTrace = Util.rayTraceBlocks(worldIn, playerIn, RayTraceContext.FluidMode.NONE, enchantments.get(enchantment) * 10);
                     ((ServerWorld) worldIn).addLightningBolt(new LightningBoltEntity(worldIn, rayTrace.getPos().getX(), rayTrace.getPos().getY(), rayTrace.getPos().getZ(), false));
                     playerIn.getHeldItem(handIn).damageItem(1, playerIn, (living) -> living.sendBreakAnimation(handIn == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND));
                     return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));

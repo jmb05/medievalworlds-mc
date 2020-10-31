@@ -1,7 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "medievalworlds:items/diamond_item_base"
+		"0": "medievalworlds:items/diamond_lance",
+		"particle": "medievalworlds:items/diamond_lance"
 	},
 	"elements": [
 		{
@@ -137,11 +138,13 @@
 	"gui_light": "front",
 	"display": {
 		"thirdperson_righthand": {
-			"translation": [0, 19.25, 2],
+			"rotation": [-19, 0, 0],
+			"translation": [0, 18, -4.5],
 			"scale": [1, 2.5, 1]
 		},
 		"thirdperson_lefthand": {
-			"translation": [0, 19.25, 2],
+			"rotation": [-19, 0, 0],
+			"translation": [0, 18, -4.5],
 			"scale": [1, 2.5, 1]
 		},
 		"firstperson_righthand": {
