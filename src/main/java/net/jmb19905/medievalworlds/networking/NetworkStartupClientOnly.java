@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.item.test;
+package net.jmb19905.medievalworlds.networking;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;

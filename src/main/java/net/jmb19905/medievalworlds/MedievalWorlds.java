@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds;
 
-import net.jmb19905.medievalworlds.item.test.NetworkStartupClientOnly;
-import net.jmb19905.medievalworlds.item.test.NetworkStartupCommon;
+import net.jmb19905.medievalworlds.networking.NetworkStartupClientOnly;
+import net.jmb19905.medievalworlds.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.registries.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;

@@ -1,6 +1,8 @@
-package net.jmb19905.medievalworlds.item.test;
+package net.jmb19905.medievalworlds.networking;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.item.lance.EntityMessageToServer;
+import net.jmb19905.medievalworlds.item.lance.TargetEffectMessageToClient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;

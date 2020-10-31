@@ -1,8 +1,8 @@
 package net.jmb19905.medievalworlds.item;
 
 import com.google.common.collect.Multimap;
-import net.jmb19905.medievalworlds.item.test.EntityMessageToServer;
-import net.jmb19905.medievalworlds.item.test.NetworkStartupCommon;
+import net.jmb19905.medievalworlds.item.lance.EntityMessageToServer;
+import net.jmb19905.medievalworlds.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -78,7 +78,7 @@ public class LanceItem extends Item {
     }
 
     private void sendEntityIDtoServer(int entityID, float attackDamageFactor){
-        EntityMessageToServer message = new EntityMessageToServer(entityID, (int) (attackDamage * attackDamageFactor));
+        EntityMessageToServer message = new EntityMessageToServer(entityID, (int) (attackDamage * attackDamageFactor), attackDamageFactor >= 1);
         NetworkStartupCommon.simpleChannel.sendToServer(message);
     }
 

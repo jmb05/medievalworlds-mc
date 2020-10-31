@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.item.test;
+package net.jmb19905.medievalworlds.item.lance;
 
 import net.minecraft.network.PacketBuffer;
 import org.apache.logging.log4j.LogManager;
@@ -12,11 +12,13 @@ public class EntityMessageToServer {
     private static final Logger LOGGER = LogManager.getLogger();
     private int entityID;
     private int attackDamage;
+    private boolean critical;
     private boolean messageIsValid;
 
-    public EntityMessageToServer(int entityID, int attackDamage){
+    public EntityMessageToServer(int entityID, int attackDamage, boolean critical){
         this.entityID = entityID;
         this.attackDamage = attackDamage;
+        this.critical = critical;
         messageIsValid = true;
     }
 
@@ -26,6 +28,10 @@ public class EntityMessageToServer {
 
     public int getAttackDamage() {
         return attackDamage;
+    }
+
+    public boolean isCritical() {
+        return critical;
     }
 
     public boolean isMessageValid() {
@@ -42,7 +48,7 @@ public class EntityMessageToServer {
         try {
             retval.entityID = buf.readInt();
             retval.attackDamage = buf.readInt();
-
+            retval.critical = buf.readBoolean();
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             LOGGER.warn("Exception while reading EntityMessageToServer: " + e);
             return retval;
@@ -55,6 +61,7 @@ public class EntityMessageToServer {
         if (!messageIsValid) return;
         buf.writeInt(entityID);
         buf.writeInt(attackDamage);
+        buf.writeBoolean(critical);
     }
 
     @Override
@@ -62,6 +69,7 @@ public class EntityMessageToServer {
         return "EntityMessageToServer{" +
                 "entityID=" + entityID +
                 ", attackDamage=" + attackDamage +
+                ", critical=" + critical +
                 ", messageIsValid=" + messageIsValid +
                 '}';
     }

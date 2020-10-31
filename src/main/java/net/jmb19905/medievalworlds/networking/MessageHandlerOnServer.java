@@ -1,9 +1,12 @@
-package net.jmb19905.medievalworlds.item.test;
+package net.jmb19905.medievalworlds.networking;
 
+import net.jmb19905.medievalworlds.item.lance.EntityMessageToServer;
+import net.jmb19905.medievalworlds.item.lance.TargetEffectMessageToClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -45,13 +48,17 @@ public class MessageHandlerOnServer {
     }
 
     static void processMessage(EntityMessageToServer message, ServerPlayerEntity sendingPlayer) {
-        TargetEffectMessageToClient msg = new TargetEffectMessageToClient(Objects.requireNonNull(sendingPlayer.world.getEntityByID(message.getEntityID())).getPositionVec());   // must generate a fresh message for every player!
-        DimensionType playerDimension = sendingPlayer.dimension;
-        NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(() -> playerDimension), msg);
+        Entity entity = sendingPlayer.world.getEntityByID(message.getEntityID());
 
         //Attack Entity
-        Entity entity = sendingPlayer.world.getEntityByID(message.getEntityID());
         if(entity instanceof LivingEntity){
+            if(message.isCritical()) {
+                AxisAlignedBB boundingBox = entity.getBoundingBox();
+                TargetEffectMessageToClient msg = new TargetEffectMessageToClient(Objects.requireNonNull(entity.getPositionVec()), boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY, boundingBox.maxZ - boundingBox.minZ);   // must generate a fresh message for every player!
+                DimensionType playerDimension = sendingPlayer.dimension;
+                NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(() -> playerDimension), msg);
+            }
+
             LivingEntity livingEntity = (LivingEntity) entity;
             livingEntity.attackEntityFrom(DamageSource.causePlayerDamage(sendingPlayer), message.getAttackDamage());
         }
