@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.client.entity.model.armor;
+package net.jmb19905.medievalworlds.client.model.armor;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;

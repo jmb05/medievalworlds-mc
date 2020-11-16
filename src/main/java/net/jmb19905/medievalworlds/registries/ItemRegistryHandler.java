@@ -1,12 +1,10 @@
 package net.jmb19905.medievalworlds.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.item.HammerItem;
-import net.jmb19905.medievalworlds.item.LanceItem;
-import net.jmb19905.medievalworlds.item.LongbowItem;
-import net.jmb19905.medievalworlds.item.SilverSword;
+import net.jmb19905.medievalworlds.item.*;
 import net.jmb19905.medievalworlds.item.armor.*;
 import net.jmb19905.medievalworlds.tiers.*;
+import net.jmb19905.medievalworlds.util.ConfigHandler;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
@@ -83,10 +81,10 @@ public class ItemRegistryHandler {
     public static final RegistryObject<Item> STEEL_BATTLE_AXE = ITEMS.register("steel_battle_axe", () -> new AxeItem(SteelBlockItemTier.STEEL_BLOCK_ITEM_TIER, 8, -3, new Item.Properties().group(ItemGroup.COMBAT)));
     public static final RegistryObject<Item> DIAMOND_BATTLE_AXE = ITEMS.register("diamond_battle_axe", () -> new AxeItem(DiamondBlockItemTier.DIAMOND_BLOCK_ITEM_TIER, 8, -2.9f, new Item.Properties().group(ItemGroup.COMBAT)));
 
-    public static final RegistryObject<Item> IRON_LONGSWORD = ITEMS.register("iron_longsword", () -> new SwordItem(IronBlockItemTier.IRON_BLOCK_ITEM_TIER, 6, -2.8f, new Item.Properties().group(ItemGroup.COMBAT)));
-    public static final RegistryObject<Item> SILVER_LONGSWORD = ITEMS.register("silver_longsword", () -> new SwordItem(SteelBlockItemTier.STEEL_BLOCK_ITEM_TIER, 5, -2.8f, new Item.Properties().group(ItemGroup.COMBAT)));
-    public static final RegistryObject<Item> STEEL_LONGSWORD = ITEMS.register("steel_longsword", () -> new SwordItem(SteelBlockItemTier.STEEL_BLOCK_ITEM_TIER, 6, -2.8f, new Item.Properties().group(ItemGroup.COMBAT)));
-    public static final RegistryObject<Item> DIAMOND_LONGSWORD = ITEMS.register("diamond_longsword", () -> new SwordItem(DiamondBlockItemTier.DIAMOND_BLOCK_ITEM_TIER, 6, -2.7f, new Item.Properties().group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> IRON_LONGSWORD = ITEMS.register("iron_longsword", () -> new SwordItem(IronBlockItemTier.IRON_BLOCK_ITEM_TIER, (int) (ConfigHandler.COMMON.ironLongswordAttackDamage.get() - IronBlockItemTier.IRON_BLOCK_ITEM_TIER.getAttackDamage()) - 1, -2.8f, new Item.Properties().group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> SILVER_LONGSWORD = ITEMS.register("silver_longsword", () -> new SwordItem(SteelBlockItemTier.STEEL_BLOCK_ITEM_TIER, (int) (ConfigHandler.COMMON.silverLongswordAttackDamage.get() - SilverBlockItemTier.SILVER_BLOCK_ITEM_TIER.getAttackDamage()) - 2, -2.8f, new Item.Properties().group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> STEEL_LONGSWORD = ITEMS.register("steel_longsword", () -> new SwordItem(SteelBlockItemTier.STEEL_BLOCK_ITEM_TIER, (int) (ConfigHandler.COMMON.steelLongswordAttackDamage.get() - IronBlockItemTier.IRON_BLOCK_ITEM_TIER.getAttackDamage()) - 1, -2.8f, new Item.Properties().group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> DIAMOND_LONGSWORD = ITEMS.register("diamond_longsword", () -> new SwordItem(DiamondBlockItemTier.DIAMOND_BLOCK_ITEM_TIER, (int) (ConfigHandler.COMMON.diamondLongswordAttackDamage.get() - DiamondBlockItemTier.DIAMOND_BLOCK_ITEM_TIER.getAttackDamage()) - 1, -2.7f, new Item.Properties().group(ItemGroup.COMBAT)));
 
     public static final RegistryObject<Item> IRON_DAGGER = ITEMS.register("iron_dagger", () -> new SwordItem(ItemTier.IRON, 0, 0, new Item.Properties().maxDamage(800).group(ItemGroup.COMBAT)));
     public static final RegistryObject<Item> SILVER_DAGGER = ITEMS.register("silver_dagger", () -> new SwordItem(SilverItemTier.SILVER_ITEM_TIER, -1, 0, new Item.Properties().maxDamage(600).group(ItemGroup.COMBAT)));
@@ -100,6 +98,11 @@ public class ItemRegistryHandler {
     public static final RegistryObject<Item> STEEL_LANCE = ITEMS.register("steel_lance", () -> new LanceItem(12, new Item.Properties().maxDamage(1000).group(ItemGroup.COMBAT)));
     public static final RegistryObject<Item> DIAMOND_LANCE = ITEMS.register("diamond_lance", () -> new LanceItem(14, new Item.Properties().maxDamage(1500).group(ItemGroup.COMBAT)));
 
+    /*public static final RegistryObject<Item> IRON_SPEAR_ITEM = ITEMS.register("iron_spear", () -> new SpearItem(6f, -2.9f, new Item.Properties().maxDamage(800).group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> SILVER_SPEAR_ITEM = ITEMS.register("silver_spear", () -> new SpearItem(7f, -2.9f, new Item.Properties().maxDamage(700).group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> STEEL_SPEAR_ITEM = ITEMS.register("steel_spear", () -> new SpearItem(8f, -2.9f, new Item.Properties().maxDamage(1000).group(ItemGroup.COMBAT)));
+    public static final RegistryObject<Item> DIAMOND_SPEAR_ITEM = ITEMS.register("diamond_spear", () -> new SpearItem(9f, -2.9f, new Item.Properties().maxDamage(1500).group(ItemGroup.COMBAT)));
+*/
     //Armor
     public static final RegistryObject<Item> COPPER_HELMET = ITEMS.register("copper_helmet", () -> new ArmorItem(ModArmorMaterials.COPPER_MATERIAL, EquipmentSlotType.HEAD, new Item.Properties().group(ItemGroup.COMBAT)));
     public static final RegistryObject<Item> COPPER_CHESTPLATE = ITEMS.register("copper_chestplate", () -> new ArmorItem(ModArmorMaterials.COPPER_MATERIAL, EquipmentSlotType.CHEST, new Item.Properties().group(ItemGroup.COMBAT)));

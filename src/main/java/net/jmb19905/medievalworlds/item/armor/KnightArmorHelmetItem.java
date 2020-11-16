@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.item.armor;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.client.entity.model.armor.KnightArmorHelmetModel;
+import net.jmb19905.medievalworlds.client.model.armor.KnightArmorHelmetModel;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

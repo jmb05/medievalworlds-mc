@@ -37,6 +37,11 @@ public class HammerItem extends SwordItem {
         this.tier = tier;
     }
 
+    @Override
+    public boolean canPlayerBreakBlockWhileHolding(@Nonnull BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull PlayerEntity player) {
+        return true;
+    }
+
     public float getDestroySpeed(@Nonnull ItemStack stack, BlockState state) {
         Material material = state.getMaterial();
         return material == Material.ROCK || material == Material.IRON ? tier.getEfficiency() + 7 : (EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistryHandler.MEGA_MINER.get(), stack) >= 1) ? 1.5f : 1;
