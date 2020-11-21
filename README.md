@@ -23,4 +23,4 @@ for a full walkthrough please refer to our wiki.
 * Download the mod from [github](https://github.com/jmb05/medievalworlds/releases) (to find the download link you may have to expand the 'Assets' section of the version you want to Download) or [CurseForge](https://www.curseforge.com/minecraft/mc-mods/medievalworlds)
 * Navigate to your 'minecraft' folder
 * Move the downloaded .jar file to the 'mods' folder (create it if it doesn't exist)
-* Open your launcher of choice, choose the version "1.x.x-forge-x.x.x" and launch the game (the 'x's will be replaced with the version you choose)
+* Open your launcher of choice, choose the version "1.x.x-forge-x.x.x" and launch the game (the 'x's will be replaced with the version you chose)
