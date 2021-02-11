@@ -15,7 +15,7 @@ public class EnchantmentRegistryHandler {
 
     public static final EnchantmentType HAMMER = EnchantmentType.create("hammer", (item) -> item instanceof HammerItem);
 
-    public static final DeferredRegister<Enchantment> ENCHANTMENTS = new DeferredRegister<>(ForgeRegistries.ENCHANTMENTS, MedievalWorlds.MOD_ID);
+    public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, MedievalWorlds.MOD_ID);
 
     public static final RegistryObject<Enchantment> LIGHTNING_STRIKE = ENCHANTMENTS.register("lightning_strike", () -> new LightningStrikeEnchantment(Enchantment.Rarity.RARE, HAMMER, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND}));
     public static final RegistryObject<Enchantment> MEGA_MINER = ENCHANTMENTS.register("mega_miner", () -> new MegaMinerEnchantment(Enchantment.Rarity.RARE, HAMMER, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND}));

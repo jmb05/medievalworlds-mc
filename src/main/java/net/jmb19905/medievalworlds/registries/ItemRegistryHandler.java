@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @SuppressWarnings({"unused", "RedundantSuppression"})
 public class ItemRegistryHandler {
 
-    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MedievalWorlds.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MedievalWorlds.MOD_ID);
 
     //Materials
     public static final RegistryObject<Item> COPPER_INGOT = ITEMS.register("copper_ingot", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS).maxStackSize(64)));
@@ -42,27 +42,27 @@ public class ItemRegistryHandler {
     public static final RegistryObject<Item> TIN_PICKAXE = ITEMS.register("tin_pickaxe", () -> new PickaxeItem(TinItemTier.TIN_ITEM_TIER, -1, -2.8f, new Item.Properties().group(ItemGroup.TOOLS)));
     public static final RegistryObject<Item> TIN_AXE = ITEMS.register("tin_axe", () -> new AxeItem(TinItemTier.TIN_ITEM_TIER, 4, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
     public static final RegistryObject<Item> TIN_SHOVEL = ITEMS.register("tin_shovel", () -> new ShovelItem(TinItemTier.TIN_ITEM_TIER, 0, -3, new Item.Properties().group(ItemGroup.TOOLS)));
-    public static final RegistryObject<Item> TIN_HOE = ITEMS.register("tin_hoe", () -> new HoeItem(TinItemTier.TIN_ITEM_TIER, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
+    public static final RegistryObject<Item> TIN_HOE = ITEMS.register("tin_hoe", () -> new HoeItem(TinItemTier.TIN_ITEM_TIER, 0, -3, new Item.Properties().group(ItemGroup.TOOLS)));
 
     public static final RegistryObject<Item> COPPER_PICKAXE = ITEMS.register("copper_pickaxe", () -> new PickaxeItem(CopperItemTier.COPPER_ITEM_TIER, -1, -2.8f, new Item.Properties().group(ItemGroup.TOOLS)));
     public static final RegistryObject<Item> COPPER_AXE = ITEMS.register("copper_axe", () -> new AxeItem(CopperItemTier.COPPER_ITEM_TIER, 4, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
     public static final RegistryObject<Item> COPPER_SHOVEL = ITEMS.register("copper_shovel", () -> new ShovelItem(CopperItemTier.COPPER_ITEM_TIER, 0, -3, new Item.Properties().group(ItemGroup.TOOLS)));
-    public static final RegistryObject<Item> COPPER_HOE = ITEMS.register("copper_hoe", () -> new HoeItem(CopperItemTier.COPPER_ITEM_TIER, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
+    public static final RegistryObject<Item> COPPER_HOE = ITEMS.register("copper_hoe", () -> new HoeItem(CopperItemTier.COPPER_ITEM_TIER, 0, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
 
     public static final RegistryObject<Item> BRONZE_PICKAXE = ITEMS.register("bronze_pickaxe", () -> new PickaxeItem(BronzeItemTier.BRONZE_ITEM_TIER, -1, -2.8f, new Item.Properties().group(ItemGroup.TOOLS)));
     public static final RegistryObject<Item> BRONZE_AXE = ITEMS.register("bronze_axe", () -> new AxeItem(BronzeItemTier.BRONZE_ITEM_TIER, 5, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
     public static final RegistryObject<Item> BRONZE_SHOVEL = ITEMS.register("bronze_shovel", () -> new ShovelItem(BronzeItemTier.BRONZE_ITEM_TIER, 0, -3, new Item.Properties().group(ItemGroup.TOOLS)));
-    public static final RegistryObject<Item> BRONZE_HOE = ITEMS.register("bronze_hoe", () -> new HoeItem(BronzeItemTier.BRONZE_ITEM_TIER, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
+    public static final RegistryObject<Item> BRONZE_HOE = ITEMS.register("bronze_hoe", () -> new HoeItem(BronzeItemTier.BRONZE_ITEM_TIER, 0, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
 
     public static final RegistryObject<Item> STEEL_PICKAXE = ITEMS.register("steel_pickaxe", () -> new PickaxeItem(SteelItemTier.STEEL_ITEM_TIER, -1, -2.8f, new Item.Properties().group(ItemGroup.TOOLS)));
     public static final RegistryObject<Item> STEEL_AXE = ITEMS.register("steel_axe", () -> new AxeItem(SteelItemTier.STEEL_ITEM_TIER, 5, -3.1f, new Item.Properties().group(ItemGroup.TOOLS)));
     public static final RegistryObject<Item> STEEL_SHOVEL = ITEMS.register("steel_shovel", () -> new ShovelItem(SteelItemTier.STEEL_ITEM_TIER, 0, -3, new Item.Properties().group(ItemGroup.TOOLS)));
-    public static final RegistryObject<Item> STEEL_HOE = ITEMS.register("steel_hoe", () -> new HoeItem(SteelItemTier.STEEL_ITEM_TIER, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
+    public static final RegistryObject<Item> STEEL_HOE = ITEMS.register("steel_hoe", () -> new HoeItem(SteelItemTier.STEEL_ITEM_TIER, 0, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
 
     public static final RegistryObject<Item> SILVER_PICKAXE = ITEMS.register("silver_pickaxe", () -> new PickaxeItem(SilverItemTier.SILVER_ITEM_TIER, -1, -2.8f, new Item.Properties().group(ItemGroup.TOOLS)));
     public static final RegistryObject<Item> SILVER_AXE = ITEMS.register("silver_axe", () -> new AxeItem(SilverItemTier.SILVER_ITEM_TIER, 5, -3.1f, new Item.Properties().group(ItemGroup.TOOLS)));
     public static final RegistryObject<Item> SILVER_SHOVEL = ITEMS.register("silver_shovel", () -> new ShovelItem(SilverItemTier.SILVER_ITEM_TIER, 0, -3, new Item.Properties().group(ItemGroup.TOOLS)));
-    public static final RegistryObject<Item> SILVER_HOE = ITEMS.register("silver_hoe", () -> new HoeItem(SilverItemTier.SILVER_ITEM_TIER, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
+    public static final RegistryObject<Item> SILVER_HOE = ITEMS.register("silver_hoe", () -> new HoeItem(SilverItemTier.SILVER_ITEM_TIER, 0, -3f, new Item.Properties().group(ItemGroup.TOOLS)));
 
     //Weapons
     public static final RegistryObject<Item> TIN_SWORD = ITEMS.register("tin_sword", () -> new SwordItem(TinItemTier.TIN_ITEM_TIER, 1, -2.5f, new Item.Properties().group(ItemGroup.COMBAT)));

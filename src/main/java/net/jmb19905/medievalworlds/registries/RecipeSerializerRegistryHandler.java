@@ -18,7 +18,7 @@ public class RecipeSerializerRegistryHandler {
     public static final IRecipeSerializer<AlloyRecipe> ALLOY_RECIPE_SERIALIZER = new AlloyRecipeSerializer();
     public static final IRecipeType<IAlloyRecipe> ALLOY_TYPE = registerType(IAlloyRecipe.RECIPE_TYPE_ID);
 
-    public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, MedievalWorlds.MOD_ID);
+    public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MedievalWorlds.MOD_ID);
 
     public static final RegistryObject<IRecipeSerializer<?>> ALLOY_SERIALIZER = RECIPE_SERIALIZERS.register("alloy", () -> ALLOY_RECIPE_SERIALIZER);
 

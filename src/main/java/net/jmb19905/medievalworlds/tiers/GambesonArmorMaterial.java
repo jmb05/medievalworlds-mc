@@ -78,4 +78,9 @@ public enum GambesonArmorMaterial implements IArmorMaterial {
         return this.toughness;
     }
 
+    @Override
+    public float getKnockbackResistance() {
+        return knockbackResistance;
+    }
+
 }

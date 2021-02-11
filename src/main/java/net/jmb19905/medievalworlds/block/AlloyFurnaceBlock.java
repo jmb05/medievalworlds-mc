@@ -31,6 +31,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
+import java.util.function.ToIntFunction;
 
 public class AlloyFurnaceBlock extends Block {
 
@@ -39,7 +40,12 @@ public class AlloyFurnaceBlock extends Block {
     private int currentLightVal = 0;
 
     public AlloyFurnaceBlock() {
-        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F).lightValue(13));
+        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F).setLightLevel(new ToIntFunction<BlockState>() {
+            @Override
+            public int applyAsInt(BlockState value) {
+                return 13;
+            }
+        }));
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(LIT, false));
     }
 
@@ -73,7 +79,7 @@ public class AlloyFurnaceBlock extends Block {
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        return state.get(LIT) ? super.getLightValue(state) : 0;
+        return state.get(LIT) ? super.getLightValue(state, world, pos) : 0;
         // Josiah is cool
     }
 

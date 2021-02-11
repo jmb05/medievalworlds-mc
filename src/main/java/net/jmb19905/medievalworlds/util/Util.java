@@ -1,18 +1,14 @@
 package net.jmb19905.medievalworlds.util;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.renderer.Vector3d;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.dragon.EnderDragonPartEntity;
 import net.minecraft.entity.item.ArmorStandEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.network.play.server.SEntityVelocityPacket;
@@ -24,6 +20,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -61,14 +58,14 @@ public class Util {
     public static BlockRayTraceResult rayTraceBlocks(World worldIn, LivingEntity entity, RayTraceContext.FluidMode fluidMode, double reach) {
         float f = entity.rotationPitch;
         float f1 = entity.rotationYaw;
-        Vec3d vec3d = entity.getEyePosition(1.0F);
+        Vector3d vec3d = entity.getEyePosition(1.0F);
         float f2 = MathHelper.cos(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
         float f3 = MathHelper.sin(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
         float f4 = -MathHelper.cos(-f * ((float)Math.PI / 180F));
         float f5 = MathHelper.sin(-f * ((float)Math.PI / 180F));
         float f6 = f3 * f4;
         float f7 = f2 * f4;
-        Vec3d vec3d1 = vec3d.add((double)f6 * reach, (double)f5 * reach, (double)f7 * reach);
+        Vector3d vec3d1 = vec3d.add((double)f6 * reach, (double)f5 * reach, (double)f7 * reach);
         return worldIn.rayTraceBlocks(new RayTraceContext(vec3d, vec3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, entity));
     }
 
@@ -140,7 +137,7 @@ public class Util {
                         flag1 = true;
                     }
 
-                    boolean flag2 = flag && attacker.fallDistance > 0.0F && !attacker.onGround && !attacker.isOnLadder() && !attacker.isInWater() && !attacker.isPotionActive(Effects.BLINDNESS) && !attacker.isPassenger() && targetEntity instanceof LivingEntity;
+                    boolean flag2 = flag && attacker.fallDistance > 0.0F && !attacker.isOnGround() && !attacker.isOnLadder() && !attacker.isInWater() && !attacker.isPotionActive(Effects.BLINDNESS) && !attacker.isPassenger() && targetEntity instanceof LivingEntity;
                     flag2 = flag2 && !attacker.isSprinting();
                     net.minecraftforge.event.entity.player.CriticalHitEvent hitResult = net.minecraftforge.common.ForgeHooks.getCriticalHit(attacker, targetEntity, flag2, flag2 ? 1.5F : 1.0F);
                     flag2 = hitResult != null;
@@ -151,7 +148,7 @@ public class Util {
                     f = f + f1;
                     boolean flag3 = false;
                     double d0 = attacker.distanceWalkedModified - attacker.prevDistanceWalkedModified;
-                    if (flag && !flag2 && !flag1 && attacker.onGround && d0 < (double)attacker.getAIMoveSpeed()) {
+                    if (flag && !flag2 && !flag1 && attacker.isOnGround() && d0 < (double)attacker.getAIMoveSpeed()) {
                         ItemStack itemstack = attacker.getHeldItem(Hand.MAIN_HAND);
                         if (itemstack.getItem() instanceof SwordItem) {
                             flag3 = true;
@@ -169,12 +166,12 @@ public class Util {
                         }
                     }
 
-                    Vec3d vec3d = targetEntity.getMotion();
+                    Vector3d vec3d = targetEntity.getMotion();
                     boolean flag5 = targetEntity.attackEntityFrom(DamageSource.causePlayerDamage(attacker), f);
                     if (flag5) {
                         if (i > 0) {
                             if (targetEntity instanceof LivingEntity) {
-                                ((LivingEntity)targetEntity).knockBack(attacker, (float)i * 0.5F, MathHelper.sin(attacker.rotationYaw * ((float)Math.PI / 180F)), -MathHelper.cos(attacker.rotationYaw * ((float)Math.PI / 180F)));
+                                ((LivingEntity)targetEntity).applyKnockback((float)i * 0.5F, MathHelper.sin(attacker.rotationYaw * ((float)Math.PI / 180F)), -MathHelper.cos(attacker.rotationYaw * ((float)Math.PI / 180F)));
                             } else {
                                 targetEntity.addVelocity(-MathHelper.sin(attacker.rotationYaw * ((float)Math.PI / 180F)) * (float)i * 0.5F, 0.1D, MathHelper.cos(attacker.rotationYaw * ((float)Math.PI / 180F)) * (float)i * 0.5F);
                             }
@@ -188,7 +185,7 @@ public class Util {
 
                             for(LivingEntity livingentity : attacker.world.getEntitiesWithinAABB(LivingEntity.class, targetEntity.getBoundingBox().grow(1.0D, 0.25D, 1.0D))) {
                                 if (livingentity != attacker && livingentity != targetEntity && !attacker.isOnSameTeam(livingentity) && (!(livingentity instanceof ArmorStandEntity) || !((ArmorStandEntity)livingentity).hasMarker()) && attacker.getDistanceSq(livingentity) < 9.0D) {
-                                    livingentity.knockBack(attacker, 0.4F, MathHelper.sin(attacker.rotationYaw * ((float)Math.PI / 180F)), -MathHelper.cos(attacker.rotationYaw * ((float)Math.PI / 180F)));
+                                    livingentity.applyKnockback(0.4F, MathHelper.sin(attacker.rotationYaw * ((float)Math.PI / 180F)), -MathHelper.cos(attacker.rotationYaw * ((float)Math.PI / 180F)));
                                     livingentity.attackEntityFrom(DamageSource.causePlayerDamage(attacker), f3);
                                 }
                             }

@@ -16,8 +16,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockRegistryHandler {
 
-    public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, MedievalWorlds.MOD_ID);
-    public static final DeferredRegister<net.minecraft.item.Item> BLOCK_ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MedievalWorlds.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MedievalWorlds.MOD_ID);
+    public static final DeferredRegister<net.minecraft.item.Item> BLOCK_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MedievalWorlds.MOD_ID);
 
     //Blocks
     public static final RegistryObject<Block> BRONZE_BLOCK = BLOCKS.register("bronze_block", () -> new Block(Block.Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).harvestLevel(0).hardnessAndResistance(3,6).sound(SoundType.METAL)));

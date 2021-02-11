@@ -12,6 +12,7 @@ import net.minecraft.item.Items;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -47,8 +48,9 @@ public class LongbowItem extends BowItem {
                     if (!worldIn.isRemote) {
                         ArrowItem arrowitem = (ArrowItem)(itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW);
                         AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
-                        abstractarrowentity = customeArrow(abstractarrowentity);
-                        abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw, 0.0F, f * 4.0F, 0.1F);
+                        abstractarrowentity = customArrow(abstractarrowentity);
+                        Vector3d lookVector = playerentity.getLookVec();
+                        abstractarrowentity.shoot(lookVector.x, lookVector.y, lookVector.z, f * 4.0F, 0.1F);
                         if (f == 1.0F) {
                             abstractarrowentity.setIsCritical(true);
                         }

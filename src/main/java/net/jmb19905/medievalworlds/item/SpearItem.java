@@ -2,12 +2,10 @@ package net.jmb19905.medievalworlds.item;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.entity.model.TridentModel;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.TridentEntity;
@@ -16,8 +14,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -59,7 +59,8 @@ public class SpearItem extends Item {
                 if (!worldIn.isRemote) {
                     stack.damageItem(1, playerentity, (p_220047_1_) -> p_220047_1_.sendBreakAnimation(entityLiving.getActiveHand()));
                     TridentEntity tridententity = new TridentEntity(worldIn, playerentity, stack);
-                    tridententity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw, 0.0F, 3, 1.0F);
+                    Vector3d lookVector = playerentity.getLookVec();
+                    tridententity.shoot(lookVector.x, lookVector.y, lookVector.z, 0.0F, 1.0F);
                     if (playerentity.abilities.isCreativeMode) {
                         tridententity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
                     }
@@ -115,11 +116,11 @@ public class SpearItem extends Item {
      * Gets a map of item attribute modifiers, used by ItemSword to increase hit damage.
      */
     @Nonnull
-    public Multimap<String, AttributeModifier> getAttributeModifiers(@Nonnull EquipmentSlotType equipmentSlot) {
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(@Nonnull EquipmentSlotType equipmentSlot) {
+        Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
         if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", attackDamage, AttributeModifier.Operation.ADDITION));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
+            multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", attackDamage, AttributeModifier.Operation.ADDITION));
+            multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
         }
 
         return multimap;

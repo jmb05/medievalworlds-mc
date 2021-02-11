@@ -121,4 +121,9 @@ public enum ModArmorMaterials implements IArmorMaterial {
         return this.toughness;
     }
 
+    @Override
+    public float getKnockbackResistance() {
+        return knockbackResistance;
+    }
+
 }

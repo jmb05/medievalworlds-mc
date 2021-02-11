@@ -9,6 +9,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 public interface IAlloyRecipe extends IRecipe<RecipeWrapper> {
 
@@ -17,7 +18,7 @@ public interface IAlloyRecipe extends IRecipe<RecipeWrapper> {
     @Nonnull
     @Override
     default IRecipeType<?> getType(){
-        return Registry.RECIPE_TYPE.getValue(RECIPE_TYPE_ID).get();
+        return Objects.requireNonNull(Registry.RECIPE_TYPE.getOrDefault(RECIPE_TYPE_ID));
     }
 
     @Override

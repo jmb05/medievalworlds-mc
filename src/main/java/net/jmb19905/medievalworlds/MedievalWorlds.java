@@ -3,15 +3,8 @@ package net.jmb19905.medievalworlds;
 import net.jmb19905.medievalworlds.networking.NetworkStartupClientOnly;
 import net.jmb19905.medievalworlds.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.registries.*;
-import net.jmb19905.medievalworlds.world.gen.structure.FeatureInit;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.PlainsBiome;
-import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.placement.IPlacementConfig;
-import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,7 +13,6 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import org.apache.logging.log4j.LogManager;
@@ -62,16 +54,8 @@ public class MedievalWorlds {
         modEventBus.register(NetworkStartupClientOnly.class);
     }
 
-    public void setup(final FMLCommonSetupEvent event)
-    {
-        for (Biome biome : ForgeRegistries.BIOMES)
-        {
-            if(biome instanceof PlainsBiome) {
-                //biome.addStructure(FeatureInit.TOWER_OUTPOST.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
-                //biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureInit.TOWER_OUTPOST.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
-                //        .withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
-            }
-        }
+    public void setup(final FMLCommonSetupEvent event) {
+
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -84,9 +68,8 @@ public class MedievalWorlds {
         @SubscribeEvent
         public static void onRegisterFeatures(final RegistryEvent.Register<Feature<?>> event)
         {
-            FeatureInit.registerFeatures(event);
-
-            LOGGER.info("features/structures registered.");
+            //FeatureInit.registerFeatures(event);
+            //LOGGER.info("features/structures registered.");
         }
     }
 

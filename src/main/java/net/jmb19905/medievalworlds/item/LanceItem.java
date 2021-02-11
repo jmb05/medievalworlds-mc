@@ -1,5 +1,6 @@
 package net.jmb19905.medievalworlds.item;
 
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.jmb19905.medievalworlds.item.lance.EntityMessageToServer;
 import net.jmb19905.medievalworlds.networking.NetworkStartupCommon;
@@ -7,8 +8,9 @@ import net.jmb19905.medievalworlds.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -83,13 +85,13 @@ public class LanceItem extends Item {
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
-        if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
-        }
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 
-        return multimap;
+        if (equipmentSlot == EquipmentSlotType.MAINHAND) {
+            builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
+        }
+        return builder.build();
     }
 
 }

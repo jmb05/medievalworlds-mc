@@ -6,8 +6,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.DimensionType;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -55,7 +57,7 @@ public class MessageHandlerOnServer {
             if(message.isCritical()) {
                 AxisAlignedBB boundingBox = entity.getBoundingBox();
                 TargetEffectMessageToClient msg = new TargetEffectMessageToClient(Objects.requireNonNull(entity.getPositionVec()), boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY, boundingBox.maxZ - boundingBox.minZ);   // must generate a fresh message for every player!
-                DimensionType playerDimension = sendingPlayer.dimension;
+                RegistryKey<World> playerDimension = sendingPlayer.func_241141_L_();  // func_241141_L_ is getPlayerDimension
                 NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(() -> playerDimension), msg);
             }
 

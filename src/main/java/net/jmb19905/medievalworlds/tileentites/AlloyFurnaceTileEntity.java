@@ -7,6 +7,7 @@ import net.jmb19905.medievalworlds.recipes.AlloyRecipe;
 import net.jmb19905.medievalworlds.registries.RecipeSerializerRegistryHandler;
 import net.jmb19905.medievalworlds.registries.TileEntityTypeRegistryHandler;
 import net.jmb19905.medievalworlds.util.AlloyFurnaceItemHandler;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
@@ -174,10 +175,10 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
     }
 
     @Override
-    public void read(@Nonnull CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState state, @Nonnull CompoundNBT compound) {
+        super.read(state, compound);
         if(compound.contains("CustomName", Constants.NBT.TAG_STRING)){
-            this.customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
+            this.customName = ITextComponent.Serializer.getComponentFromJson(compound.getString("CustomName"));
         }
 
         NonNullList<ItemStack> inv = NonNullList.withSize(this.inventory.getSlots(), ItemStack.EMPTY);
@@ -257,7 +258,9 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(pkt.getNbtCompound());
+        assert world != null;
+        BlockState blockState = world.getBlockState(pos);
+        this.read(blockState, pkt.getNbtCompound());
     }
 
     @Nonnull
@@ -269,8 +272,8 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
     }
 
     @Override
-    public void handleUpdateTag(CompoundNBT nbt) {
-        this.read(nbt);
+    public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
+        this.read(state, nbt);
     }
 
     @Nonnull

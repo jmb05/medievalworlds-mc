@@ -1,5 +1,6 @@
 modLoader="javafml" #mandatory
 loaderVersion="[31,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+license="MIT"
 issueTrackerURL="http://my.issue.tracker/" #optional
 [[mods]] #mandatory
 modId="medievalworlds" #mandatory
@@ -20,13 +21,13 @@ Well this is your chance!!!
 [[dependencies.medievalworlds]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[31,)" #mandatory
+    versionRange="[35,)" #mandatory
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.medievalworlds]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[1.16.4]"
     ordering="NONE"
     side="BOTH"

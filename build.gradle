@@ -19,7 +19,7 @@ archivesBaseName = 'medievalworlds'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200514-1.15.1'
+    mappings channel: 'snapshot', version: '20201028-1.16.3'
     runs {
         client {
             workingDirectory project.file('run')
@@ -68,7 +68,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.2.0'
+    minecraft 'net.minecraftforge:forge:1.16.4-35.1.4'
 }
 
 jar {

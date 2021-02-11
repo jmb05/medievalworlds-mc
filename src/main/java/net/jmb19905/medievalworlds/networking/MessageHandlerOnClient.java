@@ -1,14 +1,11 @@
 package net.jmb19905.medievalworlds.networking;
 
 import net.jmb19905.medievalworlds.item.lance.TargetEffectMessageToClient;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -55,7 +52,7 @@ public class MessageHandlerOnClient {
         Random random = new Random();
         final int NUMBER_OF_PARTICLES = 50;
         for (int i = 0; i < NUMBER_OF_PARTICLES; ++i) {
-            Vec3d targetCoordinates = message.getTargetCoordinates();
+            Vector3d targetCoordinates = message.getTargetCoordinates();
             double spawnXPos = targetCoordinates.x + (2 * random.nextDouble() - 1) * message.getXSpread();
             double spawnYPos = targetCoordinates.y + (2 * random.nextDouble() - 1) * message.getYSpread();
             double spawnZPos = targetCoordinates.z + (2 * random.nextDouble() - 1) * message.getZSpread();

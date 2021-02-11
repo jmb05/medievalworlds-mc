@@ -9,9 +9,11 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
@@ -21,6 +23,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -64,7 +67,11 @@ public class HammerItem extends SwordItem {
                         playerIn.getCooldownTracker().setCooldown(this, ((-(enchantments.get(enchantment) * 10) + 40) * 20) / 2);
                     }
                     BlockRayTraceResult rayTrace = Util.rayTraceBlocks(worldIn, playerIn, RayTraceContext.FluidMode.NONE, enchantments.get(enchantment) * 10);
-                    ((ServerWorld) worldIn).addLightningBolt(new LightningBoltEntity(worldIn, rayTrace.getPos().getX(), rayTrace.getPos().getY(), rayTrace.getPos().getZ(), false));
+                    LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(worldIn);
+                    assert lightningboltentity != null;
+                    lightningboltentity.moveForced(Vector3d.copyCenteredHorizontally(rayTrace.getPos()));
+                    lightningboltentity.setCaster(playerIn instanceof ServerPlayerEntity ? (ServerPlayerEntity)playerIn : null);
+                    worldIn.addEntity(lightningboltentity);
                     playerIn.getHeldItem(handIn).damageItem(1, playerIn, (living) -> living.sendBreakAnimation(handIn == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND));
                     return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
                 }

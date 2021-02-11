@@ -1,13 +1,13 @@
 package net.jmb19905.medievalworlds.item.lance;
 
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class TargetEffectMessageToClient {
 
-    public TargetEffectMessageToClient(Vec3d i_targetCoordinates, double xSpread, double ySpread, double zSpread) {
+    public TargetEffectMessageToClient(Vector3d i_targetCoordinates, double xSpread, double ySpread, double zSpread) {
         targetCoordinates = i_targetCoordinates;
         this.xSpread = xSpread;
         this.ySpread = ySpread;
@@ -15,7 +15,7 @@ public class TargetEffectMessageToClient {
         messageIsValid = true;
     }
 
-    public Vec3d getTargetCoordinates() {
+    public Vector3d getTargetCoordinates() {
         return targetCoordinates;
     }
 
@@ -53,7 +53,7 @@ public class TargetEffectMessageToClient {
             double x = buf.readDouble();
             double y = buf.readDouble();
             double z = buf.readDouble();
-            retval.targetCoordinates = new Vec3d(x, y, z);
+            retval.targetCoordinates = new Vector3d(x, y, z);
             retval.xSpread = buf.readDouble();
             retval.ySpread = buf.readDouble();
             retval.zSpread = buf.readDouble();
@@ -90,7 +90,7 @@ public class TargetEffectMessageToClient {
         return "TargetEffectMessageToClient[targetCoordinates=" + targetCoordinates + "]";
     }
 
-    private Vec3d targetCoordinates;
+    private Vector3d targetCoordinates;
     private double xSpread;
     private double ySpread;
     private double zSpread;
