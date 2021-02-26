@@ -3,10 +3,13 @@ package net.jmb19905.medievalworlds;
 import net.jmb19905.medievalworlds.networking.NetworkStartupClientOnly;
 import net.jmb19905.medievalworlds.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.registries.*;
+import net.jmb19905.medievalworlds.world.gen.OreGenerator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -32,6 +35,7 @@ public class MedievalWorlds {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         BlockRegistryHandler.BLOCKS.register(modEventBus);
+        OreGenerator.ORE_FEATURES.register(modEventBus);
         BlockRegistryHandler.BLOCK_ITEMS.register(modEventBus);
         ItemRegistryHandler.ITEMS.register(modEventBus);
         EnchantmentRegistryHandler.ENCHANTMENTS.register(modEventBus);
@@ -39,7 +43,8 @@ public class MedievalWorlds {
         ContainerTypeRegistryHandler.CONTAINER_TYPES.register(modEventBus);
         RecipeSerializerRegistryHandler.RECIPE_SERIALIZERS.register(modEventBus);
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        modEventBus.addListener(this::setup);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGenerator::generateOres);
         registerCommonEvents();
         DistExecutor.runWhenOn(Dist.CLIENT, () -> MedievalWorlds::registerClientOnlyEvents);
     }
