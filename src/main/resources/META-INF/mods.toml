@@ -4,7 +4,7 @@ license="MIT"
 issueTrackerURL="https://github.com/jmb05/medievalworlds/issues" #optional
 [[mods]] #mandatory
 modId="medievalworlds" #mandatory
-version="a1.0.3" #mandatory
+version="a1.1.4" #mandatory
 displayName="MedievalWorlds" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
 displayURL="http://www.github.com/jmb05/medievalworlds/" #optional
