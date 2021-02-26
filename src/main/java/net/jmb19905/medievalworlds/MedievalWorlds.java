@@ -4,6 +4,8 @@ import net.jmb19905.medievalworlds.networking.NetworkStartupClientOnly;
 import net.jmb19905.medievalworlds.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.registries.*;
 import net.jmb19905.medievalworlds.world.gen.OreGenerator;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,6 +32,8 @@ public class MedievalWorlds {
     public final static Logger LOGGER = LogManager.getLogger();
 
     public static final String MOD_ID = "medievalworlds";
+
+    public static MWItemGroup itemGroup = new MWItemGroup();
 
     public MedievalWorlds() {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -83,6 +87,18 @@ public class MedievalWorlds {
         entry.setRegistryName(new ResourceLocation(MedievalWorlds.MOD_ID, registryKey));
         registry.register(entry);
         return entry;
+    }
+
+    public static class MWItemGroup extends ItemGroup{
+
+        public MWItemGroup() {
+            super("MedievalWorlds");
+        }
+
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(ItemRegistryHandler.DIAMOND_KNIGHT_HELMET.get());
+        }
     }
 
 }

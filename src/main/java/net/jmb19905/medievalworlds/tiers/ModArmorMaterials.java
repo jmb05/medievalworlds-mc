@@ -59,7 +59,11 @@ public enum ModArmorMaterials implements IArmorMaterial {
         return Ingredient.fromItems(Items.DIAMOND);
     }),
 
-    WARRIOR_MATERIAL("medievalworlds:warrior",                  new int[]{1000, 1500, 1500, 1000}, new int[]{5, 9, 10, 4}, 7, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 3.5f, 1, () -> {
+    NETHERITE_KNIGHT_MATERIAL("medievalworlds:netherite_knight",    new int[]{810, 1100, 1150, 1000}, new int[]{4, 8, 10, 4}, 15, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3, .15f, () -> {
+        return Ingredient.fromItems(Items.NETHERITE_INGOT);
+    }),
+
+    WARRIOR_MATERIAL("medievalworlds:warrior",                  new int[]{1000, 1500, 1500, 1000}, new int[]{5, 9, 10, 4}, 7, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 3.5f, .2f, () -> {
         return Ingredient.fromItems(BlockRegistryHandler.STEEL_BLOCK_ITEM.get());
     });
 

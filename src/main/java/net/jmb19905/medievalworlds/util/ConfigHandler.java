@@ -24,13 +24,15 @@ public class ConfigHandler {
         public final ForgeConfigSpec.IntValue silverLongswordAttackDamage;
         public final ForgeConfigSpec.IntValue steelLongswordAttackDamage;
         public final ForgeConfigSpec.IntValue diamondLongswordAttackDamage;
+        public final ForgeConfigSpec.IntValue netheriteLongswordAttackDamage;
 
         public Common(ForgeConfigSpec.Builder builder){
             builder.push("weapon specs");
-            ironLongswordAttackDamage = builder.comment("Attack Damage of the Iron Longsword").defineInRange("ironLongswordAttackDamage", 10, 10, 10);
-            silverLongswordAttackDamage = builder.comment("Attack Damage of the Silver Longsword").defineInRange("silverLongswordAttackDamage", 11, 11, 11);
-            steelLongswordAttackDamage = builder.comment("Attack Damage of the Steel Longsword").defineInRange("steelLongswordAttackDamage", 12, 12, 12);
-            diamondLongswordAttackDamage = builder.comment("Attack Damage of the Diamond Longsword").defineInRange("diamondLongswordAttackDamage", 13, 13, 13);
+            ironLongswordAttackDamage = builder.comment("Attack Damage of the Iron Longsword").defineInRange("ironLongswordAttackDamage", 10, 0, 100);
+            silverLongswordAttackDamage = builder.comment("Attack Damage of the Silver Longsword").defineInRange("silverLongswordAttackDamage", 11, 0, 100);
+            steelLongswordAttackDamage = builder.comment("Attack Damage of the Steel Longsword").defineInRange("steelLongswordAttackDamage", 12, 0, 100);
+            diamondLongswordAttackDamage = builder.comment("Attack Damage of the Diamond Longsword").defineInRange("diamondLongswordAttackDamage", 13, 0, 100);
+            netheriteLongswordAttackDamage = builder.comment("Attack Damage of the Netherite Longsword").defineInRange("netheriteLongswordAttackDamage", 14, 0, 100);
 
             builder.pop();
             builder.build();
