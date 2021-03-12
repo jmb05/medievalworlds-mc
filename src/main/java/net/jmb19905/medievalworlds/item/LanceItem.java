@@ -26,8 +26,6 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-//TODO: Make based of player speed on horse
-
 public class LanceItem extends Item {
 
     private final int attackDamageFactor;
