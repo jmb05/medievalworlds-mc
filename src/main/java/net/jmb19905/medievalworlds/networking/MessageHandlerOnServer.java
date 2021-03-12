@@ -1,14 +1,17 @@
 package net.jmb19905.medievalworlds.networking;
 
+import net.jmb19905.medievalworlds.item.LanceItem;
 import net.jmb19905.medievalworlds.item.lance.EntityMessageToServer;
 import net.jmb19905.medievalworlds.item.lance.TargetEffectMessageToClient;
+import net.jmb19905.medievalworlds.util.ConfigHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
+import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -54,15 +57,35 @@ public class MessageHandlerOnServer {
 
         //Attack Entity
         if(entity instanceof LivingEntity){
-            if(message.isCritical()) {
-                AxisAlignedBB boundingBox = entity.getBoundingBox();
-                TargetEffectMessageToClient msg = new TargetEffectMessageToClient(Objects.requireNonNull(entity.getPositionVec()), boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY, boundingBox.maxZ - boundingBox.minZ);   // must generate a fresh message for every player!
-                RegistryKey<World> playerDimension = sendingPlayer.func_241141_L_();  // func_241141_L_ is getPlayerDimension
-                NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(() -> playerDimension), msg);
-            }
+            if(sendingPlayer.getRidingEntity() instanceof AbstractHorseEntity && !(sendingPlayer.getRidingEntity() instanceof LlamaEntity)) {
+                if (message.isCritical()) {
+                    AxisAlignedBB boundingBox = entity.getBoundingBox();
+                    TargetEffectMessageToClient msg = new TargetEffectMessageToClient(Objects.requireNonNull(entity.getPositionVec()), boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY, boundingBox.maxZ - boundingBox.minZ);   // must generate a fresh message for every player!
+                    RegistryKey<World> playerDimension = sendingPlayer.func_241141_L_();  // func_241141_L_ is getPlayerDimension
+                    NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(() -> playerDimension), msg);
+                }
+                AbstractHorseEntity horseEntity = (AbstractHorseEntity) sendingPlayer.getRidingEntity();
 
-            LivingEntity livingEntity = (LivingEntity) entity;
-            livingEntity.attackEntityFrom(DamageSource.causePlayerDamage(sendingPlayer), message.getAttackDamage());
+                //blocks per tick
+                double speed = horseEntity.getDistanceSq(horseEntity.prevPosX, horseEntity.prevPosY, horseEntity.prevPosZ);
+
+                //because the speed is usually below 1 we add 1
+                double speedFactor = speed + 1D;
+
+                float x = 0;
+                float bias = 0;
+
+                float k = (float) Math.pow(1 - bias, 3);
+                float retVal = (x * k) / (x * k - x + 1);
+
+                if(speedFactor == 1){
+                    speedFactor = 0.1D;
+                }
+
+                System.out.println("attacked with lance");
+                LivingEntity livingEntity = (LivingEntity) entity;
+                livingEntity.attackEntityFrom(DamageSource.causePlayerDamage(sendingPlayer), (float) (ConfigHandler.COMMON.lanceBaseAttackDamage.get() * speedFactor * ((LanceItem) (sendingPlayer.getActiveItemStack().getItem())).getAttackDamageFactor()));
+            }
         }
     }
 

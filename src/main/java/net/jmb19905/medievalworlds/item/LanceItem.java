@@ -10,7 +10,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
+import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -25,14 +26,20 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
+//TODO: Make based of player speed on horse
+
 public class LanceItem extends Item {
 
-    private final int attackDamage;
+    private final int attackDamageFactor;
     private final int fullCharge = 20;
 
-    public LanceItem(int attackDamage, Properties properties) {
+    public LanceItem(int attackDamageFactor, Properties properties) {
         super(properties);
-        this.attackDamage = attackDamage;
+        this.attackDamageFactor = attackDamageFactor;
+    }
+
+    public int getAttackDamageFactor() {
+        return attackDamageFactor;
     }
 
     @Override
@@ -61,26 +68,22 @@ public class LanceItem extends Item {
     }
 
     @Override
-    public void onPlayerStoppedUsing(@Nonnull ItemStack stack, World worldIn,@Nonnull  LivingEntity entityLiving, int timeLeft) {
-        if(worldIn.isRemote){
-            RayTraceResult rayTrace = Minecraft.getInstance().objectMouseOver;
-            if(rayTrace != null) {
-                if (rayTrace.getType().equals(RayTraceResult.Type.ENTITY)) {
-                    float percentage = ((float) (getUseDuration(stack) - timeLeft))/fullCharge;
-                    if(percentage > 0.1f) {
-                        if(percentage > 1){
-                            percentage = 1;
-                        }
+    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+        if(player.getRidingEntity() instanceof AbstractHorseEntity && !(player.getRidingEntity() instanceof LlamaEntity)) {
+            if (player.world.isRemote) {
+                RayTraceResult rayTrace = Minecraft.getInstance().objectMouseOver;
+                if (rayTrace != null) {
+                    if (rayTrace.getType().equals(RayTraceResult.Type.ENTITY)) {
                         EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) rayTrace;
-                        sendEntityIDtoServer(entityRayTrace.getEntity().getEntityId(), percentage);
+                        sendEntityIDtoServer(entityRayTrace.getEntity().getEntityId());
                     }
                 }
             }
         }
     }
 
-    private void sendEntityIDtoServer(int entityID, float attackDamageFactor){
-        EntityMessageToServer message = new EntityMessageToServer(entityID, (int) (attackDamage * attackDamageFactor), attackDamageFactor >= 1);
+    private void sendEntityIDtoServer(int entityID){
+        EntityMessageToServer message = new EntityMessageToServer(entityID, attackDamageFactor >= 1);
         NetworkStartupCommon.simpleChannel.sendToServer(message);
     }
 
@@ -88,9 +91,9 @@ public class LanceItem extends Item {
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 
-        if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
-        }
+        /*if (equipmentSlot == EquipmentSlotType.MAINHAND) {
+            builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.attackDamageFactor, AttributeModifier.Operation.ADDITION));
+        }*/
         return builder.build();
     }
 

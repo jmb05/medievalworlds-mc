@@ -26,6 +26,10 @@ public class ConfigHandler {
         public final ForgeConfigSpec.IntValue diamondLongswordAttackDamage;
         public final ForgeConfigSpec.IntValue netheriteLongswordAttackDamage;
 
+        public final ForgeConfigSpec.IntValue lanceBaseAttackDamage;
+
+        //public final ForgeConfigSpec.BooleanValue cheapNetheriteRecipe;
+
         public Common(ForgeConfigSpec.Builder builder){
             builder.push("weapon specs");
             ironLongswordAttackDamage = builder.comment("Attack Damage of the Iron Longsword").defineInRange("ironLongswordAttackDamage", 10, 0, 100);
@@ -33,6 +37,9 @@ public class ConfigHandler {
             steelLongswordAttackDamage = builder.comment("Attack Damage of the Steel Longsword").defineInRange("steelLongswordAttackDamage", 12, 0, 100);
             diamondLongswordAttackDamage = builder.comment("Attack Damage of the Diamond Longsword").defineInRange("diamondLongswordAttackDamage", 13, 0, 100);
             netheriteLongswordAttackDamage = builder.comment("Attack Damage of the Netherite Longsword").defineInRange("netheriteLongswordAttackDamage", 14, 0, 100);
+            lanceBaseAttackDamage = builder.comment("Base attack damage of the lance", "Different materials change the base with a factor").defineInRange("lanceBaseAttackDamage", 7, 0, 100);
+
+            //cheapNetheriteRecipe = builder.comment("Use cheap alloy netherite ingot recipe").define("cheapNetheriteRecipe", true);
 
             builder.pop();
             builder.build();

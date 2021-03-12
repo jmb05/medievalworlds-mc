@@ -11,23 +11,17 @@ public class EntityMessageToServer {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private int entityID;
-    private int attackDamage;
     private boolean critical;
     private boolean messageIsValid;
 
-    public EntityMessageToServer(int entityID, int attackDamage, boolean critical){
+    public EntityMessageToServer(int entityID, boolean critical){
         this.entityID = entityID;
-        this.attackDamage = attackDamage;
         this.critical = critical;
         messageIsValid = true;
     }
 
     public int getEntityID() {
         return entityID;
-    }
-
-    public int getAttackDamage() {
-        return attackDamage;
     }
 
     public boolean isCritical() {
@@ -47,7 +41,6 @@ public class EntityMessageToServer {
         EntityMessageToServer retval = new EntityMessageToServer();
         try {
             retval.entityID = buf.readInt();
-            retval.attackDamage = buf.readInt();
             retval.critical = buf.readBoolean();
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             LOGGER.warn("Exception while reading EntityMessageToServer: " + e);
@@ -60,7 +53,6 @@ public class EntityMessageToServer {
     public void encode(PacketBuffer buf) {
         if (!messageIsValid) return;
         buf.writeInt(entityID);
-        buf.writeInt(attackDamage);
         buf.writeBoolean(critical);
     }
 
@@ -68,7 +60,6 @@ public class EntityMessageToServer {
     public String toString() {
         return "EntityMessageToServer{" +
                 "entityID=" + entityID +
-                ", attackDamage=" + attackDamage +
                 ", critical=" + critical +
                 ", messageIsValid=" + messageIsValid +
                 '}';
