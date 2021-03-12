@@ -19,7 +19,6 @@ public class AlloyRecipe implements IAlloyRecipe{
     private final ItemStack output;
 
     public AlloyRecipe(ResourceLocation id, ItemStack input1, ItemStack input2, ItemStack output) {
-
         this.id = id;
         this.input1 = input1;
         this.input2 = input2;

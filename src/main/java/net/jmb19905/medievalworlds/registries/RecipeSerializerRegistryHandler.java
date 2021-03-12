@@ -1,9 +1,7 @@
 package net.jmb19905.medievalworlds.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.recipes.AlloyRecipe;
-import net.jmb19905.medievalworlds.recipes.AlloyRecipeSerializer;
-import net.jmb19905.medievalworlds.recipes.IAlloyRecipe;
+import net.jmb19905.medievalworlds.recipes.*;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
@@ -18,9 +16,13 @@ public class RecipeSerializerRegistryHandler {
     public static final IRecipeSerializer<AlloyRecipe> ALLOY_RECIPE_SERIALIZER = new AlloyRecipeSerializer();
     public static final IRecipeType<IAlloyRecipe> ALLOY_TYPE = registerType(IAlloyRecipe.RECIPE_TYPE_ID);
 
+    public static final IRecipeSerializer<BloomRecipe> BLOOM_RECIPE_SERIALIZER = new BloomRecipeSerializer();
+    public static final IRecipeType<IBloomRecipe> BLOOM_TYPE = registerType(IBloomRecipe.RECIPE_TYPE_ID);
+
     public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MedievalWorlds.MOD_ID);
 
     public static final RegistryObject<IRecipeSerializer<?>> ALLOY_SERIALIZER = RECIPE_SERIALIZERS.register("alloy", () -> ALLOY_RECIPE_SERIALIZER);
+    public static final RegistryObject<IRecipeSerializer<?>> BLOOM_SERIALIZER = RECIPE_SERIALIZERS.register("bloom", () -> BLOOM_RECIPE_SERIALIZER);
 
     private static <T extends IRecipeType> T registerType(ResourceLocation recipeTypeID){
         return (T) Registry.register(Registry.RECIPE_TYPE, recipeTypeID, new RecipeType<>());
