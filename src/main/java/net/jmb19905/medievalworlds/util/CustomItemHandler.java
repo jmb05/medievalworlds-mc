@@ -5,9 +5,9 @@ import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class AlloyFurnaceItemHandler extends ItemStackHandler {
+public class CustomItemHandler extends ItemStackHandler {
 
-    public AlloyFurnaceItemHandler(int size, ItemStack... stacks) {
+    public CustomItemHandler(int size, ItemStack... stacks) {
         super(size);
 
         for (int index = 0; index < stacks.length; index++) {
@@ -49,8 +49,6 @@ public class AlloyFurnaceItemHandler extends ItemStackHandler {
     }
 
     public void setNonNullList(NonNullList<ItemStack> items) {
-        if (items.size() == 0)
-            return;
         if (items.size() != this.getSlots())
             throw new IndexOutOfBoundsException("NonNullList must be same size as ItemStackHandler!");
         for (int index = 0; index < items.size(); index++) {

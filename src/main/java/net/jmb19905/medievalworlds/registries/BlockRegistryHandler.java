@@ -3,6 +3,7 @@ package net.jmb19905.medievalworlds.registries;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.block.AbstractOreBlock;
 import net.jmb19905.medievalworlds.block.AlloyFurnaceBlock;
+import net.jmb19905.medievalworlds.block.BloomeryBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -35,6 +36,9 @@ public class BlockRegistryHandler {
 
     public static final RegistryObject<Block> ALLOY_FURNACE_BLOCK = BLOCKS.register("alloy_furnace", AlloyFurnaceBlock::new);
 
+    public static final RegistryObject<Block> BLOOMERY_BOTTOM_BLOCK = BLOCKS.register("bloomery_bottom", BloomeryBlock.Bottom::new);
+    public static final RegistryObject<Block> BLOOMERY_TOP_BLOCK = BLOCKS.register("bloomery_top", BloomeryBlock.Top::new);
+
     public static final RegistryObject<Block> LIMESTONE_BLOCK = BLOCKS.register("limestone", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).harvestTool(ToolType.PICKAXE).harvestLevel(0).hardnessAndResistance(1.5f, 3).sound(SoundType.STONE)));
     public static final RegistryObject<Block> LIMESTONE_BRICKS_BLOCK = BLOCKS.register("limestone_bricks", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).harvestTool(ToolType.PICKAXE).harvestLevel(0).hardnessAndResistance(1.5f, 3.5f).sound(SoundType.STONE)));
 
@@ -53,6 +57,8 @@ public class BlockRegistryHandler {
     public static final RegistryObject<BlockItem> SILVER_ORE_BLOCK_ITEM = BLOCK_ITEMS.register("silver_ore", () -> new BlockItem(SILVER_ORE_BLOCK.get(), new Item.Properties().group(MedievalWorlds.itemGroup)));
 
     public static final RegistryObject<BlockItem> ALLOY_FURNACE_BLOCK_ITEM = BLOCK_ITEMS.register("alloy_furnace", () -> new BlockItem(ALLOY_FURNACE_BLOCK.get(), new Item.Properties().group(MedievalWorlds.itemGroup)));
+
+    public static final RegistryObject<BlockItem> BLOOMERY_ITEM = BLOCK_ITEMS.register("bloomery_bottom", () -> new BlockItem(BLOOMERY_BOTTOM_BLOCK.get(), new Item.Properties().group(MedievalWorlds.itemGroup)));
 
     public static final RegistryObject<BlockItem> LIMESTONE_ITEM = BLOCK_ITEMS.register("limestone", () -> new BlockItem(LIMESTONE_BLOCK.get(), new Item.Properties().group(MedievalWorlds.itemGroup)));
     public static final RegistryObject<BlockItem> LIMESTONE_BRICKS_ITEM = BLOCK_ITEMS.register("limestone_bricks", () -> new BlockItem(LIMESTONE_BRICKS_BLOCK.get(), new Item.Properties().group(MedievalWorlds.itemGroup)));

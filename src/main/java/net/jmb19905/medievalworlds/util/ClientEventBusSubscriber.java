@@ -4,6 +4,7 @@ import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.item.LanceItem;
 import net.jmb19905.medievalworlds.registries.ContainerTypeRegistryHandler;
 import net.jmb19905.medievalworlds.screen.AlloyFurnaceScreen;
+import net.jmb19905.medievalworlds.screen.BloomeryScreen;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -19,6 +20,7 @@ public class ClientEventBusSubscriber {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent evt){
         ScreenManager.registerFactory(ContainerTypeRegistryHandler.ALLOY_FURNACE.get(), AlloyFurnaceScreen::new);
+        ScreenManager.registerFactory(ContainerTypeRegistryHandler.BLOOMERY.get(), BloomeryScreen::new);
     }
 
 }

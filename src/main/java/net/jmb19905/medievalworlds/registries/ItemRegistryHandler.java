@@ -161,5 +161,6 @@ public class ItemRegistryHandler {
 
     public static final RegistryObject<Item> GAMBESON_CHESTPLATE = ITEMS.register("gambeson_chestplate", () -> new ArmorItem(ModArmorMaterials.GAMBESON_MATERIAL, EquipmentSlotType.CHEST, new Item.Properties().group(MedievalWorlds.itemGroup)));
 
+    //public static final RegistryObject<Item> CROWN = ITEMS.register("crown", () -> new CrownItem(ArmorMaterial.GOLD, new Item.Properties().group(MedievalWorlds.itemGroup)));
 
 }

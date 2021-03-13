@@ -1,5 +1,5 @@
 {
-  "parent": "medievalworlds:block/limestone",
+  "parent": "medievalworlds:block/limestone_bricks",
   "display": {
     "thirdperson": {
       "rotation": [

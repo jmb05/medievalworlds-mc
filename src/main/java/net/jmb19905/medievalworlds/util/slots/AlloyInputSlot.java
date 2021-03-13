@@ -1,7 +1,5 @@
 package net.jmb19905.medievalworlds.util.slots;
 
-import net.jmb19905.medievalworlds.registries.RecipeSerializerRegistryHandler;
-import net.jmb19905.medievalworlds.tileentites.AlloyFurnaceTileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;

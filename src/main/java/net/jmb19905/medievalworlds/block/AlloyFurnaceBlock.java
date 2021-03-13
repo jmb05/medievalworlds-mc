@@ -2,7 +2,7 @@ package net.jmb19905.medievalworlds.block;
 
 import net.jmb19905.medievalworlds.registries.TileEntityTypeRegistryHandler;
 import net.jmb19905.medievalworlds.tileentites.AlloyFurnaceTileEntity;
-import net.jmb19905.medievalworlds.util.AlloyFurnaceItemHandler;
+import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -37,15 +37,9 @@ public class AlloyFurnaceBlock extends Block {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
-    private int currentLightVal = 0;
 
     public AlloyFurnaceBlock() {
-        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F).setLightLevel(new ToIntFunction<BlockState>() {
-            @Override
-            public int applyAsInt(BlockState value) {
-                return 13;
-            }
-        }));
+        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.5F).setLightLevel(value -> 13));
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(LIT, false));
     }
 
@@ -80,7 +74,6 @@ public class AlloyFurnaceBlock extends Block {
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
         return state.get(LIT) ? super.getLightValue(state, world, pos) : 0;
-        // Josiah is cool
     }
 
     @Override
@@ -150,7 +143,7 @@ public class AlloyFurnaceBlock extends Block {
         TileEntity tile = worldIn.getTileEntity(pos);
         if(tile instanceof AlloyFurnaceTileEntity && state.getBlock() != newState.getBlock()){
             AlloyFurnaceTileEntity alloyFurnaceTile = (AlloyFurnaceTileEntity)tile;
-            ((AlloyFurnaceItemHandler) alloyFurnaceTile.getInventory()).toNonNullList().forEach(item -> {
+            ((CustomItemHandler) alloyFurnaceTile.getInventory()).toNonNullList().forEach(item -> {
                 ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), item);
                 worldIn.addEntity(itemEntity);
             });

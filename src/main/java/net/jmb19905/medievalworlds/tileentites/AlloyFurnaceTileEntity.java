@@ -6,7 +6,7 @@ import net.jmb19905.medievalworlds.containers.AlloyFurnaceContainer;
 import net.jmb19905.medievalworlds.recipes.AlloyRecipe;
 import net.jmb19905.medievalworlds.registries.RecipeSerializerRegistryHandler;
 import net.jmb19905.medievalworlds.registries.TileEntityTypeRegistryHandler;
-import net.jmb19905.medievalworlds.util.AlloyFurnaceItemHandler;
+import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -57,11 +57,11 @@ public class AlloyFurnaceTileEntity extends TileEntity implements ITickableTileE
     public int currentMaxBurnTime = 0;
     private int lastValidMaxBurnTime = -1;
     public boolean fuelConsumed = false;
-    private final AlloyFurnaceItemHandler inventory;
+    private final CustomItemHandler inventory;
 
     public AlloyFurnaceTileEntity(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
-        this.inventory = new AlloyFurnaceItemHandler(4);
+        this.inventory = new CustomItemHandler(4);
     }
 
     public AlloyFurnaceTileEntity(){

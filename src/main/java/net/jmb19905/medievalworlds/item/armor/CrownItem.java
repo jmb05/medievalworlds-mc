@@ -1,7 +1,6 @@
 package net.jmb19905.medievalworlds.item.armor;
 
-import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.client.model.armor.KnightArmorHelmetModel;
+import net.jmb19905.medievalworlds.client.model.armor.CrownHelmetModel;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -11,17 +10,13 @@ import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
 
-public class KnightArmorHelmetItem extends ArmorItem {
+public class CrownItem extends ArmorItem {
 
-    private final String material;
-
-    public KnightArmorHelmetItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builder, String material) {
-        super(materialIn, slot, builder);
-        this.material = material;
+    public CrownItem(IArmorMaterial material, Properties builderIn) {
+        super(material, EquipmentSlotType.HEAD, builderIn);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -29,7 +24,7 @@ public class KnightArmorHelmetItem extends ArmorItem {
     @Override
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
         BipedModel<LivingEntity> armorModel = new BipedModel<>(1);
-        KnightArmorHelmetModel helmetModel = new KnightArmorHelmetModel();
+        CrownHelmetModel helmetModel = new CrownHelmetModel();
         armorModel.bipedHead = helmetModel.Helmet;
         armorModel.bipedHeadwear = helmetModel.Overlay;
 
@@ -43,7 +38,7 @@ public class KnightArmorHelmetItem extends ArmorItem {
     @Nullable
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return "medievalworlds:textures/models/armor/"+material+"_knight_helmet.png";
+        return "medievalworlds:textures/models/armor/crown.png";
     }
 
 }
