@@ -1,9 +1,12 @@
 package net.jmb19905.medievalworlds;
 
-import net.jmb19905.medievalworlds.networking.NetworkStartupClientOnly;
-import net.jmb19905.medievalworlds.networking.NetworkStartupCommon;
-import net.jmb19905.medievalworlds.registries.*;
-import net.jmb19905.medievalworlds.world.gen.OreGenerator;
+import net.jmb19905.medievalworlds.client.networking.NetworkStartupClientOnly;
+import net.jmb19905.medievalworlds.common.capability.CapabilityAttachEventHandler;
+import net.jmb19905.medievalworlds.common.capability.MotionCapability;
+import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
+import net.jmb19905.medievalworlds.common.registries.*;
+import net.jmb19905.medievalworlds.common.world.gen.OreGenerator;
+import net.jmb19905.medievalworlds.core.MWEventBusSubscriber;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -64,7 +67,11 @@ public class MedievalWorlds {
     }
 
     public void setup(final FMLCommonSetupEvent event) {
+        MotionCapability.register();
+        registerCommonEvents();
 
+        MinecraftForge.EVENT_BUS.register(MWEventBusSubscriber.class);
+        MinecraftForge.EVENT_BUS.register(CapabilityAttachEventHandler.class);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

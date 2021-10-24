@@ -46,11 +46,13 @@
   "item.medievalworlds.silver_hammer": "Silberhammer",
   "item.medievalworlds.steel_hammer": "Stahlhammer",
   "item.medievalworlds.diamond_hammer": "Diamanthammer",
+  "item.medievalworlds.netherite_hammer": "Netherithammer",
 
   "item.medievalworlds.iron_longsword": "Eisenlangschwert",
   "item.medievalworlds.silver_longsword": "Silberlangschwert",
   "item.medievalworlds.steel_longsword": "Stahllangschwert",
   "item.medievalworlds.diamond_longsword": "Diamantlangschwert",
+  "item.medievalworlds.netherite_longsword": "Netheritlangschwert",
 
   "item.medievalworlds.iron_mace": "Eiserner Morgenstern",
   "item.medievalworlds.diamond_mace": "Diamantener Morgenstern",
@@ -58,17 +60,19 @@
   "item.medievalworlds.iron_battle_axe": "Eisenstreitaxt",
   "item.medievalworlds.silver_battle_axe": "Silberstreitaxt",
   "item.medievalworlds.steel_battle_axe": "Stahlstreitaxt",
-  "item.medievalworlds.diamond_battle_axe": "Diamantstreitaxt",
+  "item.medievalworlds.diamond_battle_axe": "Netheritestreitaxt",
 
   "item.medievalworlds.iron_dagger": "Eisendolch",
   "item.medievalworlds.silver_dagger": "Silberdolch",
   "item.medievalworlds.steel_dagger": "Stahldolch",
   "item.medievalworlds.diamond_dagger": "Diamantdolch",
+  "item.medievalworlds.netherite_dagger": "Netheritdolch",
 
   "item.medievalworlds.iron_lance": "Eisenlanze",
   "item.medievalworlds.silver_lance": "Silverlanze",
   "item.medievalworlds.steel_lance": "Stahllanze",
   "item.medievalworlds.diamond_lance": "Diamantlanze",
+  "item.medievalworlds.netherite_lance": "Netheritlanze",
 
   "item.medievalworlds.spear": "Speer",
 
@@ -139,6 +143,11 @@
   "item.medievalworlds.diamond_knight_leggings": "Diamantener Ritterbeinschutz",
   "item.medievalworlds.diamond_knight_boots": "Diamantene Ritterstiefel",
 
+  "item.medievalworlds.netherite_knight_helmet": "Netherit Ritterhelm",
+  "item.medievalworlds.netherite_knight_chestplate": "Netherit Ritterharnisch",
+  "item.medievalworlds.netherite_knight_leggings": "Netherit Ritterbeinschutz",
+  "item.medievalworlds.netherite_knight_boots": "Netherit Ritterstiefel",
+
   "item.medievalworlds.warrior_helmet": "Kriegerhelm",
   "item.medievalworlds.warrior_chestplate": "Kriegerharnisch",
   "item.medievalworlds.warrior_leggings": "Kriegerbeinschutz",
@@ -148,12 +157,16 @@
 
   "item.medievalworlds.crown": "Krone",
 
+  "item.medievalworlds.netherite_horse_armor": "Netherit Pferderüstung",
+
   "container.medievalworlds.alloy_furnace": "Legierungsofen",
   "container.medievalworlds.bloomery": "Rennofen",
 
   "enchantment.medievalworlds.lightning_strike": "Blitzschlag",
   "enchantment.medievalworlds.mega_miner": "Mega Miner",
 
-  "item.hammer.hit": "Hammer schlägt"
+  "item.hammer.hit": "Hammer trifft",
+
+  "itemGroup.MedievalWorlds": "MedievalWorlds"
 
 }

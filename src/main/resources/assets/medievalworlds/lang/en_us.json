@@ -46,11 +46,13 @@
   "item.medievalworlds.silver_hammer": "Silver Hammer",
   "item.medievalworlds.steel_hammer": "Steel Hammer",
   "item.medievalworlds.diamond_hammer": "Diamond Hammer",
+  "item.medievalworlds.netherite_hammer": "Netherite Hammer",
 
   "item.medievalworlds.iron_longsword": "Iron Longsword",
   "item.medievalworlds.silver_longsword": "Silver Longsword",
   "item.medievalworlds.steel_longsword": "Steel Longsword",
   "item.medievalworlds.diamond_longsword": "Diamond Longsword",
+  "item.medievalworlds.netherite_longsword": "Netherite Longsword",
 
   "item.medievalworlds.iron_mace": "Iron Mace",
   "item.medievalworlds.diamond_mace": "Diamond Mace",
@@ -59,16 +61,19 @@
   "item.medievalworlds.silver_battle_axe": "Silver Battle Axe",
   "item.medievalworlds.steel_battle_axe": "Steel Battle Axe",
   "item.medievalworlds.diamond_battle_axe": "Diamond Battle Axe",
+  "item.medievalworlds.netherite_battle_axe": "Netherite Battle Axe",
 
   "item.medievalworlds.iron_dagger": "Iron Dagger",
   "item.medievalworlds.silver_dagger": "Silver Dagger",
   "item.medievalworlds.steel_dagger": "Steel Dagger",
   "item.medievalworlds.diamond_dagger": "Diamond Dagger",
+  "item.medievalworlds.netherite_dagger": "Netherite Dagger",
 
   "item.medievalworlds.iron_lance": "Iron Lance",
   "item.medievalworlds.silver_lance": "Silver Lance",
   "item.medievalworlds.steel_lance": "Steel Lance",
   "item.medievalworlds.diamond_lance": "Diamond Lance",
+  "item.medievalworlds.netherite_lance": "Netherite Lance",
 
   "item.medievalworlds.spear": "Spear",
 
@@ -139,6 +144,11 @@
   "item.medievalworlds.diamond_knight_leggings": "Diamond Knight Leggings",
   "item.medievalworlds.diamond_knight_boots": "Diamond Knight Boots",
 
+  "item.medievalworlds.netherite_knight_helmet": "Netherite Knight Helmet",
+  "item.medievalworlds.netherite_knight_chestplate": "Netherite Knight Chestplate",
+  "item.medievalworlds.netherite_knight_leggings": "Netherite Knight Leggings",
+  "item.medievalworlds.netherite_knight_boots": "Netherite Knight Boots",
+
   "item.medievalworlds.warrior_helmet": "Warrior Armor Helmet",
   "item.medievalworlds.warrior_chestplate": "Warrior Armor Chestplate",
   "item.medievalworlds.warrior_leggings": "Warrior Armor Leggings",
@@ -148,12 +158,20 @@
 
   "item.medievalworlds.crown": "Crown",
 
+  "item.medievalworlds.netherite_horse_armor": "Netherite Horse Armor",
+
   "container.medievalworlds.alloy_furnace": "Alloy Furnace",
   "container.medievalworlds.bloomery": "Bloomery",
 
   "enchantment.medievalworlds.lightning_strike": "Lightning Strike",
   "enchantment.medievalworlds.mega_miner": "Mega Miner",
 
-  "item.hammer.hit": "Hammer Hits"
+  "item.hammer.hit": "Hammer Hits",
 
+  "itemGroup.MedievalWorlds": "MedievalWorlds",
+
+  "tooltip.usedOnHorse": "When used on Horse",
+  "tooltip.minimumAttack": "Minimum Attack Damage",
+  "tooltip.maximumAttack": "Maximum Attack Damage",
+  "tooltip.chargeTime": "Charge Time"
 }

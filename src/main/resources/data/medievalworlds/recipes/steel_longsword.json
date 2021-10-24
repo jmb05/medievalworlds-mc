@@ -3,16 +3,20 @@
   "pattern":
   [
     "x",
-    "x",
-    "y"
+    "y",
+    "z"
   ],
   "key":
   {
     "x":
     {
-      "item": "medievalworlds:steel_block"
+      "item": "medievalworlds:steel_ingot"
     },
     "y":
+    {
+      "item": "medievalworlds:steel_block"
+    },
+    "z":
     {
       "item": "medievalworlds:long_stick"
     }
