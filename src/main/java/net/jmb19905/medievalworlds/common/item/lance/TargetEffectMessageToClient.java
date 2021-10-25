@@ -1,13 +1,13 @@
 package net.jmb19905.medievalworlds.common.item.lance;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class TargetEffectMessageToClient {
 
-    public TargetEffectMessageToClient(Vector3d i_targetCoordinates, double xSpread, double ySpread, double zSpread) {
+    public TargetEffectMessageToClient(Vec3 i_targetCoordinates, double xSpread, double ySpread, double zSpread) {
         targetCoordinates = i_targetCoordinates;
         this.xSpread = xSpread;
         this.ySpread = ySpread;
@@ -15,7 +15,7 @@ public class TargetEffectMessageToClient {
         messageIsValid = true;
     }
 
-    public Vector3d getTargetCoordinates() {
+    public Vec3 getTargetCoordinates() {
         return targetCoordinates;
     }
 
@@ -46,14 +46,14 @@ public class TargetEffectMessageToClient {
      * Used to read the ByteBuf contents into your member variables
      * @param buf the PacketBuffer
      */
-    public static TargetEffectMessageToClient decode(PacketBuffer buf)
+    public static TargetEffectMessageToClient decode(FriendlyByteBuf buf)
     {
         TargetEffectMessageToClient retval = new TargetEffectMessageToClient();
         try {
             double x = buf.readDouble();
             double y = buf.readDouble();
             double z = buf.readDouble();
-            retval.targetCoordinates = new Vector3d(x, y, z);
+            retval.targetCoordinates = new Vec3(x, y, z);
             retval.xSpread = buf.readDouble();
             retval.ySpread = buf.readDouble();
             retval.zSpread = buf.readDouble();
@@ -70,7 +70,7 @@ public class TargetEffectMessageToClient {
      * Used to write the contents of your message member variables into the ByteBuf, ready for transmission over the network.
      * @param buf the PacketBuffer
      */
-    public void encode(PacketBuffer buf)
+    public void encode(FriendlyByteBuf buf)
     {
         if (!messageIsValid) return;
         buf.writeDouble(targetCoordinates.x);
@@ -90,7 +90,7 @@ public class TargetEffectMessageToClient {
         return "TargetEffectMessageToClient[targetCoordinates=" + targetCoordinates + "]";
     }
 
-    private Vector3d targetCoordinates;
+    private Vec3 targetCoordinates;
     private double xSpread;
     private double ySpread;
     private double zSpread;

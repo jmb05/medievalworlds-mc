@@ -1,43 +1,43 @@
 package net.jmb19905.medievalworlds.common.recipes;
 
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class AlloyRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AlloyRecipe> {
+public class AlloyRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AlloyRecipe> {
 
     @Nonnull
     @Override
-    public AlloyRecipe read(@Nonnull ResourceLocation recipeId, JsonObject json) {
-        ItemStack output = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "output"), true);
-        ItemStack input1 = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "input1"), true);
-        ItemStack input2 = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "input2"), true);
+    public AlloyRecipe fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json) {
+        ItemStack output = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "output"), true);
+        ItemStack input1 = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "input1"), true);
+        ItemStack input2 = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "input2"), true);
 
         return new AlloyRecipe(recipeId, input1, input2, output);
     }
 
     @Nullable
     @Override
-    public AlloyRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-        ItemStack output = buffer.readItemStack();
-        ItemStack input1 = buffer.readItemStack();
-        ItemStack input2 = buffer.readItemStack();
+    public AlloyRecipe fromNetwork(@Nonnull ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        ItemStack output = buffer.readItem();
+        ItemStack input1 = buffer.readItem();
+        ItemStack input2 = buffer.readItem();
 
         return new AlloyRecipe(recipeId, input1, input2, output);
     }
 
     @Override
-    public void write(PacketBuffer buffer, AlloyRecipe recipe) {
-        buffer.writeItemStack(recipe.getInputs().get(0));
-        buffer.writeItemStack(recipe.getInputs().get(1));
-        buffer.writeItemStack(recipe.getRecipeOutput(), false);
+    public void toNetwork(FriendlyByteBuf buffer, AlloyRecipe recipe) {
+        buffer.writeItemStack(recipe.getInputs().get(0), true);
+        buffer.writeItemStack(recipe.getInputs().get(1), true);
+        buffer.writeItemStack(recipe.getResultItem(), false);
     }
 }

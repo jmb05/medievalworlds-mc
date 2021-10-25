@@ -1,32 +1,20 @@
 package net.jmb19905.medievalworlds.util;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.boss.dragon.EnderDragonPartEntity;
-import net.minecraft.entity.item.ArmorStandEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.network.play.server.SEntityVelocityPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.Effects;
-import net.minecraft.stats.Stats;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 public class Util {
@@ -54,35 +42,30 @@ public class Util {
         return returnVal;
     }
 
-    //attacker code is from Item#rayCast
-    public static BlockRayTraceResult rayTraceBlocks(World worldIn, LivingEntity entity, RayTraceContext.FluidMode fluidMode, double reach) {
-        float f = entity.rotationPitch;
-        float f1 = entity.rotationYaw;
-        Vector3d vec3d = entity.getEyePosition(1.0F);
-        float f2 = MathHelper.cos(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
-        float f3 = MathHelper.sin(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
-        float f4 = -MathHelper.cos(-f * ((float)Math.PI / 180F));
-        float f5 = MathHelper.sin(-f * ((float)Math.PI / 180F));
+    //attacker code is from Item#getPlayerPOVHitResult
+    public static BlockHitResult rayTraceBlocks(Level level, LivingEntity entity, ClipContext.Fluid fluidMode, double reach) {
+        float f = entity.getXRot();
+        float f1 = entity.getYRot();
+        Vec3 vec3 = entity.getEyePosition();
+        float f2 = Mth.cos(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
+        float f3 = Mth.sin(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
+        float f4 = -Mth.cos(-f * ((float)Math.PI / 180F));
+        float f5 = Mth.sin(-f * ((float)Math.PI / 180F));
         float f6 = f3 * f4;
         float f7 = f2 * f4;
-        Vector3d vec3d1 = vec3d.add((double)f6 * reach, (double)f5 * reach, (double)f7 * reach);
-        return worldIn.rayTraceBlocks(new RayTraceContext(vec3d, vec3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, entity));
+        Vec3 vec31 = vec3.add((double)f6 * reach, (double)f5 * reach, (double)f7 * reach);
+        return level.clip(new ClipContext(vec3, vec31, ClipContext.Block.OUTLINE, fluidMode, entity));
     }
 
-    //Found attacker in
-    public static EntityRayTraceResult rayTraceEntities(World worldIn, LivingEntity entityIn, RayTraceContext.FluidMode fluidMode, double reach) {
-        return null;
-    }
-
-    public static List<BlockPos> calcMegaMinerBreaking(ServerWorld world, PlayerEntity player, ItemStack stack, BlockPos origin){
+    public static List<BlockPos> calcMegaMinerBreaking(ServerLevel level, Player player, ItemStack stack, BlockPos origin){
         List<BlockPos> output = new ArrayList<>();
-        Direction direction = Util.rayTraceBlocks(world, player, RayTraceContext.FluidMode.ANY, 50).getFace();
+        Direction direction = Util.rayTraceBlocks(level, player, ClipContext.Fluid.ANY, 50).getDirection();
         if (direction == Direction.DOWN || direction == Direction.UP) {
             BlockPos newPos = new BlockPos(origin.getX() - 1, origin.getY(), origin.getZ() - 1);
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     BlockPos currentPos = new BlockPos(newPos.getX() + i, newPos.getY(), newPos.getZ() + j);
-                    if (stack.canHarvestBlock(world.getBlockState(currentPos)) && world.getBlockState(currentPos).getBlock() != Blocks.BEDROCK) {
+                    if (stack.isCorrectToolForDrops(level.getBlockState(currentPos)) && level.getBlockState(currentPos).getBlock() != Blocks.BEDROCK) {//TODO: check if block is breakable
                         output.add(currentPos);
                     }
                 }
@@ -92,7 +75,7 @@ public class Util {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     BlockPos currentPos = new BlockPos(newPos.getX() + i, newPos.getY() + j, newPos.getZ());
-                    if (stack.canHarvestBlock(world.getBlockState(currentPos)) && world.getBlockState(currentPos).getBlock() != Blocks.BEDROCK) {
+                    if (stack.isCorrectToolForDrops(level.getBlockState(currentPos)) && level.getBlockState(currentPos).getBlock() != Blocks.BEDROCK) {//TODO: check if block is breakable
                         output.add(currentPos);
                     }
                 }
@@ -102,7 +85,7 @@ public class Util {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     BlockPos currentPos = new BlockPos(newPos.getX(), newPos.getY() + j, newPos.getZ() + i);
-                    if (stack.canHarvestBlock(world.getBlockState(currentPos)) && world.getBlockState(currentPos).getBlock() != Blocks.BEDROCK) {
+                    if (stack.isCorrectToolForDrops(level.getBlockState(currentPos)) && level.getBlockState(currentPos).getBlock() != Blocks.BEDROCK) {//TODO: check if block is breakable
                         output.add(currentPos);
                     }
                 }
@@ -110,34 +93,34 @@ public class Util {
         }
         return output;
     }
-    
-    public static void attackWithStack(PlayerEntity attacker, Entity targetEntity, float attackDamage){
-        if (targetEntity.canBeAttackedWithItem()) {
-            if (!targetEntity.hitByEntity(attacker)) {
+
+    /*public static void attackWithStack(Player attacker, Entity targetEntity, float attackDamage){
+        if (targetEntity.isAttackable()) {
+            if (!targetEntity.skipAttackInteraction(attacker)) {
                 float f = attackDamage;
                 float f1;
                 if (targetEntity instanceof LivingEntity) {
-                    f1 = EnchantmentHelper.getModifierForCreature(attacker.getHeldItemMainhand(), ((LivingEntity)targetEntity).getCreatureAttribute());
+                    f1 = EnchantmentHelper.getDamageBonus(attacker.getMainHandItem(), ((LivingEntity)targetEntity).getMobType());
                 } else {
-                    f1 = EnchantmentHelper.getModifierForCreature(attacker.getHeldItemMainhand(), CreatureAttribute.UNDEFINED);
+                    f1 = EnchantmentHelper.getDamageBonus(attacker.getMainHandItem(), MobType.UNDEFINED);
                 }
 
-                float f2 = attacker.getCooledAttackStrength(0.5F);
+                float f2 = attacker.getAttackStrengthScale(0.5F);
                 f = f * (0.2F + f2 * f2 * 0.8F);
                 f1 = f1 * f2;
-                attacker.resetCooldown();
+                attacker.resetAttackStrengthTicker();
                 if (f > 0.0F || f1 > 0.0F) {
                     boolean flag = f2 > 0.9F;
                     boolean flag1 = false;
                     int i = 0;
-                    i = i + EnchantmentHelper.getKnockbackModifier(attacker);
+                    i = i + EnchantmentHelper.getKnockbackBonus(attacker);
                     if (attacker.isSprinting() && flag) {
-                        attacker.world.playSound(null, attacker.getPosX(), attacker.getPosY(), attacker.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, attacker.getSoundCategory(), 1.0F, 1.0F);
+                        attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, attacker.getSoundSource(), 1.0F, 1.0F);
                         ++i;
                         flag1 = true;
                     }
 
-                    boolean flag2 = flag && attacker.fallDistance > 0.0F && !attacker.isOnGround() && !attacker.isOnLadder() && !attacker.isInWater() && !attacker.isPotionActive(Effects.BLINDNESS) && !attacker.isPassenger() && targetEntity instanceof LivingEntity;
+                    boolean flag2 = flag && attacker.fallDistance > 0.0F && !attacker.isOnGround() && !attacker.onClimbable() && !attacker.isInWater() && !attacker.hasEffect(MobEffects.BLINDNESS) && !attacker.isPassenger() && targetEntity instanceof LivingEntity;
                     flag2 = flag2 && !attacker.isSprinting();
                     net.minecraftforge.event.entity.player.CriticalHitEvent hitResult = net.minecraftforge.common.ForgeHooks.getCriticalHit(attacker, targetEntity, flag2, flag2 ? 1.5F : 1.0F);
                     flag2 = hitResult != null;
@@ -147,9 +130,9 @@ public class Util {
 
                     f = f + f1;
                     boolean flag3 = false;
-                    double d0 = attacker.distanceWalkedModified - attacker.prevDistanceWalkedModified;
-                    if (flag && !flag2 && !flag1 && attacker.isOnGround() && d0 < (double)attacker.getAIMoveSpeed()) {
-                        ItemStack itemstack = attacker.getHeldItem(Hand.MAIN_HAND);
+                    double d0 = attacker.walkDist - attacker.walkDistO;
+                    if (flag && !flag2 && !flag1 && attacker.isOnGround() && d0 < (double)attacker.getSpeed()) {
+                        ItemStack itemstack = attacker.getItemInHand(InteractionHand.MAIN_HAND);
                         if (itemstack.getItem() instanceof SwordItem) {
                             flag3 = true;
                         }
@@ -157,44 +140,44 @@ public class Util {
 
                     float f4 = 0.0F;
                     boolean flag4 = false;
-                    int j = EnchantmentHelper.getFireAspectModifier(attacker);
+                    int j = EnchantmentHelper.getFireAspect(attacker);
                     if (targetEntity instanceof LivingEntity) {
                         f4 = ((LivingEntity)targetEntity).getHealth();
-                        if (j > 0 && !targetEntity.isBurning()) {
+                        if (j > 0 && !targetEntity.isOnFire()) {
                             flag4 = true;
-                            targetEntity.setFire(1);
+                            targetEntity.setSecondsOnFire(1);
                         }
                     }
 
-                    Vector3d vec3d = targetEntity.getMotion();
-                    boolean flag5 = targetEntity.attackEntityFrom(DamageSource.causePlayerDamage(attacker), f);
+                    Vec3 vec3d = targetEntity.getDeltaMovement();
+                    boolean flag5 = targetEntity.hurt(DamageSource.playerAttack(attacker), f);
                     if (flag5) {
                         if (i > 0) {
                             if (targetEntity instanceof LivingEntity) {
-                                ((LivingEntity)targetEntity).applyKnockback((float)i * 0.5F, MathHelper.sin(attacker.rotationYaw * ((float)Math.PI / 180F)), -MathHelper.cos(attacker.rotationYaw * ((float)Math.PI / 180F)));
+                                ((LivingEntity)targetEntity).knockback((float)i * 0.5F, Mth.sin(attacker.yBodyRot * ((float)Math.PI / 180F)), -Mth.cos(attacker.yBodyRot * ((float)Math.PI / 180F)));
                             } else {
-                                targetEntity.addVelocity(-MathHelper.sin(attacker.rotationYaw * ((float)Math.PI / 180F)) * (float)i * 0.5F, 0.1D, MathHelper.cos(attacker.rotationYaw * ((float)Math.PI / 180F)) * (float)i * 0.5F);
+                                targetEntity.moveTo(-Mth.sin(attacker.yBodyRot * ((float)Math.PI / 180F)) * (float)i * 0.5F + targetEntity.getX(), 0.1D + targetEntity.getY(), Mth.cos(attacker.yBodyRot * ((float)Math.PI / 180F)) * (float)i * 0.5F + targetEntity.getZ());
                             }
 
-                            attacker.setMotion(attacker.getMotion().mul(0.6D, 1.0D, 0.6D));
+                            attacker.setDeltaMovement(attacker.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
                             attacker.setSprinting(false);
                         }
 
                         if (flag3) {
                             float f3 = 1.0F + EnchantmentHelper.getSweepingDamageRatio(attacker) * f;
 
-                            for(LivingEntity livingentity : attacker.world.getEntitiesWithinAABB(LivingEntity.class, targetEntity.getBoundingBox().grow(1.0D, 0.25D, 1.0D))) {
-                                if (livingentity != attacker && livingentity != targetEntity && !attacker.isOnSameTeam(livingentity) && (!(livingentity instanceof ArmorStandEntity) || !((ArmorStandEntity)livingentity).hasMarker()) && attacker.getDistanceSq(livingentity) < 9.0D) {
-                                    livingentity.applyKnockback(0.4F, MathHelper.sin(attacker.rotationYaw * ((float)Math.PI / 180F)), -MathHelper.cos(attacker.rotationYaw * ((float)Math.PI / 180F)));
-                                    livingentity.attackEntityFrom(DamageSource.causePlayerDamage(attacker), f3);
+                            for(LivingEntity livingentity : attacker.level.getEntitiesOfClass(LivingEntity.class, targetEntity.getBoundingBox().contract(1.0D, 0.25D, 1.0D))) {
+                                if (livingentity != attacker && livingentity != targetEntity && !attacker.isAlliedTo(livingentity) && (!(livingentity instanceof ArmorStand) || !livingentity.hurtMarked) && attacker.distanceToSqr(livingentity) < 9.0D) {
+                                    livingentity.knockback(0.4F, Mth.sin(attacker.yBodyRot * ((float)Math.PI / 180F)), -Mth.cos(attacker.yBodyRot * ((float)Math.PI / 180F)));
+                                    livingentity.hurt(DamageSource.playerAttack(attacker), f3);
                                 }
                             }
 
-                            attacker.world.playSound(null, attacker.getPosX(), attacker.getPosY(), attacker.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, attacker.getSoundCategory(), 1.0F, 1.0F);
-                            attacker.spawnSweepParticles();
+                            attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, attacker.getSoundSource(), 1.0F, 1.0F);
+                            attacker.sweepAttack();
                         }
 
-                        if (targetEntity instanceof ServerPlayerEntity && targetEntity.velocityChanged) {
+                        if (targetEntity instanceof ServerPlayer && targetEntity.) {
                             ((ServerPlayerEntity)targetEntity).connection.sendPacket(new SEntityVelocityPacket(targetEntity));
                             targetEntity.velocityChanged = false;
                             targetEntity.setMotion(vec3d);
@@ -262,6 +245,6 @@ public class Util {
 
             }
         }
-    }
+    }*/
     
 }

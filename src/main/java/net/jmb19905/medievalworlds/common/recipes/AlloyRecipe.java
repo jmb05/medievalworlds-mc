@@ -1,15 +1,16 @@
 package net.jmb19905.medievalworlds.common.recipes;
 
 import net.jmb19905.medievalworlds.common.registries.RecipeSerializerRegistryHandler;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nonnull;
 
+@SuppressWarnings("ClassCanBeRecord")
 public class AlloyRecipe implements IAlloyRecipe{
 
     private final ResourceLocation id;
@@ -25,7 +26,7 @@ public class AlloyRecipe implements IAlloyRecipe{
     }
 
 
-    public boolean matchesUniversally(RecipeWrapper inv, @Nonnull World worldIn, boolean flipped){
+    public boolean matchesUniversally(RecipeWrapper inv, @Nonnull Level worldIn, boolean flipped){
         if(flipped){
             return matchesFlipped(inv);
         }else{
@@ -34,29 +35,24 @@ public class AlloyRecipe implements IAlloyRecipe{
     }
 
     public boolean matchesFlipped(RecipeWrapper inv){
-        ItemStack stackInSlot0 = inv.getStackInSlot(1);
-        ItemStack stackInSlot1 = inv.getStackInSlot(0);
+        ItemStack stackInSlot0 = inv.getItem(1);
+        ItemStack stackInSlot1 = inv.getItem(0);
         return (stackInSlot0.getItem() == input1.getItem() && stackInSlot0.getCount() >= input1.getCount() &&
                 stackInSlot1.getItem() == input2.getItem() && stackInSlot1.getCount() >= input2.getCount());
     }
 
     @Override
-    public boolean matches(RecipeWrapper inv, @Nonnull World worldIn) {
-        ItemStack stackInSlot0 = inv.getStackInSlot(0);
-        ItemStack stackInSlot1 = inv.getStackInSlot(1);
+    public boolean matches(RecipeWrapper inv, @Nonnull Level worldIn) {
+        ItemStack stackInSlot0 = inv.getItem(0);
+        ItemStack stackInSlot1 = inv.getItem(1);
         return (stackInSlot0.getItem() == input1.getItem() && stackInSlot0.getCount() >= input1.getCount() &&
                 stackInSlot1.getItem() == input2.getItem() && stackInSlot1.getCount() >= input2.getCount());
     }
 
     @Nonnull
     @Override
-    public ItemStack getCraftingResult(@Nonnull RecipeWrapper inv) {
+    public ItemStack assemble(@Nonnull RecipeWrapper inv) {
         return this.output;
-    }
-
-    @Override
-    public boolean canFit(int width, int height) {
-        return false;
     }
 
     @Override
@@ -69,22 +65,25 @@ public class AlloyRecipe implements IAlloyRecipe{
         return this.input2;
     }
 
+    @Nonnull
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return this.output;
     }
 
+    @Nonnull
     @Override
     public ResourceLocation getId() {
         return this.id;
     }
 
+    @Nonnull
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return RecipeSerializerRegistryHandler.ALLOY_SERIALIZER.get();
     }
 
     public NonNullList<ItemStack> getInputs() {
-        return NonNullList.from(null, this.input1, this.input2);
+        return NonNullList.of(this.input1, this.input2);
     }
 }

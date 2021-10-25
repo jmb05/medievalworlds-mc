@@ -1,44 +1,52 @@
 package net.jmb19905.medievalworlds.common.item;
 
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.TridentEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
+import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ThrownTrident;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 
+@SuppressWarnings("deprecation")
 public class SpearItem extends Item {
 
-    private float attackDamage;
-    private float attackSpeed;
+    private final float attackDamage;
+    private final float attackSpeed;
+    private final Multimap<Attribute, AttributeModifier> defaultModifiers;
 
     public SpearItem(float attackDamage, float attackSpeed, Properties properties) {
         super(properties);
         this.attackDamage = attackDamage;
         this.attackSpeed = attackSpeed;
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
+        this.defaultModifiers = builder.build();
     }
 
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
     @Nonnull
-    public UseAction getUseAction(@Nonnull ItemStack stack) {
-        return UseAction.SPEAR;
+    @Override
+    public UseAnim getUseAnimation(@Nonnull ItemStack p_41452_) {
+        return UseAnim.NONE;
     }
 
     /**
@@ -48,89 +56,69 @@ public class SpearItem extends Item {
         return 72000;
     }
 
-    /**
-     * Called when the player stops using an Item (stops holding the right mouse button).
-     */
-    public void onPlayerStoppedUsing(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull LivingEntity entityLiving, int timeLeft) {
-        if (entityLiving instanceof PlayerEntity) {
-            PlayerEntity playerentity = (PlayerEntity)entityLiving;
+    @Override
+    public void releaseUsing(@Nonnull ItemStack stack, @Nonnull Level level, @Nonnull LivingEntity entity, int timeLeft) {
+        if(entity instanceof Player player) {
             int i = this.getUseDuration(stack) - timeLeft;
-            if (i >= 10) {
-                if (!worldIn.isRemote) {
-                    stack.damageItem(1, playerentity, (p_220047_1_) -> p_220047_1_.sendBreakAnimation(entityLiving.getActiveHand()));
-                    TridentEntity tridententity = new TridentEntity(worldIn, playerentity, stack);
-                    Vector3d lookVector = playerentity.getLookVec();
-                    tridententity.shoot(lookVector.x, lookVector.y, lookVector.z, 0.0F, 1.0F);
-                    if (playerentity.abilities.isCreativeMode) {
-                        tridententity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+            if(i >= 10) {
+                if(!level.isClientSide) {
+                    stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
+                    ThrownTrident trident = new ThrownTrident(level, player, stack);
+                    Vec3 lookVector = player.getLookAngle();
+                    trident.shoot(lookVector.x, lookVector.y, lookVector.z, 0.0f, 1.0f);
+                    if(player.isCreative()) {
+                        trident.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
+                        player.getInventory().removeItem(stack);
                     }
-
-                    worldIn.addEntity(tridententity);
+                    level.addFreshEntity(trident);
                     //Need to add spear sound
                     //worldIn.playMovingSound(null, tridententity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                    if (!playerentity.abilities.isCreativeMode) {
-                        playerentity.inventory.deleteStack(stack);
-                    }
                 }
-
-                playerentity.addStat(Stats.ITEM_USED.get(this));
+                player.awardStat(Stats.ITEM_USED.get(this));
             }
         }
     }
 
-    /**
-     * Called to trigger the item's "innate" right click behavior. To handle when this item is used on a Block, see
-     * {@link #onItemUse}.
-     */
     @Nonnull
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, PlayerEntity playerIn, @Nonnull Hand handIn) {
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
-        if (itemstack.getDamage() >= itemstack.getMaxDamage() - 1) {
-            return ActionResult.resultFail(itemstack);
+    public InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player playerIn, @Nonnull InteractionHand handIn) {
+        ItemStack itemstack = playerIn.getItemInHand(handIn);
+        if (itemstack.getDamageValue() >= itemstack.getMaxDamage() - 1) {
+            return InteractionResultHolder.fail(itemstack);
         }else {
-            playerIn.setActiveHand(handIn);
-            return ActionResult.resultConsume(itemstack);
+            playerIn.swing(handIn);
+            return InteractionResultHolder.consume(itemstack);
         }
     }
 
-    /**
-     * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
-     * the damage on the stack.
-     */
-    public boolean hitEntity(ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
-        stack.damageItem(1, attacker, (living) -> living.sendBreakAnimation(EquipmentSlotType.MAINHAND));
+    @Override
+    public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
+        stack.hurtAndBreak(1, attacker, living -> living.broadcastBreakEvent(EquipmentSlot.MAINHAND));
         return true;
     }
 
-    /**
-     * Called when a Block is destroyed using this Item. Return true to trigger the "Use Item" statistic.
-     */
-    public boolean onBlockDestroyed(@Nonnull ItemStack stack, @Nonnull World worldIn, BlockState state, @Nonnull BlockPos pos, @Nonnull LivingEntity entityLiving) {
-        if ((double)state.getBlockHardness(worldIn, pos) != 0.0D) {
-            stack.damageItem(2, entityLiving, (living) -> living.sendBreakAnimation(EquipmentSlotType.MAINHAND));
+    @Override
+    public boolean mineBlock(@Nonnull ItemStack stack, @Nonnull Level level, BlockState state, @Nonnull BlockPos pos, @Nonnull LivingEntity entity) {
+        if ((double)state.getDestroySpeed(level, pos) != 0.0D) {
+            stack.hurtAndBreak(2, entity, (living) -> living.broadcastBreakEvent(EquipmentSlot.MAINHAND));
         }
         return true;
     }
 
-    /**
-     * Gets a map of item attribute modifiers, used by ItemSword to increase hit damage.
-     */
     @Nonnull
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(@Nonnull EquipmentSlotType equipmentSlot) {
-        Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
-        if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", attackDamage, AttributeModifier.Operation.ADDITION));
-            multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
-        }
-
-        return multimap;
+    @Override
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(@Nonnull EquipmentSlot slot) {
+        return slot == EquipmentSlot.MAINHAND ? this.defaultModifiers : super.getDefaultAttributeModifiers(slot);
     }
 
-    /**
-     * Return the enchantability factor of the item, most of the time is based on material.
-     */
-    public int getItemEnchantability() {
+    public int getItemEnchantmentValue() {
         return 1;
     }
 
+    public float getAttackDamage() {
+        return attackDamage;
+    }
+
+    public float getAttackSpeed() {
+        return attackSpeed;
+    }
 }

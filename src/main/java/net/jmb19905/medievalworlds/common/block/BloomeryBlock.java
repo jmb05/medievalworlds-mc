@@ -1,40 +1,41 @@
 package net.jmb19905.medievalworlds.common.block;
 
 import net.jmb19905.medievalworlds.common.registries.BlockRegistryHandler;
-import net.jmb19905.medievalworlds.common.registries.TileEntityTypeRegistryHandler;
-import net.jmb19905.medievalworlds.common.tileentites.BloomeryTileEntity;
+import net.jmb19905.medievalworlds.common.registries.BlockEntityTypeRegistryHandler;
+import net.jmb19905.medievalworlds.common.blockentities.BloomeryBlockEntity;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-public abstract class BloomeryBlock extends Block {
+@SuppressWarnings("deprecation")
+public abstract class BloomeryBlock extends Block implements EntityBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty CLAY = BooleanProperty.create("clay");
@@ -46,132 +47,124 @@ public abstract class BloomeryBlock extends Block {
     public static class Bottom extends BloomeryBlock{
 
         public Bottom() {
-            super(AbstractBlock.Properties.create(Material.ROCK).sound(SoundType.STONE).harvestLevel(0).harvestTool(ToolType.PICKAXE).hardnessAndResistance(3.5F).setLightLevel(value -> 13));
-            this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(CLAY, true));
+            super(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(3.5F).lightLevel(value -> 13));
+            this.registerDefaultState(this.getStateDefinition().any()
+                    .setValue(FACING, Direction.NORTH)
+                    .setValue(CLAY, true));
         }
 
+        @Nonnull
         @Override
-        public boolean hasTileEntity(BlockState state) {
-            return true;
-        }
-
-        @Override
-        public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-            return TileEntityTypeRegistryHandler.BLOOMERY_BOTTOM.get().create();
-        }
-
-        @Override
-        public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        public VoxelShape getShape(@Nonnull BlockState p_60555_, @Nonnull BlockGetter p_60556_, @Nonnull BlockPos p_60557_, @Nonnull CollisionContext p_60558_) {
             return BOTTOM_SHAPE;
+        }
+
+        @Nullable
+        @Override
+        public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+            return BlockEntityTypeRegistryHandler.BLOOMERY_BOTTOM.get().create(pos, state);
         }
     }
 
     public static class Top extends BloomeryBlock{
 
         public Top() {
-            super(AbstractBlock.Properties.create(Material.ROCK).sound(SoundType.STONE).harvestLevel(0).harvestTool(ToolType.PICKAXE).hardnessAndResistance(3.5F).setLightLevel(value -> 13));
-            this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(CLAY, true));
+            super(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(3.5F).lightLevel(value -> 13));
+            this.registerDefaultState(this.getStateDefinition().any()
+                    .setValue(FACING, Direction.NORTH)
+                    .setValue(CLAY, true));
         }
 
+        @Nonnull
         @Override
-        public boolean hasTileEntity(BlockState state) {
-            return true;
-        }
-
-        @Override
-        public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-            return TileEntityTypeRegistryHandler.BLOOMERY_TOP.get().create();
-        }
-
-        @Override
-        public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        public VoxelShape getShape(@Nonnull BlockState p_60555_, @Nonnull BlockGetter p_60556_, @Nonnull BlockPos p_60557_, @Nonnull CollisionContext p_60558_) {
             return TOP_SHAPE;
+        }
+
+        @Nullable
+        @Override
+        public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+            return BlockEntityTypeRegistryHandler.BLOOMERY_TOP.get().create(pos, state);
         }
     }
 
-    @Nonnull
+    /*@Nonnull
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+        return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
 
     @Nonnull
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
-        return state.with(FACING, rot.rotate(state.get(FACING)));
-    }
+        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
+    }*/
 
     @Override
-    protected void fillStateContainer(@Nonnull StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void createBlockStateDefinition(@Nonnull StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(FACING, CLAY);
     }
 
     @Override
-    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+    public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
         //return state.get(LIT) ? super.getLightValue(state, world, pos) : 0;
         return 0;
     }
 
+    @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override
-    public void onBlockPlacedBy(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, LivingEntity placer, @Nonnull ItemStack stack) {
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-        if(stack.hasDisplayName()){
-            TileEntity tile = worldIn.getTileEntity(pos);
-            if(tile instanceof BloomeryTileEntity.Bottom){
-                ((BloomeryTileEntity.Bottom) tile).setCustomName(stack.getDisplayName());
+    public void setPlacedBy(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nullable LivingEntity placer, @Nonnull ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+        if(stack.hasCustomHoverName()){
+            BlockEntity entity = level.getBlockEntity(pos);
+            if(entity instanceof BloomeryBlockEntity.Bottom) {
+                ((BloomeryBlockEntity.Bottom) entity).setCustomName(stack.getDisplayName());
             }
         }
-        BlockPos topPosition = new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ());
-        worldIn.setBlockState(topPosition, BlockRegistryHandler.BLOOMERY_TOP_BLOCK.get().getDefaultState());
-    }
-
-    @Override
-    public boolean hasComparatorInputOverride(@Nonnull BlockState state) {
-        return true;
-    }
-
-    @Override
-    public int getComparatorInputOverride(@Nonnull BlockState blockState, World worldIn, @Nonnull BlockPos pos) {
-        return Container.calcRedstone(worldIn.getTileEntity(pos));
+        BlockPos topPosition = pos.above();
+        level.setBlockAndUpdate(topPosition, BlockRegistryHandler.BLOOMERY_TOP_BLOCK.get().defaultBlockState());
     }
 
     @Nonnull
     @Override
-    public ActionResultType onBlockActivated(@Nonnull BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand handIn, @Nonnull BlockRayTraceResult hit) {
-        if(!worldIn.isRemote){
-            TileEntity tile = worldIn.getTileEntity(pos);
-            if(tile instanceof BloomeryTileEntity.Bottom){
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
-                return ActionResultType.SUCCESS;
+    public InteractionResult use(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull BlockHitResult hit) {
+        if(!level.isClientSide) {
+            BlockEntity entity = level.getBlockEntity(pos);
+            if(entity instanceof BloomeryBlockEntity.Bottom) {
+                NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) entity, pos);
+                return InteractionResult.SUCCESS;
+            }else if(entity instanceof BloomeryBlockEntity.Top) {
+                BlockEntity bottomEntity = level.getBlockEntity(pos.below());
+                NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) bottomEntity, pos.below());
+                return InteractionResult.SUCCESS;
             }
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public void onReplaced(@Nonnull BlockState state, World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState newState, boolean isMoving) {
-        TileEntity tile = worldIn.getTileEntity(pos);
-        if(tile instanceof BloomeryTileEntity.Bottom && state.getBlock() != newState.getBlock()){
-            BloomeryTileEntity.Bottom bloomeryTile = (BloomeryTileEntity.Bottom)tile;
-            ((CustomItemHandler) bloomeryTile.getInventory()).toNonNullList().forEach(item -> {
-                ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), item);
-                worldIn.addEntity(itemEntity);
+    public void onRemove(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos, @Nonnull BlockState newState, boolean isMoving) {
+        BlockEntity entity = level.getBlockEntity(pos);
+        if(entity instanceof BloomeryBlockEntity.Bottom bloomeryBlockEntity && state.getBlock() != newState.getBlock()) {
+            ((CustomItemHandler) bloomeryBlockEntity.getInventory()).toNonNullList().forEach(stack -> {
+                ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack);
+                level.addFreshEntity(itemEntity);
             });
         }
 
-        if(state.hasTileEntity() && state.getBlock() != newState.getBlock()){
-            worldIn.removeTileEntity(pos);
+        if(state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {
+            level.removeBlockEntity(pos);
         }
     }
 
-    private static final VoxelShape BOTTOM_SHAPE = Block.makeCuboidShape(0, 0, 0, 16, 16, 16);
+    private static final VoxelShape BOTTOM_SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
-    private static final VoxelShape TOP_SHAPE = Block.makeCuboidShape(1, 0, 1, 15, 14, 15);
+    private static final VoxelShape TOP_SHAPE = Block.box(1, 0, 1, 15, 14, 15);
 
 }

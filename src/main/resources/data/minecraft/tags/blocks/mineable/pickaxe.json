@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "medievalworlds:bronze_block",
+    "medievalworlds:tin_block",
+    "medievalworlds:ruby_block",
+    "medievalworlds:steel_block",
+    "medievalworlds:silver_block",
+    "medievalworlds:tin_ore",
+    "medievalworlds:ruby_ore",
+    "medievalworlds:silver_ore",
+    "medievalworlds:alloy_furnace",
+    "medievalworlds:bloomery_top",
+    "medievalworlds:bloomery_bottom",
+    "medievalworlds:limestone",
+    "medievalworlds:limestone_bricks"
+  ]
+}

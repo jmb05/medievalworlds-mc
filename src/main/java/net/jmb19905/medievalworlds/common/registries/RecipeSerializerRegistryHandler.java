@@ -2,36 +2,39 @@ package net.jmb19905.medievalworlds.common.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.recipes.*;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Objects;
+
 public class RecipeSerializerRegistryHandler {
 
-    public static final IRecipeSerializer<AlloyRecipe> ALLOY_RECIPE_SERIALIZER = new AlloyRecipeSerializer();
-    public static final IRecipeType<IAlloyRecipe> ALLOY_TYPE = registerType(IAlloyRecipe.RECIPE_TYPE_ID);
+    public static final RecipeSerializer<AlloyRecipe> ALLOY_RECIPE_SERIALIZER = new AlloyRecipeSerializer();
+    public static final RecipeType<IAlloyRecipe> ALLOY_TYPE = registerType(IAlloyRecipe.RECIPE_TYPE_ID);
 
-    public static final IRecipeSerializer<BloomRecipe> BLOOM_RECIPE_SERIALIZER = new BloomRecipeSerializer();
-    public static final IRecipeType<IBloomRecipe> BLOOM_TYPE = registerType(IBloomRecipe.RECIPE_TYPE_ID);
+    public static final RecipeSerializer<BloomRecipe> BLOOM_RECIPE_SERIALIZER = new BloomRecipeSerializer();
+    public static final RecipeType<IBloomRecipe> BLOOM_TYPE = registerType(IBloomRecipe.RECIPE_TYPE_ID);
 
-    public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MedievalWorlds.MOD_ID);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MedievalWorlds.MOD_ID);
 
-    public static final RegistryObject<IRecipeSerializer<?>> ALLOY_SERIALIZER = RECIPE_SERIALIZERS.register("alloy", () -> ALLOY_RECIPE_SERIALIZER);
-    public static final RegistryObject<IRecipeSerializer<?>> BLOOM_SERIALIZER = RECIPE_SERIALIZERS.register("bloom", () -> BLOOM_RECIPE_SERIALIZER);
+    public static final RegistryObject<RecipeSerializer<?>> ALLOY_SERIALIZER = RECIPE_SERIALIZERS.register("alloy", () -> ALLOY_RECIPE_SERIALIZER);
+    public static final RegistryObject<RecipeSerializer<?>> BLOOM_SERIALIZER = RECIPE_SERIALIZERS.register("bloom", () -> BLOOM_RECIPE_SERIALIZER);
 
-    private static <T extends IRecipeType> T registerType(ResourceLocation recipeTypeID){
-        return (T) Registry.register(Registry.RECIPE_TYPE, recipeTypeID, new RecipeType<>());
+    @SuppressWarnings("unchecked")
+    private static <R extends RecipeType<?>> R registerType(ResourceLocation recipeTypeID){
+        return (R) Registry.register(Registry.RECIPE_TYPE, recipeTypeID, new CustomRecipeType<>());
     }
 
-    private static class RecipeType<T extends IRecipe<?>> implements IRecipeType<T>{
+    private static class CustomRecipeType<T extends Recipe<?>> implements RecipeType<T> {
         @Override
         public String toString() {
-            return Registry.RECIPE_TYPE.getKey(this).toString();
+            return Objects.requireNonNull(Registry.RECIPE_TYPE.getKey(this)).toString();
         }
     }
 

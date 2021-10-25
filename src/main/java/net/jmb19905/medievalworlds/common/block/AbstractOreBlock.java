@@ -1,10 +1,10 @@
 package net.jmb19905.medievalworlds.common.block;
 
 import net.jmb19905.medievalworlds.util.Util;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.OreBlock;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.OreBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nonnull;
 
@@ -26,7 +26,7 @@ public class AbstractOreBlock extends OreBlock {
     }
 
     @Override
-    public int getExpDrop(@Nonnull BlockState state, @Nonnull IWorldReader reader, @Nonnull BlockPos pos, int fortune, int silktouch) {
+    public int getExpDrop(@Nonnull BlockState state, @Nonnull LevelReader reader, @Nonnull BlockPos pos, int fortune, int silk) {
         if(minXp >= maxXp) {
             return 0;
         }else{

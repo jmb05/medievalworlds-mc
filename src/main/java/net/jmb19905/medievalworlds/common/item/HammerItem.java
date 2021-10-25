@@ -4,98 +4,109 @@ import net.jmb19905.medievalworlds.common.item.enchantment.LightningStrikeEnchan
 import net.jmb19905.medievalworlds.common.item.enchantment.MegaMinerEnchantment;
 import net.jmb19905.medievalworlds.common.registries.EnchantmentRegistryHandler;
 import net.jmb19905.medievalworlds.util.Util;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class HammerItem extends SwordItem {
 
-    private final IItemTier tier;
+    private final Tier tier;
 
-    public HammerItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
+    public HammerItem(Tier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
         super(tier, attackDamageIn, attackSpeedIn, builder);
         this.tier = tier;
     }
 
     @Override
-    public boolean canPlayerBreakBlockWhileHolding(@Nonnull BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull PlayerEntity player) {
+    public boolean canAttackBlock(@Nonnull BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull Player player) {
         return true;
     }
 
     public float getDestroySpeed(@Nonnull ItemStack stack, BlockState state) {
         Material material = state.getMaterial();
-        return material == Material.ROCK || material == Material.IRON ? tier.getEfficiency() + 7 : (EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistryHandler.MEGA_MINER.get(), stack) >= 1) ? 1.5f : 1;
+        return material == Material.STONE || material == Material.METAL ? tier.getSpeed() + 7 : (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegistryHandler.MEGA_MINER.get(), stack) >= 1) ? 1.5f : 1;
     }
 
-    public boolean canHarvestBlock(@Nonnull BlockState blockIn) {
-        return blockIn.getMaterial() == Material.ROCK && blockIn.getHarvestLevel() <= tier.getHarvestLevel();
+    @Override
+    public boolean isCorrectToolForDrops(@Nonnull BlockState state) {
+        int blockTier = 0;
+        if(BlockTags.NEEDS_STONE_TOOL.contains(state.getBlock())) {
+            blockTier = 1;
+        }else if(BlockTags.NEEDS_IRON_TOOL.contains(state.getBlock())) {
+            blockTier = 2;
+        }else if(BlockTags.NEEDS_DIAMOND_TOOL.contains(state.getBlock())) {
+            blockTier = 3;
+        }
+        return state.getMaterial() == Material.STONE && blockTier <= tier.getLevel();
     }
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull PlayerEntity playerIn, @Nonnull Hand handIn) {
-        if(!worldIn.isRemote) {
-            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(playerIn.getHeldItem(handIn));
+    public InteractionResultHolder<ItemStack> use(@Nonnull Level level, @Nonnull Player playerIn, @Nonnull InteractionHand handIn) {
+        if(!level.isClientSide) {
+            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(playerIn.getItemInHand(handIn));
             for (Enchantment enchantment : enchantments.keySet()) {
                 if (enchantment instanceof LightningStrikeEnchantment) {
                     if(!playerIn.isCreative()) {
-                        playerIn.getCooldownTracker().setCooldown(this, (-(enchantments.get(enchantment) * 10) + 40) * 20);
+                        playerIn.getCooldowns().addCooldown(this, (-(enchantments.get(enchantment) * 10) + 40) * 20);
                     }else{
-                        playerIn.getCooldownTracker().setCooldown(this, ((-(enchantments.get(enchantment) * 10) + 40) * 20) / 2);
+                        playerIn.getCooldowns().addCooldown(this, ((-(enchantments.get(enchantment) * 10) + 40) * 20) / 2);
                     }
-                    BlockRayTraceResult rayTrace = Util.rayTraceBlocks(worldIn, playerIn, RayTraceContext.FluidMode.NONE, enchantments.get(enchantment) * 10);
-                    LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(worldIn);
-                    assert lightningboltentity != null;
-                    lightningboltentity.moveForced(Vector3d.copyCenteredHorizontally(rayTrace.getPos()));
-                    lightningboltentity.setCaster(playerIn instanceof ServerPlayerEntity ? (ServerPlayerEntity)playerIn : null);
-                    worldIn.addEntity(lightningboltentity);
-                    playerIn.getHeldItem(handIn).damageItem(1, playerIn, (living) -> living.sendBreakAnimation(handIn == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND));
-                    return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+                    BlockHitResult rayTrace = Util.rayTraceBlocks(level, playerIn, ClipContext.Fluid.NONE, enchantments.get(enchantment) * 10);
+                    LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(level);
+                    assert lightningbolt != null;
+                    lightningbolt.moveTo(Vec3.atCenterOf(rayTrace.getBlockPos()));
+                    lightningbolt.setCause(playerIn instanceof ServerPlayer ? (ServerPlayer)playerIn : null);
+                    level.addFreshEntity(lightningbolt);
+                    playerIn.getItemInHand(handIn).hurtAndBreak(1, playerIn, (living) -> living.broadcastBreakEvent(handIn == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND));
+                    return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
                 }
             }
         }
-        return ActionResult.resultFail(playerIn.getHeldItem(handIn));
+        return InteractionResultHolder.fail(playerIn.getItemInHand(handIn));
     }
 
     @Override
-    public boolean onBlockDestroyed(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull BlockState state, @Nonnull BlockPos pos, @Nonnull LivingEntity entityLiving) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(entityLiving.getHeldItemMainhand());
+    public boolean mineBlock(@Nonnull ItemStack stack, @Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockPos pos, LivingEntity player) {
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(player.getMainHandItem());
         for (Enchantment enchantment : enchantments.keySet()) {
             if (enchantment instanceof MegaMinerEnchantment) {
-                if (!worldIn.isRemote && stack.canHarvestBlock(state) && state.getBlock() != Blocks.BEDROCK) {
-                    ServerWorld world = (ServerWorld) worldIn;
-                    world.setBlockState(pos, state);
-                    List<BlockPos> blocks = Util.calcMegaMinerBreaking(world, (PlayerEntity) entityLiving, stack, pos);
+                if (!level.isClientSide && stack.isCorrectToolForDrops(state) && state.getBlock() != Blocks.BEDROCK) {
+                    ServerLevel serverLevel = (ServerLevel) level;
+                    serverLevel.setBlockAndUpdate(pos, state);
+                    List<BlockPos> blocks = Util.calcMegaMinerBreaking(serverLevel, (Player) player, stack, pos);
                     for(BlockPos pos1 : blocks){
                         if (pos1 != pos) {
-                            world.getBlockState(pos1).getBlock().harvestBlock(world, (PlayerEntity) entityLiving, pos1, world.getBlockState(pos1), world.getTileEntity(pos1), stack);
+                            serverLevel.getBlockState(pos1).getBlock().playerDestroy(level, (Player) player, pos1, serverLevel.getBlockState(pos1), serverLevel.getBlockEntity(pos1), stack);
                         }
-                        world.setBlockState(pos1, Blocks.AIR.getDefaultState());
+                        serverLevel.setBlockAndUpdate(pos1, Blocks.AIR.defaultBlockState());
                     }
-                    entityLiving.getHeldItemMainhand().damageItem(blocks.size() - 1, entityLiving, (living) -> living.sendBreakAnimation(EquipmentSlotType.MAINHAND));
+                    stack.hurtAndBreak(blocks.size() - 1, player, (living) -> living.broadcastBreakEvent(EquipmentSlot.MAINHAND));
                 }
                 break;
             }

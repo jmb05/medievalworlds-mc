@@ -1,13 +1,12 @@
 package net.jmb19905.medievalworlds.common.item.armor;
 
 import net.jmb19905.medievalworlds.client.model.armor.CrownHelmetModel;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -15,11 +14,11 @@ import javax.annotation.Nullable;
 
 public class CrownItem extends ArmorItem {
 
-    public CrownItem(IArmorMaterial material, Properties builderIn) {
-        super(material, EquipmentSlotType.HEAD, builderIn);
+    public CrownItem(ArmorMaterial material, Properties builderIn) {
+        super(material, EquipmentSlot.HEAD, builderIn);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    /*@OnlyIn(Dist.CLIENT)
     @Nullable
     @Override
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
@@ -33,11 +32,11 @@ public class CrownItem extends ArmorItem {
         armorModel.isChild = entityLiving.isChild();
 
         return (A) armorModel;
-    }
+    }*/
 
     @Nullable
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
         return "medievalworlds:textures/models/armor/crown.png";
     }
 

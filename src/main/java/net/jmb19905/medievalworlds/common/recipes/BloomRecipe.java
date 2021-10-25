@@ -1,12 +1,15 @@
 package net.jmb19905.medievalworlds.common.recipes;
 
 import net.jmb19905.medievalworlds.common.registries.RecipeSerializerRegistryHandler;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+import javax.annotation.Nonnull;
+
+@SuppressWarnings("ClassCanBeRecord")
 public class BloomRecipe implements IBloomRecipe{
 
     private final ResourceLocation id;
@@ -25,28 +28,32 @@ public class BloomRecipe implements IBloomRecipe{
     }
 
     @Override
-    public boolean matches(RecipeWrapper inv, World worldIn) {
-        ItemStack stackInInputSlot = inv.getStackInSlot(0);
+    public boolean matches(RecipeWrapper inv, @Nonnull Level level) {
+        ItemStack stackInInputSlot = inv.getItem(0);
         return (stackInInputSlot.getItem() == input.getItem() && stackInInputSlot.getCount() >= input.getCount());
     }
 
+    @Nonnull
     @Override
-    public ItemStack getCraftingResult(RecipeWrapper inv) {
+    public ItemStack assemble(@Nonnull RecipeWrapper inv) {
         return this.output;
     }
 
+    @Nonnull
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return this.output;
     }
 
+    @Nonnull
     @Override
     public ResourceLocation getId() {
         return this.id;
     }
 
+    @Nonnull
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return RecipeSerializerRegistryHandler.BLOOM_SERIALIZER.get();
     }
 }

@@ -2,14 +2,14 @@ package net.jmb19905.medievalworlds.client.networking;
 
 import net.jmb19905.medievalworlds.common.item.lance.TargetEffectMessageToClient;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.LogicalSidedProvider;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.LogicalSidedProvider;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,15 +29,15 @@ public class MessageHandlerOnClient {
             return;
         }
         if (!message.isMessageValid()) {
-            LOGGER.warn("TargetEffectMessageToClient was invalid" + message.toString());
+            LOGGER.warn("TargetEffectMessageToClient was invalid" + message);
             return;
         }
         // we know for sure that this handler is only used on the client side, so it is ok to assume
         //  that the ctx handler is a client, and that Minecraft exists.
         // Packets received on the server side must be handled differently!  See MessageHandlerOnServer
 
-        Optional<ClientWorld> clientWorld = LogicalSidedProvider.CLIENTWORLD.get(sideReceived);
-        if (!clientWorld.isPresent()) {
+        Optional<ClientLevel> clientWorld = LogicalSidedProvider.CLIENTWORLD.get(sideReceived);
+        if (clientWorld.isEmpty()) {
             LOGGER.warn("TargetEffectMessageToClient context could not provide a ClientWorld.");
             return;
         }
@@ -49,16 +49,16 @@ public class MessageHandlerOnClient {
 
     // This message is called from the Client thread.
     //   It spawns a number of Particle particles at the target location within a short range around the target location
-    private static void processMessage(ClientWorld worldClient, TargetEffectMessageToClient message) {
+    private static void processMessage(ClientLevel worldClient, TargetEffectMessageToClient message) {
         Random random = new Random();
         final int NUMBER_OF_PARTICLES = 10;
         for (int i = 0; i < NUMBER_OF_PARTICLES; ++i) {
-            Vector3d targetCoordinates = message.getTargetCoordinates();
+            Vec3 targetCoordinates = message.getTargetCoordinates();
             double spawnXPos = targetCoordinates.x + (2 * random.nextDouble() - 1) * message.getXSpread();
             double spawnYPos = targetCoordinates.y + (2 * random.nextDouble() - 1) * message.getYSpread();
             double spawnZPos = targetCoordinates.z + (2 * random.nextDouble() - 1) * message.getZSpread();
             worldClient.addParticle(ParticleTypes.CRIT, spawnXPos, spawnYPos, spawnZPos, 0, 0, 0);
-            worldClient.playSound(null, spawnXPos, spawnYPos, spawnZPos, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1.0F, 1.0F);
+            worldClient.playSound(null, spawnXPos, spawnYPos, spawnZPos, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.0F, 1.0F);
         }
     }
 

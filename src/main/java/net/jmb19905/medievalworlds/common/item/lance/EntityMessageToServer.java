@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.item.lance;
 
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,7 +37,7 @@ public class EntityMessageToServer {
         messageIsValid = false;
     }
 
-    public static EntityMessageToServer decode(PacketBuffer buf) {
+    public static EntityMessageToServer decode(FriendlyByteBuf buf) {
         EntityMessageToServer retval = new EntityMessageToServer();
         try {
             retval.entityID = buf.readInt();
@@ -50,7 +50,7 @@ public class EntityMessageToServer {
         return retval;
     }
 
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
         if (!messageIsValid) return;
         buf.writeInt(entityID);
         buf.writeBoolean(critical);

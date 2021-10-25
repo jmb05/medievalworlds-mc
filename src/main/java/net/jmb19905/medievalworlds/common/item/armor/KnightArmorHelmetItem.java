@@ -1,46 +1,44 @@
 package net.jmb19905.medievalworlds.common.item.armor;
 
+import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.model.armor.KnightArmorHelmetModel;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.IItemRenderProperties;
 
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public class KnightArmorHelmetItem extends ArmorItem {
 
     private final String material;
 
-    public KnightArmorHelmetItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builder, String material) {
+    public KnightArmorHelmetItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties builder, String material) {
         super(materialIn, slot, builder);
         this.material = material;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Nullable
     @Override
-    public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
-        BipedModel<LivingEntity> armorModel = new BipedModel<>(1);
-        KnightArmorHelmetModel helmetModel = new KnightArmorHelmetModel();
-        armorModel.bipedHead = helmetModel.Helmet;
-        armorModel.bipedHeadwear = helmetModel.Overlay;
-
-        armorModel.isSneak = entityLiving.isSneaking();
-        armorModel.isSitting = _default.isSitting;
-        armorModel.isChild = entityLiving.isChild();
-
-        return (A) armorModel;
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        consumer.accept(new IItemRenderProperties() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
+                KnightArmorHelmetModel model = new KnightArmorHelmetModel(Minecraft.getInstance().getEntityModels().bakeLayer(MedievalWorlds.ClientSetup.KNIGHT_HELMET_LAYER));
+                return (A) model;
+            }
+        });
     }
 
     @Nullable
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
         return "medievalworlds:textures/models/armor/"+material+"_knight_helmet.png";
     }
 

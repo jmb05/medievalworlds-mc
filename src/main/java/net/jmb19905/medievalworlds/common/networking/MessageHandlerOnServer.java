@@ -1,25 +1,24 @@
 package net.jmb19905.medievalworlds.common.networking;
 
 import net.jmb19905.medievalworlds.common.capability.Motion;
-import net.jmb19905.medievalworlds.common.capability.MotionCapability;
 import net.jmb19905.medievalworlds.common.item.LanceItem;
 import net.jmb19905.medievalworlds.common.item.lance.EntityMessageToServer;
 import net.jmb19905.medievalworlds.common.item.lance.TargetEffectMessageToClient;
 import net.jmb19905.medievalworlds.util.ConfigHandler;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.horse.AbstractHorseEntity;
-import net.minecraft.entity.passive.horse.LlamaEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.horse.Llama;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,11 +42,11 @@ public class MessageHandlerOnServer {
             return;
         }
         if (!message.isMessageValid()) {
-            LOGGER.warn("EntityMessageToServer was invalid" + message.toString());
+            LOGGER.warn("EntityMessageToServer was invalid" + message);
             return;
         }
 
-        final ServerPlayerEntity sendingPlayer = context.getSender();
+        final ServerPlayer sendingPlayer = context.getSender();
 
         if(sendingPlayer != null) {
             context.enqueueWork(() -> processMessage(message, sendingPlayer));
@@ -56,39 +55,37 @@ public class MessageHandlerOnServer {
         }
     }
 
-    static void processMessage(EntityMessageToServer message, ServerPlayerEntity sendingPlayer) {
-        Entity entity = sendingPlayer.world.getEntityByID(message.getEntityID());
+    @SuppressWarnings("ConstantConditions")
+    static void processMessage(EntityMessageToServer message, ServerPlayer sendingPlayer) {
+        Entity entity = sendingPlayer.level.getEntity(message.getEntityID());
         //Attack Entity
         if(entity instanceof LivingEntity){
-            ItemStack laneStack = sendingPlayer.getActiveItemStack();
+            ItemStack laneStack = sendingPlayer.getUseItem();
             if(laneStack.getItem() instanceof LanceItem) {
-                if (sendingPlayer.getRidingEntity() instanceof AbstractHorseEntity && !(sendingPlayer.getRidingEntity() instanceof LlamaEntity)) {
-                    if(sendingPlayer.getRidingEntity().equals(entity)){
+                if (sendingPlayer.getRootVehicle() instanceof AbstractHorse && !(sendingPlayer.getRootVehicle() instanceof Llama)) {
+                    if(sendingPlayer.getRootVehicle().equals(entity)){
                         return;
                     }
                     if (message.isCritical()) {
-                        AxisAlignedBB boundingBox = entity.getBoundingBox();
-                        TargetEffectMessageToClient msg = new TargetEffectMessageToClient(Objects.requireNonNull(entity.getPositionVec()), boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY, boundingBox.maxZ - boundingBox.minZ);   // must generate a fresh message for every player!
-                        RegistryKey<World> playerDimension = sendingPlayer.func_241141_L_();  // func_241141_L_ is getPlayerDimension
+                        AABB boundingBox = entity.getBoundingBox();
+                        TargetEffectMessageToClient msg = new TargetEffectMessageToClient(new Vec3(entity.getX(), entity.getY(), entity.getZ()), boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY, boundingBox.maxZ - boundingBox.minZ);   // must generate a fresh message for every player!
+                        ResourceKey<Level> playerDimension = sendingPlayer.getRespawnDimension();  // TODO: not respawn dimension but playerDimension ???
                         NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(() -> playerDimension), msg);
                     }
 
-                    Motion motion = sendingPlayer.getCapability(MotionCapability.CAPABILITY_MOTION).orElse(new Motion());
-                    double moveDist = motion.getMotionDistance();
-                    if(motion.getMotionDistance() > 0.72) {//Invalid: We don't want to let the player deal huge amounts of damage
-                        moveDist = 0.237; //set to the minimum horse speed (per tick)
-                    }
+                    Motion motion = (Motion) sendingPlayer.getCapability(Motion.MOTION_CAPABILITY).orElse(new Motion());
+                    double moveDist = motion.getMoveDist();
 
                     double speedFactor = moveDist + 0.25;
 
-                    float attackDamageFactor = ((LanceItem) (sendingPlayer.getActiveItemStack().getItem())).getAttackDamageFactor();
+                    float attackDamageFactor = ((LanceItem) (sendingPlayer.getUseItem().getItem())).getAttackDamageFactor();
                     float attackDamage = (float) (ConfigHandler.COMMON.lanceBaseAttackDamage.get() * speedFactor * attackDamageFactor);
                     System.out.println(ConfigHandler.COMMON.lanceBaseAttackDamage.get() + " * " + speedFactor + " * " + attackDamageFactor + " = " + attackDamage);
 
                     LivingEntity livingEntity = (LivingEntity) entity;
-                    livingEntity.attackEntityFrom(DamageSource.causePlayerDamage(sendingPlayer), attackDamage);
-                    laneStack.damageItem(1, sendingPlayer, player -> player.sendBreakAnimation(player.swingingHand));
-                    sendingPlayer.getCooldownTracker().setCooldown(laneStack.getItem(), ((LanceItem) laneStack.getItem()).getFullCharge());
+                    livingEntity.hurt(DamageSource.playerAttack(sendingPlayer), attackDamage);
+                    laneStack.hurtAndBreak(1, sendingPlayer, player -> player.broadcastBreakEvent(player.getUsedItemHand()));
+                    sendingPlayer.getCooldowns().addCooldown(laneStack.getItem(), ((LanceItem) laneStack.getItem()).getFullCharge());
                 }
             }else {
                 System.err.println("Client tried to use lanceattack without holding lance");

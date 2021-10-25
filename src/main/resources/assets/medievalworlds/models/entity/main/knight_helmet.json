@@ -1,0 +1,47 @@
+{
+  "__comment": "The model of the knight Helmet in JSON because of the EntityModelJson mod",
+  "mesh": {
+    "root": {
+      "children": {
+        "head": {
+          "cubes": [
+            {
+              "texCoord": {
+                "u": 0.0,
+                "v": 0.0
+              },
+              "origin": [
+                -4.0,
+                -8.0,
+                -4.0
+              ],
+              "dimensions": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        },
+        "visor": {
+          "cubes": [
+            {
+              "texCoord": {
+                "u": 0.0,
+                "v": 16.0
+              },
+              "origin": [
+                -4.0,
+                -8.0,
+                -4.0
+              ],
+              "dimensions": [
+
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}
