@@ -54,7 +54,6 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
     public final int maxAlloyTime = 200 - 2;
     public int currentBurnTime = 0;
     public int currentMaxBurnTime = 0;
-    private int lastValidMaxBurnTime = -1;
     public boolean fuelConsumed = false;
     private final CustomItemHandler inventory;
     private Component customName;
@@ -81,36 +80,41 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
     }
 
     public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T blockEntity) {
-        boolean dirty = false;
-        if(blockEntity instanceof AlloyFurnaceBlockEntity alloyFurnaceBlockEntity) {
-            if (level != null && !level.isClientSide) {
-                boolean flipped = false;
+        if (level != null && !level.isClientSide) {//Only do these calculations on the server
+            if(blockEntity instanceof AlloyFurnaceBlockEntity alloyFurnaceBlockEntity) {
+                boolean dirty = false;
+
+                //Get the recipe instance for the items in the slots
                 CustomItemHandler inventory = alloyFurnaceBlockEntity.inventory;
-                ItemStack inv0 = inventory.getStackInSlot(0);
-                ItemStack inv1 = inventory.getStackInSlot(1);
-                AlloyRecipe recipe = alloyFurnaceBlockEntity.getRecipe(inv0, inv1, false);
-                if (recipe == null) {
-                    AlloyRecipe flippedRecipe = alloyFurnaceBlockEntity.getRecipe(inv1, inv0, true);
-                    if (flippedRecipe != null) {
-                        recipe = flippedRecipe;
-                        flipped = true;
-                    }
-                }
+                AlloyRecipeWrapper recipeWrapper = getRecipe(alloyFurnaceBlockEntity, inventory);
+                AlloyRecipe recipe = recipeWrapper.recipe();
+                boolean flipped = recipeWrapper.flipped();
+
+                //Checks if there is a recipe for the ingredients in the slots
                 if (recipe != null) {
+                    //Checks if the fuel burn timer is running and the output slot isn't clogged
                     if (alloyFurnaceBlockEntity.currentBurnTime < alloyFurnaceBlockEntity.currentMaxBurnTime && alloyFurnaceBlockEntity.currentBurnTime >= 0 && inventory.getStackInSlot(3).getCount() < 64) {
+                        //If not fuel Item has been consumed it is done now
                         if (!alloyFurnaceBlockEntity.fuelConsumed) {
                             inventory.decrStackSize(2, 1);
                             alloyFurnaceBlockEntity.fuelConsumed = true;
                         }
+                        //Checks if the alloy timer is running
                         if (alloyFurnaceBlockEntity.currentAlloyTime < alloyFurnaceBlockEntity.maxAlloyTime) {
+                            //turns on the fire (if it isn't already burning)...
                             if (!level.getBlockState(pos).getValue(AlloyFurnaceBlock.LIT)) {
                                 level.setBlockAndUpdate(pos, state.setValue(AlloyFurnaceBlock.LIT, true));
                             }
+
+                            //...and increases the alloy timer
                             alloyFurnaceBlockEntity.currentAlloyTime++;
                         } else {
+                            //Resets the alloy timer
                             alloyFurnaceBlockEntity.currentAlloyTime = 0;
+                            //Put the result in the result slot
                             ItemStack output = Objects.requireNonNull(recipe).getResultItem();
                             inventory.insertItem(3, output.copy(), false);
+                            //Checks if the recipe was flipped and removes the recipes accordingly
                             if (flipped) {
                                 inventory.decrStackSize(1, recipe.getInput1().getCount());
                                 inventory.decrStackSize(0, recipe.getInput2().getCount());
@@ -121,41 +125,69 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
                         }
                         dirty = true;
                     } else if (ForgeHooks.getBurnTime(inventory.getStackInSlot(2), RecipeSerializerRegistryHandler.ALLOY_TYPE) > 0 && inventory.getStackInSlot(3).getCount() < 64) {
+                        //Else If there is a fuel in the fuel slot and the output slot isn't clogged:
+                        //reset the fuel burn timer
                         alloyFurnaceBlockEntity.currentBurnTime = 0;
                         alloyFurnaceBlockEntity.fuelConsumed = false;
+                        //change the mx burn time to the burn time of the fuel
                         alloyFurnaceBlockEntity.currentMaxBurnTime = ForgeHooks.getBurnTime(inventory.getStackInSlot(2), RecipeSerializerRegistryHandler.ALLOY_TYPE);
                         dirty = true;
                     } else {
+                        //reset the fuel burn timer to -1 to indicate that the timer has halted
                         alloyFurnaceBlockEntity.currentBurnTime = -1;
                         alloyFurnaceBlockEntity.fuelConsumed = false;
+                        alloyFurnaceBlockEntity.currentMaxBurnTime = 0;
                         level.setBlockAndUpdate(pos, state.setValue(AlloyFurnaceBlock.LIT, false));
+                        //decrease alloy timer
                         if (alloyFurnaceBlockEntity.currentAlloyTime > 0) {
                             alloyFurnaceBlockEntity.currentAlloyTime -= 2;
                         }
                         dirty = true;
                     }
                 } else {
+                    //If there are no valid Ingredients we turn of the fire but only if there is no fuel still burning and...
                     if (level.getBlockState(pos).getValue(AlloyFurnaceBlock.LIT) && alloyFurnaceBlockEntity.currentBurnTime >= alloyFurnaceBlockEntity.currentMaxBurnTime) {
                         level.setBlockAndUpdate(pos, state.setValue(AlloyFurnaceBlock.LIT, false));
                     }
+                    //...we decrease the alloy timer
                     if (alloyFurnaceBlockEntity.currentAlloyTime < alloyFurnaceBlockEntity.maxAlloyTime && alloyFurnaceBlockEntity.currentAlloyTime > 0) {
                         alloyFurnaceBlockEntity.currentAlloyTime -= 2;
                     }
                 }
+                //The increase the fuel timer if fuel is (still) burning
+                //But only if the timer is bigger than 0
                 if (alloyFurnaceBlockEntity.currentBurnTime < alloyFurnaceBlockEntity.currentMaxBurnTime && alloyFurnaceBlockEntity.currentBurnTime >= 0) {
                     alloyFurnaceBlockEntity.currentBurnTime++;
                     dirty = true;
                 }
+                //The alloy timer should not be smaller than 0
                 if (alloyFurnaceBlockEntity.currentAlloyTime < 0) {
                     alloyFurnaceBlockEntity.currentAlloyTime = 0;
                     dirty = true;
                 }
-            }
-            if(dirty){
-                //alloyFurnaceBlockEntity.markDirty();
-                level.sendBlockUpdated(pos, state, state, Constants.BlockFlags.BLOCK_UPDATE);
+                //if the block has changed we write the changes to the disk,
+                //notify the neighbours and send the update to the client
+                if(dirty){
+                    alloyFurnaceBlockEntity.setChanged();
+                    level.sendBlockUpdated(pos, state, state, Constants.BlockFlags.BLOCK_UPDATE);
+                }
             }
         }
+    }
+
+    private static AlloyRecipeWrapper getRecipe(AlloyFurnaceBlockEntity blockEntity, CustomItemHandler inventory){
+        boolean flipped = false;
+        ItemStack inv0 = inventory.getStackInSlot(0);
+        ItemStack inv1 = inventory.getStackInSlot(1);
+        AlloyRecipe recipe = blockEntity.getRecipe(inv0, inv1, false);
+        if (recipe == null) {
+            AlloyRecipe flippedRecipe = blockEntity.getRecipe(inv1, inv0, true);
+            if (flippedRecipe != null) {
+                recipe = flippedRecipe;
+                flipped = true;
+            }
+        }
+        return new AlloyRecipeWrapper(recipe, flipped);
     }
 
     public void setCustomName(Component name){
@@ -188,6 +220,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
 
         this.currentAlloyTime = nbt.getInt("CurrentAlloyTime");
         this.currentBurnTime = nbt.getInt("CurrentBurnTime");
+        this.currentMaxBurnTime = nbt.getInt("CurrentMaxBurnTime");
     }
 
     @Nonnull
@@ -201,6 +234,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
 
         nbt.putInt("CurrentAlloyTime", currentAlloyTime);
         nbt.putInt("CurrentBurnTime", currentBurnTime);
+        nbt.putInt("CurrentMaxBurnTime", currentMaxBurnTime);
 
         return nbt;
     }
@@ -288,4 +322,6 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
     public boolean isBurning(){
         return currentBurnTime < currentMaxBurnTime;
     }
+
+    private static record AlloyRecipeWrapper(AlloyRecipe recipe, boolean flipped){}
 }

@@ -45,6 +45,7 @@ public class MedievalWorlds {
 
     public static MWCreativeTab tab = new MWCreativeTab();
 
+    @SuppressWarnings("deprecation")
     public MedievalWorlds() {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -59,7 +60,7 @@ public class MedievalWorlds {
         modEventBus.addListener(this::setup);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGenerator::registerBiomeModification);
         registerCommonEvents();
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> MedievalWorlds::registerClientOnlyEvents);
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> MedievalWorlds::registerClientOnlyEvents);
     }
 
     public static void registerCommonEvents(){

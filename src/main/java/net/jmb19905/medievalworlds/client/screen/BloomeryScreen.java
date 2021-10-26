@@ -16,33 +16,21 @@ public class BloomeryScreen extends AbstractContainerScreen<BloomeryMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(MedievalWorlds.MOD_ID, "textures/gui/bloomery.png");
     private final BloomeryMenu screenContainer;
 
-    private final int left;
-    private final int top;
-    private final int width_;
-    private final int height_;
-
     public BloomeryScreen(BloomeryMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.screenContainer = screenContainer;
 
-        this.leftPos = 0;
-        this.topPos = 0;
-        this.width = 176;
-        this.height = 166;
-
-        this.left = leftPos;
-        this.top = topPos;
-        this.width_ = width;
-        this.height_ = height;
+        this.imageWidth = 176;
+        this.imageHeight = 166;
     }
 
     @Override
     protected void renderBg(@Nonnull PoseStack stack, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        this.blit(stack, this.left, this.top, 0, 0, this.width_, this.height_);
-        this.blit(stack, this.left + 79, this.top + 35, 176, 14, screenContainer.getSmeltProgressionScaled(), 16);
-        this.blit(stack, this.left + 39, this.top + 35 + screenContainer.getBurnProgressionScaled(), 176, screenContainer.getBurnProgressionScaled(), 14, screenContainer.getCurrentMaxBurnTime() != 0 ? 14 - screenContainer.getBurnProgressionScaled() : 0);
+        this.blit(stack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        this.blit(stack, this.leftPos + 79, this.topPos + 35, 176, 14, screenContainer.getSmeltProgressionScaled(), 16);
+        this.blit(stack, this.leftPos + 39, this.topPos + 35 + screenContainer.getBurnProgressionScaled(), 176, screenContainer.getBurnProgressionScaled(), 14, screenContainer.getCurrentMaxBurnTime() != 0 ? 14 - screenContainer.getBurnProgressionScaled() : 0);
     }
 
     @Override
@@ -56,7 +44,7 @@ public class BloomeryScreen extends AbstractContainerScreen<BloomeryMenu> {
     public void render(@Nonnull PoseStack stack, int p_render_1_, int p_render_2_, float p_render_3_) {
         this.renderBackground(stack);
         super.render(stack, p_render_1_, p_render_2_, p_render_3_);
-        //TODO: this.renderToolTip(p_render_1_, p_render_2_);
+        this.renderTooltip(stack, p_render_1_, p_render_2_);
     }
 
 }

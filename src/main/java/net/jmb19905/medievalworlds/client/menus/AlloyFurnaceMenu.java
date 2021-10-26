@@ -23,15 +23,12 @@ import java.util.Objects;
 
 public class AlloyFurnaceMenu extends AbstractContainerMenu {
 
-    private final AlloyFurnaceBlockEntity tileEntity;
+    private final AlloyFurnaceBlockEntity blockEntity;
     private final ContainerLevelAccess containerLevelAccess;
-    public int currentAlloyTime;
-    public int currentBurnTime;
-    public int currentMaxBurnTime;
 
     public AlloyFurnaceMenu(final int windowID, final Inventory playerInventory, final AlloyFurnaceBlockEntity tile) {
         super(MenuTypeRegistryHandler.ALLOY_FURNACE.get(), windowID);
-        this.tileEntity = tile;
+        this.blockEntity = tile;
         this.containerLevelAccess = ContainerLevelAccess.create(Objects.requireNonNull(tile.getLevel()), tile.getBlockPos());
 
         final int slotSizePlus2 = 18;
@@ -108,17 +105,17 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
 
     @OnlyIn(Dist.CLIENT)
     public int getSmeltProgressionScaled(){
-        return this.currentAlloyTime != 0 ? this.currentAlloyTime * 24 / this.tileEntity.maxAlloyTime : 0;
+        return (this.blockEntity.currentAlloyTime != 0) ? (this.blockEntity.currentAlloyTime * 24 / this.blockEntity.maxAlloyTime) : 0;
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getBurnProgressionScaled(){
-        return this.currentBurnTime != 0 && this.currentMaxBurnTime != 0 ? this.currentBurnTime * 13 / this.tileEntity.currentMaxBurnTime : 0;
+        return (this.blockEntity.currentBurnTime == 0 || this.blockEntity.currentMaxBurnTime == 0) ? 0 : (this.blockEntity.currentBurnTime * 13 / this.blockEntity.currentMaxBurnTime);
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getCurrentMaxBurnTime(){
-        return this.currentMaxBurnTime;
+        return this.blockEntity.currentMaxBurnTime;
     }
 
     @Override
