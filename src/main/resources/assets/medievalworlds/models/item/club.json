@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "medievalworlds:items/logbow",
-		"particle": "medievalworlds:items/logbow"
+		"0": "medievalworlds:item/logbow",
+		"particle": "medievalworlds:item/logbow"
 	},
 	"elements": [
 		{

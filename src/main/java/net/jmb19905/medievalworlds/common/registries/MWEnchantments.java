@@ -11,7 +11,7 @@ import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class EnchantmentRegistryHandler {
+public class MWEnchantments {
 
     public static final EnchantmentCategory HAMMER = EnchantmentCategory.create("hammer", (item) -> item instanceof HammerItem);
 

@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.recipes;
 
-import net.jmb19905.medievalworlds.common.registries.RecipeSerializerRegistryHandler;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -54,6 +54,6 @@ public class BloomRecipe implements IBloomRecipe{
     @Nonnull
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return RecipeSerializerRegistryHandler.BLOOM_SERIALIZER.get();
+        return MWRecipeSerializers.BLOOM_SERIALIZER.get();
     }
 }

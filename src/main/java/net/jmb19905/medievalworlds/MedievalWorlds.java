@@ -1,9 +1,5 @@
 package net.jmb19905.medievalworlds;
 
-import com.mojang.authlib.Agent;
-import com.mojang.authlib.exceptions.AuthenticationException;
-import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
-import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 import net.jmb19905.medievalworlds.client.model.armor.KnightArmorHelmetModel;
 import net.jmb19905.medievalworlds.client.networking.NetworkStartupClientOnly;
 import net.jmb19905.medievalworlds.client.screen.AlloyFurnaceScreen;
@@ -14,7 +10,6 @@ import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.registries.*;
 import net.jmb19905.medievalworlds.common.world.gen.OreGenerator;
 import net.jmb19905.medievalworlds.core.MWEventBusSubscriber;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
@@ -33,7 +28,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import javax.annotation.Nonnull;
-import java.net.Proxy;
 
 import static net.jmb19905.medievalworlds.MedievalWorlds.MOD_ID;
 
@@ -49,13 +43,13 @@ public class MedievalWorlds {
     public MedievalWorlds() {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        BlockRegistryHandler.BLOCKS.register(modEventBus);
-        BlockRegistryHandler.BLOCK_ITEMS.register(modEventBus);
-        ItemRegistryHandler.ITEMS.register(modEventBus);
-        EnchantmentRegistryHandler.ENCHANTMENTS.register(modEventBus);
-        BlockEntityTypeRegistryHandler.BLOCK_ENTITIES.register(modEventBus);
-        MenuTypeRegistryHandler.MENU_TYPES.register(modEventBus);
-        RecipeSerializerRegistryHandler.RECIPE_SERIALIZERS.register(modEventBus);
+        MWBlocks.BLOCKS.register(modEventBus);
+        MWBlocks.BLOCK_ITEMS.register(modEventBus);
+        MWItems.ITEMS.register(modEventBus);
+        MWEnchantments.ENCHANTMENTS.register(modEventBus);
+        MWBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
+        MWMenuTypes.MENU_TYPES.register(modEventBus);
+        MWRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
 
         modEventBus.addListener(this::setup);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGenerator::registerBiomeModification);
@@ -89,8 +83,8 @@ public class MedievalWorlds {
 
         @SubscribeEvent
         public static void clientSetup(FMLClientSetupEvent evt){
-            MenuScreens.register(MenuTypeRegistryHandler.ALLOY_FURNACE.get(), AlloyFurnaceScreen::new);
-            MenuScreens.register(MenuTypeRegistryHandler.BLOOMERY.get(), BloomeryScreen::new);
+            MenuScreens.register(MWMenuTypes.ALLOY_FURNACE.get(), AlloyFurnaceScreen::new);
+            MenuScreens.register(MWMenuTypes.BLOOMERY.get(), BloomeryScreen::new);
             System.out.println("Client setup");
         }
 
@@ -111,7 +105,7 @@ public class MedievalWorlds {
         @Nonnull
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ItemRegistryHandler.DIAMOND_KNIGHT_HELMET.get());
+            return new ItemStack(MWItems.DIAMOND_KNIGHT_HELMET.get());
         }
     }
 

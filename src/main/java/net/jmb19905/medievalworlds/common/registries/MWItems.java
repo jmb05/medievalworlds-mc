@@ -13,12 +13,13 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @SuppressWarnings({"unused", "RedundantSuppression"})
-public class ItemRegistryHandler {
+public class MWItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MedievalWorlds.MOD_ID);
 
     //Materials
 
+    public static final RegistryObject<Item> RAW_TIM = ITEMS.register("raw_tin", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
     public static final RegistryObject<Item> TIN_INGOT = ITEMS.register("tin_ingot", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
     public static final RegistryObject<Item> TIN_NUGGET = ITEMS.register("tin_nugget", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
 
@@ -28,6 +29,7 @@ public class ItemRegistryHandler {
     public static final RegistryObject<Item> STEEL_INGOT = ITEMS.register("steel_ingot", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
     public static final RegistryObject<Item> STEEL_NUGGET = ITEMS.register("steel_nugget", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
 
+    public static final RegistryObject<Item> RAW_SILVER = ITEMS.register("raw_silver", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
     public static final RegistryObject<Item> SILVER_INGOT = ITEMS.register("silver_ingot", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
     public static final RegistryObject<Item> SILVER_NUGGET = ITEMS.register("silver_nugget", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
 

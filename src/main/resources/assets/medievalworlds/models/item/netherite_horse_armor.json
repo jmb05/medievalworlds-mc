@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "medievalworlds:items/netherite_horse_armor"
+    "layer0": "medievalworlds:item/netherite_horse_armor"
   }
 }

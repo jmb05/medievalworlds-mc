@@ -1,5 +1,5 @@
 {
-  "parent": "medievalworlds:block/copper_ore",
+  "parent": "medievalworlds:block/raw_silver_block",
   "display": {
     "thirdperson": {
       "rotation": [

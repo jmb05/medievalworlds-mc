@@ -1,8 +1,8 @@
 package net.jmb19905.medievalworlds.client.menus;
 
-import net.jmb19905.medievalworlds.common.registries.BlockRegistryHandler;
-import net.jmb19905.medievalworlds.common.registries.MenuTypeRegistryHandler;
-import net.jmb19905.medievalworlds.common.registries.RecipeSerializerRegistryHandler;
+import net.jmb19905.medievalworlds.common.registries.MWBlocks;
+import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.common.blockentities.AlloyFurnaceBlockEntity;
 import net.jmb19905.medievalworlds.util.slots.AlloyInputSlot;
 import net.jmb19905.medievalworlds.util.slots.FuelInputSlot;
@@ -27,7 +27,7 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess containerLevelAccess;
 
     public AlloyFurnaceMenu(final int windowID, final Inventory playerInventory, final AlloyFurnaceBlockEntity tile) {
-        super(MenuTypeRegistryHandler.ALLOY_FURNACE.get(), windowID);
+        super(MWMenuTypes.ALLOY_FURNACE.get(), windowID);
         this.blockEntity = tile;
         this.containerLevelAccess = ContainerLevelAccess.create(Objects.requireNonNull(tile.getLevel()), tile.getBlockPos());
 
@@ -53,7 +53,7 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
         //Input
         this.addSlot(new AlloyInputSlot(tile.getInventory(), 0, 20, 16, tile.getLevel()));
         this.addSlot(new AlloyInputSlot(tile.getInventory(), 1, 56, 16, tile.getLevel()));
-        this.addSlot(new FuelInputSlot(tile.getInventory(), 2, 38, 51, RecipeSerializerRegistryHandler.ALLOY_TYPE));
+        this.addSlot(new FuelInputSlot(tile.getInventory(), 2, 38, 51, MWRecipeSerializers.ALLOY_TYPE));
 
         //Output
         this.addSlot(new OutputSlot(tile.getInventory(), 3, 116, 35));
@@ -73,21 +73,22 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
         throw new IllegalStateException("TileEntity is not correct " + tileAtPos);
     }
 
+    //I do not understand this :C
     @Nonnull
     @Override
-    public ItemStack quickMoveStack(@Nonnull Player player, int index) {
+    public ItemStack quickMoveStack(@Nonnull Player player, int slotIndex) {
         ItemStack returnStack = ItemStack.EMPTY;
-        final Slot slot = this.slots.get(index);
+        final Slot slot = this.slots.get(slotIndex);
         if (slot.hasItem()) {
             final ItemStack slotStack = slot.getItem();
             returnStack = slotStack.copy();
 
-            final int containerSlots = this.slots.size() - player.getInventory().items.size();
-            if (index < containerSlots) {
-                if (!moveItemStackTo(slotStack, containerSlots, this.slots.size(), true)) {
+            final int containerSlotCount = this.slots.size() - player.getInventory().items.size();
+            if (slotIndex < containerSlotCount) {//if the slot is in the container
+                if (!moveItemStackTo(slotStack, containerSlotCount, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!moveItemStackTo(slotStack, 0, containerSlots, false)) {
+            } else if (!moveItemStackTo(slotStack, 0, containerSlotCount, false)) {
                 return ItemStack.EMPTY;
             }
             if (slotStack.getCount() == 0) {
@@ -120,6 +121,6 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(@Nonnull Player player) {
-        return stillValid(containerLevelAccess, player, BlockRegistryHandler.ALLOY_FURNACE_BLOCK.get());
+        return stillValid(containerLevelAccess, player, MWBlocks.ALLOY_FURNACE_BLOCK.get());
     }
 }

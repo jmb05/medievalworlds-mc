@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "medievalworlds:blocks/limestone_bricks",
-    "particle": "medievalworlds:blocks/limestone_bricks"
+    "all": "medievalworlds:block/limestone_bricks",
+    "particle": "medievalworlds:block/limestone_bricks"
   }
 }

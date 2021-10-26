@@ -3,9 +3,9 @@ package net.jmb19905.medievalworlds.common.blockentities;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.menus.BloomeryMenu;
 import net.jmb19905.medievalworlds.common.recipes.BloomRecipe;
-import net.jmb19905.medievalworlds.common.registries.BlockRegistryHandler;
-import net.jmb19905.medievalworlds.common.registries.RecipeSerializerRegistryHandler;
-import net.jmb19905.medievalworlds.common.registries.BlockEntityTypeRegistryHandler;
+import net.jmb19905.medievalworlds.common.registries.MWBlocks;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -64,7 +64,7 @@ public abstract class BloomeryBlockEntity extends BlockEntity {
         private final CustomItemHandler inventory;
 
         public Bottom(BlockPos pos, BlockState state) {
-            super(BlockEntityTypeRegistryHandler.BLOOMERY_BOTTOM.get(), pos, state);
+            super(MWBlockEntityTypes.BLOOMERY_BOTTOM.get(), pos, state);
             this.inventory = new CustomItemHandler(2);
         }
 
@@ -129,7 +129,7 @@ public abstract class BloomeryBlockEntity extends BlockEntity {
         public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T blockEntity) {
             BlockPos topPos = pos.above();
             assert level != null;
-            if (level.getBlockState(topPos).getBlock() != BlockRegistryHandler.BLOOMERY_TOP_BLOCK.get()) {
+            if (level.getBlockState(topPos).getBlock() != MWBlocks.BLOOMERY_TOP_BLOCK.get()) {
                 level.destroyBlock(pos, true);
             }
         }
@@ -139,7 +139,7 @@ public abstract class BloomeryBlockEntity extends BlockEntity {
             if(input == null){
                 return null;
             }
-            Set<Recipe<?>> recipes = findRecipeByType(RecipeSerializerRegistryHandler.BLOOM_TYPE, this.level);
+            Set<Recipe<?>> recipes = findRecipeByType(MWRecipeSerializers.BLOOM_TYPE, this.level);
             for(Recipe<?> iRecipe : recipes){
                 BloomRecipe recipe = (BloomRecipe)iRecipe;
                 assert this.level != null;
@@ -197,13 +197,13 @@ public abstract class BloomeryBlockEntity extends BlockEntity {
     public static class Top extends BloomeryBlockEntity {
 
         public Top(BlockPos pos, BlockState state) {
-            super(BlockEntityTypeRegistryHandler.BLOOMERY_TOP.get(), pos, state);
+            super(MWBlockEntityTypes.BLOOMERY_TOP.get(), pos, state);
         }
 
         public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T blockEntity) {
             BlockPos bottomPos = pos.below();
             assert level != null;
-            if(level.getBlockState(bottomPos).getBlock() != BlockRegistryHandler.BLOOMERY_BOTTOM_BLOCK.get()){
+            if(level.getBlockState(bottomPos).getBlock() != MWBlocks.BLOOMERY_BOTTOM_BLOCK.get()){
                 level.destroyBlock(pos, false);
             }
         }

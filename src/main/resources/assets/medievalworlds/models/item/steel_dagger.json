@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "medievalworlds:items/steel_dagger",
-		"particle": "medievalworlds:items/steel_dagger"
+		"0": "medievalworlds:item/steel_dagger",
+		"particle": "medievalworlds:item/steel_dagger"
 	},
 	"elements": [
 		{

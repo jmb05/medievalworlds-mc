@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.recipes;
 
-import net.jmb19905.medievalworlds.common.registries.RecipeSerializerRegistryHandler;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -80,7 +80,7 @@ public class AlloyRecipe implements IAlloyRecipe{
     @Nonnull
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return RecipeSerializerRegistryHandler.ALLOY_SERIALIZER.get();
+        return MWRecipeSerializers.ALLOY_SERIALIZER.get();
     }
 
     public NonNullList<ItemStack> getInputs() {

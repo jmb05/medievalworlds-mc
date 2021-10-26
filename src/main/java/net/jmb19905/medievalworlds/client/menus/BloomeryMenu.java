@@ -1,8 +1,8 @@
 package net.jmb19905.medievalworlds.client.menus;
 
-import net.jmb19905.medievalworlds.common.registries.BlockRegistryHandler;
-import net.jmb19905.medievalworlds.common.registries.MenuTypeRegistryHandler;
-import net.jmb19905.medievalworlds.common.registries.RecipeSerializerRegistryHandler;
+import net.jmb19905.medievalworlds.common.registries.MWBlocks;
+import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.common.blockentities.BloomeryBlockEntity;
 import net.jmb19905.medievalworlds.util.slots.BloomInputSlot;
 import net.jmb19905.medievalworlds.util.slots.FuelInputSlot;
@@ -29,7 +29,7 @@ public class BloomeryMenu extends AbstractContainerMenu {
     public int currentMaxBurnTime;
 
     public BloomeryMenu(final int windowID, final Inventory playerInventory, final BloomeryBlockEntity.Bottom tile) {
-        super(MenuTypeRegistryHandler.BLOOMERY.get(), windowID);
+        super(MWMenuTypes.BLOOMERY.get(), windowID);
         this.tileEntity = tile;
         this.containerLevelAccess = ContainerLevelAccess.create(Objects.requireNonNull(tile.getLevel()), tile.getBlockPos());
 
@@ -54,7 +54,7 @@ public class BloomeryMenu extends AbstractContainerMenu {
 
         //Input
         this.addSlot(new BloomInputSlot(tile.getInventory(), 0, 1, 79, 16));
-        this.addSlot(new FuelInputSlot(tile.getInventory(), 1, 79, 51, RecipeSerializerRegistryHandler.BLOOM_TYPE));
+        this.addSlot(new FuelInputSlot(tile.getInventory(), 1, 79, 51, MWRecipeSerializers.BLOOM_TYPE));
     }
 
     public BloomeryMenu(final int windowID, final Inventory playerInventory, final FriendlyByteBuf data) {
@@ -73,7 +73,7 @@ public class BloomeryMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(@Nonnull Player player) {
-        return stillValid(containerLevelAccess, player, BlockRegistryHandler.BLOOMERY_BOTTOM_BLOCK.get());
+        return stillValid(containerLevelAccess, player, MWBlocks.BLOOMERY_BOTTOM_BLOCK.get());
     }
 
     @Nonnull

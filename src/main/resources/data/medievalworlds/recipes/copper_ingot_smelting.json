@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "medievalworlds:copper_ore"
-  },
-  "result": "medievalworlds:copper_ingot",
-  "experience": 0.3,
-  "cookingtime": 200
-}

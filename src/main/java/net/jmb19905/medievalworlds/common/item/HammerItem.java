@@ -2,7 +2,7 @@ package net.jmb19905.medievalworlds.common.item;
 
 import net.jmb19905.medievalworlds.common.item.enchantment.LightningStrikeEnchantment;
 import net.jmb19905.medievalworlds.common.item.enchantment.MegaMinerEnchantment;
-import net.jmb19905.medievalworlds.common.registries.EnchantmentRegistryHandler;
+import net.jmb19905.medievalworlds.common.registries.MWEnchantments;
 import net.jmb19905.medievalworlds.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -49,7 +49,7 @@ public class HammerItem extends SwordItem {
 
     public float getDestroySpeed(@Nonnull ItemStack stack, BlockState state) {
         Material material = state.getMaterial();
-        return material == Material.STONE || material == Material.METAL ? tier.getSpeed() + 7 : (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegistryHandler.MEGA_MINER.get(), stack) >= 1) ? 1.5f : 1;
+        return material == Material.STONE || material == Material.METAL ? tier.getSpeed() + 7 : (EnchantmentHelper.getItemEnchantmentLevel(MWEnchantments.MEGA_MINER.get(), stack) >= 1) ? 1.5f : 1;
     }
 
     @Override

@@ -173,5 +173,7 @@
   "tooltip.usedOnHorse": "When used on Horse",
   "tooltip.minimumAttack": "Minimum Attack Damage",
   "tooltip.maximumAttack": "Maximum Attack Damage",
-  "tooltip.chargeTime": "Charge Time"
+  "tooltip.chargeTime": "Charge Time",
+
+  "gui.recipebook.toggleRecipes.alloyable": "Showing Alloyable"
 }

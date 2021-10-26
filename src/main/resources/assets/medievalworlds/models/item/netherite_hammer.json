@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "medievalworlds:items/netherite_hammer",
-		"particle": "medievalworlds:items/netherite_hammer"
+		"0": "medievalworlds:item/netherite_hammer",
+		"particle": "medievalworlds:item/netherite_hammer"
 	},
 	"elements": [
 		{

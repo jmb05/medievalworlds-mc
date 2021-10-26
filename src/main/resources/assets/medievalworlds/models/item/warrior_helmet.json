@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "medievalworlds:items/warrior_helmet"
+    "layer0": "medievalworlds:item/warrior_helmet"
   }
 }

@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "medievalworlds:blocks/copper_block",
-    "particle": "medievalworlds:blocks/copper_block"
+    "all": "medievalworlds:block/copper_block",
+    "particle": "medievalworlds:block/copper_block"
   }
 }

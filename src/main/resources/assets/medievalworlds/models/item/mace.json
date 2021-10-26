@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "medievalworlds:items/mace",
-		"particle": "medievalworlds:items/mace"
+		"0": "medievalworlds:item/mace",
+		"particle": "medievalworlds:item/mace"
 	},
 	"elements": [
 		{

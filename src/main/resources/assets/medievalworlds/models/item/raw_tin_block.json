@@ -1,5 +1,5 @@
 {
-  "parent": "medievalworlds:block/copper_block",
+  "parent": "medievalworlds:block/raw_tin_block",
   "display": {
     "thirdperson": {
       "rotation": [

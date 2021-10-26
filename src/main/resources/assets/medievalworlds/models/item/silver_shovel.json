@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "medievalworlds:items/silver_shovel"
+    "layer0": "medievalworlds:item/silver_shovel"
   }
 }

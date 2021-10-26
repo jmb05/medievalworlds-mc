@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "medievalworlds:items/iron_knight_chestplate"
+    "layer0": "medievalworlds:item/iron_knight_chestplate"
   }
 }

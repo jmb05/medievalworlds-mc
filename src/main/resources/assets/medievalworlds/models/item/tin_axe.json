@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "medievalworlds:items/tin_axe"
+    "layer0": "medievalworlds:item/tin_axe"
   }
 }

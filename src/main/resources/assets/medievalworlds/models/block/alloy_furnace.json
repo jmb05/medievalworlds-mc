@@ -1,12 +1,12 @@
 {
   "parent": "block/cube",
   "textures": {
-    "down": "medievalworlds:blocks/alloy_furnace_side_top_bottom",
-    "up": "medievalworlds:blocks/alloy_furnace_side_top_bottom",
-    "north": "medievalworlds:blocks/alloy_furnace_front_unlit",
-    "east": "medievalworlds:blocks/alloy_furnace_side_top_bottom",
-    "south": "medievalworlds:blocks/alloy_furnace_side_top_bottom",
-    "west": "medievalworlds:blocks/alloy_furnace_side_top_bottom",
-    "particle": "medievalworlds:blocks/alloy_furnace_side_top_bottom"
+    "down": "medievalworlds:block/alloy_furnace_side_top_bottom",
+    "up": "medievalworlds:block/alloy_furnace_side_top_bottom",
+    "north": "medievalworlds:block/alloy_furnace_front_unlit",
+    "east": "medievalworlds:block/alloy_furnace_side_top_bottom",
+    "south": "medievalworlds:block/alloy_furnace_side_top_bottom",
+    "west": "medievalworlds:block/alloy_furnace_side_top_bottom",
+    "particle": "medievalworlds:block/alloy_furnace_side_top_bottom"
   }
 }

@@ -1,10 +1,10 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "medievalworlds:items/iron_shield",
-		"1": "medievalworlds:items/creeper_face_shield_pattern",
-		"2": "medievalworlds:items/shield_handle",
-		"particle": "medievalworlds:items/creeper_face_shield_pattern"
+		"0": "medievalworlds:item/iron_shield",
+		"1": "medievalworlds:item/creeper_face_shield_pattern",
+		"2": "medievalworlds:item/shield_handle",
+		"particle": "medievalworlds:item/creeper_face_shield_pattern"
 	},
 	"elements": [
 		{

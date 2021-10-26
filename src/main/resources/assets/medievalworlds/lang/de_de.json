@@ -61,6 +61,7 @@
   "item.medievalworlds.silver_battle_axe": "Silberstreitaxt",
   "item.medievalworlds.steel_battle_axe": "Stahlstreitaxt",
   "item.medievalworlds.diamond_battle_axe": "Netheritestreitaxt",
+  "item.medievalworlds.netherite_battle_axe": "Netherite Battle Axe",
 
   "item.medievalworlds.iron_dagger": "Eisendolch",
   "item.medievalworlds.silver_dagger": "Silberdolch",
@@ -167,6 +168,12 @@
 
   "item.hammer.hit": "Hammer trifft",
 
-  "itemGroup.MedievalWorlds": "MedievalWorlds"
+  "itemGroup.MedievalWorlds": "MedievalWorlds",
 
+  "tooltip.usedOnHorse": "Wenn auf Pferd benutzt",
+  "tooltip.minimumAttack": "Minimum Schaden",
+  "tooltip.maximumAttack": "Maximum Schaden",
+  "tooltip.chargeTime": "Ladezeit",
+
+  "gui.recipebook.toggleRecipes.alloyable": "Zeigt Legierbar"
 }

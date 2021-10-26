@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "medievalworlds:items/copper_axe"
+    "layer0": "medievalworlds:item/copper_axe"
   }
 }

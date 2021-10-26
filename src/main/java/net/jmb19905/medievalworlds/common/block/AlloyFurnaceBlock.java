@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.block;
 
-import net.jmb19905.medievalworlds.common.registries.BlockEntityTypeRegistryHandler;
+import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.common.blockentities.AlloyFurnaceBlockEntity;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.minecraft.core.BlockPos;
@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -45,8 +46,8 @@ public class AlloyFurnaceBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
-    public AlloyFurnaceBlock() {
-        super(Block.Properties.of(Material.STONE).strength(3.5F).lightLevel(value -> 13));
+    public AlloyFurnaceBlock(BlockBehaviour.Properties properties) {
+        super(properties);
         this.registerDefaultState(this.getStateDefinition().any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(LIT, false));
@@ -55,13 +56,13 @@ public class AlloyFurnaceBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
-        return BlockEntityTypeRegistryHandler.ALLOY_FURNACE.get().create(pos, state);
+        return MWBlockEntityTypes.ALLOY_FURNACE.get().create(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> blockEntityType) {
-        return level.isClientSide() ? null : blockEntityType == BlockEntityTypeRegistryHandler.ALLOY_FURNACE.get() ? AlloyFurnaceBlockEntity::tick : null;
+        return level.isClientSide() ? null : blockEntityType == MWBlockEntityTypes.ALLOY_FURNACE.get() ? AlloyFurnaceBlockEntity::tick : null;
     }
 
     @Override

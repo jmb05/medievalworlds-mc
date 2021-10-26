@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.common.block;
 
-import net.jmb19905.medievalworlds.common.registries.BlockRegistryHandler;
-import net.jmb19905.medievalworlds.common.registries.BlockEntityTypeRegistryHandler;
+import net.jmb19905.medievalworlds.common.registries.MWBlocks;
+import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.common.blockentities.BloomeryBlockEntity;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.minecraft.core.BlockPos;
@@ -46,8 +46,8 @@ public abstract class BloomeryBlock extends Block implements EntityBlock {
 
     public static class Bottom extends BloomeryBlock{
 
-        public Bottom() {
-            super(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(3.5F).lightLevel(value -> 13));
+        public Bottom(Properties properties) {
+            super(properties);
             this.registerDefaultState(this.getStateDefinition().any()
                     .setValue(FACING, Direction.NORTH)
                     .setValue(CLAY, true));
@@ -62,14 +62,14 @@ public abstract class BloomeryBlock extends Block implements EntityBlock {
         @Nullable
         @Override
         public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
-            return BlockEntityTypeRegistryHandler.BLOOMERY_BOTTOM.get().create(pos, state);
+            return MWBlockEntityTypes.BLOOMERY_BOTTOM.get().create(pos, state);
         }
     }
 
     public static class Top extends BloomeryBlock{
 
-        public Top() {
-            super(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(3.5F).lightLevel(value -> 13));
+        public Top(Properties properties) {
+            super(properties);
             this.registerDefaultState(this.getStateDefinition().any()
                     .setValue(FACING, Direction.NORTH)
                     .setValue(CLAY, true));
@@ -84,7 +84,7 @@ public abstract class BloomeryBlock extends Block implements EntityBlock {
         @Nullable
         @Override
         public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
-            return BlockEntityTypeRegistryHandler.BLOOMERY_TOP.get().create(pos, state);
+            return MWBlockEntityTypes.BLOOMERY_TOP.get().create(pos, state);
         }
     }
 
@@ -128,7 +128,7 @@ public abstract class BloomeryBlock extends Block implements EntityBlock {
             }
         }
         BlockPos topPosition = pos.above();
-        level.setBlockAndUpdate(topPosition, BlockRegistryHandler.BLOOMERY_TOP_BLOCK.get().defaultBlockState());
+        level.setBlockAndUpdate(topPosition, MWBlocks.BLOOMERY_TOP_BLOCK.get().defaultBlockState());
     }
 
     @Nonnull

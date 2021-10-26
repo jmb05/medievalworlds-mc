@@ -34,17 +34,9 @@ public class BloomeryScreen extends AbstractContainerScreen<BloomeryMenu> {
     }
 
     @Override
-    protected void renderLabels(@Nonnull PoseStack stack, int mouseX, int mouseY) {
-        super.renderLabels(stack, mouseX, mouseY);
-        this.font.draw(stack, this.title.getString(), 8,5, 0x404040);
-        this.font.draw(stack, this.playerInventoryTitle.getString(), 8, 72, 0x404040);
-    }
-
-    @Override
-    public void render(@Nonnull PoseStack stack, int p_render_1_, int p_render_2_, float p_render_3_) {
-        this.renderBackground(stack);
-        super.render(stack, p_render_1_, p_render_2_, p_render_3_);
-        this.renderTooltip(stack, p_render_1_, p_render_2_);
+    public void render(@Nonnull PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+        super.render(stack, mouseX, mouseY, partialTicks);
+        this.renderTooltip(stack, mouseX, mouseY);
     }
 
 }

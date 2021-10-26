@@ -4,8 +4,8 @@ import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.block.AlloyFurnaceBlock;
 import net.jmb19905.medievalworlds.client.menus.AlloyFurnaceMenu;
 import net.jmb19905.medievalworlds.common.recipes.AlloyRecipe;
-import net.jmb19905.medievalworlds.common.registries.RecipeSerializerRegistryHandler;
-import net.jmb19905.medievalworlds.common.registries.BlockEntityTypeRegistryHandler;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -64,7 +64,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
     }
 
     public AlloyFurnaceBlockEntity(BlockPos pos, BlockState state){
-        this(BlockEntityTypeRegistryHandler.ALLOY_FURNACE.get(), pos, state);
+        this(MWBlockEntityTypes.ALLOY_FURNACE.get(), pos, state);
     }
 
     @Nonnull
@@ -124,13 +124,13 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
                             }
                         }
                         dirty = true;
-                    } else if (ForgeHooks.getBurnTime(inventory.getStackInSlot(2), RecipeSerializerRegistryHandler.ALLOY_TYPE) > 0 && inventory.getStackInSlot(3).getCount() < 64) {
+                    } else if (ForgeHooks.getBurnTime(inventory.getStackInSlot(2), MWRecipeSerializers.ALLOY_TYPE) > 0 && inventory.getStackInSlot(3).getCount() < 64) {
                         //Else If there is a fuel in the fuel slot and the output slot isn't clogged:
                         //reset the fuel burn timer
                         alloyFurnaceBlockEntity.currentBurnTime = 0;
                         alloyFurnaceBlockEntity.fuelConsumed = false;
                         //change the mx burn time to the burn time of the fuel
-                        alloyFurnaceBlockEntity.currentMaxBurnTime = ForgeHooks.getBurnTime(inventory.getStackInSlot(2), RecipeSerializerRegistryHandler.ALLOY_TYPE);
+                        alloyFurnaceBlockEntity.currentMaxBurnTime = ForgeHooks.getBurnTime(inventory.getStackInSlot(2), MWRecipeSerializers.ALLOY_TYPE);
                         dirty = true;
                     } else {
                         //reset the fuel burn timer to -1 to indicate that the timer has halted
@@ -244,7 +244,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         if(input1 == null || input2 == null){
             return null;
         }
-        Set<Recipe<?>> recipes = findRecipeByType(RecipeSerializerRegistryHandler.ALLOY_TYPE, this.level);
+        Set<Recipe<?>> recipes = findRecipeByType(MWRecipeSerializers.ALLOY_TYPE, this.level);
         for(Recipe<?> iRecipe : recipes){
             AlloyRecipe recipe = (AlloyRecipe)iRecipe;
             assert this.level != null;
