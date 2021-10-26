@@ -3,11 +3,12 @@ package net.jmb19905.medievalworlds.common.registries;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.block.AbstractOreBlock;
 import net.jmb19905.medievalworlds.common.block.AlloyFurnaceBlock;
-import net.jmb19905.medievalworlds.common.block.BloomeryBlock;
+import net.jmb19905.medievalworlds.common.block.slackTub.SlackTubBlock;
+import net.jmb19905.medievalworlds.common.block.bloomery.BloomeryBlockBottom;
+import net.jmb19905.medievalworlds.common.block.bloomery.BloomeryBlockTop;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -39,12 +40,13 @@ public class MWBlocks {
 
     public static final RegistryObject<Block> ALLOY_FURNACE_BLOCK = BLOCKS.register("alloy_furnace", () -> new AlloyFurnaceBlock(Block.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(3.5F).lightLevel(value -> 13)));
 
-    public static final RegistryObject<Block> BLOOMERY_BOTTOM_BLOCK = BLOCKS.register("bloomery_bottom", () -> new BloomeryBlock.Bottom(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).sound(SoundType.STONE).strength(3.5F).lightLevel(value -> 13)));
-    public static final RegistryObject<Block> BLOOMERY_TOP_BLOCK = BLOCKS.register("bloomery_top", () -> new BloomeryBlock.Top(BlockBehaviour.Properties.copy(BLOOMERY_BOTTOM_BLOCK.get())));
+    public static final RegistryObject<Block> BLOOMERY_BOTTOM_BLOCK = BLOCKS.register("bloomery_bottom", () -> new BloomeryBlockBottom(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).sound(SoundType.STONE).strength(3.5F).lightLevel(value -> 13)));
+    public static final RegistryObject<Block> BLOOMERY_TOP_BLOCK = BLOCKS.register("bloomery_top", () -> new BloomeryBlockTop(BlockBehaviour.Properties.copy(BLOOMERY_BOTTOM_BLOCK.get())));
 
     public static final RegistryObject<Block> LIMESTONE_BLOCK = BLOCKS.register("limestone", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SAND).requiresCorrectToolForDrops().strength(1.5f, 3).sound(SoundType.STONE)));
     public static final RegistryObject<Block> LIMESTONE_BRICKS_BLOCK = BLOCKS.register("limestone_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SAND).requiresCorrectToolForDrops().strength(1.5f, 3.5f).sound(SoundType.STONE)));
 
+    public static final RegistryObject<SlackTubBlock> SLACK_TUB_BLOCK = BLOCKS.register("slack_tub", () -> new SlackTubBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
 
     //BlockItems
     public static final RegistryObject<BlockItem> BRONZE_BLOCK_ITEM = BLOCK_ITEMS.register("bronze_block", () -> new BlockItem(BRONZE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab))) ;
@@ -66,5 +68,7 @@ public class MWBlocks {
 
     public static final RegistryObject<BlockItem> LIMESTONE_ITEM = BLOCK_ITEMS.register("limestone", () -> new BlockItem(LIMESTONE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<BlockItem> LIMESTONE_BRICKS_ITEM = BLOCK_ITEMS.register("limestone_bricks", () -> new BlockItem(LIMESTONE_BRICKS_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
+
+    public static final RegistryObject<BlockItem> SLACK_TUB = BLOCK_ITEMS.register("slack_tub", () -> new BlockItem(SLACK_TUB_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
 
 }

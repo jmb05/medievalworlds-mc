@@ -4,12 +4,12 @@ import net.jmb19905.medievalworlds.client.model.armor.KnightArmorHelmetModel;
 import net.jmb19905.medievalworlds.client.networking.NetworkStartupClientOnly;
 import net.jmb19905.medievalworlds.client.screen.AlloyFurnaceScreen;
 import net.jmb19905.medievalworlds.client.screen.BloomeryScreen;
+import net.jmb19905.medievalworlds.common.block.slackTub.SlackTubInteraction;
 import net.jmb19905.medievalworlds.common.capability.CapabilityAttachEventHandler;
 import net.jmb19905.medievalworlds.common.capability.Motion;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.registries.*;
 import net.jmb19905.medievalworlds.common.world.gen.OreGenerator;
-import net.jmb19905.medievalworlds.core.MWEventBusSubscriber;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
@@ -43,6 +43,8 @@ public class MedievalWorlds {
     public MedievalWorlds() {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        SlackTubInteraction.bootstrap();
+
         MWBlocks.BLOCKS.register(modEventBus);
         MWBlocks.BLOCK_ITEMS.register(modEventBus);
         MWItems.ITEMS.register(modEventBus);
@@ -73,7 +75,7 @@ public class MedievalWorlds {
         registerCommonEvents();
         OreGenerator.registerOres();
 
-        MinecraftForge.EVENT_BUS.register(MWEventBusSubscriber.class);
+        //MinecraftForge.EVENT_BUS.register(MWEventBusSubscriber.class);
         MinecraftForge.EVENT_BUS.register(CapabilityAttachEventHandler.class);
     }
 
