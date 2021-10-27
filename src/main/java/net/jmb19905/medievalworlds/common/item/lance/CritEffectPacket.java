@@ -5,9 +5,9 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class TargetEffectMessageToClient {
+public class CritEffectPacket {
 
-    public TargetEffectMessageToClient(Vec3 i_targetCoordinates, double xSpread, double ySpread, double zSpread) {
+    public CritEffectPacket(Vec3 i_targetCoordinates, double xSpread, double ySpread, double zSpread) {
         targetCoordinates = i_targetCoordinates;
         this.xSpread = xSpread;
         this.ySpread = ySpread;
@@ -36,7 +36,7 @@ public class TargetEffectMessageToClient {
     }
 
     // for use by the message handler only.
-    public TargetEffectMessageToClient()
+    public CritEffectPacket()
     {
         messageIsValid = false;
     }
@@ -46,9 +46,8 @@ public class TargetEffectMessageToClient {
      * Used to read the ByteBuf contents into your member variables
      * @param buf the PacketBuffer
      */
-    public static TargetEffectMessageToClient decode(FriendlyByteBuf buf)
-    {
-        TargetEffectMessageToClient retval = new TargetEffectMessageToClient();
+    public static CritEffectPacket decode(FriendlyByteBuf buf) {
+        CritEffectPacket retval = new CritEffectPacket();
         try {
             double x = buf.readDouble();
             double y = buf.readDouble();
@@ -70,8 +69,7 @@ public class TargetEffectMessageToClient {
      * Used to write the contents of your message member variables into the ByteBuf, ready for transmission over the network.
      * @param buf the PacketBuffer
      */
-    public void encode(FriendlyByteBuf buf)
-    {
+    public void encode(FriendlyByteBuf buf) {
         if (!messageIsValid) return;
         buf.writeDouble(targetCoordinates.x);
         buf.writeDouble(targetCoordinates.y);
@@ -80,8 +78,6 @@ public class TargetEffectMessageToClient {
         buf.writeDouble(xSpread);
         buf.writeDouble(ySpread);
         buf.writeDouble(zSpread);
-
-        //System.out.println("TargetEffectMessageToClient:toBytes length=" + buf.readableBytes());  // debugging only
     }
 
     @Override

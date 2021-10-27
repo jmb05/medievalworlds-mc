@@ -1,19 +1,18 @@
 package net.jmb19905.medievalworlds.common.block.slackTub;
 
-import net.minecraft.client.color.block.BlockColor;
+import net.jmb19905.medievalworlds.util.BlockInteraction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -22,7 +21,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nonnull;
-import java.util.Map;
 import java.util.stream.Stream;
 
 @SuppressWarnings("deprecation")
@@ -39,38 +37,47 @@ public class SlackTubBlock extends Block {
     private static final VoxelShape INSIDE = Block.box(1,1,1,14,11,14);
 
     public static final BooleanProperty FILLED = BooleanProperty.create("filled");
-
-    private Map<Item, SlackTubInteraction> interactions;
+    public static final IntegerProperty EVAPORATION_CHANCE = IntegerProperty.create("evaporation_chance", 0, 10);
 
     public SlackTubBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.getStateDefinition().any().setValue(FILLED, false));
-        this.interactions = SlackTubInteraction.EMPTY;
+        this.registerDefaultState(this.getStateDefinition().any().setValue(FILLED, false).setValue(EVAPORATION_CHANCE, 0));
     }
 
-    public boolean isFull(BlockState state){
+    public static boolean isFull(BlockState state){
         return state.getValue(FILLED);
     }
 
-    public BlockState setEmpty(BlockState state, Level level, BlockPos pos) {
-        BlockState newState = state.setValue(FILLED, false);
+    public static BlockState setEmpty(BlockState state, Level level, BlockPos pos) {
+        BlockState newState = state.setValue(FILLED, false).setValue(EVAPORATION_CHANCE, 0);
         level.setBlockAndUpdate(pos, newState);
-        this.interactions = SlackTubInteraction.EMPTY;
         return newState;
     }
 
-    public BlockState setFull(BlockState state, Level level, BlockPos pos){
-        BlockState newState = state.setValue(FILLED, true);
+    public static BlockState setFull(BlockState state, Level level, BlockPos pos){
+        BlockState newState = state.setValue(FILLED, true).setValue(EVAPORATION_CHANCE, 0);
         level.setBlockAndUpdate(pos, newState);
-        this.interactions = SlackTubInteraction.WATER;
         return newState;
+    }
+
+    public static int getEvaporationChance(BlockState state) {
+        return state.getValue(EVAPORATION_CHANCE);
+    }
+
+    public static float getEvaporationFactor(BlockState state) {
+        return getEvaporationChance(state) / 10f;
+    }
+
+    public static BlockState increaseEvaporationChance(BlockState state) {
+        int evaporationChance = getEvaporationChance(state);
+        return state.setValue(EVAPORATION_CHANCE, evaporationChance < 10 ? evaporationChance + 1 : evaporationChance);
     }
 
     @Nonnull
     @Override
     public InteractionResult use(@Nonnull BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, Player player, @Nonnull InteractionHand hand, @Nonnull BlockHitResult hitResult) {
         ItemStack stack = player.getItemInHand(hand);
-        SlackTubInteraction interaction = this.interactions.get(stack.getItem());
+        BlockInteraction interaction = SlackTubInteraction.INTERACTIONS.get(stack.getItem());
         return interaction.interact(state, level, pos, player, hand, stack);
     }
 
@@ -81,7 +88,7 @@ public class SlackTubBlock extends Block {
 
     @Override
     protected void createBlockStateDefinition(@Nonnull StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FILLED);
+        builder.add(FILLED, EVAPORATION_CHANCE);
     }
 
     @Nonnull

@@ -18,7 +18,6 @@ public class MWItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MedievalWorlds.MOD_ID);
 
     //Materials
-
     public static final RegistryObject<Item> RAW_TIM = ITEMS.register("raw_tin", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
     public static final RegistryObject<Item> TIN_INGOT = ITEMS.register("tin_ingot", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
     public static final RegistryObject<Item> TIN_NUGGET = ITEMS.register("tin_nugget", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
@@ -64,6 +63,14 @@ public class MWItems {
     public static final RegistryObject<Item> SILVER_AXE = ITEMS.register("silver_axe", () -> new AxeItem(MWItemTiers.SILVER_ITEM_TIER, 5, -3.1f, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> SILVER_SHOVEL = ITEMS.register("silver_shovel", () -> new ShovelItem(MWItemTiers.SILVER_ITEM_TIER, 0, -3, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> SILVER_HOE = ITEMS.register("silver_hoe", () -> new HoeItem(MWItemTiers.SILVER_ITEM_TIER, 0, -3f, new Item.Properties().tab(MedievalWorlds.tab)));
+
+    public static final RegistryObject<Item> WOODEN_FORGE_HAMMER = ITEMS.register("wooden_forge_hammer", () -> new ForgeHammerItem(Tiers.WOOD, new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<Item> STONE_FORGE_HAMMER = ITEMS.register("stone_forge_hammer", () -> new ForgeHammerItem(Tiers.STONE, new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<Item> IRON_FORGE_HAMMER = ITEMS.register("iron_forge_hammer", () -> new ForgeHammerItem(Tiers.IRON, new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<Item> STEEL_FORGE_HAMMER = ITEMS.register("steel_forge_hammer", () -> new ForgeHammerItem(MWItemTiers.STEEL_ITEM_TIER, new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<Item> DIAMOND_FORGE_HAMMER = ITEMS.register("diamond_forge_hammer", () -> new ForgeHammerItem(Tiers.DIAMOND, new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<Item> NETHERITE_FORGE_HAMMER = ITEMS.register("netherite_forge_hammer", () -> new ForgeHammerItem(Tiers.NETHERITE, new Item.Properties().tab(MedievalWorlds.tab)));
+
 
     //Weapons
     public static final RegistryObject<Item> TIN_SWORD = ITEMS.register("tin_sword", () -> new SwordItem(MWItemTiers.TIN_ITEM_TIER, 1, -2.5f, new Item.Properties().tab(MedievalWorlds.tab)));

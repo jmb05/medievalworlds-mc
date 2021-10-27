@@ -3,7 +3,7 @@ package net.jmb19905.medievalworlds.common.networking;
 import net.jmb19905.medievalworlds.common.capability.Motion;
 import net.jmb19905.medievalworlds.common.item.LanceItem;
 import net.jmb19905.medievalworlds.common.item.lance.EntityMessageToServer;
-import net.jmb19905.medievalworlds.common.item.lance.TargetEffectMessageToClient;
+import net.jmb19905.medievalworlds.common.item.lance.CritEffectPacket;
 import net.jmb19905.medievalworlds.util.ConfigHandler;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,7 +22,6 @@ import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Objects;
 import java.util.function.Supplier;
 
 public class MessageHandlerOnServer {
@@ -68,8 +67,8 @@ public class MessageHandlerOnServer {
                     }
                     if (message.isCritical()) {
                         AABB boundingBox = entity.getBoundingBox();
-                        TargetEffectMessageToClient msg = new TargetEffectMessageToClient(new Vec3(entity.getX(), entity.getY(), entity.getZ()), boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY, boundingBox.maxZ - boundingBox.minZ);   // must generate a fresh message for every player!
-                        ResourceKey<Level> playerDimension = sendingPlayer.getRespawnDimension();  // TODO: not respawn dimension but playerDimension ???
+                        CritEffectPacket msg = new CritEffectPacket(new Vec3(entity.getX(), entity.getY(), entity.getZ()), boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY, boundingBox.maxZ - boundingBox.minZ);   // must generate a fresh message for every player!
+                        ResourceKey<Level> playerDimension = sendingPlayer.getLevel().dimension();
                         NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(() -> playerDimension), msg);
                     }
 

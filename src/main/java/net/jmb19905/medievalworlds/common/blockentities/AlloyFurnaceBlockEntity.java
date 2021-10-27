@@ -96,7 +96,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
                     if (alloyFurnaceBlockEntity.currentBurnTime < alloyFurnaceBlockEntity.currentMaxBurnTime && alloyFurnaceBlockEntity.currentBurnTime >= 0 && inventory.getStackInSlot(3).getCount() < 64) {
                         //If not fuel Item has been consumed it is done now
                         if (!alloyFurnaceBlockEntity.fuelConsumed) {
-                            inventory.decrStackSize(2, 1);
+                            inventory.decreaseStackSize(2, 1);
                             alloyFurnaceBlockEntity.fuelConsumed = true;
                         }
                         //Checks if the alloy timer is running
@@ -116,11 +116,11 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
                             inventory.insertItem(3, output.copy(), false);
                             //Checks if the recipe was flipped and removes the recipes accordingly
                             if (flipped) {
-                                inventory.decrStackSize(1, recipe.getInput1().getCount());
-                                inventory.decrStackSize(0, recipe.getInput2().getCount());
+                                inventory.decreaseStackSize(1, recipe.getInput1().getCount());
+                                inventory.decreaseStackSize(0, recipe.getInput2().getCount());
                             } else {
-                                inventory.decrStackSize(0, recipe.getInput1().getCount());
-                                inventory.decrStackSize(1, recipe.getInput2().getCount());
+                                inventory.decreaseStackSize(0, recipe.getInput1().getCount());
+                                inventory.decreaseStackSize(1, recipe.getInput2().getCount());
                             }
                         }
                         dirty = true;

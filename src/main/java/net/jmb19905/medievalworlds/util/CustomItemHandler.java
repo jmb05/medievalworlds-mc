@@ -31,7 +31,7 @@ public class CustomItemHandler extends ItemStackHandler {
         return false;
     }
 
-    public void decrStackSize(int index, int count) {
+    public void decreaseStackSize(int index, int count) {
         ItemStack stack = getStackInSlot(index);
         stack.shrink(count);
         setStackInSlot(index, stack);

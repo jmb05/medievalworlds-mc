@@ -1,8 +1,10 @@
 package net.jmb19905.medievalworlds.client.networking;
 
-import net.jmb19905.medievalworlds.common.item.lance.TargetEffectMessageToClient;
+import net.jmb19905.medievalworlds.common.item.lance.CritEffectPacket;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
+import net.jmb19905.medievalworlds.common.networking.SteamEffectPacket;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -19,17 +21,17 @@ import java.util.function.Supplier;
 
 public class MessageHandlerOnClient {
 
-    public static void onMessageReceived(final TargetEffectMessageToClient message, Supplier<NetworkEvent.Context> ctxSupplier) {
+    public static void onMessageReceived(final CritEffectPacket message, Supplier<NetworkEvent.Context> ctxSupplier) {
         NetworkEvent.Context ctx = ctxSupplier.get();
         LogicalSide sideReceived = ctx.getDirection().getReceptionSide();
         ctx.setPacketHandled(true);
 
         if (sideReceived != LogicalSide.CLIENT) {
-            LOGGER.warn("TargetEffectMessageToClient received on wrong side:" + ctx.getDirection().getReceptionSide());
+            LOGGER.warn("TargetEffectMessageToClient received on wrong side :" + ctx.getDirection().getReceptionSide());
             return;
         }
         if (!message.isMessageValid()) {
-            LOGGER.warn("TargetEffectMessageToClient was invalid" + message);
+            LOGGER.warn("TargetEffectMessageToClient was invalid " + message);
             return;
         }
         // we know for sure that this handler is only used on the client side, so it is ok to assume
@@ -44,12 +46,12 @@ public class MessageHandlerOnClient {
 
         // This code creates a new task which will be executed by the client during the next tick
         //  In this case, the task is to call messageHandlerOnClient.processMessage(worldclient, message)
-        ctx.enqueueWork(() -> processMessage(clientWorld.get(), message));
+        ctx.enqueueWork(() -> processCritEffectPacket(clientWorld.get(), message));
     }
 
     // This message is called from the Client thread.
     //   It spawns a number of Particle particles at the target location within a short range around the target location
-    private static void processMessage(ClientLevel worldClient, TargetEffectMessageToClient message) {
+    private static void processCritEffectPacket(ClientLevel worldClient, CritEffectPacket message) {
         Random random = new Random();
         final int NUMBER_OF_PARTICLES = 10;
         for (int i = 0; i < NUMBER_OF_PARTICLES; ++i) {
@@ -59,6 +61,37 @@ public class MessageHandlerOnClient {
             double spawnZPos = targetCoordinates.z + (2 * random.nextDouble() - 1) * message.getZSpread();
             worldClient.addParticle(ParticleTypes.CRIT, spawnXPos, spawnYPos, spawnZPos, 0, 0, 0);
             worldClient.playSound(null, spawnXPos, spawnYPos, spawnZPos, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.0F, 1.0F);
+        }
+    }
+
+    public static void onSteamEffectPacketReceived(final SteamEffectPacket packet, Supplier<NetworkEvent.Context> ctxSupplier) {
+        NetworkEvent.Context ctx = ctxSupplier.get();
+        LogicalSide sideReceived = ctx.getDirection().getReceptionSide();
+        ctx.setPacketHandled(true);
+
+        if(sideReceived != LogicalSide.CLIENT) {
+            LOGGER.warn("SteamEffectPacket received on wrong side: " + ctx.getDirection().getReceptionSide());
+            return;
+        }if(!packet.isValid()) {
+            LOGGER.warn("SteamEffectPacket was invalid " + packet);
+            return;
+        }
+
+        Optional<ClientLevel> clientWorld = LogicalSidedProvider.CLIENTWORLD.get(sideReceived);
+        if (clientWorld.isEmpty()) {
+            LOGGER.warn("SteamEffectPacket context could not provide a ClientWorld.");
+            return;
+        }
+
+        ctx.enqueueWork(() -> processSteamEffectPacket(clientWorld.get(), packet));
+    }
+
+    private static void processSteamEffectPacket(ClientLevel level, SteamEffectPacket packet) {
+        Random random = level.getRandom();
+        BlockPos coords = packet.getTargetCoords();
+        float spread = packet.getSpread();
+        for(int i = 0; i < 8; ++i) {
+            level.addParticle(ParticleTypes.CLOUD, coords.getX() + random.nextDouble() * spread, coords.getY() + 1.2D * spread, coords.getZ() + random.nextDouble() * spread, random.nextDouble() * .1, 0.1D, Math.abs(random.nextDouble()) * .05);
         }
     }
 

@@ -1,8 +1,10 @@
 package net.jmb19905.medievalworlds.common.block.slackTub;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.jmb19905.medievalworlds.common.registries.MWBlocks;
-import net.minecraft.Util;
+import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
+import net.jmb19905.medievalworlds.common.networking.SteamEffectPacket;
+import net.jmb19905.medievalworlds.common.registries.MWItems;
+import net.jmb19905.medievalworlds.util.BlockInteraction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -18,32 +20,28 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import java.util.Map;
 import java.util.function.Predicate;
 
-public interface SlackTubInteraction {
-    Map<Item, SlackTubInteraction> EMPTY = newInteractionMap();
-    Map<Item, SlackTubInteraction> WATER = newInteractionMap();
+public interface SlackTubInteraction extends BlockInteraction {
+    Map<Item, SlackTubInteraction> INTERACTIONS = BlockInteraction.newInteractionMap();
 
     SlackTubInteraction FILL_WATER = (state, level, pos, player, hand, stack)
-            -> emptyBucket(level, pos, player, hand, stack, MWBlocks.SLACK_TUB_BLOCK.get().setFull(state, level, pos), SoundEvents.BUCKET_EMPTY);
+            -> emptyBucket(level, pos, player, hand, stack, SlackTubBlock.setFull(state, level, pos), SoundEvents.BUCKET_EMPTY);
 
     SlackTubInteraction EMPTY_WATER = (state, level, pos, player, hand, stack)
-            -> fillBucket(state, level, pos, player, hand, stack, new ItemStack(Items.WATER_BUCKET), (predicateState) -> MWBlocks.SLACK_TUB_BLOCK.get().isFull(predicateState), SoundEvents.BUCKET_FILL);
+            -> fillBucket(state, level, pos, player, hand, stack, new ItemStack(Items.WATER_BUCKET), SlackTubBlock::isFull, SoundEvents.FIRE_EXTINGUISH);
 
-    static Object2ObjectOpenHashMap<Item, SlackTubInteraction> newInteractionMap() {
-        return Util.make(new Object2ObjectOpenHashMap<>(), (map)
-                -> map.defaultReturnValue((p_175739_, p_175740_, p_175741_, p_175742_, p_175743_, p_175744_)
-                -> InteractionResult.PASS));
-    }
-
-    InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack);
+    SlackTubInteraction QUENCH = (state, level, pos, player, hand, stack)
+            -> quenchItem(level, pos, player, hand, stack, state, SlackTubBlock::isFull, SoundEvents.BUCKET_FILL);
 
     static void bootstrap(){
-        EMPTY.put(Items.WATER_BUCKET, FILL_WATER);
-        WATER.put(Items.WATER_BUCKET, FILL_WATER);
-        WATER.put(Items.BUCKET, EMPTY_WATER);
+        INTERACTIONS.put(Items.WATER_BUCKET, FILL_WATER);
+        INTERACTIONS.put(Items.BUCKET, EMPTY_WATER);
+        INTERACTIONS.put(Items.IRON_INGOT, QUENCH);
+        INTERACTIONS.put(MWItems.STEEL_INGOT.get(), QUENCH);
     }
 
     static InteractionResult fillBucket(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack, ItemStack stack2, Predicate<BlockState> predicate, SoundEvent soundEvent) {
@@ -55,7 +53,7 @@ public interface SlackTubInteraction {
                 player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, stack2));
                 //player.awardStat(Stats.USE_CAULDRON);
                 player.awardStat(Stats.ITEM_USED.get(item));
-                level.setBlockAndUpdate(pos, MWBlocks.SLACK_TUB_BLOCK.get().setEmpty(state, level, pos));
+                level.setBlockAndUpdate(pos, SlackTubBlock.setEmpty(state, level, pos));
                 level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
             }
@@ -75,4 +73,34 @@ public interface SlackTubInteraction {
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
+
+    static InteractionResult quenchItem(Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack, BlockState state, Predicate<BlockState> condition, SoundEvent soundEvent) {
+        if(!condition.test(state)) {
+            return InteractionResult.PASS;
+        } else {
+            if(!level.isClientSide) {
+                int heat = stack.getOrCreateTag().getInt(MedievalWorlds.MOD_ID + ".heat");
+                //if(heat > 0) {
+                    float evaporationFactor = SlackTubBlock.getEvaporationFactor(state) * .5f;
+                    boolean evaporates = level.getRandom().nextFloat() < evaporationFactor;
+                    if(evaporates) {
+                        level.setBlockAndUpdate(pos, state.setValue(SlackTubBlock.FILLED, false));
+                    }else {
+                        level.setBlockAndUpdate(pos, SlackTubBlock.increaseEvaporationChance(state));
+                    }
+                    stack.getOrCreateTag().putInt(MedievalWorlds.MOD_ID + ".heat", 0);
+                    sendStemEffectPacket(level, pos, 1);
+                    level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
+                //} else {
+                //    return InteractionResult.PASS;
+                //}
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+    }
+
+    static void sendStemEffectPacket(Level level, BlockPos position, float spread) {
+        NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(level::dimension), new SteamEffectPacket(position, spread));
+    }
+
 }

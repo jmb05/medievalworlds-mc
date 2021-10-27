@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.item.armor;
 
-import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.client.ClientSetup;
 import net.jmb19905.medievalworlds.client.model.armor.KnightArmorHelmetModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -30,7 +30,7 @@ public class KnightArmorHelmetItem extends ArmorItem {
             @SuppressWarnings("unchecked")
             @Override
             public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
-                KnightArmorHelmetModel model = new KnightArmorHelmetModel(Minecraft.getInstance().getEntityModels().bakeLayer(MedievalWorlds.ClientSetup.KNIGHT_HELMET_LAYER));
+                KnightArmorHelmetModel model = new KnightArmorHelmetModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientSetup.KNIGHT_HELMET_LAYER));
                 return (A) model;
             }
         });

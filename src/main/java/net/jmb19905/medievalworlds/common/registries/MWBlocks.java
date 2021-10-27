@@ -3,6 +3,8 @@ package net.jmb19905.medievalworlds.common.registries;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.block.AbstractOreBlock;
 import net.jmb19905.medievalworlds.common.block.AlloyFurnaceBlock;
+import net.jmb19905.medievalworlds.common.block.anvil.CustomAnvilBlock;
+import net.jmb19905.medievalworlds.common.block.anvil.StoneAnvil;
 import net.jmb19905.medievalworlds.common.block.slackTub.SlackTubBlock;
 import net.jmb19905.medievalworlds.common.block.bloomery.BloomeryBlockBottom;
 import net.jmb19905.medievalworlds.common.block.bloomery.BloomeryBlockTop;
@@ -47,6 +49,7 @@ public class MWBlocks {
     public static final RegistryObject<Block> LIMESTONE_BRICKS_BLOCK = BLOCKS.register("limestone_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SAND).requiresCorrectToolForDrops().strength(1.5f, 3.5f).sound(SoundType.STONE)));
 
     public static final RegistryObject<SlackTubBlock> SLACK_TUB_BLOCK = BLOCKS.register("slack_tub", () -> new SlackTubBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
+    public static final RegistryObject<StoneAnvil> STONE_ANVIL = BLOCKS.register("stone_anvil", () -> new StoneAnvil(BlockBehaviour.Properties.of(Material.STONE).strength(3.0f).sound(SoundType.STONE)));
 
     //BlockItems
     public static final RegistryObject<BlockItem> BRONZE_BLOCK_ITEM = BLOCK_ITEMS.register("bronze_block", () -> new BlockItem(BRONZE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab))) ;
@@ -70,5 +73,6 @@ public class MWBlocks {
     public static final RegistryObject<BlockItem> LIMESTONE_BRICKS_ITEM = BLOCK_ITEMS.register("limestone_bricks", () -> new BlockItem(LIMESTONE_BRICKS_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
 
     public static final RegistryObject<BlockItem> SLACK_TUB = BLOCK_ITEMS.register("slack_tub", () -> new BlockItem(SLACK_TUB_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<BlockItem> STONE_ANVIL_ITEM = BLOCK_ITEMS.register("stone_anvil", () -> new BlockItem(STONE_ANVIL.get(), new Item.Properties().tab(MedievalWorlds.tab)));
 
 }

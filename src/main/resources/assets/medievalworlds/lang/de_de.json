@@ -12,6 +12,8 @@
   "block.medievalworlds.silver_block": "Silberblock",
   "block.medievalworlds.silver_ore": "Silbererz",
 
+  "block.medievalworlds.slack_tup": "Härtebecken",
+
   "item.medievalworlds.copper_pickaxe": "Kupferspitzhacke",
   "item.medievalworlds.tin_pickaxe": "Zinnspitzhacke",
   "item.medievalworlds.bronze_pickaxe": "Bronzespitzhacke",
@@ -80,6 +82,12 @@
   "item.minecraft.bow": "Bogen",
   "item.medievalworlds.longbow": "Langbogen",
 
+  "item.medievalworlds.wooden_forge_hammer": "Holz Schmiedehammer",
+  "item.medievalworlds.stone_forge_hammer": "Stein Schmiedehammer",
+  "item.medievalworlds.iron_forge_hammer": "Eisen Schmiedehammer",
+  "item.medievalworlds.steel_forge_hammer": "Stahl Schmiedehammer",
+  "item.medievalworlds.diamond_forge_hammer": "Diamant Schmiedehammer",
+  "item.medievalworlds.netherite_forge_hammer": "Netherit Schmiedehammer",
 
   "item.medievalworlds.key": "Schlüssel",
   "item.medievalworlds.lock": "Schloss",
