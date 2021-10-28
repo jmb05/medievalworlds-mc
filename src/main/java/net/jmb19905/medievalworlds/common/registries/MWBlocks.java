@@ -11,6 +11,7 @@ import net.jmb19905.medievalworlds.common.block.bloomery.BloomeryBlockTop;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -36,6 +37,10 @@ public class MWBlocks {
     public static final RegistryObject<Block> RUBY_ORE_BLOCK = BLOCKS.register("ruby_ore", () -> new AbstractOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3).sound(SoundType.STONE), 0, 3));
     public static final RegistryObject<Block> SILVER_ORE_BLOCK = BLOCKS.register("silver_ore", () -> new AbstractOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3).sound(SoundType.STONE), 0));
     //public static final RegistryObject<Block> LEAD_ORE_BLOCK = BLOCKS.register("lead_ore", () -> new AbstractOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3).sound(SoundType.STONE), 0));
+
+    public static final RegistryObject<Block> DEEPSLATE_TIN_ORE_BLOCK = BLOCKS.register("deepslate_tin_ore", () -> new AbstractOreBlock(BlockBehaviour.Properties.copy(TIN_ORE_BLOCK.get()).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE),0));
+    public static final RegistryObject<Block> DEEPSLATE_RUBY_ORE_BLOCK = BLOCKS.register("deepslate_ruby_ore", () -> new AbstractOreBlock(BlockBehaviour.Properties.copy(RUBY_ORE_BLOCK.get()).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), 3, 7));
+    public static final RegistryObject<Block> DEEPSLATE_SILVER_ORE_BLOCK = BLOCKS.register("deepslate_silver_ore", () -> new AbstractOreBlock(BlockBehaviour.Properties.copy(SILVER_ORE_BLOCK.get()).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), 0));
 
     public static final RegistryObject<Block> RAW_TIN_BLOCK = BLOCKS.register("raw_tin_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GRAY).requiresCorrectToolForDrops().strength(5.0F, 6.0F)));
     public static final RegistryObject<Block> RAW_SILVER_BLOCK = BLOCKS.register("raw_silver_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_GRAY).requiresCorrectToolForDrops().strength(5.0F, 6.0F)));
