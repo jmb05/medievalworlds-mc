@@ -5,11 +5,9 @@ import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.registries.MWBlocks;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.Features;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -24,11 +22,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 
-import static net.minecraft.data.worldgen.Features.*;
-
 public class OreGenerator {
 
-    public static ImmutableList<OreConfiguration.TargetBlockState> ORE_TARGET_LIST;
     public static final ArrayList<ConfiguredFeature<?, ?>> overworldOres = new ArrayList<>();
     public static final ArrayList<ConfiguredFeature<?, ?>> mountainOres = new ArrayList<>();
 
@@ -67,7 +62,7 @@ public class OreGenerator {
             }
         }
         if(evt.getCategory() == Biome.BiomeCategory.EXTREME_HILLS) {
-            for (ConfiguredFeature<?, ?> ore : overworldOres) {
+            for (ConfiguredFeature<?, ?> ore : mountainOres) {
                 if (ore != null) {
                     generation.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).add(() -> ore);
                 }
