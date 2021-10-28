@@ -51,7 +51,6 @@ import java.util.stream.Collectors;
 public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider {
 
     public int currentAlloyTime = 0;
-    //TODO: check why alloy time and burn time do not align
     public final int maxAlloyTime = 200 - 2;
     public int currentBurnTime = 0;
     public int currentMaxBurnTime = 0;
