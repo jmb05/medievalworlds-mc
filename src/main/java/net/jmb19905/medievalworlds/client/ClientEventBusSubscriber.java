@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.client;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.blockentities.anvil.CustomAnvilRenderer;
+import net.jmb19905.medievalworlds.client.ber.CustomAnvilRenderer;
 import net.jmb19905.medievalworlds.common.item.LanceItem;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.minecraft.client.player.AbstractClientPlayer;

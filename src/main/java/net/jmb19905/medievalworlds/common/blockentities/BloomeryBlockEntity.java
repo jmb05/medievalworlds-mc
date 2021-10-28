@@ -2,7 +2,7 @@ package net.jmb19905.medievalworlds.common.blockentities;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.menus.BloomeryMenu;
-import net.jmb19905.medievalworlds.common.recipes.BloomRecipe;
+import net.jmb19905.medievalworlds.common.recipes.bloom.BloomRecipe;
 import net.jmb19905.medievalworlds.common.registries.MWBlocks;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;

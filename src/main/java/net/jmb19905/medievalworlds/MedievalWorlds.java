@@ -5,7 +5,7 @@ import net.jmb19905.medievalworlds.client.networking.NetworkStartupClientOnly;
 import net.jmb19905.medievalworlds.common.block.anvil.AnvilInteraction;
 import net.jmb19905.medievalworlds.common.block.slackTub.SlackTubInteraction;
 import net.jmb19905.medievalworlds.common.capability.CapabilityAttachEventHandler;
-import net.jmb19905.medievalworlds.common.capability.Motion;
+import net.jmb19905.medievalworlds.common.capability.motion.Motion;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.registries.*;
 import net.jmb19905.medievalworlds.common.world.gen.OreGenerator;
@@ -64,8 +64,6 @@ public class MedievalWorlds {
     }
 
     public void setup(final FMLCommonSetupEvent event) {
-        SlackTubInteraction.bootstrap();
-        AnvilInteraction.bootstrap();
         Motion.register();
         registerCommonEvents();
         OreGenerator.registerOres();

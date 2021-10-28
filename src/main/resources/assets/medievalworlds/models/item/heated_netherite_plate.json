@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "medievalworlds:item/netherite_plate",
+    "layer1": "medievalworlds:item/redhot_plate_layer"
+  }
+}

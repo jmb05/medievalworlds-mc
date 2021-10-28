@@ -1,0 +1,9 @@
+{
+  "type": "medievalworlds:anvil",
+  "output": {
+    "item": "medievalworlds:heated_iron_plate"
+  },
+  "input": {
+    "item": "medievalworlds:heated_iron_ingot"
+  }
+}

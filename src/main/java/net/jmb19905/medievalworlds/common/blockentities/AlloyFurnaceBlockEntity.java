@@ -3,10 +3,11 @@ package net.jmb19905.medievalworlds.common.blockentities;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.block.AlloyFurnaceBlock;
 import net.jmb19905.medievalworlds.client.menus.AlloyFurnaceMenu;
-import net.jmb19905.medievalworlds.common.recipes.AlloyRecipe;
+import net.jmb19905.medievalworlds.common.recipes.alloy.AlloyRecipe;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
+import net.jmb19905.medievalworlds.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -244,7 +245,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         if(input1 == null || input2 == null){
             return null;
         }
-        Set<Recipe<?>> recipes = findRecipeByType(MWRecipeSerializers.ALLOY_TYPE, this.level);
+        Set<Recipe<?>> recipes = Util.findRecipeByType(MWRecipeSerializers.ALLOY_TYPE, this.level);
         for(Recipe<?> iRecipe : recipes){
             AlloyRecipe recipe = (AlloyRecipe)iRecipe;
             assert this.level != null;
@@ -253,30 +254,6 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
             }
         }
         return null;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static Set<Recipe<?>> findRecipeByType(RecipeType<?> typeIn, Level world) {
-        return world != null ? world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.EMPTY_SET;
-    }
-
-    @SuppressWarnings("unchecked")
-    @OnlyIn(Dist.CLIENT)
-    public static Set<Recipe<?>> findRecipeByType(RecipeType<?> typeIn) {
-        ClientLevel world = Minecraft.getInstance().level;
-        return world != null ? world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.EMPTY_SET;
-    }
-
-    public static Set<ItemStack> getAllRecipeInputs(RecipeType<?> typeIn, Level worldIn){
-        Set<ItemStack> inputs = new HashSet<>();
-        Set<Recipe<?>> recipes = findRecipeByType(typeIn, worldIn);
-        for(Recipe<?> recipe : recipes){
-            if(recipe instanceof AlloyRecipe) {
-                NonNullList<ItemStack> inputList = ((AlloyRecipe) recipe).getInputs();
-                inputs.addAll(inputList);
-            }
-        }
-        return inputs;
     }
 
     public final IItemHandlerModifiable getInventory(){

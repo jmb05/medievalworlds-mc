@@ -2,10 +2,13 @@ package net.jmb19905.medievalworlds.common.world.gen;
 
 import com.google.common.collect.ImmutableList;
 import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.common.registries.MWBlocks;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.data.worldgen.Features;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
@@ -27,20 +30,25 @@ public class OreGenerator {
 
     public static ImmutableList<OreConfiguration.TargetBlockState> ORE_TARGET_LIST;
     public static final ArrayList<ConfiguredFeature<?, ?>> overworldOres = new ArrayList<>();
+    public static final ArrayList<ConfiguredFeature<?, ?>> mountainOres = new ArrayList<>();
+
+    //TODO: add Deepslate ore variants
+    public static final ImmutableList<OreConfiguration.TargetBlockState> ORE_RUBY_TARGET_LIST = ImmutableList.of(OreConfiguration.target(OreConfiguration.Predicates.STONE_ORE_REPLACEABLES, MWBlocks.RUBY_ORE_BLOCK.get().defaultBlockState()), OreConfiguration.target(OreConfiguration.Predicates.DEEPSLATE_ORE_REPLACEABLES, MWBlocks.RUBY_ORE_BLOCK.get().defaultBlockState()));
+    public static final ImmutableList<OreConfiguration.TargetBlockState> ORE_SILVER_TARGET_LIST = ImmutableList.of(OreConfiguration.target(OreConfiguration.Predicates.STONE_ORE_REPLACEABLES, MWBlocks.SILVER_ORE_BLOCK.get().defaultBlockState()), OreConfiguration.target(OreConfiguration.Predicates.DEEPSLATE_ORE_REPLACEABLES, MWBlocks.SILVER_ORE_BLOCK.get().defaultBlockState()));
+    public static final ImmutableList<OreConfiguration.TargetBlockState> ORE_TIN_TARGET_LIST = ImmutableList.of(OreConfiguration.target(OreConfiguration.Predicates.STONE_ORE_REPLACEABLES, MWBlocks.TIN_ORE_BLOCK.get().defaultBlockState()), OreConfiguration.target(OreConfiguration.Predicates.DEEPSLATE_ORE_REPLACEABLES, MWBlocks.TIN_ORE_BLOCK.get().defaultBlockState()));
 
     public static void registerOres() {
-        ORE_TARGET_LIST = ImmutableList.of(OreConfiguration.target(OreConfiguration.Predicates.NATURAL_STONE, Blocks.STONE.defaultBlockState()));
-        overworldOres.add(register("tin_ore", Feature.ORE.configured(new OreConfiguration(ORE_COPPER_TARGET_LIST, 7))
+        overworldOres.add(register("tin_ore", Feature.ORE.configured(new OreConfiguration(ORE_TIN_TARGET_LIST, 7))
                 .rangeTriangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(100))
                 .squared()
                 .count(3)
         ));
-        overworldOres.add(register("silver_ore", Feature.ORE.configured(new OreConfiguration(ORE_GOLD_TARGET_LIST, 11))
+        overworldOres.add(register("silver_ore", Feature.ORE.configured(new OreConfiguration(ORE_SILVER_TARGET_LIST, 11))
                 .rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(31))
                 .squared()
                 .count(3)
         ));
-        overworldOres.add(register("ruby_ore", Feature.REPLACE_SINGLE_BLOCK.configured(new ReplaceBlockConfiguration(ORE_EMERALD_TARGET_LIST))
+        mountainOres.add(register("ruby_ore", Feature.REPLACE_SINGLE_BLOCK.configured(new ReplaceBlockConfiguration(ORE_RUBY_TARGET_LIST))
                 .rangeUniform(VerticalAnchor.absolute(4), VerticalAnchor.absolute(31))
                 .squared()
                 .count(UniformInt.of(3, 8))
@@ -57,6 +65,13 @@ public class OreGenerator {
         for(ConfiguredFeature<?,?> ore : overworldOres) {
             if(ore != null) {
                 generation.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).add(() -> ore);
+            }
+        }
+        if(evt.getCategory() == Biome.BiomeCategory.EXTREME_HILLS) {
+            for (ConfiguredFeature<?, ?> ore : overworldOres) {
+                if (ore != null) {
+                    generation.getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).add(() -> ore);
+                }
             }
         }
     }

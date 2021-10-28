@@ -1,0 +1,16 @@
+{
+  "type": "medievalworlds:forge",
+  "output": {
+    "item": "medievalworlds:heated_ingot",
+    "count": 1,
+    "nbt": {
+      "Items": [
+        "minecraft:iron_ingot"
+      ]
+    }
+  },
+  "input": {
+    "item": "minecraft:iron_ingot",
+    "count": 1
+  }
+}

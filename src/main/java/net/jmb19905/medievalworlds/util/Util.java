@@ -1,21 +1,30 @@
 package net.jmb19905.medievalworlds.util;
 
+import net.jmb19905.medievalworlds.common.recipes.alloy.AlloyRecipe;
+import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Util {
 
@@ -92,6 +101,42 @@ public class Util {
             }
         }
         return output;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Set<Recipe<?>> findRecipeByType(RecipeType<?> typeIn, Level world) {
+        return world != null ? world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.EMPTY_SET;
+    }
+
+    @SuppressWarnings("unchecked")
+    @OnlyIn(Dist.CLIENT)
+    public static Set<Recipe<?>> findRecipeByType(RecipeType<?> typeIn) {
+        ClientLevel world = Minecraft.getInstance().level;
+        return world != null ? world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.EMPTY_SET;
+    }
+
+
+    public static Set<ItemStack> getAllRecipeInputs(RecipeType<?> typeIn, Level level){
+        Set<ItemStack> inputs = new HashSet<>();
+        Set<Recipe<?>> recipes = findRecipeByType(typeIn, level);
+        for(Recipe<?> recipe : recipes){
+            if(typeIn == MWRecipeSerializers.ALLOY_TYPE) {
+                NonNullList<ItemStack> inputList = ((AlloyRecipe) recipe).getInputs();
+                inputs.addAll(inputList);
+            }else if(typeIn == MWRecipeSerializers.ANVIL_TYPE) {
+                inputs.add(((AnvilRecipe) recipe).getInput());
+            }
+        }
+        return inputs;
+    }
+
+    public static Set<ItemStack> getAllRecipeInput(RecipeType<?> typeIn, Level level) {
+        Set<ItemStack> inputs = new HashSet<>();
+        Set<Recipe<?>> recipes = findRecipeByType(typeIn, level);
+        for(Recipe<?> recipe : recipes){
+            inputs.add(recipe.getResultItem());
+        }
+        return inputs;
     }
 
     /*public static void attackWithStack(Player attacker, Entity targetEntity, float attackDamage){

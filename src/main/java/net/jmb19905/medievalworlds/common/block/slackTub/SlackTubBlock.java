@@ -1,9 +1,14 @@
 package net.jmb19905.medievalworlds.common.block.slackTub;
 
+import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
+import net.jmb19905.medievalworlds.common.networking.SteamEffectPacket;
 import net.jmb19905.medievalworlds.util.BlockInteraction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -19,6 +24,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import java.util.stream.Stream;
@@ -58,6 +64,36 @@ public class SlackTubBlock extends Block {
         BlockState newState = state.setValue(FILLED, true).setValue(EVAPORATION_CHANCE, 0);
         level.setBlockAndUpdate(pos, newState);
         return newState;
+    }
+
+    @Override
+    public void entityInside(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos, @Nonnull Entity entity) {
+        if (!level.isClientSide && entity.isOnFire() && this.isEntityInsideContent(state, pos, entity)) {
+            entity.clearFire();
+            if (entity.mayInteract(level, pos)) {
+                this.handleEntityOnFireInside(state, level, pos);
+            }
+        }
+    }
+
+    protected void handleEntityOnFireInside(BlockState state, Level level, BlockPos pos) {
+        float evaporationFactor = SlackTubBlock.getEvaporationFactor(state) * .5f;
+        boolean evaporates = level.getRandom().nextFloat() < evaporationFactor;
+        if(evaporates) {
+            level.setBlockAndUpdate(pos, state.setValue(SlackTubBlock.FILLED, false));
+        }else {
+            level.setBlockAndUpdate(pos, SlackTubBlock.increaseEvaporationChance(state));
+        }
+        NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(level::dimension), new SteamEffectPacket(pos, 1));
+        level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
+    }
+
+    protected boolean isEntityInsideContent(BlockState state, BlockPos pos, Entity entity) {
+        return entity.getY() < (double)pos.getY() + this.getContentHeight(state) && entity.getBoundingBox().maxY > (double)pos.getY() + 0.25D;
+    }
+
+    protected double getContentHeight(BlockState state) {
+        return (state.getValue(FILLED) ? 11 : 0) / 16.0D;
     }
 
     public static int getEvaporationChance(BlockState state) {

@@ -1,5 +1,7 @@
 package net.jmb19905.medievalworlds.common.capability;
 
+import net.jmb19905.medievalworlds.common.capability.motion.Motion;
+import net.jmb19905.medievalworlds.common.capability.motion.MotionCapProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;

@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.networking;
 
-import net.jmb19905.medievalworlds.common.capability.Motion;
+import net.jmb19905.medievalworlds.common.capability.motion.Motion;
 import net.jmb19905.medievalworlds.common.item.LanceItem;
 import net.jmb19905.medievalworlds.common.item.lance.EntityMessageToServer;
 import net.jmb19905.medievalworlds.common.item.lance.CritEffectPacket;

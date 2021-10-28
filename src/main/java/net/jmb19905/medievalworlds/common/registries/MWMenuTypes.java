@@ -3,6 +3,7 @@ package net.jmb19905.medievalworlds.common.registries;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.menus.AlloyFurnaceMenu;
 import net.jmb19905.medievalworlds.client.menus.BloomeryMenu;
+import net.jmb19905.medievalworlds.client.menus.ForgeBaseMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fmllegacy.RegistryObject;
@@ -15,5 +16,6 @@ public class MWMenuTypes {
 
     public static final RegistryObject<MenuType<AlloyFurnaceMenu>> ALLOY_FURNACE = MENU_TYPES.register("alloy_furnace", () -> IForgeContainerType.create(AlloyFurnaceMenu::new));
     public static final RegistryObject<MenuType<BloomeryMenu>> BLOOMERY = MENU_TYPES.register("bloomery", () -> IForgeContainerType.create(BloomeryMenu::new));
+    public static final RegistryObject<MenuType<ForgeBaseMenu>> FORGE = MENU_TYPES.register("forge", () -> IForgeContainerType.create(ForgeBaseMenu::new));
 
 }
