@@ -2,7 +2,7 @@ package net.jmb19905.medievalworlds.common.world.gen;
 
 import com.google.common.collect.ImmutableList;
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.registries.MWBlocks;
+import net.jmb19905.medievalworlds.core.registries.MWBlocks;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "medievalworlds:block/charcoal_log_top",
+    "side": "medievalworlds:block/charcoal_log"
+  }
+}

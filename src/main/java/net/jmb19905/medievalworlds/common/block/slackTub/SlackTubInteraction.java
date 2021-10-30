@@ -3,7 +3,7 @@ package net.jmb19905.medievalworlds.common.block.slackTub;
 import net.jmb19905.medievalworlds.common.item.IAnvilItem;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.networking.SteamEffectPacket;
-import net.jmb19905.medievalworlds.common.registries.MWItems;
+import net.jmb19905.medievalworlds.core.registries.MWItems;
 import net.jmb19905.medievalworlds.util.BlockInteraction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -93,7 +93,7 @@ public interface SlackTubInteraction extends BlockInteraction {
             return InteractionResult.PASS;
         } else {
             if(!level.isClientSide) {
-                float evaporationFactor = SlackTubBlock.getEvaporationFactor(state) * .5f;
+                float evaporationFactor = SlackTubBlock.getEvaporationFactor(state) * .1f;
                 boolean evaporates = level.getRandom().nextFloat() < evaporationFactor;
                 if(evaporates) {
                     level.setBlockAndUpdate(pos, state.setValue(SlackTubBlock.FILLED, false));
@@ -110,7 +110,7 @@ public interface SlackTubInteraction extends BlockInteraction {
     }
 
     static void sendStemEffectPacket(Level level, BlockPos position, float spread) {
-        NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(level::dimension), new SteamEffectPacket(position, spread));
+        //NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(level::dimension), new SteamEffectPacket(position, spread));
     }
 
 }

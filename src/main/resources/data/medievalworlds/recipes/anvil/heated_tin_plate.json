@@ -3,7 +3,10 @@
   "output": {
     "item": "medievalworlds:heated_tin_plate"
   },
-  "input": {
+  "input1": {
     "item": "medievalworlds:heated_tin_ingot"
+  },
+  "input2": {
+    "item": "minecraft:air"
   }
 }

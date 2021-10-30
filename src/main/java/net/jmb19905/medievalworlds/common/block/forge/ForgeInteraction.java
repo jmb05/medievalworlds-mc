@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.common.block.forge;
 
 import net.jmb19905.medievalworlds.common.blockentities.forge.ForgeBaseBlockEntity;
-import net.jmb19905.medievalworlds.common.registries.MWItems;
+import net.jmb19905.medievalworlds.core.registries.MWItems;
 import net.jmb19905.medievalworlds.util.BlockInteraction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;

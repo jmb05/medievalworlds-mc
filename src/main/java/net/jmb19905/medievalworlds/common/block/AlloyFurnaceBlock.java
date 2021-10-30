@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.block;
 
-import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
+import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.common.blockentities.AlloyFurnaceBlockEntity;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.minecraft.core.BlockPos;
@@ -30,7 +30,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

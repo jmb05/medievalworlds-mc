@@ -6,7 +6,7 @@ import net.jmb19905.medievalworlds.client.screen.AlloyFurnaceScreen;
 import net.jmb19905.medievalworlds.client.screen.BloomeryScreen;
 import net.jmb19905.medievalworlds.client.screen.ForgeScreen;
 import net.jmb19905.medievalworlds.client.ber.CustomAnvilRenderer;
-import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
+import net.jmb19905.medievalworlds.core.registries.MWMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;

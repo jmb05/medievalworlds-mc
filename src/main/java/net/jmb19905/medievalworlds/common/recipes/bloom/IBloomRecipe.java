@@ -27,5 +27,6 @@ public interface IBloomRecipe extends Recipe<RecipeWrapper> {
     }
 
     ItemStack getInput();
-
+    ItemStack getSecondaryOutput();
+    float getSecondaryChance();
 }

@@ -1,11 +1,12 @@
 package net.jmb19905.medievalworlds.client.menus;
 
-import net.jmb19905.medievalworlds.common.registries.MWBlocks;
-import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
-import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.core.registries.MWBlocks;
+import net.jmb19905.medievalworlds.core.registries.MWMenuTypes;
+import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.common.blockentities.AlloyFurnaceBlockEntity;
-import net.jmb19905.medievalworlds.util.slots.AlloyInputSlot;
 import net.jmb19905.medievalworlds.util.slots.FuelInputSlot;
+import net.jmb19905.medievalworlds.util.slots.InputSlot;
+import net.jmb19905.medievalworlds.util.slots.OnlyVisualSlot;
 import net.jmb19905.medievalworlds.util.slots.OutputSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -51,9 +52,12 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
         }
 
         //Input
-        this.addSlot(new AlloyInputSlot(tile.getInventory(), 0, 20, 16, tile.getLevel()));
-        this.addSlot(new AlloyInputSlot(tile.getInventory(), 1, 56, 16, tile.getLevel()));
+        this.addSlot(new InputSlot(tile.getInventory(), 0, 20, 16, MWRecipeSerializers.ALLOY_TYPE));
+        this.addSlot(new InputSlot(tile.getInventory(), 1, 56, 16, MWRecipeSerializers.ALLOY_TYPE));
         this.addSlot(new FuelInputSlot(tile.getInventory(), 2, 38, 51, MWRecipeSerializers.ALLOY_TYPE));
+
+        //Visual
+        this.addSlot(new OnlyVisualSlot(tile.getInventory(), 5, 79, 19));
 
         //Output
         this.addSlot(new OutputSlot(tile.getInventory(), 3, 116, 35));

@@ -29,8 +29,8 @@ public class BloomeryScreen extends AbstractContainerScreen<BloomeryMenu> {
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, TEXTURE);
         this.blit(stack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
-        this.blit(stack, this.leftPos + 79, this.topPos + 35, 176, 14, screenContainer.getSmeltProgressionScaled(), 16);
-        this.blit(stack, this.leftPos + 39, this.topPos + 35 + screenContainer.getBurnProgressionScaled(), 176, screenContainer.getBurnProgressionScaled(), 14, screenContainer.getCurrentMaxBurnTime() != 0 ? 14 - screenContainer.getBurnProgressionScaled() : 0);
+        this.blit(stack, this.leftPos + 75, this.topPos + 34, 176, 14, screenContainer.getSmeltProgressionScaled(), 16);
+        this.blit(stack, this.leftPos + 44, this.topPos + 35 + screenContainer.getBurnProgressionScaled(), 176, screenContainer.getBurnProgressionScaled(), 14, screenContainer.getCurrentMaxBurnTime() != 0 ? 14 - screenContainer.getBurnProgressionScaled() : 0);
     }
 
     @Override

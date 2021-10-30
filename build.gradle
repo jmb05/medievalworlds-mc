@@ -49,12 +49,12 @@ minecraft {
             // "SCAN": For mods scan.
             // "REGISTRIES": For firing of registry events.
             // "REGISTRYDUMP": For getting the contents of all registries.
-            property 'forge.logging.markers', 'REGISTRIES'
+            //property 'forge.logging.markers', 'REGISTRIES'
 
             // Recommended logging level for the console
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
-            property 'forge.logging.console.level', 'debug'
+            //property 'forge.logging.console.level', 'debug'
 
             mods {
                 examplemod {
@@ -71,12 +71,12 @@ minecraft {
             // "SCAN": For mods scan.
             // "REGISTRIES": For firing of registry events.
             // "REGISTRYDUMP": For getting the contents of all registries.
-            property 'forge.logging.markers', 'REGISTRIES'
+            //property 'forge.logging.markers', 'REGISTRIES'
 
             // Recommended logging level for the console
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
-            property 'forge.logging.console.level', 'debug'
+            //property 'forge.logging.console.level', 'debug'
 
             mods {
                 examplemod {
@@ -93,12 +93,12 @@ minecraft {
             // "SCAN": For mods scan.
             // "REGISTRIES": For firing of registry events.
             // "REGISTRYDUMP": For getting the contents of all registries.
-            property 'forge.logging.markers', 'REGISTRIES'
+            //property 'forge.logging.markers', 'REGISTRIES'
 
             // Recommended logging level for the console
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
-            property 'forge.logging.console.level', 'debug'
+            //property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
@@ -124,10 +124,10 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.17.1-37.0.103'
-    implementation fg.deobf("me.sizableshrimp:entitymodeljson:${minecraft_version}-1.0.2")
+    //implementation fg.deobf("me.sizableshrimp:entitymodeljson:${minecraft_version}-1.0.2")
 
-    implementation('org.slf4j:slf4j-api:1.7.32')
-    implementation('org.slf4j:jcl-over-slf4j:1.7.32')
+    //implementation('org.slf4j:slf4j-api:1.7.32')
+    //implementation('org.slf4j:jcl-over-slf4j:1.7.32')
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

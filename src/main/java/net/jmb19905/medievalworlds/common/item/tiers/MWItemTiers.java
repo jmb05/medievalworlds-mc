@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.common.item.tiers;
 
-import net.jmb19905.medievalworlds.common.registries.MWBlocks;
-import net.jmb19905.medievalworlds.common.registries.MWItems;
+import net.jmb19905.medievalworlds.core.registries.MWBlocks;
+import net.jmb19905.medievalworlds.core.registries.MWItems;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;

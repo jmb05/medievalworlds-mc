@@ -1,11 +1,12 @@
 package net.jmb19905.medievalworlds.client.menus;
 
-import net.jmb19905.medievalworlds.common.registries.MWBlocks;
-import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
-import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
-import net.jmb19905.medievalworlds.common.blockentities.BloomeryBlockEntity;
-import net.jmb19905.medievalworlds.util.slots.BloomInputSlot;
+import net.jmb19905.medievalworlds.common.blockentities.bloomery.BloomeryBottomBlockEntity;
+import net.jmb19905.medievalworlds.core.registries.MWBlocks;
+import net.jmb19905.medievalworlds.core.registries.MWMenuTypes;
+import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.util.slots.FuelInputSlot;
+import net.jmb19905.medievalworlds.util.slots.InputSlot;
+import net.jmb19905.medievalworlds.util.slots.OutputSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -22,16 +23,13 @@ import java.util.Objects;
 
 public class BloomeryMenu extends AbstractContainerMenu {
 
-    private final BloomeryBlockEntity.Bottom tileEntity;
+    private final BloomeryBottomBlockEntity tileEntity;
     private final ContainerLevelAccess containerLevelAccess;
-    public int currentSmeltTime;
-    public int currentBurnTime;
-    public int currentMaxBurnTime;
 
-    public BloomeryMenu(final int windowID, final Inventory playerInventory, final BloomeryBlockEntity.Bottom tile) {
+    public BloomeryMenu(final int windowID, final Inventory playerInventory, final BloomeryBottomBlockEntity entity) {
         super(MWMenuTypes.BLOOMERY.get(), windowID);
-        this.tileEntity = tile;
-        this.containerLevelAccess = ContainerLevelAccess.create(Objects.requireNonNull(tile.getLevel()), tile.getBlockPos());
+        this.tileEntity = entity;
+        this.containerLevelAccess = ContainerLevelAccess.create(Objects.requireNonNull(entity.getLevel()), entity.getBlockPos());
 
         final int slotSizePlus2 = 18;
         final int startX = 8;
@@ -53,27 +51,29 @@ public class BloomeryMenu extends AbstractContainerMenu {
         }
 
         //Input
-        this.addSlot(new BloomInputSlot(tile.getInventory(), 0, 1, 79, 16));
-        this.addSlot(new FuelInputSlot(tile.getInventory(), 1, 79, 51, MWRecipeSerializers.BLOOM_TYPE));
+        this.addSlot(new InputSlot(entity.getInventory(), 0, 43, 17, MWRecipeSerializers.BLOOM_TYPE));
+        this.addSlot(new FuelInputSlot(entity.getInventory(), 1, 43, 51, MWRecipeSerializers.BLOOM_TYPE));
+        this.addSlot(new OutputSlot(entity.getInventory(), 2, 116, 21));
+        this.addSlot(new OutputSlot(entity.getInventory(), 3, 116, 47));
     }
 
     public BloomeryMenu(final int windowID, final Inventory playerInventory, final FriendlyByteBuf data) {
         this(windowID, playerInventory, getTileEntity(playerInventory, data));
     }
 
-    private static BloomeryBlockEntity.Bottom getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
+    private static BloomeryBottomBlockEntity getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
         Objects.requireNonNull(playerInv, "playerInv cannot be null");
         Objects.requireNonNull(data, "data cannot be null");
         final BlockEntity blockEntityAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
-        if (blockEntityAtPos instanceof BloomeryBlockEntity.Bottom) {
-            return (BloomeryBlockEntity.Bottom) blockEntityAtPos;
+        if (blockEntityAtPos instanceof BloomeryBottomBlockEntity) {
+            return (BloomeryBottomBlockEntity) blockEntityAtPos;
         }
         throw new IllegalStateException("TileEntity is not correct " + blockEntityAtPos);
     }
 
     @Override
     public boolean stillValid(@Nonnull Player player) {
-        return stillValid(containerLevelAccess, player, MWBlocks.BLOOMERY_BOTTOM_BLOCK.get());
+        return stillValid(containerLevelAccess, player, MWBlocks.BLOOMERY_CLAY_BOTTOM_BLOCK.get());
     }
 
     @Nonnull
@@ -108,16 +108,18 @@ public class BloomeryMenu extends AbstractContainerMenu {
 
     @OnlyIn(Dist.CLIENT)
     public int getSmeltProgressionScaled(){
-        return this.currentSmeltTime != 0 ? this.currentSmeltTime * 24 / this.tileEntity.maxSmeltTime : 0;
+        if(this.tileEntity.currentMaxBurnTime == 0 || this.tileEntity.currentBurnTime == 0) return 0;
+        return this.tileEntity.currentBurnTime * 24 / this.tileEntity.currentMaxBurnTime;
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getBurnProgressionScaled(){
-        return this.currentBurnTime != 0 && this.currentMaxBurnTime != 0 ? this.currentBurnTime * 13 / this.tileEntity.currentMaxBurnTime : 0;
+        if(this.tileEntity.currentMaxBurnTime == 0 || this.tileEntity.currentBurnTime == 0) return 0;
+        return this.tileEntity.currentBurnTime * 13 / this.tileEntity.currentMaxBurnTime;
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getCurrentMaxBurnTime(){
-        return this.currentMaxBurnTime;
+        return this.tileEntity.currentMaxBurnTime;
     }
 }

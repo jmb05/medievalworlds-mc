@@ -1,12 +1,10 @@
 package net.jmb19905.medievalworlds.common.blockentities;
 
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
-import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
-import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
+import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.jmb19905.medievalworlds.util.Util;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -17,14 +15,10 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -34,7 +28,6 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class AnvilBlockEntity extends BlockEntity {
 
@@ -46,7 +39,7 @@ public class AnvilBlockEntity extends BlockEntity {
     public AnvilBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.state = state;
-        this.inventory = new CustomItemHandler(2);
+        this.inventory = new CustomItemHandler(3);
     }
 
     public AnvilBlockEntity(BlockPos pos, BlockState state) {
@@ -80,28 +73,29 @@ public class AnvilBlockEntity extends BlockEntity {
 
     public void cycleResultItem() {
         List<AnvilRecipe> recipes = getRecipes(inventory.getStackInSlot(0));
-        if(recipes == null) {
-            inventory.setStackInSlot(1, ItemStack.EMPTY);
+        if(recipes == null || recipes.size() < 1) {
+            inventory.setStackInSlot(2, ItemStack.EMPTY);
             return;
         }
         currentRecipePointer++;
         if (currentRecipePointer > recipes.size() - 1 || hasNoResultItem()) {
             currentRecipePointer = 0;
         }
-        inventory.setStackInSlot(1, recipes.get(currentRecipePointer).getResultItem());
+        inventory.setStackInSlot(2, recipes.get(currentRecipePointer).getResultItem());
         System.out.println(getItemToShow());
     }
 
     public boolean hasNoResultItem() {
-        return inventory.getStackInSlot(1).isEmpty() || inventory.getStackInSlot(1).getItem() == Items.AIR;
+        return inventory.getStackInSlot(2).isEmpty();
     }
 
     public void lockRecipe() {
         if(hasNoResultItem()) {
             return;
         }
-        inventory.setStackInSlot(0, inventory.getStackInSlot(1).copy());
+        inventory.setStackInSlot(0, inventory.getStackInSlot(2).copy());
         inventory.setStackInSlot(1, ItemStack.EMPTY);
+        inventory.setStackInSlot(2, ItemStack.EMPTY);
     }
 
     public ItemStack getItemToShow(){
@@ -164,6 +158,6 @@ public class AnvilBlockEntity extends BlockEntity {
     }
 
     public boolean hasItems(){
-        return inventory.getStackInSlot(0) != ItemStack.EMPTY;
+        return !inventory.getStackInSlot(0).isEmpty();
     }
 }

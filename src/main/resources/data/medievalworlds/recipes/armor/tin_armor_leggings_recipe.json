@@ -1,0 +1,18 @@
+{
+  "group": "medievalworlds",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "000",
+    "0 0",
+    "0 0"
+  ],
+  "key": {
+    "0": {
+      "item": "medievalworlds:tin_armor_plate"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:tin_leggings",
+    "count": 1
+  }
+}

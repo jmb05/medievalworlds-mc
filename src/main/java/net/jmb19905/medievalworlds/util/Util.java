@@ -2,7 +2,7 @@ package net.jmb19905.medievalworlds.util;
 
 import net.jmb19905.medievalworlds.common.recipes.alloy.AlloyRecipe;
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
-import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -124,7 +124,7 @@ public class Util {
                 NonNullList<ItemStack> inputList = ((AlloyRecipe) recipe).getInputs();
                 inputs.addAll(inputList);
             }else if(typeIn == MWRecipeSerializers.ANVIL_TYPE) {
-                inputs.add(((AnvilRecipe) recipe).getInput());
+                inputs.add(((AnvilRecipe) recipe).getInput1());
             }
         }
         return inputs;

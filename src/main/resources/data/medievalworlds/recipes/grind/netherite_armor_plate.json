@@ -1,0 +1,9 @@
+{
+  "type": "medievalworlds:grind",
+  "input": {
+    "item": "medievalworlds:netherite_plate"
+  },
+  "output": {
+    "item": "medievalworlds:netherite_armor_plate"
+  }
+}

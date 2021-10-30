@@ -2,7 +2,7 @@ package net.jmb19905.medievalworlds.common.item;
 
 import net.jmb19905.medievalworlds.common.item.enchantment.LightningStrikeEnchantment;
 import net.jmb19905.medievalworlds.common.item.enchantment.MegaMinerEnchantment;
-import net.jmb19905.medievalworlds.common.registries.MWEnchantments;
+import net.jmb19905.medievalworlds.core.registries.MWEnchantments;
 import net.jmb19905.medievalworlds.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

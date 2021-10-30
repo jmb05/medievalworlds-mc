@@ -84,7 +84,7 @@ public class SlackTubBlock extends Block {
         }else {
             level.setBlockAndUpdate(pos, SlackTubBlock.increaseEvaporationChance(state));
         }
-        NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(level::dimension), new SteamEffectPacket(pos, 1));
+        //NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(level::dimension), new SteamEffectPacket(pos, 1));
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
     }
 

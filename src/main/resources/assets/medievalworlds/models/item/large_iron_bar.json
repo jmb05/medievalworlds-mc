@@ -1,0 +1,50 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "medievalworlds:item/large_iron_bar",
+		"particle": "medievalworlds:item/large_iron_bar"
+	},
+	"elements": [
+		{
+			"from": [6.5, 8, 1],
+			"to": [9.5, 9, 15],
+			"faces": {
+				"north": {"uv": [0, 0, 3, 1], "texture": "#0"},
+				"east": {"uv": [7, 2, 8, 16], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [0, 1, 3, 2], "texture": "#0"},
+				"west": {"uv": [6, 2, 7, 16], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [3, 2, 6, 16], "texture": "#0"},
+				"down": {"uv": [0, 2, 3, 16], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [90, 0, 0],
+			"translation": [0, 3.25, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [90, 0, 0],
+			"translation": [0, 3.25, 0.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [90, 0, 0],
+			"translation": [0, 1.75, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [90, 0, 0],
+			"translation": [0, 1.75, 0]
+		},
+		"ground": {
+			"translation": [0, -4.25, 0]
+		},
+		"gui": {
+			"rotation": [30, -45, 0],
+			"translation": [0, -2.25, 0],
+			"scale": [1.2, 1.2, 1.2]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0]
+		}
+	}
+}

@@ -1,9 +1,9 @@
 package net.jmb19905.medievalworlds.client.menus;
 
 import net.jmb19905.medievalworlds.common.blockentities.forge.ForgeBaseBlockEntity;
-import net.jmb19905.medievalworlds.common.registries.MWBlocks;
-import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
-import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.core.registries.MWBlocks;
+import net.jmb19905.medievalworlds.core.registries.MWMenuTypes;
+import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.util.slots.FuelInputSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "medievalworlds:entity/anvil/heated_steel_bloom"
+  }
+}

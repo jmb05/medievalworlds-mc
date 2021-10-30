@@ -2,7 +2,6 @@ package net.jmb19905.medievalworlds.common.block.anvil;
 
 import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
 import net.jmb19905.medievalworlds.util.BlockInteraction;
-import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -30,24 +29,6 @@ public class CustomAnvilBlock extends AnvilBlock implements EntityBlock {
         super(properties);
     }
 
-    public static boolean setItem(Level level, BlockPos pos, ItemStack stack) {
-        BlockEntity entity = level.getBlockEntity(pos);
-        if(!(entity instanceof AnvilBlockEntity anvilEntity)){
-            return false;
-        }
-        anvilEntity.getInventory().setStackInSlot(0, stack);
-        return true;
-    }
-
-    public static ItemStack clearItem(Level level, BlockPos pos) {
-        BlockEntity entity = level.getBlockEntity(pos);
-        if(!(entity instanceof AnvilBlockEntity anvilEntity)) return ItemStack.EMPTY;
-        ItemStack anvilStack = anvilEntity.getItemToShow();
-        anvilEntity.getInventory().setStackInSlot(0, ItemStack.EMPTY);
-        anvilEntity.getInventory().setStackInSlot(1, ItemStack.EMPTY);
-        return anvilStack;
-    }
-
     @Nonnull
     @Override
     public InteractionResult use(@Nonnull BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull BlockHitResult hitResult) {
@@ -58,12 +39,14 @@ public class CustomAnvilBlock extends AnvilBlock implements EntityBlock {
         BlockEntity entity = level.getBlockEntity(pos);
         if(entity instanceof AnvilBlockEntity anvilEntity) {
             Map<Item, AnvilInteraction> interactionMap = anvilEntity.hasItems() ? (anvilEntity.hasNoResultItem() ? AnvilInteraction.FULL_INPUT : AnvilInteraction.FULL_OUTPUT) : AnvilInteraction.EMPTY;
-            if(interactionMap == AnvilInteraction.FULL_OUTPUT) {
-                System.out.println("Interaction: FULL_OUTPUT");
-            }else if(interactionMap == AnvilInteraction.FULL_INPUT) {
-                System.out.println("Interaction: FULL_INPUT");
-            }else {
-                System.out.println("Interaction: EMPTY");
+            if(!level.isClientSide) {
+                if (interactionMap == AnvilInteraction.FULL_OUTPUT) {
+                    System.out.println("Interaction: FULL_OUTPUT");
+                } else if (interactionMap == AnvilInteraction.FULL_INPUT) {
+                    System.out.println("Interaction: FULL_INPUT");
+                } else {
+                    System.out.println("Interaction: EMPTY");
+                }
             }
             BlockInteraction interaction = interactionMap.get(stack.getItem());
             player.awardStat(Stats.INTERACT_WITH_ANVIL);
@@ -77,10 +60,8 @@ public class CustomAnvilBlock extends AnvilBlock implements EntityBlock {
     public void onRemove(@Nonnull BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState newState, boolean p_60519_) {
         BlockEntity entity = level.getBlockEntity(pos);
         if(entity instanceof AnvilBlockEntity anvilEntity && state.getBlock() != newState.getBlock()){
-            ((CustomItemHandler) anvilEntity.getInventory()).toNonNullList().forEach(stack -> {
-                ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack);
-                level.addFreshEntity(itemEntity);
-            });
+            ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), anvilEntity.getItemToShow());
+            level.addFreshEntity(itemEntity);
         }
 
         if(state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {

@@ -1,11 +1,10 @@
 package net.jmb19905.medievalworlds.common.blockentities.forge;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.block.AlloyFurnaceBlock;
 import net.jmb19905.medievalworlds.common.block.forge.ForgeBaseBlock;
 import net.jmb19905.medievalworlds.common.recipes.forge.ForgeRecipe;
-import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
-import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
+import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "medievalworlds:block/bloomery_terracotta",
-		"particle": "medievalworlds:block/bloomery_terracotta"
+		"0": "minecraft:block/terracotta",
+		"particle": "minecraft:block/terracotta"
 	},
 	"elements": [
 		{

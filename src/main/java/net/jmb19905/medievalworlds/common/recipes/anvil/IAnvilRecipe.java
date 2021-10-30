@@ -26,5 +26,6 @@ public interface IAnvilRecipe extends Recipe<RecipeWrapper> {
         return false;
     }
 
-    ItemStack getInput();
+    ItemStack getInput1();
+    ItemStack getInput2();
 }

@@ -1,11 +1,14 @@
 package net.jmb19905.medievalworlds.common.block.bloomery;
 
-import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
+import net.jmb19905.medievalworlds.common.blockentities.bloomery.BloomeryTopBlockEntity;
+import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -20,9 +23,6 @@ public class BloomeryBlockTop extends AbstractBloomeryBlock{
 
     public BloomeryBlockTop(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.getStateDefinition().any()
-                .setValue(FACING, Direction.NORTH)
-                .setValue(CLAY, true));
     }
 
     @Nonnull
@@ -35,6 +35,12 @@ public class BloomeryBlockTop extends AbstractBloomeryBlock{
     @Override
     public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
         return MWBlockEntityTypes.BLOOMERY_TOP.get().create(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> blockType) {
+        return level.isClientSide ? null : blockType == MWBlockEntityTypes.BLOOMERY_TOP.get() ? BloomeryTopBlockEntity::tick : null;
     }
 
 }

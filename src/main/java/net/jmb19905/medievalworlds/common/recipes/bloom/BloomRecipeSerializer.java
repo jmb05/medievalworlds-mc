@@ -18,21 +18,27 @@ public class BloomRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?
     @Override
     public BloomRecipe fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json) {
         ItemStack output = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "output"), true);
+        ItemStack secondary = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "secondary"), true);
         ItemStack input = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "input"), true);
-        return new BloomRecipe(recipeId, input, output);
+        float secondaryChance = GsonHelper.convertToFloat(json, "chance");
+        return new BloomRecipe(recipeId, input, secondary, secondaryChance, output);
     }
 
     @Nullable
     @Override
     public BloomRecipe fromNetwork(@Nonnull ResourceLocation recipeId, FriendlyByteBuf buffer) {
         ItemStack output = buffer.readItem();
+        ItemStack secondary = buffer.readItem();
         ItemStack input = buffer.readItem();
-        return new BloomRecipe(recipeId, input, output);
+        float chance = buffer.readFloat();
+        return new BloomRecipe(recipeId, input, secondary, chance, output);
     }
 
     @Override
     public void toNetwork(FriendlyByteBuf buffer, BloomRecipe recipe) {
+        buffer.writeFloat(recipe.getSecondaryChance());
         buffer.writeItemStack(recipe.getInput(), true);
+        buffer.writeItemStack(recipe.getSecondaryOutput(), true);
         buffer.writeItemStack(recipe.getResultItem(), false);
     }
 }

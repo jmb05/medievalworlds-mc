@@ -1,0 +1,21 @@
+{
+  "group": "medievalworlds",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "111",
+    "101",
+    "111"
+  ],
+  "key": {
+    "0": {
+      "item": "medievalworlds:silver_boots"
+    },
+    "1": {
+      "item": "medievalworlds:silver_armor_plate"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:silver_knight_boots",
+    "count": 1
+  }
+}

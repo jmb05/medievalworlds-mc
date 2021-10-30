@@ -34,7 +34,10 @@ public class SteamEffectPacket {
     public static SteamEffectPacket decode(FriendlyByteBuf buffer) {
         SteamEffectPacket packet = new SteamEffectPacket();
         try {
-            packet.targetCoords = new BlockPos(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
+            double x = buffer.readDouble();
+            double y = buffer.readDouble();
+            double z = buffer.readDouble();
+            packet.targetCoords = new BlockPos(x,y,z);
             packet.spread = buffer.readFloat();
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             LOGGER.warn("Exception while reading SteamEffectPacket: " + e);

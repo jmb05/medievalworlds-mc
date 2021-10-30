@@ -1,0 +1,9 @@
+{
+  "type": "medievalworlds:grind",
+  "input": {
+    "item": "medievalworlds:copper_plate"
+  },
+  "output": {
+    "item": "medievalworlds:copper_armor_plate"
+  }
+}
