@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing",
   "base": {
-    "item": "medievalworlds:diamond_battle_axe"
+    "item": "medievalworlds:steel_battle_axe"
   },
   "addition": {
     "item": "minecraft:netherite_ingot"

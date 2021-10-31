@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing",
   "base": {
-    "item": "medievalworlds:diamond_knight_boots"
+    "item": "medievalworlds:steel_knight_boots"
   },
   "addition": {
     "item": "minecraft:netherite_ingot"

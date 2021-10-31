@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing",
   "base": {
-    "item": "medievalworlds:diamond_longsword"
+    "item": "medievalworlds:steel_longsword"
   },
   "addition": {
     "item": "minecraft:netherite_ingot"

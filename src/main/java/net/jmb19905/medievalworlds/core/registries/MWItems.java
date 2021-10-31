@@ -3,9 +3,11 @@ package net.jmb19905.medievalworlds.core.registries;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.item.*;
 import net.jmb19905.medievalworlds.common.item.armor.*;
+import net.jmb19905.medievalworlds.common.item.heated.HeatedBarItem;
 import net.jmb19905.medievalworlds.common.item.heated.HeatedBloomItem;
 import net.jmb19905.medievalworlds.common.item.heated.HeatedIngotItem;
 import net.jmb19905.medievalworlds.common.item.heated.HeatedPlateItem;
+import net.jmb19905.medievalworlds.common.item.lance.LanceItem;
 import net.jmb19905.medievalworlds.common.item.tiers.*;
 import net.jmb19905.medievalworlds.util.ConfigHandler;
 import net.minecraft.resources.ResourceLocation;
@@ -58,14 +60,98 @@ public class MWItems {
     public static final RegistryObject<PlateItem> GOLD_PLATE = ITEMS.register("gold_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
     public static final RegistryObject<PlateItem> NETHERITE_PLATE = ITEMS.register("netherite_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
 
-    public static final RegistryObject<HeatedPlateItem> HEATED_IRON_PLATE_ITEM = ITEMS.register("heated_iron_plate", () -> new HeatedPlateItem(MWItems.IRON_PLATE.get(), "iron", new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
-    public static final RegistryObject<HeatedPlateItem> HEATED_STEEL_PLATE_ITEM = ITEMS.register("heated_steel_plate", () -> new HeatedPlateItem(MWItems.STEEL_PLATE.get(), "steel", new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
-    public static final RegistryObject<HeatedPlateItem> HEATED_COPPER_PLATE_ITEM = ITEMS.register("heated_copper_plate", () -> new HeatedPlateItem(MWItems.COPPER_PLATE.get(), "copper", new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
-    public static final RegistryObject<HeatedPlateItem> HEATED_TIN_PLATE_ITEM = ITEMS.register("heated_tin_plate", () -> new HeatedPlateItem(MWItems.TIN_PLATE.get(), "tin", new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
-    public static final RegistryObject<HeatedPlateItem> HEATED_BRONZE_PLATE_ITEM = ITEMS.register("heated_bronze_plate", () -> new HeatedPlateItem(MWItems.BRONZE_PLATE.get(), "bronze", new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
-    public static final RegistryObject<HeatedPlateItem> HEATED_SILVER_PLATE_ITEM = ITEMS.register("heated_silver_plate", () -> new HeatedPlateItem(MWItems.SILVER_PLATE.get(), "silver", new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
-    public static final RegistryObject<HeatedPlateItem> HEATED_GOLD_PLATE_ITEM = ITEMS.register("heated_gold_plate", () -> new HeatedPlateItem(MWItems.GOLD_PLATE.get(), "gold", new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
-    public static final RegistryObject<HeatedPlateItem> HEATED_NETHERITE_PLATE_ITEM = ITEMS.register("heated_netherite_plate", () -> new HeatedPlateItem(MWItems.NETHERITE_PLATE.get(), "netherite", new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64).fireResistant()));
+    public static final RegistryObject<HeatedPlateItem> HEATED_IRON_PLATE_ITEM = ITEMS.register("heated_iron_plate", () -> new HeatedPlateItem(MWItems.IRON_PLATE.get(), "iron", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_STEEL_PLATE_ITEM = ITEMS.register("heated_steel_plate", () -> new HeatedPlateItem(MWItems.STEEL_PLATE.get(), "steel", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_COPPER_PLATE_ITEM = ITEMS.register("heated_copper_plate", () -> new HeatedPlateItem(MWItems.COPPER_PLATE.get(), "copper", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_TIN_PLATE_ITEM = ITEMS.register("heated_tin_plate", () -> new HeatedPlateItem(MWItems.TIN_PLATE.get(), "tin", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_BRONZE_PLATE_ITEM = ITEMS.register("heated_bronze_plate", () -> new HeatedPlateItem(MWItems.BRONZE_PLATE.get(), "bronze", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_SILVER_PLATE_ITEM = ITEMS.register("heated_silver_plate", () -> new HeatedPlateItem(MWItems.SILVER_PLATE.get(), "silver", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_GOLD_PLATE_ITEM = ITEMS.register("heated_gold_plate", () -> new HeatedPlateItem(MWItems.GOLD_PLATE.get(), "gold", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_NETHERITE_PLATE_ITEM = ITEMS.register("heated_netherite_plate", () -> new HeatedPlateItem(MWItems.NETHERITE_PLATE.get(), "netherite", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64).fireResistant()));
+
+    public static final RegistryObject<PlateItem> MEDIUM_IRON_PLATE = ITEMS.register("medium_iron_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> MEDIUM_STEEL_PLATE = ITEMS.register("medium_steel_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> MEDIUM_COPPER_PLATE = ITEMS.register("medium_copper_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> MEDIUM_TIN_PLATE = ITEMS.register("medium_tin_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> MEDIUM_BRONZE_PLATE = ITEMS.register("medium_bronze_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> MEDIUM_SILVER_PLATE = ITEMS.register("medium_silver_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> MEDIUM_GOLD_PLATE = ITEMS.register("medium_gold_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> MEDIUM_NETHERITE_PLATE = ITEMS.register("medium_netherite_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+
+    public static final RegistryObject<HeatedPlateItem> HEATED_MEDIUM_IRON_PLATE_ITEM = ITEMS.register("heated_medium_iron_plate", () -> new HeatedPlateItem(MWItems.IRON_PLATE.get(), "iron", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_MEDIUM_STEEL_PLATE_ITEM = ITEMS.register("heated_medium_steel_plate", () -> new HeatedPlateItem(MWItems.STEEL_PLATE.get(), "steel", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_MEDIUM_COPPER_PLATE_ITEM = ITEMS.register("heated_medium_copper_plate", () -> new HeatedPlateItem(MWItems.COPPER_PLATE.get(), "copper", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_MEDIUM_TIN_PLATE_ITEM = ITEMS.register("heated_medium_tin_plate", () -> new HeatedPlateItem(MWItems.TIN_PLATE.get(), "tin", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_MEDIUM_BRONZE_PLATE_ITEM = ITEMS.register("heated_medium_bronze_plate", () -> new HeatedPlateItem(MWItems.BRONZE_PLATE.get(), "bronze", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_MEDIUM_SILVER_PLATE_ITEM = ITEMS.register("heated_medium_silver_plate", () -> new HeatedPlateItem(MWItems.SILVER_PLATE.get(), "silver", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_MEDIUM_GOLD_PLATE_ITEM = ITEMS.register("heated_medium_gold_plate", () -> new HeatedPlateItem(MWItems.GOLD_PLATE.get(), "gold", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_MEDIUM_NETHERITE_PLATE_ITEM = ITEMS.register("heated_medium_netherite_plate", () -> new HeatedPlateItem(MWItems.NETHERITE_PLATE.get(), "netherite", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64).fireResistant()));
+
+    public static final RegistryObject<PlateItem> LARGE_IRON_PLATE = ITEMS.register("large_iron_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> LARGE_STEEL_PLATE = ITEMS.register("large_steel_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> LARGE_COPPER_PLATE = ITEMS.register("large_copper_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> LARGE_TIN_PLATE = ITEMS.register("large_tin_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> LARGE_BRONZE_PLATE = ITEMS.register("large_bronze_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> LARGE_SILVER_PLATE = ITEMS.register("large_silver_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> LARGE_GOLD_PLATE = ITEMS.register("large_gold_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<PlateItem> LARGE_NETHERITE_PLATE = ITEMS.register("large_netherite_plate", () -> new PlateItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+
+    public static final RegistryObject<HeatedPlateItem> HEATED_LARGE_IRON_PLATE_ITEM = ITEMS.register("heated_large_iron_plate", () -> new HeatedPlateItem(MWItems.IRON_PLATE.get(), "iron", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_LARGE_STEEL_PLATE_ITEM = ITEMS.register("heated_large_steel_plate", () -> new HeatedPlateItem(MWItems.STEEL_PLATE.get(), "steel", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_LARGE_COPPER_PLATE_ITEM = ITEMS.register("heated_large_copper_plate", () -> new HeatedPlateItem(MWItems.COPPER_PLATE.get(), "copper", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_LARGE_TIN_PLATE_ITEM = ITEMS.register("heated_large_tin_plate", () -> new HeatedPlateItem(MWItems.TIN_PLATE.get(), "tin", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_LARGE_BRONZE_PLATE_ITEM = ITEMS.register("heated_large_bronze_plate", () -> new HeatedPlateItem(MWItems.BRONZE_PLATE.get(), "bronze", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_LARGE_SILVER_PLATE_ITEM = ITEMS.register("heated_large_silver_plate", () -> new HeatedPlateItem(MWItems.SILVER_PLATE.get(), "silver", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_LARGE_GOLD_PLATE_ITEM = ITEMS.register("heated_large_gold_plate", () -> new HeatedPlateItem(MWItems.GOLD_PLATE.get(), "gold", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedPlateItem> HEATED_LARGE_NETHERITE_PLATE_ITEM = ITEMS.register("heated_large_netherite_plate", () -> new HeatedPlateItem(MWItems.NETHERITE_PLATE.get(), "netherite", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64).fireResistant()));
+
+    public static final RegistryObject<BarItem> IRON_BAR = ITEMS.register("iron_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> STEEL_BAR = ITEMS.register("steel_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> TIN_BAR = ITEMS.register("tin_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> COPPER_BAR = ITEMS.register("copper_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> BRONZE_BAR = ITEMS.register("bronze_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> SILVER_BAR = ITEMS.register("silver_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> NETHERITE_BAR = ITEMS.register("netherite_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+
+    public static final RegistryObject<HeatedBarItem> HEATED_IRON_BAR = ITEMS.register("heated_iron_bar", () -> new HeatedBarItem(IRON_BAR.get(), "iron", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_STEEL_BAR = ITEMS.register("heated_steel_bar", () -> new HeatedBarItem(STEEL_BAR.get(), "steel", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_TIN_BAR = ITEMS.register("heated_tin_bar", () -> new HeatedBarItem(TIN_BAR.get(), "tin", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_COPPER_BAR = ITEMS.register("heated_copper_bar", () -> new HeatedBarItem(COPPER_BAR.get(), "copper", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_BRONZE_BAR = ITEMS.register("heated_bronze_bar", () -> new HeatedBarItem(BRONZE_BAR.get(), "bronze", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_SILVER_BAR = ITEMS.register("heated_silver_bar", () -> new HeatedBarItem(SILVER_BAR.get(), "silver", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_NETHERITE_BAR = ITEMS.register("heated_netherite_bar", () -> new HeatedBarItem(NETHERITE_BAR.get(), "netherite", 0, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+
+    public static final RegistryObject<BarItem> MEDIUM_IRON_BAR = ITEMS.register("medium_iron_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> MEDIUM_STEEL_BAR = ITEMS.register("medium_steel_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> MEDIUM_TIN_BAR = ITEMS.register("medium_tin_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> MEDIUM_COPPER_BAR = ITEMS.register("medium_copper_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> MEDIUM_BRONZE_BAR = ITEMS.register("medium_bronze_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> MEDIUM_SILVER_BAR = ITEMS.register("medium_silver_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> MEDIUM_NETHERITE_BAR = ITEMS.register("medium_netherite_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+
+    public static final RegistryObject<HeatedBarItem> HEATED_MEDIUM_IRON_BAR = ITEMS.register("heated_medium_iron_bar", () -> new HeatedBarItem(MEDIUM_IRON_BAR.get(), "iron", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_MEDIUM_STEEL_BAR = ITEMS.register("heated_medium_steel_bar", () -> new HeatedBarItem(MEDIUM_STEEL_BAR.get(), "steel", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_MEDIUM_TIN_BAR = ITEMS.register("heated_medium_tin_bar", () -> new HeatedBarItem(MEDIUM_TIN_BAR.get(), "tin", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_MEDIUM_COPPER_BAR = ITEMS.register("heated_medium_copper_bar", () -> new HeatedBarItem(MEDIUM_COPPER_BAR.get(), "copper", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_MEDIUM_BRONZE_BAR = ITEMS.register("heated_medium_bronze_bar", () -> new HeatedBarItem(MEDIUM_BRONZE_BAR.get(), "bronze", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_MEDIUM_SILVER_BAR = ITEMS.register("heated_medium_silver_bar", () -> new HeatedBarItem(MEDIUM_SILVER_BAR.get(), "silver", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_MEDIUM_NETHERITE_BAR = ITEMS.register("heated_medium_netherite_bar", () -> new HeatedBarItem(MEDIUM_NETHERITE_BAR.get(), "netherite", 1, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+
+    public static final RegistryObject<BarItem> LARGE_IRON_BAR = ITEMS.register("large_iron_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> LARGE_STEEL_BAR = ITEMS.register("large_steel_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> LARGE_TIN_BAR = ITEMS.register("large_tin_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> LARGE_COPPER_BAR = ITEMS.register("large_copper_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> LARGE_BRONZE_BAR = ITEMS.register("large_bronze_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> LARGE_SILVER_BAR = ITEMS.register("large_silver_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<BarItem> LARGE_NETHERITE_BAR = ITEMS.register("large_netherite_bar", () -> new BarItem(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+
+    public static final RegistryObject<HeatedBarItem> HEATED_LARGE_IRON_BAR = ITEMS.register("heated_large_iron_bar", () -> new HeatedBarItem(MEDIUM_IRON_BAR.get(), "iron", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_LARGE_STEEL_BAR = ITEMS.register("heated_large_steel_bar", () -> new HeatedBarItem(MEDIUM_STEEL_BAR.get(), "steel", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_LARGE_TIN_BAR = ITEMS.register("heated_large_tin_bar", () -> new HeatedBarItem(MEDIUM_TIN_BAR.get(), "tin", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_LARGE_COPPER_BAR = ITEMS.register("heated_large_copper_bar", () -> new HeatedBarItem(MEDIUM_COPPER_BAR.get(), "copper", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_LARGE_BRONZE_BAR = ITEMS.register("heated_large_bronze_bar", () -> new HeatedBarItem(MEDIUM_BRONZE_BAR.get(), "bronze", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_LARGE_SILVER_BAR = ITEMS.register("heated_large_silver_bar", () -> new HeatedBarItem(MEDIUM_SILVER_BAR.get(), "silver", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
+    public static final RegistryObject<HeatedBarItem> HEATED_LARGE_NETHERITE_BAR = ITEMS.register("heated_large_netherite_bar", () -> new HeatedBarItem(MEDIUM_NETHERITE_BAR.get(), "netherite", 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
 
     public static final RegistryObject<Item> IRON_BLOOM = ITEMS.register("iron_bloom", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
     public static final RegistryObject<Item> STEEL_BLOOM = ITEMS.register("steel_bloom", () -> new Item(new Item.Properties().tab(MedievalWorlds.tab).stacksTo(64)));
@@ -112,7 +198,6 @@ public class MWItems {
     public static final RegistryObject<Item> STONE_FORGE_HAMMER = ITEMS.register("stone_forge_hammer", () -> new ForgeHammerItem(Tiers.STONE, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> IRON_FORGE_HAMMER = ITEMS.register("iron_forge_hammer", () -> new ForgeHammerItem(Tiers.IRON, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> STEEL_FORGE_HAMMER = ITEMS.register("steel_forge_hammer", () -> new ForgeHammerItem(MWItemTiers.STEEL_ITEM_TIER, new Item.Properties().tab(MedievalWorlds.tab)));
-    public static final RegistryObject<Item> DIAMOND_FORGE_HAMMER = ITEMS.register("diamond_forge_hammer", () -> new ForgeHammerItem(Tiers.DIAMOND, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> NETHERITE_FORGE_HAMMER = ITEMS.register("netherite_forge_hammer", () -> new ForgeHammerItem(Tiers.NETHERITE, new Item.Properties().tab(MedievalWorlds.tab).fireResistant()));
 
     //Weapons
@@ -125,32 +210,27 @@ public class MWItems {
     public static final RegistryObject<Item> IRON_HAMMER = ITEMS.register("iron_hammer", () -> new HammerItem(MWItemTiers.IRON_BLOCK_ITEM_TIER, 10, -3.4f, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> SILVER_HAMMER = ITEMS.register("silver_hammer", () -> new HammerItem(MWItemTiers.SILVER_BLOCK_ITEM_TIER, 10, -3.3f, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> STEEL_HAMMER = ITEMS.register("steel_hammer", () -> new HammerItem(MWItemTiers.STEEL_BLOCK_ITEM_TIER, 10, -3.3f, new Item.Properties().tab(MedievalWorlds.tab)));
-    public static final RegistryObject<Item> DIAMOND_HAMMER = ITEMS.register("diamond_hammer", () -> new HammerItem(MWItemTiers.DIAMOND_BLOCK_ITEM_TIER, 10, -3.2f, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> NETHERITE_HAMMER = ITEMS.register("netherite_hammer", () -> new HammerItem(MWItemTiers.NETHERITE_BLOCK_ITEM_TIER, 10, -3.3f, new Item.Properties().tab(MedievalWorlds.tab).fireResistant()));
 
     public static final RegistryObject<Item> IRON_BATTLE_AXE = ITEMS.register("iron_battle_axe", () -> new AxeItem(MWItemTiers.IRON_BLOCK_ITEM_TIER, 8, -3, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> SILVER_BATTLE_AXE = ITEMS.register("silver_battle_axe", () -> new AxeItem(MWItemTiers.SILVER_BLOCK_ITEM_TIER, 8, -3, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> STEEL_BATTLE_AXE = ITEMS.register("steel_battle_axe", () -> new AxeItem(MWItemTiers.STEEL_BLOCK_ITEM_TIER, 8, -3, new Item.Properties().tab(MedievalWorlds.tab)));
-    public static final RegistryObject<Item> DIAMOND_BATTLE_AXE = ITEMS.register("diamond_battle_axe", () -> new AxeItem(MWItemTiers.DIAMOND_BLOCK_ITEM_TIER, 8, -2.9f, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> NETHERITE_BATTLE_AXE = ITEMS.register("netherite_battle_axe", () -> new AxeItem(MWItemTiers.NETHERITE_BLOCK_ITEM_TIER, 8, -3f, new Item.Properties().tab(MedievalWorlds.tab).fireResistant()));
 
     public static final RegistryObject<Item> IRON_LONGSWORD = ITEMS.register("iron_longsword", () -> new SwordItem(MWItemTiers.IRON_BLOCK_ITEM_TIER, (int) (ConfigHandler.COMMON.ironLongswordAttackDamage.get() - MWItemTiers.IRON_BLOCK_ITEM_TIER.getAttackDamageBonus()) - 1, -2.8f, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> SILVER_LONGSWORD = ITEMS.register("silver_longsword", () -> new SwordItem(MWItemTiers.STEEL_BLOCK_ITEM_TIER, (int) (ConfigHandler.COMMON.silverLongswordAttackDamage.get() - MWItemTiers.SILVER_BLOCK_ITEM_TIER.getAttackDamageBonus()) - 2, -2.8f, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> STEEL_LONGSWORD = ITEMS.register("steel_longsword", () -> new SwordItem(MWItemTiers.STEEL_BLOCK_ITEM_TIER, (int) (ConfigHandler.COMMON.steelLongswordAttackDamage.get() - MWItemTiers.IRON_BLOCK_ITEM_TIER.getAttackDamageBonus()) - 1, -2.8f, new Item.Properties().tab(MedievalWorlds.tab)));
-    public static final RegistryObject<Item> DIAMOND_LONGSWORD = ITEMS.register("diamond_longsword", () -> new SwordItem(MWItemTiers.DIAMOND_BLOCK_ITEM_TIER, (int) (ConfigHandler.COMMON.diamondLongswordAttackDamage.get() - MWItemTiers.DIAMOND_BLOCK_ITEM_TIER.getAttackDamageBonus()) - 1, -2.7f, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> NETHERITE_LONGSWORD = ITEMS.register("netherite_longsword", () -> new SwordItem(MWItemTiers.NETHERITE_BLOCK_ITEM_TIER, (int) (ConfigHandler.COMMON.netheriteLongswordAttackDamage.get() - MWItemTiers.NETHERITE_BLOCK_ITEM_TIER.getAttackDamageBonus()) - 1, -2.7f, new Item.Properties().tab(MedievalWorlds.tab).fireResistant()));
 
     public static final RegistryObject<Item> IRON_DAGGER = ITEMS.register("iron_dagger", () -> new SwordItem(Tiers.IRON, 0, 0, new Item.Properties().durability(800).tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> SILVER_DAGGER = ITEMS.register("silver_dagger", () -> new SwordItem(MWItemTiers.SILVER_ITEM_TIER, -1, 0, new Item.Properties().durability(600).tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> STEEL_DAGGER = ITEMS.register("steel_dagger", () -> new SwordItem(MWItemTiers.STEEL_ITEM_TIER, 0, 0, new Item.Properties().durability(1000).tab(MedievalWorlds.tab)));
-    public static final RegistryObject<Item> DIAMOND_DAGGER = ITEMS.register("diamond_dagger", () -> new SwordItem(Tiers.DIAMOND, 0, 0, new Item.Properties().durability(1500).tab(MedievalWorlds.tab)));
 
     public static final RegistryObject<Item> LONGBOW = ITEMS.register("longbow", () -> new LongbowItem(new Item.Properties().tab(MedievalWorlds.tab).durability(1200)));
 
     public static final RegistryObject<Item> IRON_LANCE = ITEMS.register("iron_lance", () -> new LanceItem(2.5f, 20, new Item.Properties().durability(800).tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> SILVER_LANCE = ITEMS.register("silver_lance", () -> new LanceItem(2.75f, 15, new Item.Properties().durability(600).tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> STEEL_LANCE = ITEMS.register("steel_lance", () -> new LanceItem(3f, 25, new Item.Properties().durability(1000).tab(MedievalWorlds.tab)));
-    public static final RegistryObject<Item> DIAMOND_LANCE = ITEMS.register("diamond_lance", () -> new LanceItem(3.25f, 20, new Item.Properties().durability(1500).tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> NETHERITE_LANCE = ITEMS.register("netherite_lance", () -> new LanceItem(3.5f, 30, new Item.Properties().durability(2000).tab(MedievalWorlds.tab).fireResistant()));
 
     public static final RegistryObject<SpearItem> IRON_SPEAR = ITEMS.register("iron_spear", () -> new SpearItem(6, 2, new Item.Properties().tab(MedievalWorlds.tab).stacksTo(1).durability(600)));
@@ -191,11 +271,6 @@ public class MWItems {
     public static final RegistryObject<Item> STEEL_KNIGHT_LEGGINGS = ITEMS.register("steel_knight_leggings", () -> new KnightArmorLeggingsItem(MWArmorMaterials.STEEL_KNIGHT_MATERIAL, EquipmentSlot.LEGS, new Item.Properties().tab(MedievalWorlds.tab), "steel"));
     public static final RegistryObject<Item> STEEL_KNIGHT_BOOTS = ITEMS.register("steel_knight_boots", () -> new KnightArmorBootsItem(MWArmorMaterials.STEEL_KNIGHT_MATERIAL, EquipmentSlot.FEET, new Item.Properties().tab(MedievalWorlds.tab), "steel"));
 
-    public static final RegistryObject<Item> DIAMOND_KNIGHT_HELMET = ITEMS.register("diamond_knight_helmet", () -> new KnightArmorHelmetItem(MWArmorMaterials.DIAMOND_KNIGHT_MATERIAL, EquipmentSlot.HEAD, new Item.Properties().tab(MedievalWorlds.tab), "diamond"));
-    public static final RegistryObject<Item> DIAMOND_KNIGHT_CHESTPLATE = ITEMS.register("diamond_knight_chestplate", () -> new KnightArmorChestplateItem(MWArmorMaterials.DIAMOND_KNIGHT_MATERIAL, EquipmentSlot.CHEST, new Item.Properties().tab(MedievalWorlds.tab), "diamond"));
-    public static final RegistryObject<Item> DIAMOND_KNIGHT_LEGGINGS = ITEMS.register("diamond_knight_leggings", () -> new KnightArmorLeggingsItem(MWArmorMaterials.DIAMOND_KNIGHT_MATERIAL, EquipmentSlot.LEGS, new Item.Properties().tab(MedievalWorlds.tab), "diamond"));
-    public static final RegistryObject<Item> DIAMOND_KNIGHT_BOOTS = ITEMS.register("diamond_knight_boots", () -> new KnightArmorBootsItem(MWArmorMaterials.DIAMOND_KNIGHT_MATERIAL, EquipmentSlot.FEET, new Item.Properties().tab(MedievalWorlds.tab), "diamond"));
-
     public static final RegistryObject<Item> NETHERITE_KNIGHT_HELMET = ITEMS.register("netherite_knight_helmet", () -> new KnightArmorHelmetItem(MWArmorMaterials.NETHERITE_KNIGHT_MATERIAL, EquipmentSlot.HEAD, new Item.Properties().tab(MedievalWorlds.tab).fireResistant(), "netherite"));
     public static final RegistryObject<Item> NETHERITE_KNIGHT_CHESTPLATE = ITEMS.register("netherite_knight_chestplate", () -> new KnightArmorChestplateItem(MWArmorMaterials.NETHERITE_KNIGHT_MATERIAL, EquipmentSlot.CHEST, new Item.Properties().tab(MedievalWorlds.tab).fireResistant(), "netherite"));
     public static final RegistryObject<Item> NETHERITE_KNIGHT_LEGGINGS = ITEMS.register("netherite_knight_leggings", () -> new KnightArmorLeggingsItem(MWArmorMaterials.NETHERITE_KNIGHT_MATERIAL, EquipmentSlot.LEGS, new Item.Properties().tab(MedievalWorlds.tab).fireResistant(), "netherite"));
@@ -211,10 +286,11 @@ public class MWItems {
     public static final RegistryObject<Item> STEEL_LEGGINGS = ITEMS.register("steel_leggings", () -> new ArmorItem(MWArmorMaterials.STEEL_MATERIAL, EquipmentSlot.LEGS, new Item.Properties().tab(MedievalWorlds.tab)));
     public static final RegistryObject<Item> STEEL_BOOTS = ITEMS.register("steel_boots", () -> new ArmorItem(MWArmorMaterials.STEEL_MATERIAL, EquipmentSlot.FEET, new Item.Properties().tab(MedievalWorlds.tab)));
 
-    public static final RegistryObject<Item> GAMBESON_CHESTPLATE = ITEMS.register("gambeson_chestplate", () -> new ArmorItem(MWArmorMaterials.GAMBESON_MATERIAL, EquipmentSlot.CHEST, new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<Item> GAMBESON_CHESTPLATE = ITEMS.register("gambeson_chestplate", () -> new GambesonChestplateItem(new Item.Properties().tab(MedievalWorlds.tab)));
 
-    public static final RegistryObject<Item> NETHERITE_HORSE_ARMOR = ITEMS.register("netherite_horse_armor", () -> new HorseArmorItem(20, new ResourceLocation("medievalworlds", "textures/entity/horse/armor/horse_armor_netherite.png"), (new Item.Properties()).stacksTo(1).tab(MedievalWorlds.tab).fireResistant()));
+    public static final RegistryObject<Item> SILVER_HORSE_ARMOR = ITEMS.register("silver_horse_armor", () -> new CustomHorseArmorItem(6, new ResourceLocation(MedievalWorlds.MOD_ID, "textures/entity/horse/armor/horse_armor_netherite.png"), (new Item.Properties()).stacksTo(1).tab(MedievalWorlds.tab).fireResistant()));
+    public static final RegistryObject<Item> NETHERITE_HORSE_ARMOR = ITEMS.register("netherite_horse_armor", () -> new CustomHorseArmorItem(15, new ResourceLocation(MedievalWorlds.MOD_ID, "textures/entity/horse/armor/horse_armor_netherite.png"), (new Item.Properties()).stacksTo(1).tab(MedievalWorlds.tab).fireResistant()));
 
-    //public static final RegistryObject<Item> CROWN = ITEMS.register("crown", () -> new CrownItem(ArmorMaterial.GOLD, new Item.Properties().tab(MedievalWorlds.itemGroup)));
+    public static final RegistryObject<Item> CROWN = ITEMS.register("crown", () -> new CrownItem(ArmorMaterials.GOLD, new Item.Properties().tab(MedievalWorlds.tab)));
 
 }

@@ -1,16 +1,20 @@
 package net.jmb19905.medievalworlds.common.item.armor;
 
-import net.jmb19905.medievalworlds.client.model.armor.CrownHelmetModel;
+import net.jmb19905.medievalworlds.client.ClientSetup;
+import net.jmb19905.medievalworlds.client.model.armor.CrownModel;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IItemRenderProperties;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public class CrownItem extends ArmorItem {
 
@@ -18,21 +22,16 @@ public class CrownItem extends ArmorItem {
         super(material, EquipmentSlot.HEAD, builderIn);
     }
 
-    /*@OnlyIn(Dist.CLIENT)
-    @Nullable
     @Override
-    public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
-        BipedModel<LivingEntity> armorModel = new BipedModel<>(1);
-        CrownHelmetModel helmetModel = new CrownHelmetModel();
-        armorModel.bipedHead = helmetModel.Helmet;
-        armorModel.bipedHeadwear = helmetModel.Overlay;
-
-        armorModel.isSneak = entityLiving.isSneaking();
-        armorModel.isSitting = _default.isSitting;
-        armorModel.isChild = entityLiving.isChild();
-
-        return (A) armorModel;
-    }*/
+    public void initializeClient(@Nonnull Consumer<IItemRenderProperties> consumer) {
+        consumer.accept(new IItemRenderProperties() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
+                return (A) new CrownModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientSetup.CROWN_LAYER));
+            }
+        });
+    }
 
     @Nullable
     @Override

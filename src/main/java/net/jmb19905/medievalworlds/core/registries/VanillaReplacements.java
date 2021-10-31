@@ -2,8 +2,11 @@ package net.jmb19905.medievalworlds.core.registries;
 
 import net.jmb19905.medievalworlds.common.block.anvil.CustomAnvilBlock;
 import net.jmb19905.medievalworlds.common.block.grindstone.CustomGrindstoneBlock;
+import net.jmb19905.medievalworlds.common.item.armor.CustomHorseArmorItem;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.HorseArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -30,5 +33,8 @@ public class VanillaReplacements {
     public static final RegistryObject<BlockItem> DAMAGED_ANVIL_ITEM = ITEMS.register("damaged_anvil", () -> new BlockItem(DAMAGED_ANVIL.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 
     public static final RegistryObject<BlockItem> GRINDSTONE_ITEM = ITEMS.register("grindstone", () -> new BlockItem(GRINDSTONE.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+
+    public static final RegistryObject<Item> GOLDEN_HORSE_ARMOR = ITEMS.register("golden_horse_armor", () -> new CustomHorseArmorItem(5, "gold", (new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
+    public static final RegistryObject<Item> IRON_HORSE_ARMOR = ITEMS.register("iron_horse_armor", () -> new CustomHorseArmorItem(7, "iron", (new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
 
 }

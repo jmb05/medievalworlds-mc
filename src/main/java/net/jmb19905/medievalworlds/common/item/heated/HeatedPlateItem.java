@@ -7,10 +7,12 @@ import net.minecraft.world.item.Item;
 public class HeatedPlateItem extends AbstractHeatedItem {
 
     private ResourceLocation anvilTexture;
+    private final int size;
 
-    public HeatedPlateItem(Item basePlate, String material, Properties properties) {
+    public HeatedPlateItem(Item basePlate, String material, int size, Properties properties) {
         super(basePlate, properties);
         this.anvilTexture = new ResourceLocation(MedievalWorlds.MOD_ID, "textures/entity/anvil/" + material + ".png");
+        this.size = size;
     }
 
     protected void setAnvilTexture(ResourceLocation anvilTexture) {
@@ -24,8 +26,12 @@ public class HeatedPlateItem extends AbstractHeatedItem {
 
     @Override
     public String getType() {
-        return "plate";
+        if(size == 0) {
+            return "plate";
+        }else if(size == 1) {
+            return "medium_plate";
+        }else {
+            return "large_plate";
+        }
     }
-
-
 }

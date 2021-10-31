@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing",
   "base": {
-    "item": "medievalworlds:diamond_lance"
+    "item": "medievalworlds:steel_lance"
   },
   "addition": {
     "item": "minecraft:netherite_ingot"

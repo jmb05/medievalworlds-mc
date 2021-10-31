@@ -78,7 +78,7 @@ public class MedievalWorlds {
         @Nonnull
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(MWItems.DIAMOND_KNIGHT_HELMET.get());
+            return new ItemStack(MWItems.STEEL_KNIGHT_HELMET.get());
         }
     }
 

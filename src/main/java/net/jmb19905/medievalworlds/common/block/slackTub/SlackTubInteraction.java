@@ -40,6 +40,7 @@ public interface SlackTubInteraction extends BlockInteraction {
     static void bootstrap(){
         INTERACTIONS.put(Items.WATER_BUCKET, FILL_WATER);
         INTERACTIONS.put(Items.BUCKET, EMPTY_WATER);
+
         INTERACTIONS.put(MWItems.HEATED_IRON_INGOT_ITEM.get(), QUENCH);
         INTERACTIONS.put(MWItems.HEATED_STEEL_INGOT_ITEM.get(), QUENCH);
         INTERACTIONS.put(MWItems.HEATED_COPPER_INGOT_ITEM.get(), QUENCH);
@@ -48,6 +49,7 @@ public interface SlackTubInteraction extends BlockInteraction {
         INTERACTIONS.put(MWItems.HEATED_SILVER_INGOT_ITEM.get(), QUENCH);
         INTERACTIONS.put(MWItems.HEATED_GOLD_INGOT_ITEM.get(), QUENCH);
         INTERACTIONS.put(MWItems.HEATED_NETHERITE_INGOT_ITEM.get(), QUENCH);
+
         INTERACTIONS.put(MWItems.HEATED_IRON_PLATE_ITEM.get(), QUENCH);
         INTERACTIONS.put(MWItems.HEATED_STEEL_PLATE_ITEM.get(), QUENCH);
         INTERACTIONS.put(MWItems.HEATED_COPPER_PLATE_ITEM.get(), QUENCH);
@@ -56,6 +58,17 @@ public interface SlackTubInteraction extends BlockInteraction {
         INTERACTIONS.put(MWItems.HEATED_SILVER_PLATE_ITEM.get(), QUENCH);
         INTERACTIONS.put(MWItems.HEATED_GOLD_PLATE_ITEM.get(), QUENCH);
         INTERACTIONS.put(MWItems.HEATED_NETHERITE_PLATE_ITEM.get(), QUENCH);
+
+        INTERACTIONS.put(MWItems.HEATED_IRON_BAR.get(), QUENCH);
+        INTERACTIONS.put(MWItems.HEATED_STEEL_BAR.get(), QUENCH);
+        INTERACTIONS.put(MWItems.HEATED_COPPER_BAR.get(), QUENCH);
+        INTERACTIONS.put(MWItems.HEATED_TIN_BAR.get(), QUENCH);
+        INTERACTIONS.put(MWItems.HEATED_BRONZE_BAR.get(), QUENCH);
+        INTERACTIONS.put(MWItems.HEATED_SILVER_BAR.get(), QUENCH);
+        INTERACTIONS.put(MWItems.HEATED_NETHERITE_BAR.get(), QUENCH);
+
+        INTERACTIONS.put(MWItems.HEATED_IRON_BLOOM.get(), QUENCH);
+        INTERACTIONS.put(MWItems.HEATED_STEEL_BLOOM.get(), QUENCH);
     }
 
     static InteractionResult fillBucket(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack, ItemStack stack2, Predicate<BlockState> predicate, SoundEvent soundEvent) {
@@ -110,7 +123,7 @@ public interface SlackTubInteraction extends BlockInteraction {
     }
 
     static void sendStemEffectPacket(Level level, BlockPos position, float spread) {
-        //NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(level::dimension), new SteamEffectPacket(position, spread));
+        NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(level::dimension), new SteamEffectPacket(position, spread));
     }
 
 }

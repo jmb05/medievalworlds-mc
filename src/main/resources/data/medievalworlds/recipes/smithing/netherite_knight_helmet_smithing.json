@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing",
   "base": {
-    "item": "medievalworlds:diamond_knight_helmet"
+    "item": "medievalworlds:steel_knight_helmet"
   },
   "addition": {
     "item": "minecraft:netherite_ingot"

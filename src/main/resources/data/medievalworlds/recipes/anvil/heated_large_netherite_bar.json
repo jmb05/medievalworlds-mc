@@ -1,0 +1,12 @@
+{
+  "type": "medievalworlds:anvil",
+  "output": {
+    "item": "medievalworlds:heated_large_netherite_bar"
+  },
+  "input1": {
+    "item": "medievalworlds:heated_medium_netherite_bar"
+  },
+  "input2": {
+    "item": "medievalworlds:heated_netherite_bar"
+  }
+}

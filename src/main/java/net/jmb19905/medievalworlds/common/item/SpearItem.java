@@ -85,7 +85,7 @@ public class SpearItem extends Item {
         if (itemstack.getDamageValue() >= itemstack.getMaxDamage() - 1) {
             return InteractionResultHolder.fail(itemstack);
         }else {
-            playerIn.swing(handIn);
+            playerIn.startUsingItem(handIn);
             return InteractionResultHolder.consume(itemstack);
         }
     }

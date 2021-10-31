@@ -13,7 +13,6 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -81,8 +80,8 @@ public class AnvilBlockEntity extends BlockEntity {
         if (currentRecipePointer > recipes.size() - 1 || hasNoResultItem()) {
             currentRecipePointer = 0;
         }
-        inventory.setStackInSlot(2, recipes.get(currentRecipePointer).getResultItem());
-        System.out.println(getItemToShow());
+        inventory.setStackInSlot(2, recipes.get(currentRecipePointer).getResultItem().copy());
+        if(recipes.size() == 1) lockRecipe();
     }
 
     public boolean hasNoResultItem() {
@@ -100,12 +99,9 @@ public class AnvilBlockEntity extends BlockEntity {
 
     public ItemStack getItemToShow(){
         ItemStack inputItem = inventory.getStackInSlot(0);
-        ItemStack resultItem = inventory.getStackInSlot(1);
-        if(resultItem != ItemStack.EMPTY && resultItem.getItem() != Items.AIR){
-            return resultItem;
-        }else {
-            return inputItem;
-        }
+        ItemStack resultItem = inventory.getStackInSlot(2);
+        if(!resultItem.isEmpty()) return resultItem;
+        else return inputItem;
     }
 
     @Nullable

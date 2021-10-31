@@ -39,15 +39,6 @@ public class CustomAnvilBlock extends AnvilBlock implements EntityBlock {
         BlockEntity entity = level.getBlockEntity(pos);
         if(entity instanceof AnvilBlockEntity anvilEntity) {
             Map<Item, AnvilInteraction> interactionMap = anvilEntity.hasItems() ? (anvilEntity.hasNoResultItem() ? AnvilInteraction.FULL_INPUT : AnvilInteraction.FULL_OUTPUT) : AnvilInteraction.EMPTY;
-            if(!level.isClientSide) {
-                if (interactionMap == AnvilInteraction.FULL_OUTPUT) {
-                    System.out.println("Interaction: FULL_OUTPUT");
-                } else if (interactionMap == AnvilInteraction.FULL_INPUT) {
-                    System.out.println("Interaction: FULL_INPUT");
-                } else {
-                    System.out.println("Interaction: EMPTY");
-                }
-            }
             BlockInteraction interaction = interactionMap.get(stack.getItem());
             player.awardStat(Stats.INTERACT_WITH_ANVIL);
             return interaction.interact(state, level, pos, player, hand, stack);

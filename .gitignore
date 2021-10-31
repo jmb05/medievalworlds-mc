@@ -23,3 +23,7 @@ run
 
 # Files from Forge MDK
 forge*changelog.txt
+/src/main/resources/assets/medievalworlds/textures/item/old/
+/src/main/resources/assets/medievalworlds/textures/entity/anvil/old/
+/src/main/resources/assets/medievalworlds/textures/entity/anvil/iron.xcf
+/src/main/java/net/jmb19905/medievalworlds/client/model/armor/GambesonModel.bbmodel

@@ -2,9 +2,8 @@ package net.jmb19905.medievalworlds.client;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.ber.CustomAnvilRenderer;
-import net.jmb19905.medievalworlds.common.item.LanceItem;
+import net.jmb19905.medievalworlds.common.item.lance.LanceItem;
 import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -17,27 +16,15 @@ import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class ClientEventBusSubscriber {
 
     @Mod.EventBusSubscriber(modid = MedievalWorlds.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ModEvents{
 
-        static Logger logger = LogManager.getLogger();
-
         @SubscribeEvent
         public static void registerERs(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(MWBlockEntityTypes.CUSTOM_ANVIL.get(), CustomAnvilRenderer::new);
-        }
-
-        @SubscribeEvent
-        public static void onFMLClientSetupEvent(final FMLClientSetupEvent event) {
-            logger.warn("ACCESS_TOKEN "+ Minecraft.getInstance().getUser().getAccessToken());
-            logger.warn("UUID "+ Minecraft.getInstance().getUser().getUuid());
-            //System.exit(-1);
         }
 
     }

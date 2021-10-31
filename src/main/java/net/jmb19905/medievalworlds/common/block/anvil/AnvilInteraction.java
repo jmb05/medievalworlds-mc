@@ -67,14 +67,12 @@ public interface AnvilInteraction extends BlockInteraction {
         FULL_INPUT.put(MWItems.STONE_FORGE_HAMMER.get(), HAMMER_ITEM);
         FULL_INPUT.put(MWItems.IRON_FORGE_HAMMER.get(), HAMMER_ITEM);
         FULL_INPUT.put(MWItems.STEEL_FORGE_HAMMER.get(), HAMMER_ITEM);
-        FULL_INPUT.put(MWItems.DIAMOND_FORGE_HAMMER.get(), HAMMER_ITEM);
         FULL_INPUT.put(MWItems.NETHERITE_FORGE_HAMMER.get(), HAMMER_ITEM);
 
         FULL_OUTPUT.put(MWItems.WOODEN_FORGE_HAMMER.get(), HAMMER_ITEM);
         FULL_OUTPUT.put(MWItems.STONE_FORGE_HAMMER.get(), HAMMER_ITEM);
         FULL_OUTPUT.put(MWItems.IRON_FORGE_HAMMER.get(), HAMMER_ITEM);
         FULL_OUTPUT.put(MWItems.STEEL_FORGE_HAMMER.get(), HAMMER_ITEM);
-        FULL_OUTPUT.put(MWItems.DIAMOND_FORGE_HAMMER.get(), HAMMER_ITEM);
         FULL_OUTPUT.put(MWItems.NETHERITE_FORGE_HAMMER.get(), HAMMER_ITEM);
     }
 
@@ -90,6 +88,7 @@ public interface AnvilInteraction extends BlockInteraction {
             stack.shrink(1);
             level.setBlockAndUpdate(pos, state);
             level.sendBlockUpdated(pos, state, state, Constants.BlockFlags.BLOCK_UPDATE);
+            System.out.println("Added Item: " + entity.getInventory());
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -102,21 +101,25 @@ public interface AnvilInteraction extends BlockInteraction {
         }else if(!level.isClientSide) {
             AnvilBlockEntity entity = (AnvilBlockEntity) blockEntity;
             assert entity != null;
+            ItemStack stack0 = entity.getInventory().getStackInSlot(0);
+            ItemStack stack1 = entity.getInventory().getStackInSlot(1);
+            ItemStack stack2 = entity.getInventory().getStackInSlot(2);
             if(stack.getItem() == entity.getItemToShow().getItem()) {
                 player.getItemInHand(hand).grow(1);
-                entity.getInventory().getStackInSlot(0).shrink(1);
-                entity.getInventory().getStackInSlot(1).shrink(1);
-                entity.getInventory().getStackInSlot(2).shrink(1);
+                if(stack0.getCount() > 0) stack0.shrink(1);
+                if(stack1.getCount() > 0) stack1.shrink(1);
+                if(stack2.getCount() > 0) stack2.shrink(1);
                 level.setBlockAndUpdate(pos, state);
                 level.sendBlockUpdated(pos, state, state, Constants.BlockFlags.BLOCK_UPDATE);
             }else if(stack.isEmpty()) {
                 player.setItemInHand(hand, entity.getItemToShow().copy());
-                entity.getInventory().getStackInSlot(0).shrink(1);
-                entity.getInventory().getStackInSlot(1).shrink(1);
-                entity.getInventory().getStackInSlot(2).shrink(1);
+                if(stack0.getCount() > 0) stack0.shrink(1);
+                if(stack1.getCount() > 0) stack1.shrink(1);
+                if(stack2.getCount() > 0) stack2.shrink(1);
                 level.setBlockAndUpdate(pos, state);
                 level.sendBlockUpdated(pos, state, state, Constants.BlockFlags.BLOCK_UPDATE);
             }
+            System.out.println("Took Item" + entity.getInventory());
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -133,6 +136,8 @@ public interface AnvilInteraction extends BlockInteraction {
                 player.getCooldowns().addCooldown(stack.getItem(), HAMMER_COOLDOWN);
                 stack.hurtAndBreak(1, player, (living) -> living.broadcastBreakEvent(hand));
                 level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1,level.getRandom().nextFloat() * 0.1F + 0.9F);
+
+                System.out.println("Hammered Item: " + anvilEntity.getInventory());
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide);

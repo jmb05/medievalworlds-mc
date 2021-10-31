@@ -1,0 +1,7 @@
+{
+	"parent": "medievalworlds:item/large_bar_template",
+	"textures": {
+		"texture": "medievalworlds:item/large_bronze_bar",
+		"particle": "medievalworlds:item/large_bronze_bar"
+	}
+}

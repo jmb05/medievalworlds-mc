@@ -56,9 +56,6 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
         this.addSlot(new InputSlot(tile.getInventory(), 1, 56, 16, MWRecipeSerializers.ALLOY_TYPE));
         this.addSlot(new FuelInputSlot(tile.getInventory(), 2, 38, 51, MWRecipeSerializers.ALLOY_TYPE));
 
-        //Visual
-        this.addSlot(new OnlyVisualSlot(tile.getInventory(), 5, 79, 19));
-
         //Output
         this.addSlot(new OutputSlot(tile.getInventory(), 3, 116, 35));
     }

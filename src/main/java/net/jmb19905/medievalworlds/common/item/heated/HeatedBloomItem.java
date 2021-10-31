@@ -10,7 +10,7 @@ public class HeatedBloomItem extends AbstractHeatedItem {
 
     public HeatedBloomItem(Item baseItem, String material, Properties properties) {
         super(baseItem, properties);
-        this.anvilIngotTexture = new ResourceLocation(MedievalWorlds.MOD_ID, "textures/entity/anvil/" + material + "_bloom.png");
+        this.anvilIngotTexture = new ResourceLocation(MedievalWorlds.MOD_ID, "textures/entity/anvil/" + material + ".png");
     }
 
     @Override

@@ -18,16 +18,3 @@ Did you ever wanted to wield mighty weapons and rule the Minecraft world??
 Well this is your chance!!!
 
 '''
-[[dependencies.medievalworlds]] #optional
-    modId="forge" #mandatory
-    mandatory=true #mandatory
-    versionRange="[37,)" #mandatory
-    ordering="NONE"
-    side="BOTH"
-
-[[dependencies.medievalworlds]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.17.1]"
-    ordering="NONE"
-    side="BOTH"

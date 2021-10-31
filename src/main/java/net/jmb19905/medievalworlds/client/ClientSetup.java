@@ -1,6 +1,8 @@
 package net.jmb19905.medievalworlds.client;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.client.model.armor.CrownModel;
+import net.jmb19905.medievalworlds.client.model.armor.GambesonModel;
 import net.jmb19905.medievalworlds.client.model.armor.KnightArmorHelmetModel;
 import net.jmb19905.medievalworlds.client.screen.AlloyFurnaceScreen;
 import net.jmb19905.medievalworlds.client.screen.BloomeryScreen;
@@ -17,6 +19,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientSetup {
 
     public static final ModelLayerLocation KNIGHT_HELMET_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "knight_armor_helmet"), "main");
+    public static final ModelLayerLocation GAMBESON_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "gambeson"), "main");
+    public static final ModelLayerLocation CROWN_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "crown"), "main");
     public static final ModelLayerLocation CUSTOM_ANVIL_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "anvil"), "main");
 
     @SubscribeEvent
@@ -29,6 +33,8 @@ public class ClientSetup {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(KNIGHT_HELMET_LAYER, KnightArmorHelmetModel::createBodyLayer);
+        event.registerLayerDefinition(GAMBESON_LAYER, GambesonModel::createBodyLayer);
+        event.registerLayerDefinition(CROWN_LAYER, CrownModel::createBodyLayer);
         event.registerLayerDefinition(CUSTOM_ANVIL_LAYER, CustomAnvilRenderer::createBodyLayer);
     }
 

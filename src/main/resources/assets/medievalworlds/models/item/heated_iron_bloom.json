@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "medievalworlds:item/heated_iron_bloom"
-  }
+	"parent": "medievalworlds:item/bloom_template",
+	"textures": {
+		"texture": "medievalworlds:item/heated_iron_bloom"
+	}
 }

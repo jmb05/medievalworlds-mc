@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing",
   "base": {
-    "item": "medievalworlds:diamond_knight_chestplate"
+    "item": "medievalworlds:steel_knight_chestplate"
   },
   "addition": {
     "item": "minecraft:netherite_ingot"
