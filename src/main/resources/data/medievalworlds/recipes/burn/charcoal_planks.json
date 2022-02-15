@@ -1,0 +1,5 @@
+{
+  "type": "medievalworlds:burn",
+  "output": "medievalworlds:charcoal_planks",
+  "input": "minecraft:planks"
+}

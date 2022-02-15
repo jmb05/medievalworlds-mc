@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "medievalworlds:gold_axe_head"
+  },
+  "addition": {
+    "item": "minecraft:stick"
+  },
+  "result": {
+    "item": "minecraft:golden_axe"
+  }
+}

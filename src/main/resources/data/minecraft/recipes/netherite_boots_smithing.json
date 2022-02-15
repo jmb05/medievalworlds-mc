@@ -4,7 +4,7 @@
     "item": "medievalworlds:steel_boots"
   },
   "addition": {
-    "item": "minecraft:netherite_ingot"
+    "item": "medievalworlds:netherite_armor_plate"
   },
   "result": {
     "item": "minecraft:netherite_boots"

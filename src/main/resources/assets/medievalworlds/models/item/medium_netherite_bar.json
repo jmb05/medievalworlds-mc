@@ -1,7 +1,0 @@
-{
-	"parent": "medievalworlds:item/medium_bar_template",
-	"textures": {
-		"texture": "medievalworlds:item/medium_netherite_bar",
-		"particle": "medievalworlds:item/medium_netherite_bar"
-	}
-}

@@ -16,8 +16,8 @@ public class CylindricalAnvil extends CustomAnvilBlock{
 
     private static final VoxelShape SHAPE = createShape();
 
-    public CylindricalAnvil(Properties properties) {
-        super(properties);
+    public CylindricalAnvil(BlockState damaged, float damageFactor, Properties properties) {
+        super(damaged, damageFactor, properties);
     }
 
     @Nonnull

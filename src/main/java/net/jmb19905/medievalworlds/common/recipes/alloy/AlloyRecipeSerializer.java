@@ -1,6 +1,7 @@
 package net.jmb19905.medievalworlds.common.recipes.alloy;
 
 import com.google.gson.JsonObject;
+import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -12,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class AlloyRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AlloyRecipe> {
+public class AlloyRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<IAlloyRecipe> {
 
     @Nonnull
     @Override
@@ -35,7 +36,7 @@ public class AlloyRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buffer, AlloyRecipe recipe) {
+    public void toNetwork(FriendlyByteBuf buffer, IAlloyRecipe recipe) {
         buffer.writeItemStack(recipe.getInput2(), true);
         buffer.writeItemStack(recipe.getInput1(), true);
         buffer.writeItemStack(recipe.getResultItem(), false);

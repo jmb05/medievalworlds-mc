@@ -12,34 +12,35 @@
   "block.medievalworlds.silver_block": "Silberblock",
   "block.medievalworlds.silver_ore": "Silbererz",
 
-  "block.medievalworlds.slack_tup": "Härtebecken",
+  "block.medievalworlds.raw_tin_block": "Rohzinnblock",
+  "block.medievalworlds.raw_silver_block": "Rohsilverblock",
 
-  "item.medievalworlds.copper_pickaxe": "Kupferspitzhacke",
-  "item.medievalworlds.tin_pickaxe": "Zinnspitzhacke",
+  "block.medievalworlds.limestone": "Kalkstein",
+  "block.medievalworlds.limestone_bricks": "Kalksteinziegel",
+
+  "block.medievalworlds.slack_tub": "Härtebecken",
+
+  "block.medievalworlds.stone_anvil": "Steinamboss",
+
+  "item.medievalworlds.raw_tin": "Rohzinn",
+  "item.medievalworlds.raw_silver": "Rohsilber",
+
   "item.medievalworlds.bronze_pickaxe": "Bronzespitzhacke",
   "item.medievalworlds.steel_pickaxe": "Stahlspitzhacke",
   "item.medievalworlds.silver_pickaxe": "Silberspitzhacke",
 
-  "item.medievalworlds.copper_axe": "Kupferaxt",
-  "item.medievalworlds.tin_axe": "Zinnaxt",
   "item.medievalworlds.bronze_axe": "Bronzeaxt",
   "item.medievalworlds.steel_axe": "Stahlaxt",
   "item.medievalworlds.silver_axe": "Silberaxt",
 
-  "item.medievalworlds.copper_shovel": "Kupferschaufel",
-  "item.medievalworlds.tin_shovel": "Zinnschaufel",
   "item.medievalworlds.bronze_shovel": "Bronzeschaufel",
   "item.medievalworlds.steel_shovel": "Stahlschaufel",
   "item.medievalworlds.silver_shovel": "Silberschaufel",
 
-  "item.medievalworlds.copper_hoe": "Kupferhacke",
-  "item.medievalworlds.tin_hoe": "Zinnhacke",
   "item.medievalworlds.bronze_hoe": "Bronzehacke",
   "item.medievalworlds.steel_hoe": "Stahlhacke",
   "item.medievalworlds.silver_hoe": "Silberhacke",
 
-  "item.medievalworlds.copper_sword": "Kupferschwert",
-  "item.medievalworlds.tin_sword": "Zinnschwert",
   "item.medievalworlds.bronze_sword": "Bronzeschwert",
   "item.medievalworlds.steel_sword": "Stahlschwert",
   "item.medievalworlds.silver_sword": "Silberschwert",
@@ -47,34 +48,28 @@
   "item.medievalworlds.iron_hammer": "Eisenhammer",
   "item.medievalworlds.silver_hammer": "Silberhammer",
   "item.medievalworlds.steel_hammer": "Stahlhammer",
-  "item.medievalworlds.diamond_hammer": "Diamanthammer",
   "item.medievalworlds.netherite_hammer": "Netherithammer",
 
   "item.medievalworlds.iron_longsword": "Eisenlangschwert",
   "item.medievalworlds.silver_longsword": "Silberlangschwert",
   "item.medievalworlds.steel_longsword": "Stahllangschwert",
-  "item.medievalworlds.diamond_longsword": "Diamantlangschwert",
   "item.medievalworlds.netherite_longsword": "Netheritlangschwert",
 
   "item.medievalworlds.iron_mace": "Eiserner Morgenstern",
-  "item.medievalworlds.diamond_mace": "Diamantener Morgenstern",
 
   "item.medievalworlds.iron_battle_axe": "Eisenstreitaxt",
   "item.medievalworlds.silver_battle_axe": "Silberstreitaxt",
   "item.medievalworlds.steel_battle_axe": "Stahlstreitaxt",
-  "item.medievalworlds.diamond_battle_axe": "Netheritestreitaxt",
-  "item.medievalworlds.netherite_battle_axe": "Netherite Battle Axe",
+  "item.medievalworlds.netherite_battle_axe": "Netherit Battle Axe",
 
   "item.medievalworlds.iron_dagger": "Eisendolch",
   "item.medievalworlds.silver_dagger": "Silberdolch",
   "item.medievalworlds.steel_dagger": "Stahldolch",
-  "item.medievalworlds.diamond_dagger": "Diamantdolch",
   "item.medievalworlds.netherite_dagger": "Netheritdolch",
 
   "item.medievalworlds.iron_lance": "Eisenlanze",
-  "item.medievalworlds.silver_lance": "Silverlanze",
+  "item.medievalworlds.silver_lance": "Silberlanze",
   "item.medievalworlds.steel_lance": "Stahllanze",
-  "item.medievalworlds.diamond_lance": "Diamantlanze",
   "item.medievalworlds.netherite_lance": "Netheritlanze",
 
   "item.medievalworlds.spear": "Speer",
@@ -82,21 +77,17 @@
   "item.minecraft.bow": "Bogen",
   "item.medievalworlds.longbow": "Langbogen",
 
-  "item.medievalworlds.wooden_forge_hammer": "Holz Schmiedehammer",
-  "item.medievalworlds.stone_forge_hammer": "Stein Schmiedehammer",
-  "item.medievalworlds.iron_forge_hammer": "Eisen Schmiedehammer",
-  "item.medievalworlds.steel_forge_hammer": "Stahl Schmiedehammer",
-  "item.medievalworlds.diamond_forge_hammer": "Diamant Schmiedehammer",
+  "item.medievalworlds.stone_forge_hammer": "Steinerner Schmiedehammer",
+  "item.medievalworlds.iron_forge_hammer": "Eisener Schmiedehammer",
+  "item.medievalworlds.steel_forge_hammer": "Stählerner Schmiedehammer",
   "item.medievalworlds.netherite_forge_hammer": "Netherit Schmiedehammer",
 
   "item.medievalworlds.key": "Schlüssel",
   "item.medievalworlds.lock": "Schloss",
 
-  "item.medievalworlds.copper_ingot": "Kupferbarren",
   "item.medievalworlds.bronze_ingot": "Bronzebarren",
   "item.medievalworlds.tin_ingot": "Zinnbarren",
   "item.medievalworlds.tin_nugget": "Zinnklumpen",
-  "item.medievalworlds.copper_nugget": "Kupferklumpen",
   "item.medievalworlds.bronze_nugget": "Bronzeklumpen",
   "item.medievalworlds.steel_ingot": "Stahlbarren",
   "item.medievalworlds.steel_nugget": "Stahlklumpen",
@@ -104,18 +95,17 @@
   "item.medievalworlds.silver_nugget": "Silberklumpen",
   "item.medievalworlds.ruby": "Rubin",
 
+  "item.medievalworlds.heated_copper_ingot": "Erhitzer Kupferbarren",
+  "item.medievalworlds.heated_bronze_ingot": "Erhitzer Bronzebarren",
+  "item.medievalworlds.heated_tin_ingot": "Erhitzer Zinnbarren",
+  "item.medievalworlds.heated_steel_ingot": "Erhitzer Stahlbarren",
+  "item.medievalworlds.heated_silver_ingot": "Erhitzer Silberbarren",
+  "item.medievalworlds.heated_iron_ingot": "Erhitzer Eisenbarren",
+  "item.medievalworlds.heated_gold_ingot": "Erhitzer Goldbarren",
+  "item.medievalworlds.heated_netherite_ingot": "Erhitzer Netheritbarren",
+
   "item.medievalworlds.long_stick": "Langer Stock",
   "item.medievalworlds.long_string": "Langer Strick",
-
-  "item.medievalworlds.tin_helmet": "Zinnhelm",
-  "item.medievalworlds.tin_chestplate": "Zinnharnisch",
-  "item.medievalworlds.tin_leggings": "Zinnbeinschutz",
-  "item.medievalworlds.tin_boots": "Zinnstiefel",
-
-  "item.medievalworlds.copper_helmet": "Kupferhelm",
-  "item.medievalworlds.copper_chestplate": "Kupferharnisch",
-  "item.medievalworlds.copper_leggings": "Kupferbeinschutz",
-  "item.medievalworlds.copper_boots": "Kupferstiefel",
 
   "item.medievalworlds.bronze_helmet": "Bronzehelm",
   "item.medievalworlds.bronze_chestplate": "Bronzeharnisch",
@@ -147,11 +137,6 @@
   "item.medievalworlds.steel_knight_leggings": "Stählerner Ritterbeinschutz",
   "item.medievalworlds.steel_knight_boots": "Stählerne Ritterstiefel",
 
-  "item.medievalworlds.diamond_knight_helmet": "Diamantener Ritterhelm",
-  "item.medievalworlds.diamond_knight_chestplate": "Diamantener Ritterharnisch",
-  "item.medievalworlds.diamond_knight_leggings": "Diamantener Ritterbeinschutz",
-  "item.medievalworlds.diamond_knight_boots": "Diamantene Ritterstiefel",
-
   "item.medievalworlds.netherite_knight_helmet": "Netherit Ritterhelm",
   "item.medievalworlds.netherite_knight_chestplate": "Netherit Ritterharnisch",
   "item.medievalworlds.netherite_knight_leggings": "Netherit Ritterbeinschutz",
@@ -166,10 +151,98 @@
 
   "item.medievalworlds.crown": "Krone",
 
-  "item.medievalworlds.netherite_horse_armor": "Netherit Pferderüstung",
+  "item.medievalworlds.netherite_horse_armor": "Netherit Rossharnisch",
+  "item.medievalworlds.steel_horse_armor": "Stählerner Rossharnisch",
+
+  "item.medievalworlds.iron_pickaxe_head": "Eisenspitzhackenkopf",
+  "item.medievalworlds.steel_pickaxe_head": "Stahlspitzhackenkopf",
+  "item.medievalworlds.bronze_pickaxe_head": "Bronzespitzhackenkopf",
+  "item.medievalworlds.silver_pickaxe_head": "Silberspitzhackenkopf",
+  "item.medievalworlds.gold_pickaxe_head": "Goldspitzhackenkopf",
+  "item.medievalworlds.netherite_pickaxe_head": "Netheritspitzhackenkopf",
+
+  "item.medievalworlds.heated_iron_pickaxe_head": "Erhitzer Eisenspitzhackenkopf",
+  "item.medievalworlds.heated_steel_pickaxe_head": "Erhitzer Stahlspitzhackenkopf",
+  "item.medievalworlds.heated_bronze_pickaxe_head": "Erhitzer Bronzespitzhackenkopf",
+  "item.medievalworlds.heated_silver_pickaxe_head": "Erhitzer Silberspitzhackenkopf",
+  "item.medievalworlds.heated_gold_pickaxe_head": "Erhitzer Goldspitzhackenkopf",
+  "item.medievalworlds.heated_netherite_pickaxe_head": "Erhitzer Netheritspitzhackenkopf",
+
+  "item.medievalworlds.iron_axe_head": "Eisenaxtkopf",
+  "item.medievalworlds.steel_axe_head": "Stahlaxtkopf",
+  "item.medievalworlds.bronze_axe_head": "Bronzeaxtkopf",
+  "item.medievalworlds.silver_axe_head": "Silberaxtkopf",
+  "item.medievalworlds.gold_axe_head": "Goldaxtkopf",
+  "item.medievalworlds.netherite_axe_head": "Netheritaxtkopf",
+
+  "item.medievalworlds.heated_iron_axe_head": "Erhitzer Eisenaxtkopf",
+  "item.medievalworlds.heated_steel_axe_head": "Erhitzer Stahlaxtkopf",
+  "item.medievalworlds.heated_bronze_axe_head": "Erhitzer Bronzeaxtkopf",
+  "item.medievalworlds.heated_silver_axe_head": "Erhitzer Silberaxtkopf",
+  "item.medievalworlds.heated_gold_axe_head": "Erhitzer Goldaxtkopf",
+  "item.medievalworlds.heated_netherite_axe_head": "Erhitzer Netheritaxtkopf",
+
+  "item.medievalworlds.iron_hoe_head": "Eisenhackenkopf",
+  "item.medievalworlds.steel_hoe_head": "Stahlhackenkopf",
+  "item.medievalworlds.bronze_hoe_head": "Bronzehackenkopf",
+  "item.medievalworlds.silver_hoe_head": "Silberhackenkopf",
+  "item.medievalworlds.gold_hoe_head": "Goldhackenkopf",
+  "item.medievalworlds.netherite_hoe_head": "Netherithackenkopf",
+
+  "item.medievalworlds.heated_iron_hoe_head": "Erhitzer Eisenhackenkopf",
+  "item.medievalworlds.heated_steel_hoe_head": "Erhitzer Stahlhackenkopf",
+  "item.medievalworlds.heated_bronze_hoe_head": "Erhitzer Bronzehackenkopf",
+  "item.medievalworlds.heated_silver_hoe_head": "Erhitzer Silberhackenkopf",
+  "item.medievalworlds.heated_gold_hoe_head": "Erhitzer Goldhackenkopf",
+  "item.medievalworlds.heated_netherite_hoe_head": "Erhitzer Netherithackenkopf",
+
+  "item.medievalworlds.iron_shovel_head": "Eisenschaufelkopf",
+  "item.medievalworlds.steel_shovel_head": "Stahlschaufelkopf",
+  "item.medievalworlds.bronze_shovel_head": "Bronzeschaufelkopf",
+  "item.medievalworlds.silver_shovel_head": "Silberschaufelkopf",
+  "item.medievalworlds.gold_shovel_head": "Goldschaufelkopf",
+  "item.medievalworlds.netherite_shovel_head": "Netheritschaufelkopf",
+
+  "item.medievalworlds.heated_iron_shovel_head": "Erhitzer Eisenschaufelkopf",
+  "item.medievalworlds.heated_steel_shovel_head": "Erhitzer Stahlschaufelkopf",
+  "item.medievalworlds.heated_bronze_shovel_head": "Erhitzer Bronzeschaufelkopf",
+  "item.medievalworlds.heated_silver_shovel_head": "Erhitzer Silberschaufelkopf",
+  "item.medievalworlds.heated_gold_shovel_head": "Erhitzer Goldschaufelkopf",
+  "item.medievalworlds.heated_netherite_shovel_head": "Erhitzer Netheritschaufelkopf",
+
+  "item.medievalworlds.iron_sword_blade": "Eisenschwertklinge",
+  "item.medievalworlds.steel_sword_blade": "Stahlschwertklinge",
+  "item.medievalworlds.bronze_sword_blade": "Bronzeschwertklinge",
+  "item.medievalworlds.silver_sword_blade": "Silberschwertklinge",
+  "item.medievalworlds.gold_sword_blade": "Goldschwertklinge",
+  "item.medievalworlds.netherite_sword_blade": "Netheritschwertklinge",
+
+  "item.medievalworlds.heated_iron_sword_blade": "Erhitze Eisenschwertklinge",
+  "item.medievalworlds.heated_steel_sword_blade": "Erhitze Stahlschwertklinge",
+  "item.medievalworlds.heated_bronze_sword_blade": "Erhitze Bronzeschwertklinge",
+  "item.medievalworlds.heated_silver_sword_blade": "Erhitze Silberschwertklinge",
+  "item.medievalworlds.heated_gold_sword_blade": "Erhitze Goldschwertklinge",
+  "item.medievalworlds.heated_netherite_sword_blade": "Erhitze Netheritschwertklinge",
+
+  "item.medievalworlds.iron_armor_plate": "Eiserne Rüstungsplatte",
+  "item.medievalworlds.steel_armor_plate": "Stählerne Rüstungsplatte",
+  "item.medievalworlds.bronze_armor_plate": "Bronze Rüstungsplatte",
+  "item.medievalworlds.silver_armor_plate": "Silberne Rüstungsplatte",
+  "item.medievalworlds.gold_armor_plate": "Goldene Rüstungsplatte",
+  "item.medievalworlds.netherite_armor_plate": "Netherit Rüstungsplatte",
+
+  "item.medievalworlds.heated_iron_armor_plate": "Erhitze Eiserne Rüstungsplatte",
+  "item.medievalworlds.heated_steel_armor_plate": "Erhitze Stählerne Rüstungsplatte",
+  "item.medievalworlds.heated_bronze_armor_plate": "Erhitze Bronze Rüstungsplatte",
+  "item.medievalworlds.heated_silver_armor_plate": "Erhitze Silberne Rüstungsplatte",
+  "item.medievalworlds.heated_gold_armor_plate": "Erhitze Goldene Rüstungsplatte",
+  "item.medievalworlds.heated_netherite_armor_plate": "Erhitze Netherit Rüstungsplatte",
+
+  "item.medievalworlds.iron_spear": "Eisenspeer",
 
   "container.medievalworlds.alloy_furnace": "Legierungsofen",
   "container.medievalworlds.bloomery": "Rennofen",
+  "container.medievalworlds.smithing": "Schmieden",
 
   "enchantment.medievalworlds.lightning_strike": "Blitzschlag",
   "enchantment.medievalworlds.mega_miner": "Mega Miner",
@@ -183,5 +256,10 @@
   "tooltip.maximumAttack": "Maximum Schaden",
   "tooltip.chargeTime": "Ladezeit",
 
-  "gui.recipebook.toggleRecipes.alloyable": "Zeigt Legierbar"
+  "gui.recipebook.toggleRecipes.alloyable": "Zeigt Legierbar",
+
+  "itemgroup.medievalworlds.block": "MedievalWorlds Blöcke",
+  "itemgroup.medievalworlds.combat": "MedievalWorlds Combat",
+  "itemgroup.medievalworlds.materials": "MedievalWorlds Materialien",
+  "itemgroup.medievalworlds.tools": "MedievalWorlds Werkzeuge"
 }

@@ -1,0 +1,11 @@
+{
+  "type": "medievalworlds:anvil",
+  "input": {
+    "item": "medievalworlds:heated_silver_armor_plate",
+    "count": 1
+  },
+  "output": {
+    "item": "medievalworlds:heated_silver_ingot",
+    "count": 1
+  }
+}

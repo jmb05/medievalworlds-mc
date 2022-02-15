@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "medievalworlds:item/steel_sword_blade",
+    "layer1": "medievalworlds:item/sword_blade"
+  }
+}

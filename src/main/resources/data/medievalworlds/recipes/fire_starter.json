@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " x ",
+    "xyx",
+    " z "
+  ],
+  "key":
+  {
+    "x":
+    {
+      "item": "minecraft:stick"
+    },
+    "y": {
+      "item": "minecraft:string"
+    },
+    "z": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result":
+  {
+    "item": "medievalworlds:fire_starter",
+    "count": 1
+  }
+}

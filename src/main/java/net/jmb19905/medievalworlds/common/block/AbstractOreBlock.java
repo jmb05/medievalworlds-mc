@@ -30,7 +30,7 @@ public class AbstractOreBlock extends OreBlock {
         if(minXp >= maxXp) {
             return 0;
         }else{
-            return Util.getRandomNumberInRange(minXp, maxXp);
+            return Util.getRandomIntInRange(minXp, maxXp);
         }
     }
 }

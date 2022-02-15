@@ -11,25 +11,15 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 
-import java.util.Map;
 import java.util.Set;
 
 public interface GrindstoneInteraction extends BlockInteraction {
-    Map<Item, GrindstoneInteraction> INTERACTIONS = BlockInteraction.newInteractionMap();
 
     GrindstoneInteraction GRIND_ITEM = (state, level, pos, player, hand, stack) -> grindItem(level, pos, player, stack);
-
-    static void bootstrap(Level level) {
-        Set<ItemStack> inputs = Util.getAllRecipeInputs(MWRecipeSerializers.GRIND_TYPE, level);
-        for(ItemStack input : inputs) {
-            INTERACTIONS.put(input.getItem(), GRIND_ITEM);
-        }
-    }
 
     static InteractionResult grindItem(Level level, BlockPos pos, Player player, ItemStack stack){
         if(!level.isClientSide) {
@@ -41,6 +31,7 @@ public interface GrindstoneInteraction extends BlockInteraction {
                     .findFirst()
                     .orElse(null);
             if(recipe != null) {
+                System.out.println("Grind Recipe: " + recipe);
                 stack.shrink(1);
                 givePlayerItem((ServerPlayer) player, recipe.getResultItem().copy());
                 level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1,level.getRandom().nextFloat() * 0.1F + 0.9F);

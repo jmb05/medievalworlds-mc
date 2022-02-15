@@ -1,0 +1,21 @@
+{
+  "group": "medievalworlds",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "1 1",
+    "010",
+    "010"
+  ],
+  "key": {
+    "0": {
+      "tag": "minecraft:wool"
+    },
+    "1": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:gambeson_chestplate",
+    "count": 1
+  }
+}

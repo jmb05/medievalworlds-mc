@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "medievalworlds:bronze_shovel_head"
+  },
+  "addition": {
+    "item": "minecraft:stick"
+  },
+  "result": {
+    "item": "medievalworlds:bronze_shovel"
+  }
+}

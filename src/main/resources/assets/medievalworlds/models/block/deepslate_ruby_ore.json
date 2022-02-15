@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "medievalworlds:block/deepslate_ruby_ore",
+    "particle": "medievalworlds:block/deepslate_ruby_ore"
+  }
+}

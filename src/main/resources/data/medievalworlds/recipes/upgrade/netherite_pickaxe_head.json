@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "medievalworlds:heated_steel_pickaxe_head"
+  },
+  "addition": {
+    "item": "medievalworlds:heated_netherite_ingot"
+  },
+  "result": {
+    "item": "medievalworlds:heated_netherite_pickaxe_head"
+  }
+}

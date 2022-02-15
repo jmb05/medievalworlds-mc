@@ -15,16 +15,23 @@ public class ForgeRecipe implements IForgeRecipe{
     private final ResourceLocation id;
     private final ItemStack input;
     private final ItemStack result;
+    private final int heatTime;
 
-    public ForgeRecipe(ResourceLocation id, ItemStack input, ItemStack result){
+    public ForgeRecipe(ResourceLocation id, ItemStack input, ItemStack result, int heatTime){
         this.id = id;
         this.input = input;
         this.result = result;
+        this.heatTime = heatTime;
     }
 
     @Override
     public ItemStack getInput() {
         return this.input;
+    }
+
+    @Override
+    public int getHeatTime() {
+        return heatTime;
     }
 
     @Override

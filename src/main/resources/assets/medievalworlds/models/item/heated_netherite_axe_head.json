@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "medievalworlds:item/netherite_axe_head",
+    "layer1": "medievalworlds:item/axe_head"
+  }
+}

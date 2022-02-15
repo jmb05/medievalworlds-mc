@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "medievalworlds:heated_steel_hoe_head"
+  },
+  "addition": {
+    "item": "medievalworlds:heated_netherite_ingot"
+  },
+  "result": {
+    "item": "medievalworlds:heated_netherite_hoe_head"
+  }
+}

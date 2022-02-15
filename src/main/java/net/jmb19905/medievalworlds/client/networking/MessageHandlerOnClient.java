@@ -1,5 +1,7 @@
 package net.jmb19905.medievalworlds.client.networking;
 
+import net.jmb19905.medievalworlds.common.blockentities.bellows.BellowsActivationPacket;
+import net.jmb19905.medievalworlds.common.blockentities.bellows.BellowsBlockEntity;
 import net.jmb19905.medievalworlds.common.item.lance.CritEffectPacket;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.networking.SteamEffectPacket;
@@ -8,10 +10,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LogicalSidedProvider;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fmllegacy.LogicalSidedProvider;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,15 +42,15 @@ public class MessageHandlerOnClient {
         //  that the ctx handler is a client, and that Minecraft exists.
         // Packets received on the server side must be handled differently!  See MessageHandlerOnServer
 
-        Optional<ClientLevel> clientWorld = LogicalSidedProvider.CLIENTWORLD.get(sideReceived);
-        if (clientWorld.isEmpty()) {
+        Optional<Level> clientWorld = LogicalSidedProvider.CLIENTWORLD.get(sideReceived);
+        if (clientWorld.isEmpty() || !(clientWorld.get() instanceof ClientLevel)) {
             LOGGER.warn("TargetEffectMessageToClient context could not provide a ClientWorld.");
             return;
         }
 
         // This code creates a new task which will be executed by the client during the next tick
         //  In this case, the task is to call messageHandlerOnClient.processMessage(worldclient, message)
-        ctx.enqueueWork(() -> processCritEffectPacket(clientWorld.get(), message));
+        ctx.enqueueWork(() -> processCritEffectPacket((ClientLevel) clientWorld.get(), message));
     }
 
     // This message is called from the Client thread.
@@ -77,13 +81,13 @@ public class MessageHandlerOnClient {
             return;
         }
 
-        Optional<ClientLevel> clientWorld = LogicalSidedProvider.CLIENTWORLD.get(sideReceived);
-        if (clientWorld.isEmpty()) {
+        Optional<Level> clientWorld = LogicalSidedProvider.CLIENTWORLD.get(sideReceived);
+        if (clientWorld.isEmpty() || !(clientWorld.get() instanceof ClientLevel)) {
             LOGGER.warn("SteamEffectPacket context could not provide a ClientWorld.");
             return;
         }
 
-        ctx.enqueueWork(() -> processSteamEffectPacket(clientWorld.get(), packet));
+        ctx.enqueueWork(() -> processSteamEffectPacket((ClientLevel) clientWorld.get(), packet));
     }
 
     private static void processSteamEffectPacket(ClientLevel level, SteamEffectPacket packet) {
@@ -92,6 +96,35 @@ public class MessageHandlerOnClient {
         float spread = packet.getSpread();
         for(int i = 0; i < 8; ++i) {
             level.addParticle(ParticleTypes.CLOUD, coords.getX() + random.nextDouble() * spread, coords.getY() + 1.2D * spread, coords.getZ() + random.nextDouble() * spread, random.nextDouble() * .1, 0.1D, Math.abs(random.nextDouble()) * .05);
+        }
+    }
+
+    public static void onBellowsActivationPacketReceived(final BellowsActivationPacket packet, Supplier<NetworkEvent.Context> ctxSupplier) {
+        NetworkEvent.Context ctx = ctxSupplier.get();
+        LogicalSide side = ctx.getDirection().getReceptionSide();
+        ctx.setPacketHandled(true);
+
+        if(side != LogicalSide.CLIENT) {
+            LOGGER.warn("BellowsActivationPacket received on wrong side: " + ctx.getDirection().getReceptionSide());
+            return;
+        }if(!packet.isValid()) {
+            LOGGER.warn("BellowsActivationPacket was invalid " + packet);
+            return;
+        }
+
+        Optional<Level> clientWorld = LogicalSidedProvider.CLIENTWORLD.get(side);
+        if(clientWorld.isEmpty() || !(clientWorld.get() instanceof ClientLevel)) {
+            LOGGER.warn("BellowsActivationPacket ctx could not provide a ClientLevel");
+            return;
+        }
+
+        ctx.enqueueWork(() -> processBellowsActivationPacket((ClientLevel) clientWorld.get(), packet));
+    }
+
+    private static void processBellowsActivationPacket(ClientLevel level, BellowsActivationPacket packet) {
+        BlockEntity entity = level.getBlockEntity(packet.getPos());
+        if(entity instanceof BellowsBlockEntity bellowsEntity) {
+            bellowsEntity.setActive(packet.isActivated());
         }
     }
 

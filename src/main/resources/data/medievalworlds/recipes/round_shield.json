@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " x ",
+    "xyx",
+    " x "
+  ],
+  "key":
+  {
+    "x":
+    {
+      "tag": "minecraft:planks"
+    },
+    "y": {
+      "item": "medievalworlds:bronze_armor_plate"
+    }
+  },
+  "result":
+  {
+    "item": "medievalworlds:round_shield",
+    "count": 1
+  }
+}

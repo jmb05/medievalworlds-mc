@@ -1,9 +1,0 @@
-{
-  "type": "medievalworlds:grind",
-  "input": {
-    "item": "medievalworlds:bronze_plate"
-  },
-  "output": {
-    "item": "medievalworlds:bronze_armor_plate"
-  }
-}

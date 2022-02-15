@@ -5,17 +5,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 
-@SuppressWarnings("removal")
 public class Heat implements IHeat{
 
     public static final ResourceLocation ID = new ResourceLocation(MedievalWorlds.MOD_ID, "heat");
 
-    @net.minecraftforge.common.capabilities.CapabilityInject(IHeat.class)
-    public static final Capability<IHeat> HEAT_CAPABILITY = null;
-    public static void register() {
-        CapabilityManager.INSTANCE.register(IHeat.class);
-    }
+    public static final Capability<IHeat> HEAT_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
     private int heat;
 

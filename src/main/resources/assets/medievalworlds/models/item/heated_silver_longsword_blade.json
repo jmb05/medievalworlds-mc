@@ -1,0 +1,8 @@
+{
+  "parent": "medievalworlds:item/template_heated_longsword_blade",
+  "textures": {
+    "0": "medievalworlds:item/silver_longsword",
+    "1": "medievalworlds:item/heated_silver_longsword_blade",
+    "particle": "medievalworlds:item/silver_longsword"
+  }
+}

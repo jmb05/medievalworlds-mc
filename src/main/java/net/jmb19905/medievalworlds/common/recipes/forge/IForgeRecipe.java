@@ -27,4 +27,5 @@ public interface IForgeRecipe extends Recipe<RecipeWrapper> {
     }
 
     ItemStack getInput();
+    int getHeatTime();
 }

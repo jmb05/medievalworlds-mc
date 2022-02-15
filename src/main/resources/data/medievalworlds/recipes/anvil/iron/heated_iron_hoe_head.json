@@ -1,0 +1,11 @@
+{
+  "type": "medievalworlds:anvil",
+  "input": {
+    "item": "medievalworlds:heated_iron_ingot",
+    "count": 2
+  },
+  "output": {
+    "item": "medievalworlds:heated_iron_hoe_head",
+    "count": 1
+  }
+}

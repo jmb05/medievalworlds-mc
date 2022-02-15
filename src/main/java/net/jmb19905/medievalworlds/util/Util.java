@@ -1,7 +1,6 @@
 package net.jmb19905.medievalworlds.util;
 
 import net.jmb19905.medievalworlds.common.recipes.alloy.AlloyRecipe;
-import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
 import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -28,14 +27,22 @@ import java.util.stream.Collectors;
 
 public class Util {
 
-    public static int getRandomNumberInRange(int min, int max) {
-
+    public static int getRandomIntInRange(int min, int max) {
         if (min >= max) {
             throw new IllegalArgumentException("max must be greater than min");
         }
 
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
+    }
+
+    public static float getRandomFloatInRange(float min, float max) {
+        if (min >= max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+
+        Random r = new Random();
+        return r.nextFloat((max - min) + 1) + min;
     }
 
     public static int percentage(int max, int min, int curr){
@@ -103,9 +110,17 @@ public class Util {
         return output;
     }
 
+    public static List<Recipe<?>> findRecipeByTypeAsList(RecipeType<?> type, Level level) {
+        return new ArrayList<>(Util.findRecipeByType(MWRecipeSerializers.ANVIL_TYPE, level));
+    }
+
     @SuppressWarnings("unchecked")
     public static Set<Recipe<?>> findRecipeByType(RecipeType<?> typeIn, Level world) {
-        return world != null ? world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.EMPTY_SET;
+        return world != null ? world.getRecipeManager().getRecipes()
+                .stream()
+                .filter(recipe -> recipe.getType() == typeIn)
+                .collect(Collectors.toSet())
+            : Collections.EMPTY_SET;
     }
 
     @SuppressWarnings("unchecked")
@@ -124,7 +139,7 @@ public class Util {
                 NonNullList<ItemStack> inputList = ((AlloyRecipe) recipe).getInputs();
                 inputs.addAll(inputList);
             }else if(typeIn == MWRecipeSerializers.ANVIL_TYPE) {
-                inputs.add(((AnvilRecipe) recipe).getInput1());
+                //inputs.add(((AnvilRecipe) recipe).getInput());
             }
         }
         return inputs;

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:bricks",
+    "minecraft:cobbled_deepslate",
+    "minecraft:deepslate_bricks",
+    "minecraft:cobbled_tiles",
+    "medievalworlds:limestone_bricks",
+    "minecraft:stone_bricks"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "medievalworlds:block/template_chimney",
+  "textures": {
+    "texture": "minecraft:block/bricks",
+    "particle": "minecraft:block/bricks"
+  }
+}

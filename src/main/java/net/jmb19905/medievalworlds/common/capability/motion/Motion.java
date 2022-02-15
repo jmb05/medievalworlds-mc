@@ -6,17 +6,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 
-@SuppressWarnings("removal")
 public class Motion implements IMotion{
 
     public static final ResourceLocation ID = new ResourceLocation(MedievalWorlds.MOD_ID, "motion");
 
-    @net.minecraftforge.common.capabilities.CapabilityInject(IMotion.class)
-    public static final Capability<IMotion> MOTION_CAPABILITY = null;
-    public static void register() {
-        CapabilityManager.INSTANCE.register(IMotion.class);
-    }
+    public static final Capability<IMotion> MOTION_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
     private Vec3 prevPos;
     private Vec3 pos;

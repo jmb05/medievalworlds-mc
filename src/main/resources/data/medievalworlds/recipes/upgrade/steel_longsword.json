@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "medievalworlds:steel_longsword_blade"
+  },
+  "addition": {
+    "item": "medievalworlds:long_stick"
+  },
+  "result": {
+    "item": "medievalworlds:steel_longsword"
+  }
+}

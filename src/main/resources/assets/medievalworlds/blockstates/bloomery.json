@@ -1,0 +1,23 @@
+{
+  "variants": {
+      "facing=north,clay=true,half=lower": {"model": "medievalworlds:block/bloomery_clay_bottom"},
+      "facing=east,clay=true,half=lower": {"model": "medievalworlds:block/bloomery_clay_bottom", "y": 90},
+      "facing=south,clay=true,half=lower": {"model": "medievalworlds:block/bloomery_clay_bottom", "y": 180},
+      "facing=west,clay=true,half=lower": {"model": "medievalworlds:block/bloomery_clay_bottom", "y": 270},
+
+      "facing=north,clay=false,half=lower": {"model": "medievalworlds:block/bloomery_terracotta_bottom"},
+      "facing=east,clay=false,half=lower": {"model": "medievalworlds:block/bloomery_terracotta_bottom", "y": 90},
+      "facing=south,clay=false,half=lower": {"model": "medievalworlds:block/bloomery_terracotta_bottom", "y": 180},
+      "facing=west,clay=false,half=lower": {"model": "medievalworlds:block/bloomery_terracotta_bottom", "y": 270},
+
+      "facing=north,clay=true,half=upper": {"model": "medievalworlds:block/bloomery_clay_top"},
+      "facing=east,clay=true,half=upper": {"model": "medievalworlds:block/bloomery_clay_top", "y": 90},
+      "facing=south,clay=true,half=upper": {"model": "medievalworlds:block/bloomery_clay_top", "y": 180},
+      "facing=west,clay=true,half=upper": {"model": "medievalworlds:block/bloomery_clay_top", "y": 270},
+
+      "facing=north,clay=false,half=upper": {"model": "medievalworlds:block/bloomery_terracotta_top"},
+      "facing=east,clay=false,half=upper": {"model": "medievalworlds:block/bloomery_terracotta_top", "y": 90},
+      "facing=south,clay=false,half=upper": {"model": "medievalworlds:block/bloomery_terracotta_top", "y": 180},
+      "facing=west,clay=false,half=upper": {"model": "medievalworlds:block/bloomery_terracotta_top", "y": 270}
+   }
+}

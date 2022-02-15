@@ -1,7 +1,0 @@
-{
-	"parent": "medievalworlds:item/medium_bar_template",
-	"textures": {
-		"texture": "medievalworlds:item/heated_medium_tin_bar",
-		"particle": "medievalworlds:item/heated_medium_tin_bar"
-	}
-}

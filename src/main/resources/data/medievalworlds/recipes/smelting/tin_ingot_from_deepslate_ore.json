@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "medievalworlds:deepslate_tin_ore"
+  },
+  "result": "medievalworlds:tin_ingot",
+  "experience": 0.3,
+  "cookingtime": 200
+}

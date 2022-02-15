@@ -25,11 +25,9 @@ public class GambesonChestplateItem extends ArmorItem {
     @Override
     public void initializeClient(@Nonnull Consumer<IItemRenderProperties> consumer) {
         consumer.accept(new IItemRenderProperties() {
-            @SuppressWarnings("unchecked")
             @Override
-            public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
-                GambesonModel model = new GambesonModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientSetup.GAMBESON_LAYER));
-                return (A) model;
+            public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
+                return new GambesonModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientSetup.GAMBESON_LAYER));
             }
         });
     }

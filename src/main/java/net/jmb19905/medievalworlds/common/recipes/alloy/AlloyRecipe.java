@@ -1,10 +1,8 @@
 package net.jmb19905.medievalworlds.common.recipes.alloy;
 
-import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
@@ -51,7 +49,7 @@ public class AlloyRecipe implements IAlloyRecipe{
     @Nonnull
     @Override
     public ItemStack assemble(@Nonnull RecipeWrapper inv) {
-        return this.output;
+        return this.output.copy();
     }
 
     @Override
@@ -73,13 +71,7 @@ public class AlloyRecipe implements IAlloyRecipe{
     @Nonnull
     @Override
     public ResourceLocation getId() {
-        return this.id;
-    }
-
-    @Nonnull
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return MWRecipeSerializers.ALLOY_SERIALIZER.get();
+        return id;
     }
 
     public NonNullList<ItemStack> getInputs() {

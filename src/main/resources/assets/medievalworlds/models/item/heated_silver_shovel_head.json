@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "medievalworlds:item/silver_shovel_head",
+    "layer1": "medievalworlds:item/shovel_head"
+  }
+}

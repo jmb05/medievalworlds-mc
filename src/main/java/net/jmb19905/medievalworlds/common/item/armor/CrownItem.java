@@ -11,6 +11,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.IItemRenderProperties;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,10 +26,9 @@ public class CrownItem extends ArmorItem {
     @Override
     public void initializeClient(@Nonnull Consumer<IItemRenderProperties> consumer) {
         consumer.accept(new IItemRenderProperties() {
-            @SuppressWarnings("unchecked")
             @Override
-            public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
-                return (A) new CrownModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientSetup.CROWN_LAYER));
+            public @NotNull HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
+                return new CrownModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientSetup.CROWN_LAYER));
             }
         });
     }

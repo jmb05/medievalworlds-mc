@@ -1,15 +1,15 @@
 package net.jmb19905.medievalworlds.common.recipes.alloy;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.minecraft.core.Registry;
+import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
 
 public interface IAlloyRecipe extends Recipe<RecipeWrapper> {
 
@@ -18,7 +18,13 @@ public interface IAlloyRecipe extends Recipe<RecipeWrapper> {
     @Nonnull
     @Override
     default RecipeType<?> getType(){
-        return Objects.requireNonNull(Registry.RECIPE_TYPE.get(RECIPE_TYPE_ID));
+        return MWRecipeSerializers.ALLOY_TYPE;
+    }
+
+    @Nonnull
+    @Override
+    default RecipeSerializer<?> getSerializer() {
+        return MWRecipeSerializers.ALLOY_SERIALIZER.get();
     }
 
     @Override

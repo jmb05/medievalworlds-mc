@@ -3,24 +3,34 @@ package net.jmb19905.medievalworlds.core.registries;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.block.AbstractOreBlock;
 import net.jmb19905.medievalworlds.common.block.AlloyFurnaceBlock;
+import net.jmb19905.medievalworlds.common.block.BellowsBlock;
+import net.jmb19905.medievalworlds.common.block.ChimneyBlock;
 import net.jmb19905.medievalworlds.common.block.anvil.CylindricalAnvil;
-import net.jmb19905.medievalworlds.common.block.forge.ForgeBaseBlock;
+import net.jmb19905.medievalworlds.common.block.bloomery.BloomeryBlock;
+import net.jmb19905.medievalworlds.common.block.forge.ForgeBlock;
 import net.jmb19905.medievalworlds.common.block.slackTub.SlackTubBlock;
-import net.jmb19905.medievalworlds.common.block.bloomery.BloomeryBlockBottom;
-import net.jmb19905.medievalworlds.common.block.bloomery.BloomeryBlockTop;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
+
+@SuppressWarnings("unused")
 public class MWBlocks {
+
+    public static List<BlockItem> blockItemOrder;
+    private static final List<RegistryObject<BlockItem>> blockItemRegistryOrder = new ArrayList<>();
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MedievalWorlds.MOD_ID);
     public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MedievalWorlds.MOD_ID);
@@ -47,44 +57,66 @@ public class MWBlocks {
 
     public static final RegistryObject<Block> ALLOY_FURNACE_BLOCK = BLOCKS.register("alloy_furnace", () -> new AlloyFurnaceBlock(Block.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(3.5F).lightLevel(value -> 13)));
 
-    public static final RegistryObject<Block> BLOOMERY_CLAY_BOTTOM_BLOCK = BLOCKS.register("bloomery_clay_bottom", () -> new BloomeryBlockBottom(BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.CLAY).sound(SoundType.GRAVEL).strength(0.6F)));
-    public static final RegistryObject<Block> BLOOMERY_CLAY_TOP_BLOCK = BLOCKS.register("bloomery_clay_top", () -> new BloomeryBlockTop(BlockBehaviour.Properties.copy(BLOOMERY_CLAY_BOTTOM_BLOCK.get())));
+    public static final RegistryObject<Block> BLOOMERY = BLOCKS.register("bloomery", () -> new BloomeryBlock(BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.CLAY).sound(SoundType.GRAVEL).strength(0.6F).noOcclusion()));
+    public static final RegistryObject<BellowsBlock> BELLOWS = BLOCKS.register("bellows", () -> new BellowsBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).sound(SoundType.WOOD).strength(0.6f).noOcclusion()));
 
-    public static final RegistryObject<Block> BLOOMERY_TERRACOTTA_BOTTOM_BLOCK = BLOCKS.register("bloomery_terracotta_bottom", () -> new BloomeryBlockBottom(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).sound(SoundType.STONE).strength(3.5F)));
-    public static final RegistryObject<Block> BLOOMERY_TERRACOTTA_TOP_BLOCK = BLOCKS.register("bloomery_terracotta_top", () -> new BloomeryBlockTop(BlockBehaviour.Properties.copy(BLOOMERY_TERRACOTTA_BOTTOM_BLOCK.get())));
-
-    public static final RegistryObject<Block> FORGE_BASE_BLOCK = BLOCKS.register("forge_base", () -> new ForgeBaseBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).requiresCorrectToolForDrops().strength(2.0F, 6.0F)));
+    public static final RegistryObject<Block> FORGE_BLOCK = BLOCKS.register("forge", () -> new ForgeBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).requiresCorrectToolForDrops().strength(2.0F, 6.0F)));
 
     public static final RegistryObject<Block> LIMESTONE_BLOCK = BLOCKS.register("limestone", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SAND).requiresCorrectToolForDrops().strength(1.5f, 3).sound(SoundType.STONE)));
     public static final RegistryObject<Block> LIMESTONE_BRICKS_BLOCK = BLOCKS.register("limestone_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SAND).requiresCorrectToolForDrops().strength(1.5f, 3.5f).sound(SoundType.STONE)));
 
     public static final RegistryObject<SlackTubBlock> SLACK_TUB_BLOCK = BLOCKS.register("slack_tub", () -> new SlackTubBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
-    public static final RegistryObject<CylindricalAnvil> STONE_ANVIL = BLOCKS.register("stone_anvil", () -> new CylindricalAnvil(BlockBehaviour.Properties.of(Material.STONE).strength(3.0f).sound(SoundType.STONE)));
+    public static final RegistryObject<CylindricalAnvil> STONE_ANVIL = BLOCKS.register("stone_anvil", () -> new CylindricalAnvil(null, .07f, BlockBehaviour.Properties.of(Material.STONE).strength(3.0f).sound(SoundType.STONE)));
 
     public static final RegistryObject<Block> CHARCOAL_LOG = BLOCKS.register("charcoal_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLACK).strength(2.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> CHARCOAl_PLANKS = BLOCKS.register("charcoal_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLACK).strength(2.0f).sound(SoundType.WOOD)));
+
+    public static final RegistryObject<Block> BRICK_CHIMNEY = BLOCKS.register("brick_chimney", () -> new ChimneyBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
 
     //BlockItems
-    public static final RegistryObject<BlockItem> BRONZE_BLOCK_ITEM = BLOCK_ITEMS.register("bronze_block", () -> new BlockItem(BRONZE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab))) ;
-    public static final RegistryObject<BlockItem> TIN_BLOCK_ITEM = BLOCK_ITEMS.register("tin_block", () -> new BlockItem(TIN_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab))) ;
-    public static final RegistryObject<BlockItem> RUBY_BLOCK_ITEM = BLOCK_ITEMS.register("ruby_block", () -> new BlockItem(RUBY_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab))) ;
-    public static final RegistryObject<BlockItem> STEEL_BLOCK_ITEM = BLOCK_ITEMS.register("steel_block", () -> new BlockItem(STEEL_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab))) ;
-    public static final RegistryObject<BlockItem> SILVER_BLOCK_ITEM = BLOCK_ITEMS.register("silver_block", () -> new BlockItem(SILVER_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab))) ;
+    public static final RegistryObject<BlockItem> TIN_BLOCK_ITEM = registerBlockItem("tin_block", () -> new BlockItem(TIN_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab))) ;
+    public static final RegistryObject<BlockItem> BRONZE_BLOCK_ITEM = registerBlockItem("bronze_block", () -> new BlockItem(BRONZE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab))) ;
+    public static final RegistryObject<BlockItem> STEEL_BLOCK_ITEM = registerBlockItem("steel_block", () -> new BlockItem(STEEL_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab))) ;
+    public static final RegistryObject<BlockItem> SILVER_BLOCK_ITEM = registerBlockItem("silver_block", () -> new BlockItem(SILVER_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab))) ;
+    public static final RegistryObject<BlockItem> RUBY_BLOCK_ITEM = registerBlockItem("ruby_block", () -> new BlockItem(RUBY_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab))) ;
 
-    public static final RegistryObject<BlockItem> TIN_ORE_BLOCK_ITEM = BLOCK_ITEMS.register("tin_ore", () -> new BlockItem(TIN_ORE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
-    public static final RegistryObject<BlockItem> RUBY_ORE_BLOCK_ITEM = BLOCK_ITEMS.register("ruby_ore", () -> new BlockItem(RUBY_ORE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
-    public static final RegistryObject<BlockItem> SILVER_ORE_BLOCK_ITEM = BLOCK_ITEMS.register("silver_ore", () -> new BlockItem(SILVER_ORE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<BlockItem> TIN_ORE_BLOCK_ITEM = registerBlockItem("tin_ore", () -> new BlockItem(TIN_ORE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+    public static final RegistryObject<BlockItem> SILVER_ORE_BLOCK_ITEM = registerBlockItem("silver_ore", () -> new BlockItem(SILVER_ORE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+    public static final RegistryObject<BlockItem> RUBY_ORE_BLOCK_ITEM = registerBlockItem("ruby_ore", () -> new BlockItem(RUBY_ORE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
-    public static final RegistryObject<BlockItem> RAW_TIN_BLOCK_ITEM = BLOCK_ITEMS.register("raw_tin_block", () -> new BlockItem(RAW_TIN_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
-    public static final RegistryObject<BlockItem> RAW_SILVER_BLOCK_ITEM = BLOCK_ITEMS.register("raw_silver_block", () -> new BlockItem(RAW_SILVER_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<BlockItem> DEEPSLATE_TIN_ORE_BLOCK_ITEM = registerBlockItem("deepslate_tin_ore", () -> new BlockItem(DEEPSLATE_TIN_ORE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+    public static final RegistryObject<BlockItem> DEEPSLATE_SILVER_ORE_BLOCK_ITEM = registerBlockItem("deepslate_silver_ore", () -> new BlockItem(DEEPSLATE_SILVER_ORE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+    public static final RegistryObject<BlockItem> DEEPSLATE_RUBY_ORE_BLOCK_ITEM = registerBlockItem("deepslate_ruby_ore", () -> new BlockItem(DEEPSLATE_RUBY_ORE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
-    public static final RegistryObject<BlockItem> ALLOY_FURNACE_BLOCK_ITEM = BLOCK_ITEMS.register("alloy_furnace", () -> new BlockItem(ALLOY_FURNACE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<BlockItem> RAW_TIN_BLOCK_ITEM = registerBlockItem("raw_tin_block", () -> new BlockItem(RAW_TIN_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+    public static final RegistryObject<BlockItem> RAW_SILVER_BLOCK_ITEM = registerBlockItem("raw_silver_block", () -> new BlockItem(RAW_SILVER_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
-    //public static final RegistryObject<BlockItem> BLOOMERY_ITEM = BLOCK_ITEMS.register("bloomery", () -> new BlockItem(BLOOMERY_CLAY_BOTTOM_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<BlockItem> ALLOY_FURNACE_BLOCK_ITEM = registerBlockItem("alloy_furnace", () -> new BlockItem(ALLOY_FURNACE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
-    public static final RegistryObject<BlockItem> LIMESTONE_ITEM = BLOCK_ITEMS.register("limestone", () -> new BlockItem(LIMESTONE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
-    public static final RegistryObject<BlockItem> LIMESTONE_BRICKS_ITEM = BLOCK_ITEMS.register("limestone_bricks", () -> new BlockItem(LIMESTONE_BRICKS_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<BlockItem> BLOOMERY_ITEM = registerBlockItem("bloomery", () -> new BlockItem(BLOOMERY.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+    public static final RegistryObject<BlockItem> BELLOWS_ITEM = registerBlockItem("bellows", () -> new BlockItem(BELLOWS.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
-    public static final RegistryObject<BlockItem> SLACK_TUB = BLOCK_ITEMS.register("slack_tub", () -> new BlockItem(SLACK_TUB_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.tab)));
-    public static final RegistryObject<BlockItem> STONE_ANVIL_ITEM = BLOCK_ITEMS.register("stone_anvil", () -> new BlockItem(STONE_ANVIL.get(), new Item.Properties().tab(MedievalWorlds.tab)));
+    public static final RegistryObject<BlockItem> LIMESTONE_ITEM = registerBlockItem("limestone", () -> new BlockItem(LIMESTONE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+    public static final RegistryObject<BlockItem> LIMESTONE_BRICKS_ITEM = registerBlockItem("limestone_bricks", () -> new BlockItem(LIMESTONE_BRICKS_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
+    public static final RegistryObject<BlockItem> SLACK_TUB = registerBlockItem("slack_tub", () -> new BlockItem(SLACK_TUB_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+    public static final RegistryObject<BlockItem> STONE_ANVIL_ITEM = registerBlockItem("stone_anvil", () -> new BlockItem(STONE_ANVIL.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+
+    public static final RegistryObject<BlockItem> CHARCOAL_LOG_ITEM = registerBlockItem("charcoal_log", () -> new BlockItem(CHARCOAL_LOG.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+    public static final RegistryObject<BlockItem> CHARCOAL_PLANKS_ITEM = registerBlockItem("charcoal_planks", () -> new BlockItem(CHARCOAl_PLANKS.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+
+    public static final RegistryObject<BlockItem> BRICK_CHIMNEY_ITEM = registerBlockItem("brick_chimney", () -> new BlockItem(BRICK_CHIMNEY.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+
+    private static RegistryObject<BlockItem> registerBlockItem(String id, Supplier<BlockItem> itemSupplier) {
+        RegistryObject<BlockItem> regObj = BLOCK_ITEMS.register(id, itemSupplier);
+        blockItemRegistryOrder.add(regObj);
+        return regObj;
+    }
+
+    public static List<BlockItem> getBlockItemTabOrder() {
+        if(blockItemOrder == null) {
+            blockItemOrder = blockItemRegistryOrder.stream().collect(ArrayList::new, (list, regObj) -> list.add(regObj.get()), ArrayList::addAll);
+        }
+        return blockItemOrder;
+    }
 }

@@ -2,7 +2,7 @@ package net.jmb19905.medievalworlds.common.blockentities;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.block.AlloyFurnaceBlock;
-import net.jmb19905.medievalworlds.client.menus.AlloyFurnaceMenu;
+import net.jmb19905.medievalworlds.common.menus.AlloyFurnaceMenu;
 import net.jmb19905.medievalworlds.common.recipes.alloy.AlloyRecipe;
 import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
@@ -11,6 +11,7 @@ import net.jmb19905.medievalworlds.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -29,7 +30,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -161,7 +161,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
                 //notify the neighbours and send the update to the client
                 if(dirty){
                     alloyFurnaceBlockEntity.setChanged();
-                    level.sendBlockUpdated(pos, state, state, Constants.BlockFlags.BLOCK_UPDATE);
+                    level.sendBlockUpdated(pos, state, state, 3);
                 }
             }
         }
@@ -202,7 +202,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
     @Override
     public void load(@Nonnull CompoundTag nbt) {
         super.load(nbt);
-        if(nbt.contains("CustomName", Constants.NBT.TAG_STRING)) {
+        if(nbt.contains("CustomName", Tag.TAG_STRING)) {
             this.customName = Component.Serializer.fromJson(nbt.getString("CustomName"));
         }
 
@@ -215,10 +215,9 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         this.currentMaxBurnTime = nbt.getInt("CurrentMaxBurnTime");
     }
 
-    @Nonnull
     @Override
-    public CompoundTag save(@Nonnull CompoundTag nbt) {
-        super.save(nbt);
+    public void saveAdditional(@Nonnull CompoundTag nbt) {
+        super.saveAdditional(nbt);
         if(this.customName != null) {
             nbt.putString("CustomName", Component.Serializer.toJson(customName));
         }
@@ -227,8 +226,6 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         nbt.putInt("CurrentAlloyTime", currentAlloyTime);
         nbt.putInt("CurrentBurnTime", currentBurnTime);
         nbt.putInt("CurrentMaxBurnTime", currentMaxBurnTime);
-
-        return nbt;
     }
 
     @Nullable
@@ -255,20 +252,20 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag nbt = new CompoundTag();
-        this.save(nbt);
-        return new ClientboundBlockEntityDataPacket(this.getBlockPos(), 0, nbt);
+        this.saveAdditional(nbt);
+        return ClientboundBlockEntityDataPacket.create(this, blockEntity -> nbt);
     }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(pkt.getTag());
+        this.load(Objects.requireNonNull(pkt.getTag()));
     }
 
     @Nonnull
     @Override
     public CompoundTag getUpdateTag() {
         CompoundTag nbt = new CompoundTag();
-        this.save(nbt);
+        this.saveAdditional(nbt);
         return nbt;
     }
 
@@ -291,5 +288,5 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         return currentBurnTime < currentMaxBurnTime;
     }
 
-    private static record AlloyRecipeWrapper(AlloyRecipe recipe, boolean flipped){}
+    private record AlloyRecipeWrapper(AlloyRecipe recipe, boolean flipped){}
 }

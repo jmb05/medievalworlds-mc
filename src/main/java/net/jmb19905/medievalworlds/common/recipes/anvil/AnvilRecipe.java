@@ -13,36 +13,33 @@ import javax.annotation.Nonnull;
 public class AnvilRecipe implements IAnvilRecipe{
 
     private final ResourceLocation id;
-    private final ItemStack input1;
-    private final ItemStack input2;
+    private final ItemStack input;
     private final ItemStack output;
 
-    public AnvilRecipe(ResourceLocation id, ItemStack input1, ItemStack input2, ItemStack output) {
+    public AnvilRecipe(ResourceLocation id, ItemStack input, ItemStack output) {
         this.id = id;
-        this.input1 = input1;
-        this.input2 = input2;
+        this.input = input;
         this.output = output;
     }
 
     @Override
-    public ItemStack getInput1() {
-        return input1;
+    public ItemStack getInput() {
+        return input;
     }
 
-    @Override
-    public ItemStack getInput2() {
-        return input2;
+    public boolean matches(ItemStack input) {
+        return this.input.getItem() == input.getItem() && this.input.getCount() <= input.getCount();
     }
 
     @Override
     public boolean matches(@Nonnull RecipeWrapper invWrapper, @Nonnull Level level) {
-        return invWrapper.getItem(0).getItem() == input1.getItem() && invWrapper.getItem(1).getItem() == input2.getItem();
+        return false;
     }
 
     @Nonnull
     @Override
     public ItemStack assemble(@Nonnull RecipeWrapper invWrapper) {
-        return this.output;
+        return this.output.copy();
     }
 
     @Nonnull
@@ -63,4 +60,12 @@ public class AnvilRecipe implements IAnvilRecipe{
         return MWRecipeSerializers.ANVIL_SERIALIZER.get();
     }
 
+    @Override
+    public String toString() {
+        return "AnvilRecipe{" +
+                "id=" + id +
+                ", input=" + input +
+                ", output=" + output +
+                '}';
+    }
 }

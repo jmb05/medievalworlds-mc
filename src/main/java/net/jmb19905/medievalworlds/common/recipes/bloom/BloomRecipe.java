@@ -3,6 +3,7 @@ package net.jmb19905.medievalworlds.common.recipes.bloom;
 import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
@@ -13,22 +14,43 @@ import javax.annotation.Nonnull;
 public class BloomRecipe implements IBloomRecipe{
 
     private final ResourceLocation id;
-    private final ItemStack input;
+    private final Ingredient input;
+    private final ItemStack primaryOutput;
+    private final ItemStack primaryPacked;
+    private final int primaryOffset;
     private final ItemStack secondaryOutput;
-    private final ItemStack output;
-    private final float secondaryChance;
+    private final ItemStack secondaryPacked;
+    private final int secondaryOffset;
 
-    public BloomRecipe(ResourceLocation id, ItemStack input, ItemStack secondaryOutput, float secondaryChance, ItemStack output){
+    public BloomRecipe(ResourceLocation id, Ingredient input, ItemStack primaryOutput, ItemStack primaryPacked, int primaryOffset, ItemStack secondaryOutput, ItemStack secondaryPacked, int secondaryOffset){
         this.id = id;
         this.input = input;
+        this.primaryOutput = primaryOutput;
+        this.primaryPacked = primaryPacked;
+        this.primaryOffset = primaryOffset;
         this.secondaryOutput = secondaryOutput;
-        this.secondaryChance = secondaryChance;
-        this.output = output;
+        this.secondaryPacked = secondaryPacked;
+        this.secondaryOffset = secondaryOffset;
     }
 
     @Override
-    public ItemStack getInput() {
+    public Ingredient getInput() {
         return input;
+    }
+
+    @Override
+    public ItemStack getPrimaryOutput() {
+        return primaryOutput;
+    }
+
+    @Override
+    public ItemStack getPrimaryOutputPacked() {
+        return primaryPacked;
+    }
+
+    @Override
+    public int getPrimaryOffset() {
+        return primaryOffset;
     }
 
     @Override
@@ -37,26 +59,31 @@ public class BloomRecipe implements IBloomRecipe{
     }
 
     @Override
-    public float getSecondaryChance() {
-        return secondaryChance;
+    public ItemStack getSecondaryOutputPacked() {
+        return secondaryPacked;
+    }
+
+    @Override
+    public int getSecondaryOffset() {
+        return secondaryOffset;
     }
 
     @Override
     public boolean matches(RecipeWrapper inv, @Nonnull Level level) {
         ItemStack stackInInputSlot = inv.getItem(0);
-        return (stackInInputSlot.getItem() == input.getItem() && stackInInputSlot.getCount() >= input.getCount());
+        return input.test(stackInInputSlot);
     }
 
     @Nonnull
     @Override
     public ItemStack assemble(@Nonnull RecipeWrapper inv) {
-        return this.output;
+        return this.primaryOutput;
     }
 
     @Nonnull
     @Override
     public ItemStack getResultItem() {
-        return this.output;
+        return this.primaryOutput;
     }
 
     @Nonnull

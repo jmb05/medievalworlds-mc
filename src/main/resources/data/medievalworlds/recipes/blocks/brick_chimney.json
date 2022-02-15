@@ -1,0 +1,18 @@
+{
+  "group": "medievalworlds",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "0 0",
+    "0 0",
+    "0 0"
+  ],
+  "key": {
+    "0": {
+      "item": "minecraft:brick"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:brick_chimney",
+    "count": 3
+  }
+}

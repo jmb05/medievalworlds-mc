@@ -3,7 +3,7 @@ package net.jmb19905.medievalworlds.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.client.menus.AlloyFurnaceMenu;
+import net.jmb19905.medievalworlds.common.menus.AlloyFurnaceMenu;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +15,6 @@ public class AlloyFurnaceScreen extends AbstractContainerScreen<AlloyFurnaceMenu
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(MedievalWorlds.MOD_ID, "textures/gui/alloy_furnace.png");
     private final AlloyFurnaceMenu screenMenu;
-    private boolean widthTooNarrow;
     public final AlloyRecipeBookComponent recipeBookComponent;
 
     public AlloyFurnaceScreen(AlloyFurnaceMenu screenMenu, Inventory inv, Component titleIn) {
@@ -30,7 +29,7 @@ public class AlloyFurnaceScreen extends AbstractContainerScreen<AlloyFurnaceMenu
     @Override
     public void init(){
         super.init();
-        this.widthTooNarrow = this.width < 379;
+        boolean widthTooNarrow = this.width < 379;
         assert this.minecraft != null;
         //this.recipeBookComponent.init(this.width, this.height, this.minecraft, widthTooNarrow, this.menu);
     }

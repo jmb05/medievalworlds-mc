@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "medievalworlds:heated_steel_axe_head"
+  },
+  "addition": {
+    "item": "medievalworlds:heated_netherite_ingot"
+  },
+  "result": {
+    "item": "medievalworlds:heated_netherite_axe_head"
+  }
+}

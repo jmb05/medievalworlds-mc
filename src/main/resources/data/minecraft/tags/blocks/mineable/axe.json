@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "medievalworlds:charcoal_log"
+    "medievalworlds:charcoal_log",
+    "medievalworlds:charcoal_planks",
+    "medievalworlds:slack_tub"
   ]
 }

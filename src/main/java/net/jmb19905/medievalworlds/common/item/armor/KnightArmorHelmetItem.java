@@ -11,6 +11,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.IItemRenderProperties;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
@@ -27,11 +28,9 @@ public class KnightArmorHelmetItem extends ArmorItem {
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         consumer.accept(new IItemRenderProperties() {
-            @SuppressWarnings("unchecked")
             @Override
-            public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
-                KnightArmorHelmetModel model = new KnightArmorHelmetModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientSetup.KNIGHT_HELMET_LAYER));
-                return (A) model;
+            public @NotNull HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
+                return new KnightArmorHelmetModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientSetup.KNIGHT_HELMET_LAYER));
             }
         });
     }

@@ -4,6 +4,7 @@ import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
@@ -26,7 +27,11 @@ public interface IBloomRecipe extends Recipe<RecipeWrapper> {
         return false;
     }
 
-    ItemStack getInput();
+    Ingredient getInput();
+    ItemStack getPrimaryOutput();
+    ItemStack getPrimaryOutputPacked();
+    int getPrimaryOffset();
     ItemStack getSecondaryOutput();
-    float getSecondaryChance();
+    ItemStack getSecondaryOutputPacked();
+    int getSecondaryOffset();
 }

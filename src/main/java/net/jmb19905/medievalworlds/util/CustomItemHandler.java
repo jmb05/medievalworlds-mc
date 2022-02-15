@@ -4,8 +4,16 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CustomItemHandler extends ItemStackHandler {
+
+    private final Map<Integer, Runnable> contentsChanged;
 
     public CustomItemHandler(int size, ItemStack... stacks) {
         super(size);
@@ -13,6 +21,8 @@ public class CustomItemHandler extends ItemStackHandler {
         for (int index = 0; index < stacks.length; index++) {
             this.stacks.set(index, stacks[index]);
         }
+
+        contentsChanged = new HashMap<>();
     }
 
     public void clear() {
@@ -42,6 +52,18 @@ public class CustomItemHandler extends ItemStackHandler {
         this.onContentsChanged(index);
     }
 
+    @Override
+    protected void onContentsChanged(int slot) {
+        super.onContentsChanged(slot);
+        if(contentsChanged.get(slot) != null) {
+            contentsChanged.get(slot).run();
+        }
+    }
+
+    public void setContentsChangedListener(int slot, Runnable contentsChanged) {
+        this.contentsChanged.put(slot, contentsChanged);
+    }
+
     public NonNullList<ItemStack> toNonNullList() {
         NonNullList<ItemStack> items = NonNullList.create();
         items.addAll(this.stacks);
@@ -59,5 +81,11 @@ public class CustomItemHandler extends ItemStackHandler {
     @Override
     public String toString() {
         return this.stacks.toString();
+    }
+
+    @Override
+    public void setStackInSlot(int slot, @NotNull ItemStack stack) {
+        System.out.println("Set stack in slot");
+        super.setStackInSlot(slot, stack);
     }
 }

@@ -11,6 +11,9 @@
     "medievalworlds:silver_ore",
     "medievalworlds:alloy_furnace",
     "medievalworlds:limestone",
-    "medievalworlds:limestone_bricks"
+    "medievalworlds:limestone_bricks",
+    "medievalworlds:raw_tin_block",
+    "medievalworlds:raw_silver_block",
+    "medievalworlds:forge_base"
   ]
 }

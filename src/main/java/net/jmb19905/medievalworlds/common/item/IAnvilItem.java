@@ -4,7 +4,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 public interface IAnvilItem {
-    Item getBaseItem();
-    ResourceLocation getTexture();
+    ResourceLocation getAnvilTexture();
     String getType();
 }

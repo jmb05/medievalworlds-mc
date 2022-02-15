@@ -1,6 +1,0 @@
-{
-	"parent": "medievalworlds:item/bloom_template",
-	"textures": {
-		"texture": "medievalworlds:item/heated_iron_bloom"
-	}
-}

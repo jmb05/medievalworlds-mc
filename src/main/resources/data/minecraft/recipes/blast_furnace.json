@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X#X",
+    "YYY"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:furnace"
+    },
+    "X": {
+      "item": "medievalworlds:steel_ingot"
+    },
+    "Y": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "minecraft:blast_furnace"
+  }
+}

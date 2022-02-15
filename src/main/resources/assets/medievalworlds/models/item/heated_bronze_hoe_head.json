@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "medievalworlds:item/bronze_hoe_head",
+    "layer1": "medievalworlds:item/hoe_head"
+  }
+}
