@@ -15,11 +15,12 @@ public class SmithingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
     @Override
     @NotNull
     public ISmithingRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject json) {
-        ItemStack input = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "input"), true);
+        ItemStack input = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "base"), true);
         ItemStack addition = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "addition"), true);
         ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
+        int cost = GsonHelper.getAsInt(json, "cost");
 
-        return new SmithingRecipe(id, input, addition, result);
+        return new SmithingRecipe(id, input, addition, result, cost);
     }
 
     @Nullable
@@ -28,13 +29,15 @@ public class SmithingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         ItemStack input = buffer.readItem();
         ItemStack addition = buffer.readItem();
         ItemStack result = buffer.readItem();
-        return new SmithingRecipe(id, input, addition, result);
+        int cost = buffer.readInt();
+        return new SmithingRecipe(id, input, addition, result, cost);
     }
 
     @Override
     public void toNetwork(@NotNull FriendlyByteBuf buffer, @NotNull ISmithingRecipe recipe) {
-        buffer.writeItemStack(recipe.getResultItem(), true);
-        buffer.writeItemStack(recipe.getAddition(), true);
         buffer.writeItemStack(recipe.getInput(), true);
+        buffer.writeItemStack(recipe.getAddition(), true);
+        buffer.writeItemStack(recipe.getResultItem(), true);
+        buffer.writeInt(recipe.getCost());
     }
 }

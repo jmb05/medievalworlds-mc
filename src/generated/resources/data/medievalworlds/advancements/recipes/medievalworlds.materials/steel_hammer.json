@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:steel_hammer"
+    ]
+  },
+  "criteria": {
+    "steel_hammer_head": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:steel_hammer_head"
+            ]
+          }
+        ]
+      }
+    },
+    "stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:stick"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:steel_hammer"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "steel_hammer_head",
+      "stick",
+      "has_the_recipe"
+    ]
+  ]
+}

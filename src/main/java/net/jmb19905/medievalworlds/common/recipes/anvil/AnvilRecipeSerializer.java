@@ -1,7 +1,6 @@
 package net.jmb19905.medievalworlds.common.recipes.anvil;
 
 import com.google.gson.JsonObject;
-import net.jmb19905.medievalworlds.common.item.MetalMaterial;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -9,11 +8,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistryEntry;
-import net.minecraftforge.registries.RegistryManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Objects;
 
 public class AnvilRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AnvilRecipe> {
 
@@ -37,7 +34,7 @@ public class AnvilRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?
 
     @Override
     public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull AnvilRecipe recipe) {
-        buffer.writeItemStack(recipe.getInput(), false);
         buffer.writeItemStack(recipe.getResultItem(), false);
+        buffer.writeItemStack(recipe.getInput(), false);
     }
 }

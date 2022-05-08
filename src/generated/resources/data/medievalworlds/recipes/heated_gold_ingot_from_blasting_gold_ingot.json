@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "minecraft:gold_ingot"
+  },
+  "result": "medievalworlds:heated_gold_ingot",
+  "experience": 0.0,
+  "cookingtime": 200
+}

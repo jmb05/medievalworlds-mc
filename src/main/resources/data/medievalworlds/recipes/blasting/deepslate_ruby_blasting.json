@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:blasting",
-  "ingredient": {
-    "item": "medievalworlds:deepslate_ruby_ore"
-  },
-  "result": "medievalworlds:ruby",
-  "experience": 0.3,
-  "cookingtime": 100
-}

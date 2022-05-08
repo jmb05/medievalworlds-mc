@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:heated_silver_ingot_anvil_from_shovel_head"
+    ]
+  },
+  "criteria": {
+    "heated_silver_shovel_head": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:heated_silver_shovel_head"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:heated_silver_ingot_anvil_from_shovel_head"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "heated_silver_shovel_head",
+      "has_the_recipe"
+    ]
+  ]
+}

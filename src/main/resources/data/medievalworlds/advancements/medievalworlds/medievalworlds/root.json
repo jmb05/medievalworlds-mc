@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "medievalworlds:alloy_furnace"
+    },
+    "title": {
+      "translate": "advancements.medievalworlds.root.title"
+    },
+    "description": {
+      "translate": "advancements.medievalworlds.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "medievalworlds:textures/gui/advancements/backgrounds/medievalworlds.png"
+  },
+  "criteria": {
+    "alloy_furnace": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:alloy_furnace"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    "alloy_furnace"
+  ]
+}

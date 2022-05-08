@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "medievalworlds:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:steel_block"
+  }
+}

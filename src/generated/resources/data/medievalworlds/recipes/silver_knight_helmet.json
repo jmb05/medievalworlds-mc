@@ -1,0 +1,14 @@
+{
+  "type": "medievalworlds:smithing",
+  "result": {
+    "item": "medievalworlds:silver_helmet"
+  },
+  "base": {
+    "item": "medievalworlds:silver_armor_plate",
+    "count": 8
+  },
+  "addition": {
+    "item": "medievalworlds:silver_knight_helmet"
+  },
+  "cost": 18
+}

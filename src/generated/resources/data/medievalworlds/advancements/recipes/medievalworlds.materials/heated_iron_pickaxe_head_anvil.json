@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:heated_iron_pickaxe_head_anvil"
+    ]
+  },
+  "criteria": {
+    "heated_iron_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:heated_iron_ingot"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:heated_iron_pickaxe_head_anvil"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "heated_iron_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

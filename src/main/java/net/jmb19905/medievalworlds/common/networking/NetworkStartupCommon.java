@@ -24,7 +24,9 @@ public class NetworkStartupCommon {
     public static final byte ANVIL_RECIPE_SELECTED_ID = 3;
     public static final byte BELLOWS_ACTIVATION_ID = 4;
 
-    public static final String MESSAGE_PROTOCOL_VERSION = "1.1";
+    public static final byte RENAME_ITEM_ID = 5;
+
+    public static final String MESSAGE_PROTOCOL_VERSION = "2";
 
     public static final ResourceLocation simpleChannelRL = new ResourceLocation(MedievalWorlds.MOD_ID, "mwchannel");
 
@@ -58,6 +60,10 @@ public class NetworkStartupCommon {
                 BellowsActivationPacket::encode, BellowsActivationPacket::decode,
                 MessageHandlerOnClient::onBellowsActivationPacketReceived,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        simpleChannel.registerMessage(RENAME_ITEM_ID, MWServerboundRenameItemPacket.class,
+                MWServerboundRenameItemPacket::encode, MWServerboundRenameItemPacket::decode,
+                MessageHandlerOnServer::onRenameItemPacketReceived,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER));
     }
 
 }

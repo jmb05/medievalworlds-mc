@@ -1,17 +1,14 @@
 package net.jmb19905.medievalworlds.common.block;
 
 import net.jmb19905.medievalworlds.common.multiblock.ForgeShape;
-import net.jmb19905.medievalworlds.common.recipes.bloom.BloomRecipe;
 import net.jmb19905.medievalworlds.common.recipes.burn.BurnRecipe;
 import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -52,7 +49,6 @@ public class CustomFireBlock extends FireBlock {
                         if (!level.getBlockState(belowPos).isFaceSturdy(level, belowPos, Direction.UP) || fireAge > 3) {
                             level.removeBlock(pos, false);
                         }
-
                         return;
                     }
 
@@ -153,7 +149,7 @@ public class CustomFireBlock extends FireBlock {
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean transformByBurning(Level level, BlockPos pos) {
-        BurnRecipe recipe = getRecipe(level, level.getBlockState(pos).getBlock());
+        BurnRecipe recipe = getRecipe(level, level.getBlockState(pos));
         if(recipe != null) {
             Random random = level.getRandom();
             if(random.nextFloat() > .5f) {
@@ -164,7 +160,7 @@ public class CustomFireBlock extends FireBlock {
         return false;
     }
 
-    private BurnRecipe getRecipe(Level level, Block block) {
+    private BurnRecipe getRecipe(Level level, BlockState block) {
         if(block == null){
             return null;
         }
@@ -180,7 +176,8 @@ public class CustomFireBlock extends FireBlock {
         FireBlock.bootStrap();
     }
 
-    public void onPlace(BlockState oldState, @NotNull Level level, @NotNull BlockPos pos, BlockState newState, boolean b) {
+    public void onPlace(@NotNull BlockState oldState, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState newState, boolean b) {
+        super.onPlace(oldState, level, pos, newState, b);
         if (!newState.is(oldState.getBlock())) {
             if (inPortalDimension(level)) {
                 Optional<PortalShape> optional = PortalShape.findEmptyPortalShape(level, pos, Direction.Axis.X);

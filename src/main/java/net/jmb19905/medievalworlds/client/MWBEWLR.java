@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.model.RoundShieldModel;
+import net.jmb19905.medievalworlds.common.blockentities.QuernBlockEntity;
 import net.jmb19905.medievalworlds.common.blockentities.bellows.BellowsBlockEntity;
 import net.jmb19905.medievalworlds.core.registries.MWBlocks;
 import net.jmb19905.medievalworlds.core.registries.MWItems;
@@ -13,6 +14,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -25,9 +27,15 @@ public class MWBEWLR extends BlockEntityWithoutLevelRenderer {
     public static final ResourceLocation ROUND_SHIELD_TEXTURE = new ResourceLocation(MedievalWorlds.MOD_ID, "textures/entity/round_shield.png");
 
     private final BellowsBlockEntity bellowsBlockEntity = new BellowsBlockEntity(BlockPos.ZERO, MWBlocks.BELLOWS.get().defaultBlockState());
+    private final QuernBlockEntity quernBlockEntity = new QuernBlockEntity(BlockPos.ZERO, MWBlocks.QUERN.get().defaultBlockState());
 
     public MWBEWLR() {
         super(minecraft.getBlockEntityRenderDispatcher(), minecraft.getEntityModels());
+    }
+
+    @Override
+    public void onResourceManagerReload(@NotNull ResourceManager resourceManager) {
+        roundShieldModel = new RoundShieldModel(minecraft.getEntityModels().bakeLayer(ClientSetup.ROUND_SHIELD_LAYER));
     }
 
     @Override
@@ -42,6 +50,8 @@ public class MWBEWLR extends BlockEntityWithoutLevelRenderer {
             poseStack.popPose();
         }else if(item == MWBlocks.BELLOWS_ITEM.get()) {
             minecraft.getBlockEntityRenderDispatcher().renderItem(bellowsBlockEntity, poseStack, bufferSource, light, overlay);
+        }else if(item == MWBlocks.QUERN_ITEM.get()) {
+            minecraft.getBlockEntityRenderDispatcher().renderItem(quernBlockEntity, poseStack, bufferSource, light, overlay);
         }
     }
 }

@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:silver_battle_axe"
+    ]
+  },
+  "criteria": {
+    "silver_battle_axe_head": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:silver_battle_axe_head"
+            ]
+          }
+        ]
+      }
+    },
+    "stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:stick"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:silver_battle_axe"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "silver_battle_axe_head",
+      "stick",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -6,9 +6,7 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CustomItemHandler extends ItemStackHandler {
@@ -85,7 +83,6 @@ public class CustomItemHandler extends ItemStackHandler {
 
     @Override
     public void setStackInSlot(int slot, @NotNull ItemStack stack) {
-        System.out.println("Set stack in slot");
         super.setStackInSlot(slot, stack);
     }
 }

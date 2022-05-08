@@ -3,6 +3,7 @@ package net.jmb19905.medievalworlds.common.block;
 import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.common.blockentities.AlloyFurnaceBlockEntity;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
+import net.minecraft.ReportedException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:bronze_ingot_packing"
+    ]
+  },
+  "criteria": {
+    "has_bronze_nugget": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:bronze_nugget"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:bronze_ingot_packing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bronze_nugget",
+      "has_the_recipe"
+    ]
+  ]
+}

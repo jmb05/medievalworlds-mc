@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "II",
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "I": {
+      "item": "medievalworlds:bronze_ingot"
+    }
+  },
+  "result": {
+    "item": "minecraft:smithing_table"
+  }
+}

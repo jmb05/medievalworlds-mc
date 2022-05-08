@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.block.anvil;
 
-import net.jmb19905.medievalworlds.common.menus.AnvilMenu;
+import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
 import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
 import net.jmb19905.medievalworlds.common.item.ForgeHammerItem;
 import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
@@ -77,7 +77,7 @@ public class CustomAnvilBlock extends AnvilBlock implements EntityBlock {
                 BlockEntity entity = level.getBlockEntity(pos);
                 if (entity instanceof AnvilBlockEntity anvilEntity) {
                     NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) entity, pos);
-                    if(player.containerMenu instanceof AnvilMenu anvilMenu)
+                    if(player.containerMenu instanceof CustomAnvilMenu anvilMenu)
                         if (anvilEntity.getCurrentRecipe() != null)
                             anvilMenu.setSelectedRecipeIndexByRecipe(anvilEntity.getCurrentRecipe());
                         else

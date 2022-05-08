@@ -1,0 +1,14 @@
+{
+  "type": "medievalworlds:alloy",
+  "output": {
+    "item": "medievalworlds:bronze_ingot",
+    "count": 4
+  },
+  "input1": {
+    "item": "minecraft:raw_copper",
+    "count": 3
+  },
+  "input2": {
+    "item": "medievalworlds:raw_tin"
+  }
+}

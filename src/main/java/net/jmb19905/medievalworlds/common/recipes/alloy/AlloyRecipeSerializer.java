@@ -37,8 +37,8 @@ public class AlloyRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?
 
     @Override
     public void toNetwork(FriendlyByteBuf buffer, IAlloyRecipe recipe) {
-        buffer.writeItemStack(recipe.getInput2(), true);
-        buffer.writeItemStack(recipe.getInput1(), true);
         buffer.writeItemStack(recipe.getResultItem(), false);
+        buffer.writeItemStack(recipe.getInput1(), true);
+        buffer.writeItemStack(recipe.getInput2(), true);
     }
 }

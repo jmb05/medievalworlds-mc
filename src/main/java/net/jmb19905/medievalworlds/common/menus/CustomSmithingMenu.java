@@ -1,28 +1,36 @@
 package net.jmb19905.medievalworlds.common.menus;
 
-import net.jmb19905.medievalworlds.common.block.smithing.CustomSmithingTable;
+import net.jmb19905.medievalworlds.common.block.CustomSmithingTable;
+import net.jmb19905.medievalworlds.common.blockentities.SmithingTableBlockEntity;
 import net.jmb19905.medievalworlds.common.recipes.smithing.ISmithingRecipe;
 import net.jmb19905.medievalworlds.common.recipes.smithing.SmithingRecipe;
 import net.jmb19905.medievalworlds.core.registries.MWMenuTypes;
 import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.util.CustomItemHandler;
+import net.jmb19905.medievalworlds.util.slots.InputSlot;
+import net.jmb19905.medievalworlds.util.slots.OutputSlot;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.world.inventory.ItemCombinerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.UpgradeRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,266 +38,418 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-public class CustomSmithingMenu extends ItemCombinerMenu {
+public class CustomSmithingMenu extends AbstractContainerMenu {
 
     private final Level level;
+    private final ContainerLevelAccess access;
     @Nullable
-    private Recipe<Container> selectedRecipe;
-    private final List<Recipe<Container>> recipes;
+    private Recipe<?> selectedRecipe;
+    private final List<Recipe<?>> allRecipes;
 
-    public static final int MAX_NAME_LENGTH = 50;
+    private final Player player;
+
+    private final InputSlot baseSlot;
+    private final InputSlot additionSlot;
+    private final OutputSlot outputSlot;
+
+    private final SmithingTableBlockEntity blockEntity;
+
     public int repairItemCountCost;
     private String itemName;
     private final DataSlot cost = DataSlot.standalone();
+    private final DataSlot smithing = DataSlot.standalone();
 
-    public CustomSmithingMenu(int windowId, Inventory inventory, ContainerLevelAccess access) {
-        super(MWMenuTypes.SMITHING_MENU.get(), windowId, inventory, access);
+    public CustomSmithingMenu(int windowId, Inventory inventory, SmithingTableBlockEntity blockEntity) {
+        super(MWMenuTypes.SMITHING_MENU.get(), windowId);
         this.level = inventory.player.level;
-        this.recipes = new ArrayList<>();
-        recipes.addAll(this.level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING));
-        recipes.addAll(this.level.getRecipeManager().getAllRecipesFor(MWRecipeSerializers.SMITHING_TYPE));
+        this.player = inventory.player;
+        this.access = ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()), blockEntity.getBlockPos());
+        this.allRecipes = new ArrayList<>();
+        allRecipes.addAll(this.level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING));
+        allRecipes.addAll(this.level.getRecipeManager().getAllRecipesFor(MWRecipeSerializers.SMITHING_TYPE));
+        setSmithing(false);
+
+        this.blockEntity = blockEntity;
+
+        baseSlot = new InputSlot(blockEntity.getInventory(), 0, 27, 47);
+        this.addSlot(baseSlot);
+        additionSlot = new InputSlot(blockEntity.getInventory(), 1, 76, 47);
+        this.addSlot(additionSlot);
+        outputSlot = new OutputSlot(blockEntity.getInventory(), 2, 134, 47) {
+            @Override
+            public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
+                CustomSmithingMenu.this.onTake(player, stack);
+                setSmithing(false);
+            }
+
+            @Override
+            public boolean mayPickup(Player playerIn) {
+                return ((selectedRecipe != null && matchesSelected(level)) && (player.getAbilities().instabuild || player.experienceLevel >= cost.get())) || ((player.getAbilities().instabuild || player.experienceLevel >= cost.get()) && cost.get() > 0);
+            }
+        };
+        this.addSlot(outputSlot);
+
+
+        //Player Inventory
+        for(int i = 0; i < 3; ++i) {
+            for(int j = 0; j < 9; ++j) {
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+            }
+        }
+
+        //Hotbar
+        for(int k = 0; k < 9; ++k) {
+            this.addSlot(new Slot(inventory, k, 8 + k * 18, 142));
+        }
+
+        ((CustomItemHandler) blockEntity.getInventory()).setContentsChangedListener(0, this::inputSlotsChanged);
+        ((CustomItemHandler) blockEntity.getInventory()).setContentsChangedListener(1, this::inputSlotsChanged);
+
         this.addDataSlot(this.cost);
     }
 
-    public CustomSmithingMenu(int windowId, Inventory inventory) {
-        this(windowId, inventory, ContainerLevelAccess.NULL);
+    public CustomSmithingMenu(int windowId, Inventory inventory, FriendlyByteBuf byteBuf) {
+        this(windowId, inventory, getBlockEntity(inventory, byteBuf));
     }
 
-    @Override
-    protected boolean isValidBlock(BlockState state) {
-        return state.getBlock() instanceof CustomSmithingTable;
+    private boolean matchesSelected(Level level) {
+        if(selectedRecipe == null) return false;
+        if(selectedRecipe instanceof UpgradeRecipe upgradeRecipe) {
+            return upgradeRecipe.matches(getSlotsAsContainer(), level);
+        }else if(selectedRecipe instanceof SmithingRecipe smithingRecipe) {
+            return smithingRecipe.matches(new RecipeWrapper(blockEntity.getInventory()), level);
+        }
+        return false;
     }
 
-    @Override
-    protected boolean mayPickup(@NotNull Player player, boolean b) {
-        return (selectedRecipe != null && this.selectedRecipe.matches(this.inputSlots, this.level)) || ((player.getAbilities().instabuild || player.experienceLevel >= this.cost.get()) && this.cost.get() > 0);
+    private void inputSlotsChanged() {
+        List<Recipe<?>> currentRecipes = getRecipes();
+        if(currentRecipes.isEmpty()) {
+            createRepairResult();
+        } else {
+            setSmithing(true);
+            selectedRecipe = currentRecipes.get(0);
+            ItemStack stack = ItemStack.EMPTY;
+            int recipeCost = 0;
+            if(selectedRecipe instanceof UpgradeRecipe upgradeRecipe) {
+                stack = upgradeRecipe.assemble(getSlotsAsContainer());
+            } else if(selectedRecipe instanceof SmithingRecipe smithingRecipe) {
+                recipeCost = smithingRecipe.getCost();
+                stack = smithingRecipe.assemble(new RecipeWrapper(blockEntity.getInventory()));
+            }
+
+            int nameRepairCost = 0;
+            ItemStack baseStack = baseSlot.getItem();
+            if(StringUtils.isBlank(this.itemName)) {
+                if(stack.hasCustomHoverName()) {
+                    nameRepairCost = 1;
+                    stack.resetHoverName();
+                }if(baseStack.hasCustomHoverName()) {
+                    nameRepairCost = 1;
+                    stack.resetHoverName();
+                }
+            } else if (!this.itemName.equals(baseStack.getHoverName().getString())) {
+                nameRepairCost = 1;
+                stack.setHoverName(new TextComponent(this.itemName));
+            }
+
+            cost.set(recipeCost + nameRepairCost);
+            outputSlot.set(stack);
+            broadcastChanges();
+        }
     }
 
-    @Override
-    protected void onTake(@NotNull Player player, @NotNull ItemStack stack) {
+    protected void  onTake(Player player, ItemStack stack) {
+        if(!player.getAbilities().instabuild) {
+            player.giveExperienceLevels(-this.cost.get());
+        }
+
         if(selectedRecipe != null) {
             stack.onCraftedBy(player.level, player, stack.getCount());
-            this.resultSlots.awardUsedRecipes(player);
             int shrinkAmountInput = 1;
             int shrinkAmountAddition = 1;
             if (selectedRecipe instanceof SmithingRecipe) {
                 shrinkAmountInput = ((SmithingRecipe) selectedRecipe).getInput().getCount();
                 shrinkAmountAddition = ((SmithingRecipe) selectedRecipe).getAddition().getCount();
             }
-            this.shrinkStackInSlot(0, shrinkAmountInput);
-            this.shrinkStackInSlot(1, shrinkAmountAddition);
-        }else {
-            if (!player.getAbilities().instabuild)
-                player.giveExperienceLevels(-this.cost.get());
-
-            System.out.println(this.repairItemCountCost);
-            this.inputSlots.setItem(0, ItemStack.EMPTY);
-            if (this.repairItemCountCost > 0) {
-                ItemStack itemstack = this.inputSlots.getItem(1);
-                if (!itemstack.isEmpty() && itemstack.getCount() > this.repairItemCountCost) {
-                    itemstack.shrink(this.repairItemCountCost);
-                    this.inputSlots.setItem(1, itemstack);
-                } else this.inputSlots.setItem(1, ItemStack.EMPTY);
-            } else this.inputSlots.setItem(1, ItemStack.EMPTY);
-
-            this.cost.set(0);
-            System.out.println("Repaired item");
+            baseSlot.getItem().shrink(shrinkAmountInput);
+            additionSlot.getItem().shrink(shrinkAmountAddition);
+            inputSlotsChanged();
+        } else {
+            baseSlot.set(ItemStack.EMPTY);
+            if(repairItemCountCost > 0) {
+                ItemStack additionStack = additionSlot.getItem();
+                if(!additionStack.isEmpty() && additionStack.getCount() > repairItemCountCost) {
+                    additionStack.shrink(repairItemCountCost);
+                } else additionSlot.set(ItemStack.EMPTY);
+            } else additionSlot.set(ItemStack.EMPTY);
         }
+        this.cost.set(0);
         this.access.execute((level, pos) -> level.levelEvent(1044, pos, 0));
+        broadcastChanges();
     }
 
-    private void shrinkStackInSlot(int slot, int amount) {
-        ItemStack itemstack = this.inputSlots.getItem(slot);
-        itemstack.shrink(amount);
-        this.inputSlots.setItem(slot, itemstack);
+    protected void createRepairResult() {
+        ItemStack baseStack = baseSlot.getItem();
+        this.cost.set(1);
+        int costCounter = 0;
+        int baseRepairCost = 0;
+        int nameRepairCost = 0;
+        if(baseStack.isEmpty()) {
+            outputSlot.set(ItemStack.EMPTY);
+            this.cost.set(0);
+            broadcastChanges();
+        } else {
+            ItemStack outputStack = baseStack.copy();
+            ItemStack additionStack = additionSlot.getItem();
+            Map<Enchantment, Integer> baseEnchantments = EnchantmentHelper.getEnchantments(outputStack);
+            baseRepairCost += baseStack.getBaseRepairCost();
+            this.repairItemCountCost = 0;
+            boolean additionEnchantedBookFlag = false;
+
+            if(!additionStack.isEmpty()) {
+                baseRepairCost += additionStack.getBaseRepairCost();
+                if(!onAnvilChange(itemName, baseRepairCost, player)) return;
+                additionEnchantedBookFlag = additionStack.getItem() instanceof EnchantedBookItem && !EnchantedBookItem.getEnchantments(additionStack).isEmpty();
+                if(outputStack.isDamageableItem() && outputStack.getItem().isValidRepairItem(baseStack, additionStack)) {
+                    int sub = Math.min(outputStack.getDamageValue(), outputStack.getMaxDamage() / 4);
+                    if(sub <= 0) {
+                        outputSlot.set(ItemStack.EMPTY);
+                        cost.set(0);
+                        return;
+                    }
+
+                    int counter;
+                    for(counter = 0; sub > 0 && counter < additionStack.getCount(); ++counter) {
+                        int j3 = outputStack.getDamageValue() - sub;
+                        outputStack.setDamageValue(j3);
+                        ++costCounter;
+                        sub = Math.min(outputStack.getDamageValue(), outputStack.getMaxDamage() / 4);
+                    }
+
+                    this.repairItemCountCost = counter;
+                } else {
+                    if(!additionEnchantedBookFlag && (!outputStack.is(additionStack.getItem()) || !outputStack.isDamageableItem())) {
+                        outputSlot.set(ItemStack.EMPTY);
+                        cost.set(0);
+                        return;
+                    }
+
+                    if(outputStack.isDamageableItem() && !additionEnchantedBookFlag) {
+                        int baseDamageDiff = baseStack.getMaxDamage() - baseStack.getDamageValue();
+                        int additionDamageDiff = additionStack.getMaxDamage() - additionStack.getDamageValue();
+                        int addedDurability = additionDamageDiff + outputStack.getDamageValue() * 12 / 100;
+                        int newBaseDurability = baseDamageDiff + addedDurability;
+                        int newBaseDamageValue = outputStack.getMaxDamage() - newBaseDurability;
+                        newBaseDamageValue = Math.max(newBaseDamageValue, 0);
+                        if(newBaseDamageValue < outputStack.getDamageValue()) {
+                            outputStack.setDamageValue(newBaseDamageValue);
+                            costCounter += 2;
+                        }
+                    }
+
+                    Map<Enchantment, Integer> additionEnchantments = EnchantmentHelper.getEnchantments(additionStack);
+                    boolean canBeEnchantedFlag = false;
+                    boolean cantBeEnchantedFlag = false;
+
+                    for(Enchantment additionEnchantment : additionEnchantments.keySet()) {
+                        if(additionEnchantment != null) {
+                            int baseEnchantmentLvl = baseEnchantments.getOrDefault(additionEnchantment, 0);
+                            int newEnchantmentLvl = additionEnchantments.get(additionEnchantment);
+                            newEnchantmentLvl = baseEnchantmentLvl == newEnchantmentLvl ? newEnchantmentLvl + 1 : Math.max(baseEnchantmentLvl, newEnchantmentLvl);
+
+                            boolean canBeEnchanted = additionEnchantment.canEnchant(baseStack);
+                            if(player.getAbilities().instabuild || baseStack.getItem() instanceof EnchantedBookItem) {
+                                canBeEnchanted = true;
+                            }
+
+                            for(Enchantment baseEnchantment : baseEnchantments.keySet()) {
+                                if(baseEnchantment != additionEnchantment && !additionEnchantment.isCompatibleWith(baseEnchantment)) {
+                                    canBeEnchanted = false;
+                                    ++costCounter;
+                                }
+                            }
+
+                            if(!canBeEnchanted) cantBeEnchantedFlag = true;
+                            else {
+                                canBeEnchantedFlag = true;
+                                newEnchantmentLvl = Math.min(newEnchantmentLvl, additionEnchantment.getMaxLevel());
+                                baseEnchantments.put(additionEnchantment, newEnchantmentLvl);
+                                int rarityCostFactor = 0;
+                                switch (additionEnchantment.getRarity()) {
+                                    case COMMON -> rarityCostFactor = 1;
+                                    case UNCOMMON -> rarityCostFactor = 2;
+                                    case RARE -> rarityCostFactor = 4;
+                                    case VERY_RARE -> rarityCostFactor = 8;
+                                }
+
+                                if(additionEnchantedBookFlag) {
+                                    rarityCostFactor = Math.max(1, rarityCostFactor / 2);
+                                }
+
+                                costCounter += rarityCostFactor * newEnchantmentLvl;
+                                if(baseStack.getCount() > 1) costCounter = 40;
+                            }
+                        }
+                    }
+                    if(cantBeEnchantedFlag && !canBeEnchantedFlag) {
+                        outputSlot.set(ItemStack.EMPTY);
+                        cost.set(0);
+                        broadcastChanges();
+                        return;
+                    }
+                }
+            }
+
+            if(StringUtils.isBlank(this.itemName)) {
+                if(baseStack.hasCustomHoverName()) {
+                    nameRepairCost = 1;
+                    costCounter += nameRepairCost;
+                    outputStack.resetHoverName();
+                }
+            } else if (!this.itemName.equals(baseStack.getHoverName().getString())) {
+                nameRepairCost = 1;
+                costCounter += nameRepairCost;
+                outputStack.setHoverName(new TextComponent(this.itemName));
+            }
+            if(additionEnchantedBookFlag && !outputStack.isBookEnchantable(additionStack)) {
+                outputStack = ItemStack.EMPTY;
+            }
+
+            cost.set(baseRepairCost + costCounter);
+            if(costCounter <= 0) {
+                outputStack = ItemStack.EMPTY;
+            }
+
+            if(nameRepairCost == costCounter && nameRepairCost > 0 && cost.get() >= 40) {
+                cost.set(39);
+            }
+
+            if(cost.get() >= 40 && !player.getAbilities().instabuild) {
+                outputStack = ItemStack.EMPTY;
+            }
+
+            if(!outputStack.isEmpty()) {
+                int outBaseRepairCost = outputStack.getBaseRepairCost();
+                if(!additionStack.isEmpty() && outBaseRepairCost < additionStack.getBaseRepairCost()) {
+                    outBaseRepairCost = additionStack.getBaseRepairCost();
+                }
+
+                if(nameRepairCost == costCounter || nameRepairCost == 0) {
+                    outBaseRepairCost = outBaseRepairCost * 2 + 1;
+                }
+
+                outputStack.setRepairCost(outBaseRepairCost);
+                EnchantmentHelper.setEnchantments(baseEnchantments, outputStack);
+            }
+
+            outputSlot.set(outputStack);
+            broadcastChanges();
+        }
+    }
+
+    public void setItemName(String name) {
+        this.itemName = name;
+        if (outputSlot.hasItem()) {
+            ItemStack itemstack = outputSlot.getItem();
+            if (StringUtils.isBlank(name)) {
+                itemstack.resetHoverName();
+            } else {
+                itemstack.setHoverName(new TextComponent(this.itemName));
+            }
+        }
+        this.inputSlotsChanged();
+    }
+
+    private static SmithingTableBlockEntity getBlockEntity(final Inventory playerInv, final FriendlyByteBuf data) {
+        Objects.requireNonNull(playerInv, "playerInv cannot be null");
+        Objects.requireNonNull(data, "data cannot be null");
+        final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
+        if (tileAtPos instanceof SmithingTableBlockEntity) {
+            return (SmithingTableBlockEntity) tileAtPos;
+        }
+        throw new IllegalStateException("BlockEntity is not correct " + tileAtPos);
     }
 
     @Override
-    public void createResult() {
-        List<UpgradeRecipe> listUpgrade = this.level.getRecipeManager().getRecipesFor(RecipeType.SMITHING, this.inputSlots, this.level);
-        List<ISmithingRecipe> listSmithing = this.level.getRecipeManager().getRecipesFor(MWRecipeSerializers.SMITHING_TYPE, this.inputSlots, this.level);
-        List<Recipe<Container>> list = new ArrayList<>();
-        list.addAll(listSmithing);
-        list.addAll(listUpgrade);
-        if (list.isEmpty()) {
-            createRepairResult();
-        } else {
-            this.selectedRecipe = list.get(0);
-            ItemStack itemstack = this.selectedRecipe.assemble(this.inputSlots);
-            this.resultSlots.setRecipeUsed(this.selectedRecipe);
-            this.resultSlots.setItem(0, itemstack);
-        }
+    public boolean stillValid(@NotNull Player player) {
+        return this.access.evaluate((level, pos) -> level.getBlockState(pos).getBlock() instanceof CustomSmithingTable && player.distanceToSqr((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D) <= 64.0D, true);
     }
 
-    //Mostly copied from AnvilMenu#createResult
-    private void createRepairResult() {
-        ItemStack itemstack = this.inputSlots.getItem(0);
-        this.cost.set(1);
-        int i = 0;
-        int j = 0;
-        int k = 0;
-        if (itemstack.isEmpty()) {
-            this.resultSlots.setItem(0, ItemStack.EMPTY);
-            this.cost.set(0);
-        } else {
-            ItemStack itemstack1 = itemstack.copy();
-            ItemStack itemstack2 = this.inputSlots.getItem(1);
-            Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(itemstack1);
-            j += itemstack.getBaseRepairCost() + (itemstack2.isEmpty() ? 0 : itemstack2.getBaseRepairCost());
-            this.repairItemCountCost = 0;
-            boolean flag = false;
+    private List<Recipe<?>> getRecipes() {
+        RecipeWrapper customSmithingTypeWrapper = new RecipeWrapper(blockEntity.getInventory());
 
-            if (!itemstack2.isEmpty()) {
-                flag = itemstack2.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(itemstack2).isEmpty();
-                if (itemstack1.isDamageableItem() && itemstack1.getItem().isValidRepairItem(itemstack, itemstack2)) {
-                    int l2 = Math.min(itemstack1.getDamageValue(), itemstack1.getMaxDamage() / 4);
-                    if (l2 <= 0) {
-                        this.resultSlots.setItem(0, ItemStack.EMPTY);
-                        this.cost.set(0);
-                        return;
-                    }
+        List<UpgradeRecipe> listUpgrade = this.level.getRecipeManager().getRecipesFor(RecipeType.SMITHING, getSlotsAsContainer(), this.level);
+        List<ISmithingRecipe> listSmithing = this.level.getRecipeManager().getRecipesFor(MWRecipeSerializers.SMITHING_TYPE, customSmithingTypeWrapper, this.level);
 
-                    int i3;
-                    for(i3 = 0; l2 > 0 && i3 < itemstack2.getCount(); ++i3) {
-                        int j3 = itemstack1.getDamageValue() - l2;
-                        itemstack1.setDamageValue(j3);
-                        ++i;
-                        l2 = Math.min(itemstack1.getDamageValue(), itemstack1.getMaxDamage() / 4);
-                    }
-
-                    this.repairItemCountCost = i3;
-                } else {
-                    if (!flag && (!itemstack1.is(itemstack2.getItem()) || !itemstack1.isDamageableItem())) {
-                        this.resultSlots.setItem(0, ItemStack.EMPTY);
-                        this.cost.set(0);
-                        return;
-                    }
-
-                    if (itemstack1.isDamageableItem() && !flag) {
-                        int l = itemstack.getMaxDamage() - itemstack.getDamageValue();
-                        int i1 = itemstack2.getMaxDamage() - itemstack2.getDamageValue();
-                        int j1 = i1 + itemstack1.getMaxDamage() * 12 / 100;
-                        int k1 = l + j1;
-                        int l1 = itemstack1.getMaxDamage() - k1;
-                        if (l1 < 0) {
-                            l1 = 0;
-                        }
-
-                        if (l1 < itemstack1.getDamageValue()) {
-                            itemstack1.setDamageValue(l1);
-                            i += 2;
-                        }
-                    }
-
-                    Map<Enchantment, Integer> map1 = EnchantmentHelper.getEnchantments(itemstack2);
-                    boolean flag2 = false;
-                    boolean flag3 = false;
-
-                    for(Enchantment enchantment1 : map1.keySet()) {
-                        if (enchantment1 != null) {
-                            int i2 = map.getOrDefault(enchantment1, 0);
-                            int j2 = map1.get(enchantment1);
-                            j2 = i2 == j2 ? j2 + 1 : Math.max(j2, i2);
-                            boolean flag1 = enchantment1.canEnchant(itemstack);
-                            if (this.player.getAbilities().instabuild || itemstack.is(Items.ENCHANTED_BOOK)) {
-                                flag1 = true;
-                            }
-
-                            for(Enchantment enchantment : map.keySet()) {
-                                if (enchantment != enchantment1 && !enchantment1.isCompatibleWith(enchantment)) {
-                                    flag1 = false;
-                                    ++i;
-                                }
-                            }
-
-                            if (!flag1) {
-                                flag3 = true;
-                            } else {
-                                flag2 = true;
-                                if (j2 > enchantment1.getMaxLevel()) {
-                                    j2 = enchantment1.getMaxLevel();
-                                }
-
-                                map.put(enchantment1, j2);
-                                int k3 = switch (enchantment1.getRarity()) {
-                                    case COMMON -> 1;
-                                    case UNCOMMON -> 2;
-                                    case RARE -> 4;
-                                    case VERY_RARE -> 8;
-                                };
-
-                                if (flag) {
-                                    k3 = Math.max(1, k3 / 2);
-                                }
-
-                                i += k3 * j2;
-                                if (itemstack.getCount() > 1) {
-                                    i = 40;
-                                }
-                            }
-                        }
-                    }
-
-                    if (flag3 && !flag2) {
-                        this.resultSlots.setItem(0, ItemStack.EMPTY);
-                        this.cost.set(0);
-                        return;
-                    }
-                }
-            }
-
-            if (StringUtils.isBlank(this.itemName)) {
-                if (itemstack.hasCustomHoverName()) {
-                    k = 1;
-                    i += k;
-                    itemstack1.resetHoverName();
-                }
-            } else if (!this.itemName.equals(itemstack.getHoverName().getString())) {
-                k = 1;
-                i += k;
-                itemstack1.setHoverName(new TextComponent(this.itemName));
-            }
-            if (flag && !itemstack1.isBookEnchantable(itemstack2)) itemstack1 = ItemStack.EMPTY;
-
-            this.cost.set(j + i);
-            if (i <= 0) {
-                itemstack1 = ItemStack.EMPTY;
-            }
-
-            if (k == i && k > 0 && this.cost.get() >= 40) {
-                this.cost.set(39);
-            }
-
-            if (this.cost.get() >= 40 && !this.player.getAbilities().instabuild) {
-                itemstack1 = ItemStack.EMPTY;
-            }
-
-            if (!itemstack1.isEmpty()) {
-                int k2 = itemstack1.getBaseRepairCost();
-                if (!itemstack2.isEmpty() && k2 < itemstack2.getBaseRepairCost()) {
-                    k2 = itemstack2.getBaseRepairCost();
-                }
-
-                if (k != i || k == 0) {
-                    k2 = calculateIncreasedRepairCost(k2);
-                }
-
-                itemstack1.setRepairCost(k2);
-                EnchantmentHelper.setEnchantments(map, itemstack1);
-            }
-
-            this.resultSlots.setItem(0, itemstack1);
-            this.broadcastChanges();
-        }
+        List<Recipe<?>> recipes = new ArrayList<>();
+        recipes.addAll(listUpgrade);
+        recipes.addAll(listSmithing);
+        return recipes;
     }
 
-    public static int calculateIncreasedRepairCost(int c) {
-        return c * 2 + 1;
+    private Container getSlotsAsContainer() {
+        return new SimpleContainer(((CustomItemHandler) blockEntity.getInventory()).toNonNullList().toArray(ItemStack[]::new));
+    }
+
+    public boolean onAnvilChange(String name, int baseCost, Player player) {
+        AnvilUpdateEvent e = new AnvilUpdateEvent(baseSlot.getItem(), additionSlot.getItem(), name, baseCost, player);
+        if (MinecraftForge.EVENT_BUS.post(e)) return false;
+        if (e.getOutput().isEmpty()) return true;
+
+        outputSlot.set(e.getOutput());
+        cost.set(e.getCost());
+        repairItemCountCost = e.getMaterialCost();
+        broadcastChanges();
+        return false;
+    }
+
+    public int getCost() {
+        return cost.get();
+    }
+
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player player, int slotIndex) {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = getSlot(slotIndex);
+        if (slot.hasItem()) {
+            ItemStack itemstack1 = slot.getItem();
+            itemstack = itemstack1.copy();
+            if (slotIndex == 2) {
+                if (!this.moveItemStackTo(itemstack1, 3, 39, true)) {
+                    return ItemStack.EMPTY;
+                }
+
+                slot.onQuickCraft(itemstack1, itemstack);
+            } else if (slotIndex != 0 && slotIndex != 1) {
+                if (slotIndex >= 3 && slotIndex < 39) {
+                    int i = this.shouldQuickMoveToAdditionalSlot(itemstack) ? 1 : 0;
+                    if (!this.moveItemStackTo(itemstack1, i, 2, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+            } else if (!this.moveItemStackTo(itemstack1, 3, 39, false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (itemstack1.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+                broadcastChanges();
+            }
+            else slot.setChanged();
+
+            if (itemstack1.getCount() == itemstack.getCount()) return ItemStack.EMPTY;
+
+            slot.onTake(player, itemstack1);
+        }
+
+        return itemstack;
     }
 
     protected boolean shouldQuickMoveToAdditionalSlot(@NotNull ItemStack stack) {
-        return this.recipes.stream().anyMatch((recipe) -> {
+        return allRecipes.stream().anyMatch((recipe) -> {
             if(recipe instanceof UpgradeRecipe) {
                 return ((UpgradeRecipe) recipe).isAdditionIngredient(stack);
             }else if(recipe instanceof ISmithingRecipe) {
@@ -299,30 +459,12 @@ public class CustomSmithingMenu extends ItemCombinerMenu {
         });
     }
 
-    public boolean canTakeItemForPickAll(@NotNull ItemStack stack, Slot slot) {
-        return slot.container != this.resultSlots && super.canTakeItemForPickAll(stack, slot);
+    public boolean isSmithing() {
+        return smithing.get() > 0;
     }
 
-    public void setItemName(String name) {
-        this.itemName = name;
-        if (this.getSlot(2).hasItem()) {
-            ItemStack itemstack = this.getSlot(2).getItem();
-            if (StringUtils.isBlank(name)) {
-                itemstack.resetHoverName();
-            } else {
-                itemstack.setHoverName(new TextComponent(this.itemName));
-            }
-        }
-
-        this.createRepairResult();
-    }
-
-    public int getCost() {
-        return this.cost.get();
-    }
-
-    public void setMaximumCost(int value) {
-        this.cost.set(value);
+    public void setSmithing(boolean b) {
+        this.smithing.set(b ? 1 : 0);
     }
 
 }

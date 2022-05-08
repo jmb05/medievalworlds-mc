@@ -1,7 +1,6 @@
 package net.jmb19905.medievalworlds.common.recipes.anvil;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.item.MetalMaterial;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;

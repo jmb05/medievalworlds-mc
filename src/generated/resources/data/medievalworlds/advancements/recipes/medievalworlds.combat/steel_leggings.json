@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:steel_leggings"
+    ]
+  },
+  "criteria": {
+    "steel_armor_plate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:steel_armor_plate"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:steel_leggings"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "steel_armor_plate",
+      "has_the_recipe"
+    ]
+  ]
+}

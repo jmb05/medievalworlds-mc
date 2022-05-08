@@ -1,0 +1,14 @@
+{
+  "type": "medievalworlds:smithing",
+  "result": {
+    "item": "minecraft:diamond_helmet"
+  },
+  "base": {
+    "item": "medievalworlds:steel_armor_plate",
+    "count": 8
+  },
+  "addition": {
+    "item": "medievalworlds:warrior_helmet"
+  },
+  "cost": 19
+}

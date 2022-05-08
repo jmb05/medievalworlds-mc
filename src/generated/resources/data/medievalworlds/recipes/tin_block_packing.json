@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "medievalworlds:tin_ingot"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:tin_block"
+  }
+}

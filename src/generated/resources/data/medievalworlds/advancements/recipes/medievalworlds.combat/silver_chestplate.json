@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:silver_chestplate"
+    ]
+  },
+  "criteria": {
+    "silver_armor_plate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:silver_armor_plate"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:silver_chestplate"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "silver_armor_plate",
+      "has_the_recipe"
+    ]
+  ]
+}

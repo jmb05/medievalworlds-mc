@@ -114,7 +114,6 @@ public class ForgeShape {
     }
 
     public void form() {
-        System.out.println("yay");
     }
 
     public boolean isFormed() {

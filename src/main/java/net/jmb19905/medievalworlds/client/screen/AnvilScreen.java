@@ -3,7 +3,7 @@ package net.jmb19905.medievalworlds.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.menus.AnvilMenu;
+import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -19,16 +19,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class AnvilScreen extends AbstractContainerScreen<AnvilMenu> {
+public class AnvilScreen extends AbstractContainerScreen<CustomAnvilMenu> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(MedievalWorlds.MOD_ID, "textures/gui/anvil.png");
-    private final AnvilMenu menu;
+    private final CustomAnvilMenu menu;
     private float scrollOffs;
     private boolean scrolling;
     private int startIndex;
     private boolean displayRecipes;
 
-    public AnvilScreen(AnvilMenu menu, Inventory inventory, Component title) {
+    public AnvilScreen(CustomAnvilMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
         this.menu = menu;
         this.menu.registerUpdateListener(this::containerChanged);
@@ -124,8 +124,8 @@ public class AnvilScreen extends AbstractContainerScreen<AnvilMenu> {
                     if (this.menu.clickMenuButton(this.minecraft.player, l)) {
                         this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
                         assert this.minecraft.gameMode != null;
-                        //this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, l);
-                        NetworkStartupCommon.simpleChannel.send(PacketDistributor.SERVER.noArg(), new AnvilRecipeSelectedPacket(this.menu.containerId, l));
+                        NetworkStartupCommon.simpleChannel.send(PacketDistributor.SERVER.noArg(), new AnvilRecipeSelectedPacket(this.menu.containerId, menu.getRecipes().get(l).getId()));
+                        NetworkStartupCommon.simpleChannel.send(PacketDistributor.SERVER.noArg(), new AnvilRecipeSelectedPacket(this.menu.containerId, menu.getRecipes().get(l).getId()));
                         return true;
                     }
                 }

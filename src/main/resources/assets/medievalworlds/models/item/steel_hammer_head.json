@@ -1,0 +1,7 @@
+{
+  "parent": "medievalworlds:item/template_hammer_head",
+  "textures": {
+    "0": "medievalworlds:item/steel_hammer",
+    "particle": "medievalworlds:item/steel_hammer"
+  }
+}

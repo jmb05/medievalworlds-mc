@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYX",
+    " Y ",
+    " Y "
+  ],
+  "key": {
+    "X": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "Y": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:stone_forge_hammer"
+  }
+}

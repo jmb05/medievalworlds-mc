@@ -1,0 +1,7 @@
+{
+  "parent": "medievalworlds:item/template_battle_axe_head",
+  "textures": {
+    "1": "medievalworlds:item/heated_silver_battle_axe",
+    "particle": "medievalworlds:item/heated_silver_battle_axe"
+  }
+}

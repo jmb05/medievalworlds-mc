@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "medievalworlds:raw_silver"
-  },
-  "result": "medievalworlds:silver_ingot",
-  "experience": 0.8,
-  "cookingtime": 200
-}

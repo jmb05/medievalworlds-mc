@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "medievalworlds:bronze_ingot"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:bronze_block"
+  }
+}

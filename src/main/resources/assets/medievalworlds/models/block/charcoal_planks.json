@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "medievalworlds:block/charcoal_planks",
-    "particle": "medievalworlds:block/charcoal_planks"
-  }
-}

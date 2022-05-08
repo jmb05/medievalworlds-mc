@@ -28,8 +28,6 @@ public abstract class MWSortedTab extends CreativeModeTab {
         super.fillItemList(items);
         try {
             items.sort(getSorter());
-        }catch (ClassCastException e){
-            System.err.println("Error sorting Creative Tab");
-        }
+        }catch (ClassCastException ignored){}
     }
 }

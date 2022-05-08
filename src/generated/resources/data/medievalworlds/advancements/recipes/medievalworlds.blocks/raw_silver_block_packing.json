@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:raw_silver_block_packing"
+    ]
+  },
+  "criteria": {
+    "has_raw_silver": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:raw_silver"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:raw_silver_block_packing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_silver",
+      "has_the_recipe"
+    ]
+  ]
+}

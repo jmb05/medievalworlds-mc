@@ -9,11 +9,12 @@ import javax.annotation.Nonnull;
 
 public class InputSlot extends SlotItemHandler {
 
-    private RecipeType<?> recipeType;
-
     public InputSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, RecipeType<?> recipeType) {
         super(itemHandler, index, xPosition, yPosition);
-        this.recipeType = recipeType;
+    }
+
+    public InputSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+        super(itemHandler, index, xPosition, yPosition);
     }
 
     @Override

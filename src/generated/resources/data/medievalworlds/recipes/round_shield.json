@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " P ",
+    "PBP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "B": {
+      "item": "medievalworlds:bronze_ingot"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:round_shield"
+  }
+}

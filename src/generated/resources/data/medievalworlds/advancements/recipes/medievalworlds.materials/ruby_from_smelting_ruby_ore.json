@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:ruby_from_smelting_ruby_ore"
+    ]
+  },
+  "criteria": {
+    "has_ruby_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:ruby_ore"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:ruby_from_smelting_ruby_ore"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ruby_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

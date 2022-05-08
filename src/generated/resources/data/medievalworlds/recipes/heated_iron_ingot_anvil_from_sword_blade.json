@@ -1,0 +1,10 @@
+{
+  "type": "medievalworlds:anvil",
+  "output": {
+    "item": "medievalworlds:heated_iron_ingot",
+    "count": 2
+  },
+  "input": {
+    "item": "medievalworlds:heated_iron_sword_blade"
+  }
+}

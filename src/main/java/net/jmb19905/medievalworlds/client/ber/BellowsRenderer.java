@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BellowsRenderer implements BlockEntityRenderer<BellowsBlockEntity> {
 
-	private float rotation = -30;
+	private final float rotation = -30;
 
 	private final ModelPart top;
 	private final ModelPart bottom;
@@ -79,11 +79,6 @@ public class BellowsRenderer implements BlockEntityRenderer<BellowsBlockEntity> 
 				poseStack.translate(0.5, -1.5, 0.5);
 			}
 			case SOUTH -> poseStack.translate(0.5, -1.5, -0.5);
-		}
-		if(entity.isActive()) {
-			rotation += Math.toRadians(1);
-			top.xRot = rotation;
-			System.out.println(top.xRot);
 		}
 		top.render(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(TEXTURE)), light, overlay);
 		bottom.render(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(TEXTURE)), light, overlay);

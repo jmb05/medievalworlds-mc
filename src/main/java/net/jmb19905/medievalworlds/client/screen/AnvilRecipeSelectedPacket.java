@@ -1,6 +1,7 @@
 package net.jmb19905.medievalworlds.client.screen;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,12 +10,12 @@ public class AnvilRecipeSelectedPacket {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private int containerId;
-    private int recipeIndex;
+    private ResourceLocation recipeId;
     private boolean valid;
 
-    public AnvilRecipeSelectedPacket(int containerId, int recipeIndex) {
+    public AnvilRecipeSelectedPacket(int containerId, ResourceLocation recipeId) {
         this.containerId = containerId;
-        this.recipeIndex = recipeIndex;
+        this.recipeId = recipeId;
         this.valid = true;
     }
 
@@ -26,15 +27,15 @@ public class AnvilRecipeSelectedPacket {
         return containerId;
     }
 
-    public int getRecipeIndex() {
-        return recipeIndex;
+    public ResourceLocation getRecipeId() {
+        return recipeId;
     }
 
     public static AnvilRecipeSelectedPacket decode(FriendlyByteBuf buffer) {
         AnvilRecipeSelectedPacket packet = new AnvilRecipeSelectedPacket();
         try {
             packet.containerId = buffer.readInt();
-            packet.recipeIndex = buffer.readInt();
+            packet.recipeId = buffer.readResourceLocation();
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             LOGGER.warn("Exception while reading SteamEffectPacket: " + e);
             return packet;
@@ -46,7 +47,7 @@ public class AnvilRecipeSelectedPacket {
     public void encode(FriendlyByteBuf buffer) {
         if(!valid) return;
         buffer.writeInt(containerId);
-        buffer.writeInt(recipeIndex);
+        buffer.writeResourceLocation(recipeId);
     }
 
     public boolean isValid() {

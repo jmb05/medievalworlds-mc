@@ -43,16 +43,18 @@ public abstract class AbstractHeatedItem extends Item implements IAnvilItem {
     @NotNull
     @Override
     public InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
-        BlockHitResult hitResult = Util.rayTraceBlocks(level, player, ClipContext.Fluid.ANY, Objects.requireNonNull(player.getAttribute(ForgeMod.REACH_DISTANCE.get())).getValue());
-        BlockPos pos = hitResult.getBlockPos();
-        BlockState state = level.getBlockState(pos);
         ItemStack stack = player.getItemInHand(hand);
-        if(state.getBlock() == Blocks.WATER) {
-            ItemStack newStack = new ItemStack(((AbstractHeatedItem) stack.getItem()).getBaseItem(), stack.getCount());
-            player.setItemInHand(hand, newStack);
-            NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(level::dimension), new SteamEffectPacket(pos, 1));
-            level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
-            return InteractionResultHolder.success(stack);
+        if(!level.isClientSide) {
+            BlockHitResult hitResult = Util.rayTraceBlocks(level, player, ClipContext.Fluid.ANY, Objects.requireNonNull(player.getAttribute(ForgeMod.REACH_DISTANCE.get())).getValue());
+            BlockPos pos = hitResult.getBlockPos();
+            BlockState state = level.getBlockState(pos);
+            if (state.getBlock() == Blocks.WATER) {
+                ItemStack newStack = new ItemStack(((AbstractHeatedItem) stack.getItem()).getBaseItem(), stack.getCount());
+                player.setItemInHand(hand, newStack);
+                NetworkStartupCommon.simpleChannel.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 50, level.dimension())), new SteamEffectPacket(pos, 1));
+                level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
+                return InteractionResultHolder.success(stack);
+            }
         }
         return InteractionResultHolder.pass(stack);
     }

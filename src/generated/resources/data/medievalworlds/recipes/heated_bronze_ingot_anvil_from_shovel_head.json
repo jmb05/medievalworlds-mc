@@ -1,0 +1,9 @@
+{
+  "type": "medievalworlds:anvil",
+  "output": {
+    "item": "medievalworlds:heated_bronze_ingot"
+  },
+  "input": {
+    "item": "medievalworlds:heated_bronze_shovel_head"
+  }
+}

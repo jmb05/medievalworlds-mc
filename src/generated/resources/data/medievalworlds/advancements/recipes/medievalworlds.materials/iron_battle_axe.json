@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:iron_battle_axe"
+    ]
+  },
+  "criteria": {
+    "iron_battle_axe_head": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:iron_battle_axe_head"
+            ]
+          }
+        ]
+      }
+    },
+    "stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:stick"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:iron_battle_axe"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "iron_battle_axe_head",
+      "stick",
+      "has_the_recipe"
+    ]
+  ]
+}

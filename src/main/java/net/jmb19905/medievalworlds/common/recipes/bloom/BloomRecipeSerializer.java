@@ -45,13 +45,13 @@ public class BloomRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buffer, BloomRecipe recipe) {
-        buffer.writeInt(recipe.getPrimaryOffset());
-        buffer.writeItemStack(recipe.getSecondaryOutputPacked(), true);
-        buffer.writeItemStack(recipe.getSecondaryOutput(), true);
-        buffer.writeInt(recipe.getSecondaryOffset());
-        buffer.writeItemStack(recipe.getPrimaryOutputPacked(), true);
-        buffer.writeItemStack(recipe.getPrimaryOutput(), true);
+    public void toNetwork(@NotNull FriendlyByteBuf buffer, BloomRecipe recipe) {
         recipe.getInput().toNetwork(buffer);
+        buffer.writeItemStack(recipe.getPrimaryOutput(), true);
+        buffer.writeItemStack(recipe.getPrimaryOutputPacked(), true);
+        buffer.writeInt(recipe.getPrimaryOffset());
+        buffer.writeItemStack(recipe.getSecondaryOutput(), true);
+        buffer.writeItemStack(recipe.getSecondaryOutputPacked(), true);
+        buffer.writeInt(recipe.getSecondaryOffset());
     }
 }

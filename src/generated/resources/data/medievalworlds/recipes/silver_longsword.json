@@ -1,0 +1,14 @@
+{
+  "type": "medievalworlds:smithing",
+  "result": {
+    "item": "medievalworlds:silver_longsword_blade"
+  },
+  "base": {
+    "item": "minecraft:stick",
+    "count": 2
+  },
+  "addition": {
+    "item": "medievalworlds:silver_longsword"
+  },
+  "cost": 0
+}

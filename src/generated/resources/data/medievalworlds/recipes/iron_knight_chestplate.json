@@ -1,0 +1,14 @@
+{
+  "type": "medievalworlds:smithing",
+  "result": {
+    "item": "minecraft:iron_chestplate"
+  },
+  "base": {
+    "item": "medievalworlds:iron_armor_plate",
+    "count": 8
+  },
+  "addition": {
+    "item": "medievalworlds:iron_knight_chestplate"
+  },
+  "cost": 10
+}

@@ -36,8 +36,8 @@ public class ForgeRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?
 
     @Override
     public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull ForgeRecipe recipe) {
-        buffer.writeInt(recipe.getHeatTime());
-        buffer.writeItemStack(recipe.getInput(), false);
         buffer.writeItemStack(recipe.getResultItem(), false);
+        buffer.writeItemStack(recipe.getInput(), false);
+        buffer.writeInt(recipe.getHeatTime());
     }
 }

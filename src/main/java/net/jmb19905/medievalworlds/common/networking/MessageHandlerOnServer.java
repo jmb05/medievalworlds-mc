@@ -1,16 +1,18 @@
 package net.jmb19905.medievalworlds.common.networking;
 
-import net.jmb19905.medievalworlds.common.menus.AnvilMenu;
+import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
 import net.jmb19905.medievalworlds.client.screen.AnvilRecipeSelectedPacket;
 import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
 import net.jmb19905.medievalworlds.common.capability.motion.Motion;
 import net.jmb19905.medievalworlds.common.item.lance.CritEffectPacket;
 import net.jmb19905.medievalworlds.common.item.lance.EntityMessageToServer;
 import net.jmb19905.medievalworlds.common.item.lance.LanceItem;
+import net.jmb19905.medievalworlds.common.menus.CustomSmithingMenu;
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
 import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.util.ConfigHandler;
 import net.jmb19905.medievalworlds.util.Util;
+import net.minecraft.SharedConstants;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Llama;
+import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -87,15 +90,12 @@ public class MessageHandlerOnServer {
 
                     float attackDamageFactor = ((LanceItem) (sendingPlayer.getUseItem().getItem())).getAttackDamageFactor();
                     float attackDamage = (float) (ConfigHandler.COMMON.lanceBaseAttackDamage.get() * speedFactor * attackDamageFactor);
-                    System.out.println(ConfigHandler.COMMON.lanceBaseAttackDamage.get() + " * " + speedFactor + " * " + attackDamageFactor + " = " + attackDamage);
 
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.hurt(DamageSource.playerAttack(sendingPlayer), attackDamage);
                     laneStack.hurtAndBreak(1, sendingPlayer, player -> player.broadcastBreakEvent(player.getUsedItemHand()));
                     sendingPlayer.getCooldowns().addCooldown(laneStack.getItem(), ((LanceItem) laneStack.getItem()).getFullCharge());
                 }
-            }else {
-                System.err.println("Client tried to use lanceattack without holding lance");
             }
         }
     }
@@ -125,7 +125,7 @@ public class MessageHandlerOnServer {
 
     static void processAnvilRecipeSelectedPacket(AnvilRecipeSelectedPacket packet, ServerPlayer sendingPlayer) {
         if(sendingPlayer.containerMenu.containerId == packet.getContainerId()) {
-            AnvilMenu menu = (AnvilMenu) sendingPlayer.containerMenu;
+            CustomAnvilMenu menu = (CustomAnvilMenu) sendingPlayer.containerMenu;
             Level level = sendingPlayer.getLevel();
             AnvilBlockEntity entity = (AnvilBlockEntity) level.getBlockEntity(menu.getBlockEntityPos());
             if(entity != null) {
@@ -135,14 +135,39 @@ public class MessageHandlerOnServer {
                         .map(recipe -> (AnvilRecipe) recipe)
                         .toList();
                 try {
-                    entity.setCurrentRecipe(recipes.get(packet.getRecipeIndex()));
-                }catch (IndexOutOfBoundsException e) {
-                    System.out.println("Invalid index (catch): " + packet.getRecipeIndex());
-                    System.out.println(recipes);
-                }
+                    recipes.stream().filter(recipe -> recipe.getId().equals(packet.getRecipeId())).findAny().ifPresent(entity::setCurrentRecipe);
+                }catch (IndexOutOfBoundsException ignored) {}
             }
-            //sendingPlayer.containerMenu.setItem(1,0, recipes.get(packet.getRecipeIndex()).getResultItem());
-            //sendingPlayer.containerMenu.broadcastChanges();
+        }
+    }
+
+    public static void onRenameItemPacketReceived(final MWServerboundRenameItemPacket packet, Supplier<NetworkEvent.Context> ctxSupplier) {
+        NetworkEvent.Context context = ctxSupplier.get();
+        LogicalSide sideReceived = context.getDirection().getReceptionSide();
+        context.setPacketHandled(true);
+
+        if (sideReceived != LogicalSide.SERVER) {
+            LOGGER.warn("MWServerboundRenameItemPacket received on wrong side:" + context.getDirection().getReceptionSide());
+            return;
+        }
+        if (!packet.isValid()) {
+            LOGGER.warn("MWServerboundRenameItemPacket was invalid" + packet);
+            return;
+        }
+
+        final ServerPlayer player = context.getSender();
+
+        if(player != null) {
+            context.enqueueWork(() -> processRename(packet, player));
+        }
+    }
+
+    static void processRename(final MWServerboundRenameItemPacket packet, ServerPlayer player) {
+        if (player.containerMenu instanceof CustomSmithingMenu smithingMenu) {
+            String s = SharedConstants.filterText(packet.getName());
+            if (s.length() <= 50) {
+                smithingMenu.setItemName(s);
+            }
         }
     }
 

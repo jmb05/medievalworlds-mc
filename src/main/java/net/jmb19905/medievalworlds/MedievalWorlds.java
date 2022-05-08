@@ -1,9 +1,11 @@
 package net.jmb19905.medievalworlds;
 
 import net.jmb19905.medievalworlds.client.ClientSetup;
+import net.jmb19905.medievalworlds.client.config.ClientConfig;
 import net.jmb19905.medievalworlds.client.networking.NetworkStartupClientOnly;
 import net.jmb19905.medievalworlds.common.block.CustomFireBlock;
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
+import net.jmb19905.medievalworlds.common.config.CommonConfig;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.world.gen.OreGenerator;
 import net.jmb19905.medievalworlds.core.compatability.ExternalMods;
@@ -15,15 +17,21 @@ import net.jmb19905.medievalworlds.core.tabs.MWToolsTab;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.spongepowered.asm.launch.MixinBootstrap;
+import org.spongepowered.asm.mixin.MixinEnvironment;
+import org.spongepowered.asm.mixin.Mixins;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.SlotTypePreset;
@@ -47,17 +55,20 @@ public class MedievalWorlds {
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.COMMON_SPEC, MOD_ID + "_common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.CLIENT_SPEC, MOD_ID + "_client.toml");
+
         MWBlocks.BLOCKS.register(modEventBus);
         VanillaReplacements.BLOCKS.register(modEventBus);
         MWBlocks.BLOCK_ITEMS.register(modEventBus);
-        MWItems.registerAllToolParts();
+        //MWItems.registerAllToolParts();
+        //MWItems.registerAllWeaponParts();
         MWItems.ITEMS.register(modEventBus);
         VanillaReplacements.ITEMS.register(modEventBus);
         MWEnchantments.ENCHANTMENTS.register(modEventBus);
         MWBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
         MWMenuTypes.MENU_TYPES.register(modEventBus);
         MWRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
-        MWMetalMaterials.METAL_MATERIALS.register(modEventBus);
 
         registerCommonEvents();
         modEventBus.addListener(this::setup);

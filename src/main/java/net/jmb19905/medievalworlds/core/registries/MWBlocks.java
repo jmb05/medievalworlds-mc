@@ -1,12 +1,9 @@
 package net.jmb19905.medievalworlds.core.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.block.AbstractOreBlock;
-import net.jmb19905.medievalworlds.common.block.AlloyFurnaceBlock;
-import net.jmb19905.medievalworlds.common.block.BellowsBlock;
-import net.jmb19905.medievalworlds.common.block.ChimneyBlock;
+import net.jmb19905.medievalworlds.common.block.*;
 import net.jmb19905.medievalworlds.common.block.anvil.CylindricalAnvil;
-import net.jmb19905.medievalworlds.common.block.bloomery.BloomeryBlock;
+import net.jmb19905.medievalworlds.common.block.BloomeryBlock;
 import net.jmb19905.medievalworlds.common.block.forge.ForgeBlock;
 import net.jmb19905.medievalworlds.common.block.slackTub.SlackTubBlock;
 import net.minecraft.world.item.BlockItem;
@@ -68,10 +65,12 @@ public class MWBlocks {
     public static final RegistryObject<SlackTubBlock> SLACK_TUB_BLOCK = BLOCKS.register("slack_tub", () -> new SlackTubBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
     public static final RegistryObject<CylindricalAnvil> STONE_ANVIL = BLOCKS.register("stone_anvil", () -> new CylindricalAnvil(null, .07f, BlockBehaviour.Properties.of(Material.STONE).strength(3.0f).sound(SoundType.STONE)));
 
-    public static final RegistryObject<Block> CHARCOAL_LOG = BLOCKS.register("charcoal_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLACK).strength(2.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<RotatedPillarBlock> CHARCOAL_LOG = BLOCKS.register("charcoal_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLACK).strength(2.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> CHARCOAl_PLANKS = BLOCKS.register("charcoal_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLACK).strength(2.0f).sound(SoundType.WOOD)));
 
     public static final RegistryObject<Block> BRICK_CHIMNEY = BLOCKS.register("brick_chimney", () -> new ChimneyBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
+
+    public static final RegistryObject<Block> QUERN = BLOCKS.register("quern", () -> new QuernBlock(BlockBehaviour.Properties.copy(Blocks.SMOOTH_STONE).noOcclusion()));
 
     //BlockItems
     public static final RegistryObject<BlockItem> TIN_BLOCK_ITEM = registerBlockItem("tin_block", () -> new BlockItem(TIN_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab))) ;
@@ -106,6 +105,8 @@ public class MWBlocks {
     public static final RegistryObject<BlockItem> CHARCOAL_PLANKS_ITEM = registerBlockItem("charcoal_planks", () -> new BlockItem(CHARCOAl_PLANKS.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
     public static final RegistryObject<BlockItem> BRICK_CHIMNEY_ITEM = registerBlockItem("brick_chimney", () -> new BlockItem(BRICK_CHIMNEY.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+
+    public static final RegistryObject<BlockItem> QUERN_ITEM = registerBlockItem("quern", () -> new BlockItem(QUERN.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
     private static RegistryObject<BlockItem> registerBlockItem(String id, Supplier<BlockItem> itemSupplier) {
         RegistryObject<BlockItem> regObj = BLOCK_ITEMS.register(id, itemSupplier);

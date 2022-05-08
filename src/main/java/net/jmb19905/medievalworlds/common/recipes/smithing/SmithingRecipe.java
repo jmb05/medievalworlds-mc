@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("ClassCanBeRecord")
@@ -15,11 +16,14 @@ public class SmithingRecipe implements ISmithingRecipe{
     private final ItemStack addition;
     private final ItemStack result;
 
-    public SmithingRecipe(ResourceLocation id, ItemStack input, ItemStack addition, ItemStack result) {
+    private final int cost;
+
+    public SmithingRecipe(ResourceLocation id, ItemStack input, ItemStack addition, ItemStack result, int cost) {
         this.id = id;
         this.input = input;
         this.addition = addition;
         this.result = result;
+        this.cost = cost;
     }
 
     @Override
@@ -33,7 +37,12 @@ public class SmithingRecipe implements ISmithingRecipe{
     }
 
     @Override
-    public boolean matches(@NotNull Container container, @NotNull Level level) {
+    public int getCost() {
+        return cost;
+    }
+
+    @Override
+    public boolean matches(@NotNull RecipeWrapper container, @NotNull Level level) {
         if(input.isEmpty() || addition.isEmpty()) return false;
         ItemStack inputSlotItem = container.getItem(0);
         ItemStack additionSlot = container.getItem(1);
@@ -43,7 +52,7 @@ public class SmithingRecipe implements ISmithingRecipe{
 
     @NotNull
     @Override
-    public ItemStack assemble(Container container) {
+    public ItemStack assemble(RecipeWrapper container) {
         ItemStack itemstack = this.result.copy();
         CompoundTag compoundtag = container.getItem(0).getTag();
         if (compoundtag != null) {

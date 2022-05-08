@@ -8,9 +8,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
-public interface ISmithingRecipe extends Recipe<Container> {
+public interface ISmithingRecipe extends Recipe<RecipeWrapper> {
 
     ResourceLocation RECIPE_TYPE_ID = new ResourceLocation(MedievalWorlds.MOD_ID, "smithing");
 
@@ -30,5 +31,6 @@ public interface ISmithingRecipe extends Recipe<Container> {
 
     ItemStack getInput();
     ItemStack getAddition();
+    int getCost();
 
 }

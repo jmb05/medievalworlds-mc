@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:heated_gold_ingot_anvil_from_armor_plate"
+    ]
+  },
+  "criteria": {
+    "heated_gold_armor_plate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:heated_gold_armor_plate"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:heated_gold_ingot_anvil_from_armor_plate"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "heated_gold_armor_plate",
+      "has_the_recipe"
+    ]
+  ]
+}

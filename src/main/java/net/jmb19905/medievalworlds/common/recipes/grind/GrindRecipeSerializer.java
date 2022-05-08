@@ -33,7 +33,7 @@ public class GrindRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?
 
     @Override
     public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull GrindRecipe recipe) {
-        buffer.writeItemStack(recipe.getInput(), true);
         buffer.writeItemStack(recipe.getResultItem(), false);
+        buffer.writeItemStack(recipe.getInput(), true);
     }
 }

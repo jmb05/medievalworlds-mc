@@ -15,12 +15,11 @@ public class ColorRegistry {
         event.getBlockColors().register((state, tintGetter, pos, tint)
                 -> tintGetter != null && pos != null ? BiomeColors.getAverageWaterColor(tintGetter, pos) : -1,
                 MWBlocks.SLACK_TUB_BLOCK.get());
-        System.out.println("Registered BlockColors");
     }
 
     @SubscribeEvent
     public static void registerItemColors(ColorHandlerEvent.Item event) {
-        System.out.println("Registered ItemColors");
+
     }
 
 }

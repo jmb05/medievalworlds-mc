@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.common.blockentities;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.menus.AnvilMenu;
+import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
 import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
@@ -155,7 +155,7 @@ public class AnvilBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private Component getDefaultName() {
-        return new TranslatableComponent("container." + MedievalWorlds.MOD_ID + ".alloy_furnace");
+        return new TranslatableComponent("container." + MedievalWorlds.MOD_ID + ".anvil");
     }
 
     @Override
@@ -167,6 +167,6 @@ public class AnvilBlockEntity extends BlockEntity implements MenuProvider {
     @org.jetbrains.annotations.Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowID, @NotNull Inventory inventory, @NotNull Player player) {
-        return new AnvilMenu(windowID, inventory, this);
+        return new CustomAnvilMenu(windowID, inventory, this);
     }
 }

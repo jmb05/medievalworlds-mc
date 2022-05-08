@@ -55,11 +55,11 @@ public class HammerItem extends SwordItem {
     @Override
     public boolean isCorrectToolForDrops(@Nonnull BlockState state) {
         int blockTier = 0;
-        if(BlockTags.NEEDS_STONE_TOOL.contains(state.getBlock())) {
+        if(state.is(BlockTags.NEEDS_STONE_TOOL)) {
             blockTier = 1;
-        }else if(BlockTags.NEEDS_IRON_TOOL.contains(state.getBlock())) {
+        }else if(state.is(BlockTags.NEEDS_IRON_TOOL)) {
             blockTier = 2;
-        }else if(BlockTags.NEEDS_DIAMOND_TOOL.contains(state.getBlock())) {
+        }else if(state.is(BlockTags.NEEDS_DIAMOND_TOOL)) {
             blockTier = 3;
         }
         return state.getMaterial() == Material.STONE && blockTier <= tier.getLevel();

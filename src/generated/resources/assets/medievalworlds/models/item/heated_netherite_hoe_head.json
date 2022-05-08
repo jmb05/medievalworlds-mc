@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "medievalworlds:item/netherite_hoe_head",
+    "layer1": "medievalworlds:item/hoe_head"
+  }
+}

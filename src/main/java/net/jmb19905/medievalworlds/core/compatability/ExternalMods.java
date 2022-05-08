@@ -4,7 +4,8 @@ import net.minecraftforge.fml.ModList;
 
 public enum ExternalMods {
 
-    CURIOS("curios");
+    CURIOS("curios"),
+    JEI("jei");
 
     private final boolean loaded;
 

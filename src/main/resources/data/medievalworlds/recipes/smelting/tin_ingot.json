@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "medievalworlds:raw_tin"
-  },
-  "result": "medievalworlds:tin_ingot",
-  "experience": 0.3,
-  "cookingtime": 200
-}

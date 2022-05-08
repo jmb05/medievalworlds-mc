@@ -1,0 +1,10 @@
+{
+  "type": "medievalworlds:anvil",
+  "output": {
+    "item": "medievalworlds:heated_gold_ingot",
+    "count": 3
+  },
+  "input": {
+    "item": "medievalworlds:heated_gold_pickaxe_head"
+  }
+}

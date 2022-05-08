@@ -1,0 +1,31 @@
+{
+  "type": "medievalworlds:bloom",
+  "input": [
+    {
+      "item": "minecraft:raw_iron"
+    },
+    {
+      "item": "minecraft:iron_ore"
+    },
+    {
+      "item": "minecraft:deepslate_iron_ore"
+    }
+  ],
+  "primaryOutput": {
+    "item": "minecraft:iron_nugget",
+    "count": 9
+  },
+  "primaryPacked": {
+    "item": "minecraft:iron_ingot",
+    "count": 9
+  },
+  "primaryOffset": 3,
+  "secondaryOutput": {
+    "item": "medievalworlds:steel_nugget"
+  },
+  "secondaryPacked": {
+    "item": "medievalworlds:steel_ingot",
+    "count": 9
+  },
+  "secondaryOffset": 1
+}

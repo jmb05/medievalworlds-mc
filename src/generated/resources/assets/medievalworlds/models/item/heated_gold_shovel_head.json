@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "medievalworlds:item/gold_shovel_head",
+    "layer1": "medievalworlds:item/shovel_head"
+  }
+}

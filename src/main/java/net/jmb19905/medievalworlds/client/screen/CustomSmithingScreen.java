@@ -4,31 +4,41 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.menus.CustomSmithingMenu;
+import net.jmb19905.medievalworlds.common.networking.MWServerboundRenameItemPacket;
+import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.network.protocol.game.ServerboundRenameItemPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class CustomSmithingScreen extends ItemCombinerScreen<CustomSmithingMenu> {
+@OnlyIn(Dist.CLIENT)
+public class CustomSmithingScreen extends AbstractContainerScreen<CustomSmithingMenu> implements ContainerListener {
     private static final ResourceLocation SMITHING_LOCATION = new ResourceLocation(MedievalWorlds.MOD_ID, "textures/gui/smithing.png");
     private static final Component TOO_EXPENSIVE_TEXT = new TranslatableComponent("container.repair.expensive");
     private EditBox name;
     private final Player player;
 
+    private static final int GREEN = 0x80FF20;
+    private static final int RED = 0xFF6060;
+
     public CustomSmithingScreen(CustomSmithingMenu menu, Inventory inv, Component component) {
-        super(menu, inv, component, SMITHING_LOCATION);
+        super(menu, inv, component);
         this.player = inv.player;
         this.titleLabelX = 60;
         this.titleLabelY = 10;
@@ -41,7 +51,8 @@ public class CustomSmithingScreen extends ItemCombinerScreen<CustomSmithingMenu>
     }
 
     @Override
-    protected void subInit() {
+    protected void init() {
+        super.init();
         assert this.minecraft != null;
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         int i = (this.width - this.imageWidth) / 2;
@@ -57,20 +68,35 @@ public class CustomSmithingScreen extends ItemCombinerScreen<CustomSmithingMenu>
         this.addWidget(this.name);
         this.setInitialFocus(this.name);
         this.name.setEditable(false);
+        this.menu.addSlotListener(this);
     }
 
+    @Override
     public void resize(@NotNull Minecraft minecraft, int x, int y) {
         String s = this.name.getValue();
         this.init(minecraft, x, y);
         this.name.setValue(s);
     }
 
+    @Override
     public void removed() {
         super.removed();
+        this.menu.removeSlotListener(this);
+        System.out.println("Removed Slot Listener");
         assert this.minecraft != null;
         this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
     }
 
+    @Override
+    public void render(@NotNull PoseStack stack, int x, int y, float partialTicks) {
+        this.renderBackground(stack);
+        super.render(stack, x, y, partialTicks);
+        RenderSystem.disableBlend();
+        this.renderFg(stack, x, y, partialTicks);
+        this.renderTooltip(stack, x, y);
+    }
+
+    @Override
     public boolean keyPressed(int key, int x, int y) {
         if (key == 256) {
             assert this.minecraft != null;
@@ -92,33 +118,34 @@ public class CustomSmithingScreen extends ItemCombinerScreen<CustomSmithingMenu>
             this.menu.setItemName(s);
             assert Objects.requireNonNull(this.minecraft).player != null;
             assert this.minecraft.player != null;
-            this.minecraft.player.connection.send(new ServerboundRenameItemPacket(s));
+            NetworkStartupCommon.simpleChannel.send(PacketDistributor.SERVER.noArg(), new MWServerboundRenameItemPacket(s));
         }
     }
 
+    @Override
     protected void renderLabels(@NotNull PoseStack stack, int x, int y) {
         RenderSystem.disableBlend();
         super.renderLabels(stack, x, y);
-        int i = this.menu.getCost();
-        if (i > 0) {
-            int j = 8453920;
+        int cost = this.menu.getCost();
+        if (cost > 0) {
+            int color = GREEN;
             Component component;
-            if (i >= 40 && !Objects.requireNonNull(Objects.requireNonNull(this.minecraft).player).getAbilities().instabuild) {
+            if (cost >= 40 && !Objects.requireNonNull(Objects.requireNonNull(this.minecraft).player).getAbilities().instabuild) {
                 component = TOO_EXPENSIVE_TEXT;
-                j = 16736352;
+                color = RED;
             } else if (!this.menu.getSlot(2).hasItem()) {
                 component = null;
             } else {
-                component = new TranslatableComponent("container.repair.cost", i);
+                component = new TranslatableComponent("container.repair.cost", cost);
                 if (!this.menu.getSlot(2).mayPickup(this.player)) {
-                    j = 16736352;
+                    color = RED;
                 }
             }
 
             if (component != null) {
                 int k = this.imageWidth - 8 - this.font.width(component) - 2;
                 fill(stack, k - 2, 67, this.imageWidth - 8, 79, 1325400064);
-                this.font.drawShadow(stack, component, (float)k, 69.0F, j);
+                this.font.drawShadow(stack, component, (float)k, 69.0F, color);
             }
         }
     }
@@ -127,13 +154,30 @@ public class CustomSmithingScreen extends ItemCombinerScreen<CustomSmithingMenu>
         this.name.render(stack, p_97895_, p_97896_, p_97897_);
     }
 
-    public void slotChanged(@NotNull AbstractContainerMenu menu, int p_97883_, @NotNull ItemStack itemStack) {
-        if (p_97883_ == 0) {
-            this.name.setValue(itemStack.isEmpty() ? "" : itemStack.getHoverName().getString());
-            this.name.setEditable(!itemStack.isEmpty());
-            this.setFocused(this.name);
+    @Override
+    protected void renderBg(@NotNull PoseStack stack, float partialTicks, int x, int y) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, SMITHING_LOCATION);
+        int i = (this.width - this.imageWidth) / 2;
+        int j = (this.height - this.imageHeight) / 2;
+        this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        this.blit(stack, i + 59, j + 20, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 110, 16);
+        if ((this.menu.getSlot(0).hasItem() || this.menu.getSlot(1).hasItem()) && !this.menu.getSlot(2).hasItem()) {
+            this.blit(stack, i + 99, j + 45, this.imageWidth, 0, 28, 21);
         }
 
     }
 
+    @Override
+    public void slotChanged(@NotNull AbstractContainerMenu menu, int slot, @NotNull ItemStack itemStack) {
+        if(slot == 0) {
+            this.name.setValue(itemStack.isEmpty() ? "" : itemStack.getHoverName().getString());
+            this.name.setEditable(!itemStack.isEmpty());
+            this.setFocused(this.name);
+        }
+    }
+
+    @Override
+    public void dataChanged(@NotNull AbstractContainerMenu menu, int x, int y) {}
 }

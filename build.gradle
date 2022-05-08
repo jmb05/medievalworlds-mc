@@ -63,14 +63,26 @@ repositories {
         name "curios"
         url "https://maven.theillusivec4.top/"
     }
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
     mavenCentral()
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:' + forge_version
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.18.1-5.0.3.1:api")
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.18.1-5.0.3.1")
-    //implementation fg.deobf("me.sizableshrimp:entitymodeljson:${minecraft_version}-1.0.2")
+    minecraft "net.minecraftforge:forge:$forge_version"
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:$curios_version")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:$curios_version")
+
+    compileOnly fg.deobf("mezz.jei:jei-$minecraft_version:$jei_version:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-$minecraft_version:$jei_version")
 }
 
 jar {

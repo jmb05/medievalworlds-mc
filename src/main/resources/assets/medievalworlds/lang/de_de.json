@@ -241,8 +241,9 @@
   "item.medievalworlds.iron_spear": "Eisenspeer",
 
   "container.medievalworlds.alloy_furnace": "Legierungsofen",
-  "container.medievalworlds.bloomery": "Rennofen",
+  "container.medievalworlds.anvil": "Amboss",
   "container.medievalworlds.smithing": "Schmieden",
+  "container.medievalworlds.fletching": "Pfeilherstellung",
 
   "enchantment.medievalworlds.lightning_strike": "Blitzschlag",
   "enchantment.medievalworlds.mega_miner": "Mega Miner",

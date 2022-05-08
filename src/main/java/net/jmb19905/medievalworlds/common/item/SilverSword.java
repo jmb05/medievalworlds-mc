@@ -22,11 +22,9 @@ public class SilverSword extends SwordItem {
 
     @Override
     public boolean hurtEnemy(@Nonnull ItemStack stack, LivingEntity target, @Nonnull LivingEntity attacker) {
-        System.out.println("CreatureType: " + MobType.UNDEAD + " - Mainhand: " + attacker.getUseItem());
         if (target.getMobType() == MobType.UNDEAD) {
             super.getAttributeModifiers(EquipmentSlot.MAINHAND, stack).put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", ((double) this.attackDamage + 2), AttributeModifier.Operation.ADDITION));
         }
-        System.out.println(super.getAttributeModifiers(EquipmentSlot.MAINHAND, stack).get(Attributes.ATTACK_DAMAGE));
         boolean returnBool = super.hurtEnemy(stack, target, attacker);
         super.getAttributeModifiers(EquipmentSlot.MAINHAND, stack).put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
         return returnBool;

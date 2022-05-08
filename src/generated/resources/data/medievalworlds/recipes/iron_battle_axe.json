@@ -1,0 +1,14 @@
+{
+  "type": "medievalworlds:smithing",
+  "result": {
+    "item": "medievalworlds:iron_battle_axe_head"
+  },
+  "base": {
+    "item": "minecraft:stick",
+    "count": 2
+  },
+  "addition": {
+    "item": "medievalworlds:iron_battle_axe"
+  },
+  "cost": 0
+}

@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:iron_longsword"
+    ]
+  },
+  "criteria": {
+    "iron_longsword_blade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:iron_longsword_blade"
+            ]
+          }
+        ]
+      }
+    },
+    "stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:stick"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:iron_longsword"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "iron_longsword_blade",
+      "stick",
+      "has_the_recipe"
+    ]
+  ]
+}

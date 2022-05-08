@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:bronze_ingot_alloying_from_raw"
+    ]
+  },
+  "criteria": {
+    "raw_copper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:raw_copper"
+            ]
+          }
+        ]
+      }
+    },
+    "raw_tin": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:raw_tin"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:bronze_ingot_alloying_from_raw"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "raw_copper",
+      "raw_tin",
+      "has_the_recipe"
+    ]
+  ]
+}

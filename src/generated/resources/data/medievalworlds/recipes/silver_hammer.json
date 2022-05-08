@@ -1,0 +1,14 @@
+{
+  "type": "medievalworlds:smithing",
+  "result": {
+    "item": "medievalworlds:silver_hammer_head"
+  },
+  "base": {
+    "item": "minecraft:stick",
+    "count": 2
+  },
+  "addition": {
+    "item": "medievalworlds:silver_hammer"
+  },
+  "cost": 0
+}

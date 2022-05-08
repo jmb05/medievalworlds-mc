@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "medievalworlds:bronze_helmet"
+    ]
+  },
+  "criteria": {
+    "bronze_armor_plate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "medievalworlds:bronze_armor_plate"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "medievalworlds:bronze_helmet"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bronze_armor_plate",
+      "has_the_recipe"
+    ]
+  ]
+}

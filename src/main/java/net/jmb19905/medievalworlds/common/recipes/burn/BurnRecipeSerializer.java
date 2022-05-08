@@ -35,7 +35,7 @@ public class BurnRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>
 
     @Override
     public void toNetwork(FriendlyByteBuf buffer, IBurnRecipe recipe) {
-        buffer.writeUtf(Objects.requireNonNull(recipe.getOutput().getRegistryName()).toString());
         buffer.writeUtf(recipe.getInputTag());
+        buffer.writeUtf(Objects.requireNonNull(recipe.getOutput().getRegistryName()).toString());
     }
 }

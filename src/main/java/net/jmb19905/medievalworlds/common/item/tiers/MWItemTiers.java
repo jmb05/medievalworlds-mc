@@ -2,7 +2,6 @@ package net.jmb19905.medievalworlds.common.item.tiers;
 
 import net.jmb19905.medievalworlds.core.registries.MWBlocks;
 import net.jmb19905.medievalworlds.core.registries.MWItems;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -19,8 +18,8 @@ public enum MWItemTiers implements Tier {
     NETHERITE_BLOCK_ITEM_TIER(4, 2500, 9f, 7f, 7, () -> Ingredient.of(Items.NETHERITE_BLOCK)),
     SILVER_BLOCK_ITEM_TIER(2, 750, 7f, 4f, 8, () -> Ingredient.of(MWBlocks.SILVER_BLOCK_ITEM.get())),
     SILVER_ITEM_TIER(2, 300, 6f, 4f, 22, () -> Ingredient.of(MWItems.SILVER_INGOT.get())),
-    STEEL_BLOCK_ITEM_TIER(2, 1500, 8f, 5f, 8, () -> Ingredient.of(MWBlocks.STEEL_BLOCK_ITEM.get())),
-    STEEL_ITEM_TIER(2, 1000, 8f, 4f, 10, () -> Ingredient.of(MWItems.STEEL_INGOT.get())),
+    STEEL_BLOCK_ITEM_TIER(3, 1500, 8f, 5f, 8, () -> Ingredient.of(MWBlocks.STEEL_BLOCK_ITEM.get())),
+    STEEL_ITEM_TIER(3, 1000, 8f, 4f, 10, () -> Ingredient.of(MWItems.STEEL_INGOT.get())),
     TIN_ITEM_TIER(0, 150, 5f, 3f, 7, () -> Ingredient.of(MWItems.TIN_INGOT.get())),
     CUSTOM_STONE_TIER(0, 131, 4.0F, 1.0F, 5, () -> Ingredient.of(Items.COBBLESTONE, Items.COBBLED_DEEPSLATE, Items.BLACKSTONE));
 

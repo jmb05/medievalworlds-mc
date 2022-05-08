@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.common.blockentities.bloomery;
 
 import net.jmb19905.medievalworlds.common.block.BellowsBlock;
-import net.jmb19905.medievalworlds.common.block.bloomery.BloomeryBlock;
+import net.jmb19905.medievalworlds.common.block.BloomeryBlock;
 import net.jmb19905.medievalworlds.common.blockentities.bellows.BellowsBlockEntity;
 import net.jmb19905.medievalworlds.common.recipes.bloom.BloomRecipe;
 import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
@@ -125,9 +125,6 @@ public class BloomeryBlockEntity extends BlockEntity {
                             primaryOutput.setCount(primaryOutput.getCount() % divisor);
                         }
 
-                        System.out.println(primaryOutput);
-                        System.out.println(primaryPacked);
-
                         if(!primaryOutput.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), primaryOutput);
                         if(!primaryPacked.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), primaryPacked);
 
@@ -142,9 +139,6 @@ public class BloomeryBlockEntity extends BlockEntity {
                             secondaryPacked.setCount(secondaryOutput.getCount() / divisor);
                             secondaryOutput.setCount(secondaryOutput.getCount() % divisor);
                         }
-
-                        System.out.println(secondaryOutput);
-                        System.out.println(secondaryPacked);
 
                         if(!secondaryOutput.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), secondaryOutput);
                         if(!secondaryPacked.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), secondaryPacked);
@@ -167,17 +161,9 @@ public class BloomeryBlockEntity extends BlockEntity {
         BlockPos pos2 = pos.relative(direction.getOpposite());
 
         if(level.getBlockState(pos1).getBlock() instanceof BellowsBlock) {
-            if(level.getBlockEntity(pos1) instanceof BellowsBlockEntity entity && entity.isActive()) {
-                return true;
-            } else {
-                System.out.println("Bellows not active");
-            }
+            return level.getBlockEntity(pos1) instanceof BellowsBlockEntity entity && entity.isActive();
         } else if(level.getBlockState(pos2).getBlock() instanceof BellowsBlock){
-            if(level.getBlockEntity(pos2) instanceof BellowsBlockEntity entity && entity.isActive()) {
-                return true;
-            } else {
-                System.out.println("Bellows not active");
-            }
+            return level.getBlockEntity(pos2) instanceof BellowsBlockEntity entity && entity.isActive();
         }
         return false;
     }
