@@ -1,0 +1,7 @@
+{
+  "parent": "medievalworlds:item/template_long_axe_head",
+  "textures": {
+    "0": "medievalworlds:item/netherite_weapon",
+    "particle": "medievalworlds:item/netherite_weapon"
+  }
+}

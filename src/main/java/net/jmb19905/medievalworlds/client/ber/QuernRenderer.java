@@ -5,6 +5,7 @@ import com.mojang.math.Vector3f;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.ClientSetup;
 import net.jmb19905.medievalworlds.common.blockentities.QuernBlockEntity;
+import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -15,6 +16,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.ChestRenderer;
 import net.minecraft.client.renderer.entity.ItemFrameRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class QuernRenderer implements BlockEntityRenderer<QuernBlockEntity> {
@@ -63,6 +65,7 @@ public class QuernRenderer implements BlockEntityRenderer<QuernBlockEntity> {
         poseStack.translate(0.5,-1.5,-0.5);
         if(entity.isTurning()) rotation++;
         if(rotation >= 360) rotation = 0;
+        System.out.println(overlay);
         main.render(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(TEXTURE)), light, overlay);
         rotating.yRot = (float) Math.toRadians(rotation);
         rotating.render(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(TEXTURE)), light, overlay);

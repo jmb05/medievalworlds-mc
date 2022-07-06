@@ -8,7 +8,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 public class CrownModel extends CustomArmorModel {
 
     public CrownModel(ModelPart root) {
-        super(root, EquipmentSlot.CHEST);
+        super(root);
         addToRender(root.getChild("head"));
     }
 

@@ -37,6 +37,10 @@ public class MWItemModelProvider extends ItemModelProvider {
 
         simpleItem(MWItems.RUBY.get());
 
+        simpleItem(MWItems.CLOAK.get());
+        simpleItem(MWItems.DARK_CLOAK.get());
+        simpleItem(MWItems.LIGHT_CLOAK.get());
+
         layeredTextureItem(MWItems.HEATED_TIN_INGOT.get(), "tin_ingot", "redhot_ingot_layer");
         layeredTextureItem(MWItems.HEATED_BRONZE_INGOT.get(), "bronze_ingot", "redhot_ingot_layer");
         layeredTextureItem(MWItems.HEATED_COPPER_INGOT.get(), new ResourceLocation("item/copper_ingot"), new ResourceLocation(MedievalWorlds.MOD_ID, "item/redhot_ingot_layer"));
@@ -83,6 +87,7 @@ public class MWItemModelProvider extends ItemModelProvider {
         simpleItem(MWItems.BRONZE_LEGGINGS.get());
         simpleItem(MWItems.BRONZE_BOOTS.get());
 
+        simpleItem(MWItems.STEEL_KETTLE_HELMET.get());
         simpleItem(MWItems.STEEL_HELMET.get());
         simpleItem(MWItems.STEEL_CHESTPLATE.get());
         simpleItem(MWItems.STEEL_LEGGINGS.get());
@@ -118,7 +123,8 @@ public class MWItemModelProvider extends ItemModelProvider {
         simpleItem(MWItems.NETHERITE_KNIGHT_LEGGINGS.get());
         simpleItem(MWItems.NETHERITE_KNIGHT_BOOTS.get());
 
-        simpleItem(MWItems.GAMBESON_CHESTPLATE.get());
+        simpleItem(MWItems.COIF.get());
+        simpleItem(MWItems.GAMBESON.get());
 
         simpleItem(MWItems.SILVER_HORSE_ARMOR.get());
         simpleItem(MWItems.STEEL_HORSE_ARMOR.get());

@@ -3,7 +3,7 @@ package net.jmb19905.medievalworlds.common.item.lance;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.jmb19905.medievalworlds.common.capability.motion.Motion;
-import net.jmb19905.medievalworlds.common.item.lance.EntityMessageToServer;
+import net.jmb19905.medievalworlds.common.networking.EntityMessageToServer;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.util.ConfigHandler;
 import net.minecraft.client.Minecraft;
@@ -72,7 +72,7 @@ public class LanceItem extends Item {
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings("deprecation")
     @Override
     public void onUseTick(@Nonnull Level level, LivingEntity living, @Nonnull ItemStack stack, int useTime) {
         if(living.getRootVehicle() instanceof AbstractHorse && !(living.getRootVehicle() instanceof Llama)) {
@@ -104,12 +104,13 @@ public class LanceItem extends Item {
 
     @Override
     public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level level, List<Component> components, @Nonnull TooltipFlag tooltipFlag) {
-        components.add(new TranslatableComponent("tooltip.usedOnHorse"));
+        components.add(new TextComponent(" "));
+        components.add(new TranslatableComponent("tooltip.medievalworlds.usedOnHorse"));
         double minimum = roundToHalf(ConfigHandler.COMMON.lanceBaseAttackDamage.get() * 0.237 * attackDamageFactor);
-        components.add(new TranslatableComponent("tooltip.minimumAttack").append(new TextComponent(": " + minimum)));
+        components.add(new TextComponent(" §2" + minimum + " ").append(new TranslatableComponent("tooltip.medievalworlds.minimumAttack")));
         double maximum = roundToHalf(ConfigHandler.COMMON.lanceBaseAttackDamage.get() * 0.7115 * attackDamageFactor);
-        components.add(new TranslatableComponent("tooltip.maximumAttack").append(new TextComponent(": " + maximum)));
-        components.add(new TranslatableComponent("tooltip.chargeTime").append(new TextComponent(": " + (fullCharge / 2))));
+        components.add(new TextComponent(" §2" + maximum + " ").append(new TranslatableComponent("tooltip.medievalworlds.maximumAttack")));
+        components.add(new TextComponent(" §2" + (fullCharge / 2) + " ").append(new TranslatableComponent("tooltip.medievalworlds.chargeTime")));
     }
 
     private double roundToHalf(double d) {

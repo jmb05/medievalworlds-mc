@@ -17,6 +17,8 @@ import net.jmb19905.medievalworlds.common.recipes.grind.GrindRecipeSerializer;
 import net.jmb19905.medievalworlds.common.recipes.grind.IGrindRecipe;
 import net.jmb19905.medievalworlds.common.recipes.noRecipe.NoRecipe;
 import net.jmb19905.medievalworlds.common.recipes.noRecipe.NoRecipeSerializer;
+import net.jmb19905.medievalworlds.common.recipes.slackTub.ISlackTubRecipe;
+import net.jmb19905.medievalworlds.common.recipes.slackTub.SlackTubRecipeSerializer;
 import net.jmb19905.medievalworlds.common.recipes.smithing.ISmithingRecipe;
 import net.jmb19905.medievalworlds.common.recipes.smithing.SmithingRecipeSerializer;
 import net.minecraft.core.Registry;
@@ -31,8 +33,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import javax.lang.model.type.NoType;
-
 @Mod.EventBusSubscriber(modid = MedievalWorlds.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MWRecipeSerializers {
 
@@ -44,6 +44,7 @@ public class MWRecipeSerializers {
     public static final RecipeType<IAlloyRecipe> BURN_TYPE = new CustomRecipeType<>(IAlloyRecipe.RECIPE_TYPE_ID);
     public static final RecipeType<ISmithingRecipe> SMITHING_TYPE = new CustomRecipeType<>(ISmithingRecipe.RECIPE_TYPE_ID);
     public static final RecipeType<IFletchingRecipe> FLETCHING_TYPE = new CustomRecipeType<>(IFletchingRecipe.RECIPE_TYPE_ID);
+    public static final RecipeType<ISlackTubRecipe> SLACK_TUB_TYPE = new CustomRecipeType<>(ISlackTubRecipe.RECIPE_TYPE_ID);
     public static final RecipeType<NoRecipe> NO_RECIPE_TYPE = new CustomRecipeType<>(NoRecipe.RECIPE_TYPE_ID);
 
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MedievalWorlds.MOD_ID);
@@ -56,7 +57,7 @@ public class MWRecipeSerializers {
     public static final RegistryObject<RecipeSerializer<?>> BURN_SERIALIZER = RECIPE_SERIALIZERS.register("burn", BurnRecipeSerializer::new);
     public static final RegistryObject<RecipeSerializer<?>> SMITHING_SERIALIZER = RECIPE_SERIALIZERS.register("smithing", SmithingRecipeSerializer::new);
     public static final RegistryObject<RecipeSerializer<?>> FLETCHING_SERIALIZER = RECIPE_SERIALIZERS.register("fletching", FletchingRecipeSerializer::new);
-
+    public static final RegistryObject<RecipeSerializer<?>> SLACK_TUB_SERIALIZER = RECIPE_SERIALIZERS.register("slack_tub", SlackTubRecipeSerializer::new);
     public static final RegistryObject<RecipeSerializer<?>> NO_RECIPE_SERIALIZER = RECIPE_SERIALIZERS.register("no_recipe", NoRecipeSerializer::new);
 
     @SubscribeEvent
@@ -69,6 +70,7 @@ public class MWRecipeSerializers {
         Registry.register(Registry.RECIPE_TYPE, IBurnRecipe.RECIPE_TYPE_ID, BURN_TYPE);
         Registry.register(Registry.RECIPE_TYPE, ISmithingRecipe.RECIPE_TYPE_ID, SMITHING_TYPE);
         Registry.register(Registry.RECIPE_TYPE, IFletchingRecipe.RECIPE_TYPE_ID, FLETCHING_TYPE);
+        Registry.register(Registry.RECIPE_TYPE, ISlackTubRecipe.RECIPE_TYPE_ID, SLACK_TUB_TYPE);
         Registry.register(Registry.RECIPE_TYPE, NoRecipe.RECIPE_TYPE_ID, NO_RECIPE_TYPE);
     }
 

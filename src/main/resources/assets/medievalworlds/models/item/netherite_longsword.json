@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "medievalworlds:item/netherite_longsword",
-		"particle": "medievalworlds:item/netherite_longsword"
+		"0": "medievalworlds:item/netherite_weapon",
+		"particle": "medievalworlds:item/netherite_weapon"
 	},
 	"elements": [
 		{

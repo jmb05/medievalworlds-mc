@@ -1,12 +1,10 @@
 package net.jmb19905.medievalworlds.common.networking;
 
-import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
 import net.jmb19905.medievalworlds.client.screen.AnvilRecipeSelectedPacket;
 import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
 import net.jmb19905.medievalworlds.common.capability.motion.Motion;
-import net.jmb19905.medievalworlds.common.item.lance.CritEffectPacket;
-import net.jmb19905.medievalworlds.common.item.lance.EntityMessageToServer;
 import net.jmb19905.medievalworlds.common.item.lance.LanceItem;
+import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
 import net.jmb19905.medievalworlds.common.menus.CustomSmithingMenu;
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
 import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
@@ -20,7 +18,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Llama;
-import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -139,6 +136,31 @@ public class MessageHandlerOnServer {
                 }catch (IndexOutOfBoundsException ignored) {}
             }
         }
+    }
+
+    public static void onDrawSword(final DrawSwordPacket packet, Supplier<NetworkEvent.Context> ctxSupplier) {
+        NetworkEvent.Context context = ctxSupplier.get();
+        LogicalSide sideReceived = context.getDirection().getReceptionSide();
+        context.setPacketHandled(true);
+
+        if (sideReceived != LogicalSide.SERVER) {
+            LOGGER.warn("DrawSwordPacket received on wrong side:" + context.getDirection().getReceptionSide());
+            return;
+        }
+        if (!packet.isMessageValid()) {
+            LOGGER.warn("DrawSwordPacket was invalid" + packet);
+            return;
+        }
+
+        final ServerPlayer player = context.getSender();
+
+        if(player != null) {
+            context.enqueueWork(() -> processDrawSword(packet, player));
+        }
+    }
+
+    private static void processDrawSword(final DrawSwordPacket packet, ServerPlayer player) {
+
     }
 
     public static void onRenameItemPacketReceived(final MWServerboundRenameItemPacket packet, Supplier<NetworkEvent.Context> ctxSupplier) {

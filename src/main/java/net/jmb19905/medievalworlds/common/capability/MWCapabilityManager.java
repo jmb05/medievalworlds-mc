@@ -1,5 +1,7 @@
 package net.jmb19905.medievalworlds.common.capability;
 
+import net.jmb19905.medievalworlds.common.capability.hood.Hood;
+import net.jmb19905.medievalworlds.common.capability.hood.HoodCapProvider;
 import net.jmb19905.medievalworlds.common.capability.motion.Motion;
 import net.jmb19905.medievalworlds.common.capability.motion.MotionCapProvider;
 import net.minecraft.world.entity.Entity;
@@ -13,6 +15,7 @@ public class MWCapabilityManager {
     @SubscribeEvent
     public static void register(RegisterCapabilitiesEvent event) {
         event.register(Motion.class);
+        event.register(Hood.class);
     }
 
     @SubscribeEvent
@@ -20,6 +23,7 @@ public class MWCapabilityManager {
         Entity entity = event.getObject();
         if(entity instanceof Player) {
             event.addCapability(Motion.ID, new MotionCapProvider());
+            event.addCapability(Hood.ID, new HoodCapProvider());
         }
     }
 

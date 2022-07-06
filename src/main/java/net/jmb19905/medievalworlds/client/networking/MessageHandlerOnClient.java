@@ -2,7 +2,7 @@ package net.jmb19905.medievalworlds.client.networking;
 
 import net.jmb19905.medievalworlds.common.blockentities.bellows.BellowsActivationPacket;
 import net.jmb19905.medievalworlds.common.blockentities.bellows.BellowsBlockEntity;
-import net.jmb19905.medievalworlds.common.item.lance.CritEffectPacket;
+import net.jmb19905.medievalworlds.common.networking.CritEffectPacket;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.networking.SteamEffectPacket;
 import net.minecraft.client.multiplayer.ClientLevel;

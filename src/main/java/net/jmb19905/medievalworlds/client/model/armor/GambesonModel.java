@@ -3,28 +3,80 @@ package net.jmb19905.medievalworlds.client.model.armor;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.world.entity.EquipmentSlot;
 
 public class GambesonModel extends CustomArmorModel {
 
 	public GambesonModel(ModelPart root) {
-		super(root, EquipmentSlot.CHEST);
+		super(root);
+		addToRender(root.getChild("head"));
 		addToRender(root.getChild("left_arm"));
 		addToRender(root.getChild("body"));
 		addToRender(root.getChild("right_arm"));
 	}
 
-	public static LayerDefinition createBodyLayer() {
+	public static LayerDefinition createSmallCoifLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
 		CubeDeformation deformation = new CubeDeformation(0.6f);
-		partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 16.0F, 4.0F, deformation), PartPose.offset(0.0F, 12.0F, 0.0F));
-		//partdefinition.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(24, 0).addBox(0.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, deformation), PartPose.offset(4.0F, 14.0F, 0.0F));
-		//partdefinition.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(24, 0).addBox(-4.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, deformation), PartPose.offset(-.0F, 14.0F, 0.0F));
+		partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.ZERO);
 
-		partdefinition.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(24, 0).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, deformation), PartPose.offset(-5.0F, 14, 0.0F));
-		partdefinition.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(24, 0).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, deformation), PartPose.offset(5.0F, 14, 0.0F));
+		partdefinition.addOrReplaceChild("right_arm", CubeListBuilder.create(), PartPose.ZERO);
+		partdefinition.addOrReplaceChild("left_arm", CubeListBuilder.create(), PartPose.ZERO);
+
+		partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
+		partdefinition.addOrReplaceChild("head", CubeListBuilder.create().addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, deformation), PartPose.offset(0.0F, 0.0F, 0.0F));
+		partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.ZERO);
+		partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.ZERO);
+
+		return LayerDefinition.create(meshdefinition, 64, 32);
+	}
+
+	public static LayerDefinition createFullCoifLayer() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
+
+		CubeDeformation deformation = new CubeDeformation(0.6f);
+		partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.ZERO);
+
+		partdefinition.addOrReplaceChild("right_arm", CubeListBuilder.create(), PartPose.ZERO);
+		partdefinition.addOrReplaceChild("left_arm", CubeListBuilder.create(), PartPose.ZERO);
+
+		partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
+		partdefinition.addOrReplaceChild("head", CubeListBuilder.create().addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, deformation), PartPose.offset(0.0F, 0.0F, 0.0F));
+		partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.ZERO);
+		partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.ZERO);
+
+		return LayerDefinition.create(meshdefinition, 64, 32);
+	}
+
+	public static LayerDefinition createSmallGambesonLayer() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
+
+		CubeDeformation deformation = new CubeDeformation(0.6f);
+		partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(40, 12).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 10.0F, 4.0F, deformation), PartPose.offset(0.0F, 12, 0.0F));
+
+		partdefinition.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(24, 16).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F, deformation), PartPose.offset(-5.0F, 14, 0.0F));
+		partdefinition.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(24, 16).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F, deformation), PartPose.offset(5.0F, 14, 0.0F));
+
+		partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
+		partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.ZERO);
+		partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.ZERO);
+		partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.ZERO);
+
+		return LayerDefinition.create(meshdefinition, 64, 32);
+	}
+
+	public static LayerDefinition createFullGambesonLayer() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
+
+		CubeDeformation deformation = new CubeDeformation(0.6f);
+		partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(40, 12).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 16.0F, 4.0F, deformation), PartPose.offset(0.0F, 12.0F, 0.0F));
+
+		partdefinition.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(24, 16).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 7.0F, 4.0F, deformation), PartPose.offset(-5.0F, 14, 0.0F));
+		partdefinition.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(24, 16).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 7.0F, 4.0F, deformation), PartPose.offset(5.0F, 14, 0.0F));
 
 		partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
 		partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.ZERO);

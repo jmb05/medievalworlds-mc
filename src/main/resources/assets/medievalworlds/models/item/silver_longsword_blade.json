@@ -1,7 +1,7 @@
 {
   "parent": "medievalworlds:item/template_longsword_blade",
   "textures": {
-    "0": "medievalworlds:item/silver_longsword",
-    "particle": "medievalworlds:item/silver_longsword"
+    "0": "medievalworlds:item/silver_weapon",
+    "particle": "medievalworlds:item/silver_weapon"
   }
 }

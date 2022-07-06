@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         super(dataGenerator);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> recipeConsumer) {
         nineBlockStorageRecipes(recipeConsumer, MWItems.RUBY.get(), MWBlocks.RUBY_BLOCK.get());
@@ -156,7 +158,15 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         leggingsRecipe(recipeConsumer, MWItems.STEEL_LEGGINGS.get(), MWItems.TOOL_PARTS.get("steel_armor_plate").get());
         bootsRecipe(recipeConsumer, MWItems.STEEL_BOOTS.get(), MWItems.TOOL_PARTS.get("steel_armor_plate").get());
 
-        ShapedRecipeBuilder.shaped(MWItems.GAMBESON_CHESTPLATE.get())
+        ShapedRecipeBuilder.shaped(MWItems.STEEL_KETTLE_HELMET.get())
+                .define('S', MWItems.TOOL_PARTS.get("steel_armor_plate").get())
+                .pattern(" S ")
+                .pattern("SSS")
+                .pattern(" S ")
+                .unlockedBy(getHasName(MWItems.TOOL_PARTS.get("steel_armor_plate").get()), has(MWItems.TOOL_PARTS.get("steel_armor_plate").get()))
+                .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, "steel_kettle_helmet"));
+
+        ShapedRecipeBuilder.shaped(MWItems.GAMBESON.get())
                 .define('W', ItemTags.WOOL)
                 .define('L', Items.LEATHER)
                 .pattern("L L")
@@ -165,6 +175,15 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy(getItemName(Items.LEATHER), has(Items.LEATHER))
                 .unlockedBy("wool", has(ItemTags.WOOL))
                 .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, "gambeson"));
+
+        ShapedRecipeBuilder.shaped(MWItems.COIF.get())
+                .define('W', ItemTags.WOOL)
+                .define('L', Items.LEATHER)
+                .pattern("LWL")
+                .pattern("W W")
+                .unlockedBy(getItemName(Items.LEATHER), has(Items.LEATHER))
+                .unlockedBy("wool", has(ItemTags.WOOL))
+                .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, "coif"));
 
         ShapedRecipeBuilder.shaped(MWBlocks.ALLOY_FURNACE_BLOCK.get())
                 .define('#', Blocks.BRICKS)
@@ -240,20 +259,19 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, "arrow_fletching"));
 
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("iron_hammer_head").get(), MWItems.IRON_HAMMER.get());
-        bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("iron_battle_axe_head").get(), MWItems.IRON_BATTLE_AXE.get());
+        bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("iron_long_axe_head").get(), MWItems.IRON_LONG_AXE.get());
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("iron_longsword_blade").get(), MWItems.IRON_LONGSWORD.get());
         smithingRecipe(recipeConsumer, Items.IRON_BOOTS, 1, MWItems.TOOL_PARTS.get("iron_armor_plate").get(), 8, MWItems.IRON_KNIGHT_BOOTS.get(), 1, 10);
         smithingRecipe(recipeConsumer, Items.IRON_LEGGINGS, 1, MWItems.TOOL_PARTS.get("iron_armor_plate").get(), 8, MWItems.IRON_KNIGHT_LEGGINGS.get(), 1, 10);
         smithingRecipe(recipeConsumer, Items.IRON_CHESTPLATE, 1, MWItems.TOOL_PARTS.get("iron_armor_plate").get(), 8, MWItems.IRON_KNIGHT_CHESTPLATE.get(), 1, 10);
         smithingRecipe(recipeConsumer, Items.IRON_HELMET, 1, MWItems.TOOL_PARTS.get("iron_armor_plate").get(), 8, MWItems.IRON_KNIGHT_HELMET.get(), 1, 10);
 
-        System.out.println(MWItems.WEAPON_PARTS.keySet());
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("netherite_hammer_head").get(), MWItems.NETHERITE_HAMMER.get());
-        bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("netherite_battle_axe_head").get(), MWItems.NETHERITE_BATTLE_AXE.get());
+        bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("netherite_long_axe_head").get(), MWItems.NETHERITE_LONG_AXE.get());
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("netherite_longsword_blade").get(), MWItems.NETHERITE_LONGSWORD.get());
 
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("silver_hammer_head").get(), MWItems.SILVER_HAMMER.get());
-        bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("silver_battle_axe_head").get(), MWItems.SILVER_BATTLE_AXE.get());
+        bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("silver_long_axe_head").get(), MWItems.SILVER_LONG_AXE.get());
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("silver_longsword_blade").get(), MWItems.SILVER_LONGSWORD.get());
         smithingRecipe(recipeConsumer, MWItems.SILVER_BOOTS.get(), 1, MWItems.TOOL_PARTS.get("silver_armor_plate").get(), 8, MWItems.SILVER_KNIGHT_BOOTS.get(), 1, 18);
         smithingRecipe(recipeConsumer, MWItems.SILVER_LEGGINGS.get(), 1, MWItems.TOOL_PARTS.get("silver_armor_plate").get(), 8, MWItems.SILVER_KNIGHT_LEGGINGS.get(), 1, 18);
@@ -261,7 +279,7 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         smithingRecipe(recipeConsumer, MWItems.SILVER_HELMET.get(), 1, MWItems.TOOL_PARTS.get("silver_armor_plate").get(), 8, MWItems.SILVER_KNIGHT_HELMET.get(), 1, 18);
 
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_hammer_head").get(), MWItems.STEEL_HAMMER.get());
-        bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_battle_axe_head").get(), MWItems.STEEL_BATTLE_AXE.get());
+        bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_long_axe_head").get(), MWItems.STEEL_LONG_AXE.get());
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_longsword_blade").get(), MWItems.STEEL_LONGSWORD.get());
         smithingRecipe(recipeConsumer, MWItems.STEEL_BOOTS.get(), 1, MWItems.TOOL_PARTS.get("steel_armor_plate").get(), 8, MWItems.STEEL_KNIGHT_BOOTS.get(), 1, 18);
         smithingRecipe(recipeConsumer, MWItems.STEEL_LEGGINGS.get(), 1, MWItems.TOOL_PARTS.get("steel_armor_plate").get(), 8, MWItems.STEEL_KNIGHT_LEGGINGS.get(), 1, 18);
@@ -318,10 +336,31 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         netheriteSmithing(recipeConsumer, MWItems.TOOL_PARTS.get("steel_pickaxe_head").get(), MWItems.TOOL_PARTS.get("netherite_pickaxe_head").get());
         netheriteSmithing(recipeConsumer, MWItems.TOOL_PARTS.get("steel_shovel_head").get(), MWItems.TOOL_PARTS.get("netherite_shovel_head").get());
         netheriteSmithing(recipeConsumer, MWItems.TOOL_PARTS.get("steel_sword_blade").get(), MWItems.TOOL_PARTS.get("netherite_sword_blade").get());
-        netheriteSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_battle_axe_head").get(), MWItems.WEAPON_PARTS.get("netherite_battle_axe_head").get());
+        netheriteSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_long_axe_head").get(), MWItems.WEAPON_PARTS.get("netherite_long_axe_head").get());
         netheriteSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_longsword_blade").get(), MWItems.WEAPON_PARTS.get("netherite_longsword_blade").get());
         netheriteBlockSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_hammer_head").get(), MWItems.WEAPON_PARTS.get("netherite_hammer_head").get());
         netheriteBlockSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_hammer_head_raw").get(), MWItems.WEAPON_PARTS.get("netherite_hammer_head_raw").get());
+
+        for(RegistryObject<Item> ro : MWItems.TOOL_PARTS.values()) {
+            if(ro.get() instanceof AbstractHeatedItem item) {
+                slackTubRecipe(recipeConsumer, Ingredient.of(item), 1, item.getBaseItem(), 1);
+            }
+        }
+
+        for(RegistryObject<Item> ro : MWItems.WEAPON_PARTS.values()) {
+            if(ro.get() instanceof AbstractHeatedItem item) {
+                slackTubRecipe(recipeConsumer, Ingredient.of(item), 1, item.getBaseItem(), 1);
+            }
+        }
+
+        slackTubRecipe(recipeConsumer, Ingredient.of(MWItems.HEATED_BRONZE_INGOT.get()), 1, MWItems.BRONZE_INGOT.get(), 1);
+        slackTubRecipe(recipeConsumer, Ingredient.of(MWItems.HEATED_TIN_INGOT.get()), 1, MWItems.TIN_INGOT.get(), 1);
+        slackTubRecipe(recipeConsumer, Ingredient.of(MWItems.HEATED_COPPER_INGOT.get()), 1, Items.COPPER_INGOT, 1);
+        slackTubRecipe(recipeConsumer, Ingredient.of(MWItems.HEATED_IRON_INGOT.get()), 1, Items.IRON_INGOT, 1);
+        slackTubRecipe(recipeConsumer, Ingredient.of(MWItems.HEATED_GOLD_INGOT.get()), 1, Items.GOLD_INGOT, 1);
+        slackTubRecipe(recipeConsumer, Ingredient.of(MWItems.HEATED_STEEL_INGOT.get()), 1, MWItems.STEEL_INGOT.get(), 1);
+        slackTubRecipe(recipeConsumer, Ingredient.of(MWItems.HEATED_SILVER_INGOT.get()), 1, MWItems.SILVER_INGOT.get(), 1);
+        slackTubRecipe(recipeConsumer, Ingredient.of(MWItems.HEATED_NETHERITE_INGOT.get()), 1, Items.NETHERITE_INGOT, 1);
 
         netheriteSmithing(recipeConsumer, MWItems.STEEL_HORSE_ARMOR.get(), MWItems.NETHERITE_HORSE_ARMOR.get());
         netheriteSmithing(recipeConsumer, MWItems.STEEL_FORGE_HAMMER.get(), MWItems.NETHERITE_FORGE_HAMMER.get());
@@ -336,7 +375,7 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         netheriteSmithing(recipeConsumer, MWItems.STEEL_SHOVEL.get(), Items.NETHERITE_SHOVEL);
         netheriteSmithing(recipeConsumer, MWItems.STEEL_SWORD.get(), Items.NETHERITE_SWORD);
         netheriteSmithing(recipeConsumer, MWItems.STEEL_LONGSWORD.get(), MWItems.NETHERITE_LONGSWORD.get());
-        netheriteSmithing(recipeConsumer, MWItems.STEEL_BATTLE_AXE.get(), MWItems.NETHERITE_BATTLE_AXE.get());
+        netheriteSmithing(recipeConsumer, MWItems.STEEL_LONG_AXE.get(), MWItems.NETHERITE_LONG_AXE.get());
         netheriteSmithing(recipeConsumer, MWItems.STEEL_LANCE.get(), MWItems.NETHERITE_LANCE.get());
 
         daggerRecipe(recipeConsumer, Items.IRON_NUGGET, MWItems.IRON_DAGGER.get());
@@ -428,6 +467,27 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         noRecipe(recipeConsumer, new ResourceLocation("netherite_chestplate_smithing"));
         noRecipe(recipeConsumer, new ResourceLocation("netherite_leggings_smithing"));
         noRecipe(recipeConsumer, new ResourceLocation("netherite_helmet_smithing"));
+
+        cloakRecipe(recipeConsumer, Blocks.BROWN_WOOL, Items.RED_DYE, MWItems.CLOAK.get());
+        cloakRecipe(recipeConsumer, Blocks.BLACK_WOOL, Items.BLUE_DYE, MWItems.DARK_CLOAK.get());
+        cloakRecipe(recipeConsumer, Blocks.WHITE_WOOL, Items.LIME_DYE, MWItems.LIGHT_CLOAK.get());
+    }
+
+    protected static void cloakRecipe(Consumer<FinishedRecipe> recipeConsumer, ItemLike wool, ItemLike dye, ItemLike cloak) {
+        ShapedRecipeBuilder.shaped(cloak)
+                .define('W', wool)
+                .define('R', dye)
+                .pattern(" W ")
+                .pattern("WRW")
+                .pattern("WWW")
+                .unlockedBy("has_wool", has(ItemTags.WOOL))
+                .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, getItemName(cloak)));
+    }
+
+    protected static void slackTubRecipe(Consumer<FinishedRecipe> recipeConsumer, Ingredient input, int inputCount, ItemLike output, int outputCount) {
+        new SlackTubRecipeBuilder(new ItemStack(output, outputCount), input, inputCount)
+                .unlockedBy(getHasName(output), has(output))
+                .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, getItemName(output) + "_quenching"));
     }
 
     protected static void noRecipe(Consumer<FinishedRecipe> recipeConsumer, ResourceLocation id) {

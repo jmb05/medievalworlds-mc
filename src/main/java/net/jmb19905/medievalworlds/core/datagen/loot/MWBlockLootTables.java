@@ -56,6 +56,7 @@ public class MWBlockLootTables extends BlockLoot {
                 (block) -> createSingleItemTableWithSilkTouch(block, Items.CHARCOAL, ConstantValue.exactly(4.0F)));
 
         this.add(MWBlocks.BLOOMERY.get(), empty());
+        this.add(MWBlocks.BRICK_BLOOMERY.get(), empty());
         this.add(MWBlocks.STONE_ANVIL.get(), empty());
     }
 

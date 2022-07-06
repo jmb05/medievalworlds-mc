@@ -31,3 +31,5 @@ forge*changelog.txt
 /src/main/java/net/jmb19905/medievalworlds/client/ber/BellowsRenderer.bbmodel
 /src/main/resources/old/
 /src/main/java/net/jmb19905/medievalworlds/client/ber/water_wheel.bbmodel
+/src/main/java/net/jmb19905/medievalworlds/client/er/CloakModel.bbmodel
+/src/main/java/net/jmb19905/medievalworlds/client/model/armor/KettlyHelmetModel.bbmodel

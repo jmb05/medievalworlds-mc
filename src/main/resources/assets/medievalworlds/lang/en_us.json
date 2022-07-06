@@ -57,10 +57,10 @@
 
   "item.medievalworlds.iron_mace": "Iron Mace",
 
-  "item.medievalworlds.iron_battle_axe": "Iron Battle Axe",
-  "item.medievalworlds.silver_battle_axe": "Silver Battle Axe",
-  "item.medievalworlds.steel_battle_axe": "Steel Battle Axe",
-  "item.medievalworlds.netherite_battle_axe": "Netherite Battle Axe",
+  "item.medievalworlds.iron_long_axe": "Iron Battle Axe",
+  "item.medievalworlds.silver_long_axe": "Silver Battle Axe",
+  "item.medievalworlds.steel_long_axe": "Steel Battle Axe",
+  "item.medievalworlds.netherite_long_axe": "Netherite Battle Axe",
 
   "item.medievalworlds.iron_dagger": "Iron Dagger",
   "item.medievalworlds.silver_dagger": "Silver Dagger",
@@ -238,6 +238,56 @@
   "item.medievalworlds.heated_gold_armor_plate": "Heated Gold Armor Plate",
   "item.medievalworlds.heated_netherite_armor_plate": "Heated Netherite Armor Plate",
 
+  "item.medievalworlds.iron_longsword_blade": "Iron Longsword Blade",
+  "item.medievalworlds.silver_longsword_blade": "Silver Longsword Blade",
+  "item.medievalworlds.steel_longsword_blade": "Steel Longsword Blade",
+  "item.medievalworlds.netherite_longsword_blade": "Netherite Longsword Blade",
+
+  "item.medievalworlds.heated_iron_longsword_blade": "Heated Iron Longsword Blade",
+  "item.medievalworlds.heated_silver_longsword_blade": "Heated Silver Longsword Blade",
+  "item.medievalworlds.heated_steel_longsword_blade": "Heated Steel Longsword Blade",
+  "item.medievalworlds.heated_netherite_longsword_blade": "Heated Netherite Longsword Blade",
+
+  "item.medievalworlds.iron_hammer_head": "Iron Hammer Head",
+  "item.medievalworlds.silver_hammer_head": "Silver Hammer Head",
+  "item.medievalworlds.steel_hammer_head": "Steel Hammer Head",
+  "item.medievalworlds.netherite_hammer_head": "Netherite Hammer Head",
+
+  "item.medievalworlds.heated_iron_hammer_head": "Heated Iron Hammer Head",
+  "item.medievalworlds.heated_silver_hammer_head": "Heated Silver Hammer Head",
+  "item.medievalworlds.heated_steel_hammer_head": "Heated Steel Hammer Head",
+  "item.medievalworlds.heated_netherite_hammer_head": "Heated Netherite Hammer Head",
+
+  "item.medievalworlds.iron_hammer_head_raw": "Raw Iron Hammer Head",
+  "item.medievalworlds.silver_hammer_head_raw": "Raw Silver Hammer Head",
+  "item.medievalworlds.steel_hammer_head_raw": "Raw Steel Hammer Head",
+  "item.medievalworlds.netherite_hammer_head_raw": "Raw Netherite Hammer Head",
+
+  "item.medievalworlds.heated_iron_hammer_head_raw": "Heated Raw Iron Hammer Head",
+  "item.medievalworlds.heated_silver_hammer_head_raw": "Heated Raw Silver Hammer Head",
+  "item.medievalworlds.heated_steel_hammer_head_raw": "Heated Raw Steel Hammer Head",
+  "item.medievalworlds.heated_netherite_hammer_head_raw": "Heated Raw Netherite Hammer Head",
+
+  "item.medievalworlds.iron_long_axe_head": "Iron Battle Axe Head",
+  "item.medievalworlds.silver_long_axe_head": "Silver Battle Axe Head",
+  "item.medievalworlds.steel_long_axe_head": "Steel Battle Axe Head",
+  "item.medievalworlds.netherite_long_axe_head": "Netherite Battle Axe Head",
+
+  "item.medievalworlds.heated_iron_long_axe_head": "Heated Iron Battle Axe Head",
+  "item.medievalworlds.heated_silver_long_axe_head": "Heated Silver Battle Axe Head",
+  "item.medievalworlds.heated_steel_long_axe_head": "Heated Steel Battle Axe Head",
+  "item.medievalworlds.heated_netherite_long_axe_head": "Heated Netherite Battle Axe Head",
+
+  "item.medievalworlds.cloak": "Cloak",
+  "item.medievalworlds.dark_cloak": "Dark Cloak",
+  "item.medievalworlds.light_cloak": "Light Cloak",
+
+  "item.medievalworlds.fire_starter": "Fire Starter",
+
+  "item.medievalworlds.silver_horse_armor": "Silver Horse Armor",
+
+  "item.medievalworlds.round_shield": "Round Shield",
+
   "item.medievalworlds.iron_spear": "Iron Spear",
 
   "container.medievalworlds.alloy_furnace": "Alloy Furnace",
@@ -252,15 +302,26 @@
 
   "itemGroup.MedievalWorlds": "MedievalWorlds",
 
-  "tooltip.usedOnHorse": "When used on Horse",
-  "tooltip.minimumAttack": "Minimum Attack Damage",
-  "tooltip.maximumAttack": "Maximum Attack Damage",
-  "tooltip.chargeTime": "Charge Time",
+  "tooltip.medievalworlds.usedOnHorse": "§7When used on Horse:",
+  "tooltip.medievalworlds.minimumAttack": "§2Minimum Attack Damage",
+  "tooltip.medievalworlds.maximumAttack": "§2Maximum Attack Damage",
+  "tooltip.medievalworlds.chargeTime": "§2Charge Time",
+  "tooltip.medievalworlds.twohanded": "§6Two-Handed",
+  "tooltip.medievalworlds.press_shift": "[Press §eSHIFT§r for more Info]",
+  "tooltip.medievalworlds.twohanded_info": " §oOnly works well if Offhand is Empty",
+  "tooltip.medievalworlds.cleansing": "§6Cleansing",
+  "tooltip.medievalworlds.cleansing_info": " §oDeals more Damage to Undead mobs",
 
   "gui.recipebook.toggleRecipes.alloyable": "Showing Alloyable",
 
-  "itemgroup.medievalworlds.block": "MedievalWorlds Blocks",
-  "itemgroup.medievalworlds.combat": "MedievalWorlds Combat",
-  "itemgroup.medievalworlds.materials": "MedievalWorlds Crafting Materials",
-  "itemgroup.medievalworlds.tools": "MedievalWorlds Tools"
+  "itemGroup.medievalworlds.block": "MedievalWorlds Blocks",
+  "itemGroup.medievalworlds.combat": "MedievalWorlds Combat",
+  "itemGroup.medievalworlds.materials": "MedievalWorlds Crafting Materials",
+  "itemGroup.medievalworlds.tools": "MedievalWorlds Tools",
+
+  "advancements.medievalworlds.root.title": "Alloying",
+  "advancements.medievalworlds.root.description": "Craft an Alloy Furnace",
+
+  "advancements.medievalworlds.bronze_age.title": "Bronze Age!",
+  "advancements.medievalworlds.bronze_age.description": "Alloy some Copper and Tin to produce Bronze"
 }

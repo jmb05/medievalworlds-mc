@@ -57,7 +57,8 @@ public class NoRecipeBuilder implements RecipeBuilder {
 
         @Override
         public @NotNull JsonObject serializeAdvancement() {
-            return new JsonObject();
+            Advancement.Builder advancement = Advancement.Builder.advancement();
+            return advancement.serializeToJson();
         }
 
         @Override

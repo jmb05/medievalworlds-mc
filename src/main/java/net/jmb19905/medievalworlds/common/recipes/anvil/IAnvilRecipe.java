@@ -1,6 +1,7 @@
 package net.jmb19905.medievalworlds.common.recipes.anvil;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +19,7 @@ public interface IAnvilRecipe extends Recipe<RecipeWrapper> {
     @Nonnull
     @Override
     default RecipeType<?> getType(){
-        return Objects.requireNonNull(Registry.RECIPE_TYPE.get(RECIPE_TYPE_ID));
+        return MWRecipeSerializers.ANVIL_TYPE;
     }
 
     @Override

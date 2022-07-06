@@ -30,6 +30,8 @@
     }
   },
   "requirements": [
-    "alloy_furnace"
+    [
+      "alloy_furnace"
+    ]
   ]
 }

@@ -3,15 +3,18 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = "https://repo.spongepowered.org/maven" }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
 
 version = '1.1.4'
 group = 'net.jmb19905.medievalworlds'
@@ -21,9 +24,15 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
+
+    accessTransformers.from(file('src/main/resources/META-INF/accesstransformer.cfg'))
+
     runs {
         client {
             workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            args '-mixin.config=medievalworlds.mixins.json'
             mods {
                 medievalworlds {
                     source sourceSets.main
@@ -33,6 +42,9 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            args '-mixin.config=medievalworlds.mixins.json'
             mods {
                 medievalworlds {
                     source sourceSets.main
@@ -42,6 +54,9 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            args '-mixin.config=medievalworlds.mixins.json'
             args '--mod', 'medievalworlds', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
@@ -73,7 +88,16 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.dev"
     }
+    maven {
+        name = "zerocore"
+        url = 'http://maven.zerono.it/'
+        allowInsecureProtocol = true
+    }
     mavenCentral()
+}
+
+mixin {
+    add sourceSets.main, "medievalworlds.mixins.refmap.json"
 }
 
 dependencies {
@@ -83,6 +107,8 @@ dependencies {
 
     compileOnly fg.deobf("mezz.jei:jei-$minecraft_version:$jei_version:api")
     runtimeOnly fg.deobf("mezz.jei:jei-$minecraft_version:$jei_version")
+
+    compileOnly fg.deobf("it.zerono.mods.zerocore:ZeroCore2:1.18.2-2.1.16")
 }
 
 jar {

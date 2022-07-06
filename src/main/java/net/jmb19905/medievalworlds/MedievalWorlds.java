@@ -8,12 +8,14 @@ import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
 import net.jmb19905.medievalworlds.common.config.CommonConfig;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.world.gen.OreGenerator;
+import net.jmb19905.medievalworlds.core.compatability.CuriosCompat;
 import net.jmb19905.medievalworlds.core.compatability.ExternalMods;
 import net.jmb19905.medievalworlds.core.registries.*;
 import net.jmb19905.medievalworlds.core.tabs.MWBlocksTab;
 import net.jmb19905.medievalworlds.core.tabs.MWCombatTab;
 import net.jmb19905.medievalworlds.core.tabs.MWMaterialsTab;
 import net.jmb19905.medievalworlds.core.tabs.MWToolsTab;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -96,8 +98,6 @@ public class MedievalWorlds {
 
     @SubscribeEvent
     public static void enqueue(InterModEnqueueEvent event) {
-        if(ExternalMods.CURIOS.isLoaded()) {
-            InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HEAD.getMessageBuilder().build());
-        }
+        CuriosCompat.createSlots();
     }
 }

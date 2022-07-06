@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " W ",
+    "WRW",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:black_wool"
+    },
+    "R": {
+      "item": "minecraft:blue_dye"
+    }
+  },
+  "result": {
+    "item": "medievalworlds:dark_cloak"
+  }
+}

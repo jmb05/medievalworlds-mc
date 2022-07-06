@@ -4,8 +4,6 @@ import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.networking.MessageHandlerOnClient;
 import net.jmb19905.medievalworlds.client.screen.AnvilRecipeSelectedPacket;
 import net.jmb19905.medievalworlds.common.blockentities.bellows.BellowsActivationPacket;
-import net.jmb19905.medievalworlds.common.item.lance.EntityMessageToServer;
-import net.jmb19905.medievalworlds.common.item.lance.CritEffectPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -23,8 +21,8 @@ public class NetworkStartupCommon {
     public static final byte STEAM_EFFECT_MESSAGE_ID = 2;
     public static final byte ANVIL_RECIPE_SELECTED_ID = 3;
     public static final byte BELLOWS_ACTIVATION_ID = 4;
-
     public static final byte RENAME_ITEM_ID = 5;
+    public static final byte DRAW_SWORD_ID = 6;
 
     public static final String MESSAGE_PROTOCOL_VERSION = "2";
 
@@ -60,9 +58,15 @@ public class NetworkStartupCommon {
                 BellowsActivationPacket::encode, BellowsActivationPacket::decode,
                 MessageHandlerOnClient::onBellowsActivationPacketReceived,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+
         simpleChannel.registerMessage(RENAME_ITEM_ID, MWServerboundRenameItemPacket.class,
                 MWServerboundRenameItemPacket::encode, MWServerboundRenameItemPacket::decode,
                 MessageHandlerOnServer::onRenameItemPacketReceived,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER));
+
+        simpleChannel.registerMessage(DRAW_SWORD_ID, DrawSwordPacket.class,
+                DrawSwordPacket::encode, DrawSwordPacket::decode,
+                MessageHandlerOnServer::onDrawSword,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER));
     }
 

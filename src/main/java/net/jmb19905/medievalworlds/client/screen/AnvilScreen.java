@@ -124,8 +124,10 @@ public class AnvilScreen extends AbstractContainerScreen<CustomAnvilMenu> {
                     if (this.menu.clickMenuButton(this.minecraft.player, l)) {
                         this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
                         assert this.minecraft.gameMode != null;
-                        NetworkStartupCommon.simpleChannel.send(PacketDistributor.SERVER.noArg(), new AnvilRecipeSelectedPacket(this.menu.containerId, menu.getRecipes().get(l).getId()));
-                        NetworkStartupCommon.simpleChannel.send(PacketDistributor.SERVER.noArg(), new AnvilRecipeSelectedPacket(this.menu.containerId, menu.getRecipes().get(l).getId()));
+                        try {
+                            NetworkStartupCommon.simpleChannel.send(PacketDistributor.SERVER.noArg(), new AnvilRecipeSelectedPacket(this.menu.containerId, menu.getRecipes().get(l).getId()));
+                            NetworkStartupCommon.simpleChannel.send(PacketDistributor.SERVER.noArg(), new AnvilRecipeSelectedPacket(this.menu.containerId, menu.getRecipes().get(l).getId()));
+                        } catch (IndexOutOfBoundsException ignored) {}
                         return true;
                     }
                 }

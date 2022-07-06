@@ -57,10 +57,10 @@
 
   "item.medievalworlds.iron_mace": "Eiserner Morgenstern",
 
-  "item.medievalworlds.iron_battle_axe": "Eisenstreitaxt",
-  "item.medievalworlds.silver_battle_axe": "Silberstreitaxt",
-  "item.medievalworlds.steel_battle_axe": "Stahlstreitaxt",
-  "item.medievalworlds.netherite_battle_axe": "Netherit Battle Axe",
+  "item.medievalworlds.iron_long_axe": "Eisenstreitaxt",
+  "item.medievalworlds.silver_long_axe": "Silberstreitaxt",
+  "item.medievalworlds.steel_long_axe": "Stahlstreitaxt",
+  "item.medievalworlds.netherite_long_axe": "Netherit Battle Axe",
 
   "item.medievalworlds.iron_dagger": "Eisendolch",
   "item.medievalworlds.silver_dagger": "Silberdolch",
@@ -217,12 +217,12 @@
   "item.medievalworlds.gold_sword_blade": "Goldschwertklinge",
   "item.medievalworlds.netherite_sword_blade": "Netheritschwertklinge",
 
-  "item.medievalworlds.heated_iron_sword_blade": "Erhitze Eisenschwertklinge",
-  "item.medievalworlds.heated_steel_sword_blade": "Erhitze Stahlschwertklinge",
-  "item.medievalworlds.heated_bronze_sword_blade": "Erhitze Bronzeschwertklinge",
-  "item.medievalworlds.heated_silver_sword_blade": "Erhitze Silberschwertklinge",
-  "item.medievalworlds.heated_gold_sword_blade": "Erhitze Goldschwertklinge",
-  "item.medievalworlds.heated_netherite_sword_blade": "Erhitze Netheritschwertklinge",
+  "item.medievalworlds.heated_iron_sword_blade": "Erhitzte Eisenschwertklinge",
+  "item.medievalworlds.heated_steel_sword_blade": "Erhitzte Stahlschwertklinge",
+  "item.medievalworlds.heated_bronze_sword_blade": "Erhitzte Bronzeschwertklinge",
+  "item.medievalworlds.heated_silver_sword_blade": "Erhitzte Silberschwertklinge",
+  "item.medievalworlds.heated_gold_sword_blade": "Erhitzte Goldschwertklinge",
+  "item.medievalworlds.heated_netherite_sword_blade": "Erhitzte Netheritschwertklinge",
 
   "item.medievalworlds.iron_armor_plate": "Eiserne Rüstungsplatte",
   "item.medievalworlds.steel_armor_plate": "Stählerne Rüstungsplatte",
@@ -231,12 +231,62 @@
   "item.medievalworlds.gold_armor_plate": "Goldene Rüstungsplatte",
   "item.medievalworlds.netherite_armor_plate": "Netherit Rüstungsplatte",
 
-  "item.medievalworlds.heated_iron_armor_plate": "Erhitze Eiserne Rüstungsplatte",
-  "item.medievalworlds.heated_steel_armor_plate": "Erhitze Stählerne Rüstungsplatte",
-  "item.medievalworlds.heated_bronze_armor_plate": "Erhitze Bronze Rüstungsplatte",
-  "item.medievalworlds.heated_silver_armor_plate": "Erhitze Silberne Rüstungsplatte",
-  "item.medievalworlds.heated_gold_armor_plate": "Erhitze Goldene Rüstungsplatte",
-  "item.medievalworlds.heated_netherite_armor_plate": "Erhitze Netherit Rüstungsplatte",
+  "item.medievalworlds.heated_iron_armor_plate": "Erhitzte Eiserne Rüstungsplatte",
+  "item.medievalworlds.heated_steel_armor_plate": "Erhitzte Stählerne Rüstungsplatte",
+  "item.medievalworlds.heated_bronze_armor_plate": "Erhitzte Bronze Rüstungsplatte",
+  "item.medievalworlds.heated_silver_armor_plate": "Erhitzte Silberne Rüstungsplatte",
+  "item.medievalworlds.heated_gold_armor_plate": "Erhitzte Goldene Rüstungsplatte",
+  "item.medievalworlds.heated_netherite_armor_plate": "Erhitzte Netherit Rüstungsplatte",
+
+  "item.medievalworlds.iron_longsword_blade": "Eisenlangschwertklinge",
+  "item.medievalworlds.silver_longsword_blade": "Silberlangschwertklinge",
+  "item.medievalworlds.steel_longsword_blade": "Stahllangschwertklinge",
+  "item.medievalworlds.netherite_longsword_blade": "Netheritlangschwertklinge",
+
+  "item.medievalworlds.heated_iron_longsword_blade": "Erhitzte Eisenlangschwertklinge",
+  "item.medievalworlds.heated_silver_longsword_blade": "Erhitzte Silberlangschwertklinge",
+  "item.medievalworlds.heated_steel_longsword_blade": "Erhitzte Stahllangschwertklinge",
+  "item.medievalworlds.heated_netherite_longsword_blade": "Erhitzte Netheritlangschwertklinge",
+
+  "item.medievalworlds.iron_hammer_head": "Eiserner Hammerkopf",
+  "item.medievalworlds.silver_hammer_head": "Silberner Hammerkopf",
+  "item.medievalworlds.steel_hammer_head": "Stählerner Hammerkopf",
+  "item.medievalworlds.netherite_hammer_head": "Netherit Hammerkopf",
+
+  "item.medievalworlds.heated_iron_hammer_head": "Erhitzter eiserner Hammerkopf",
+  "item.medievalworlds.heated_silver_hammer_head": "Erhitzter silberner Hammerkopf",
+  "item.medievalworlds.heated_steel_hammer_head": "Erhitzter stählerner Hammerkopf",
+  "item.medievalworlds.heated_netherite_hammer_head": "Erhitzter netherit Hammerkopf",
+
+  "item.medievalworlds.iron_hammer_head_raw": "Roher eiserner Hammerkopf",
+  "item.medievalworlds.silver_hammer_head_raw": "Roher silberner Hammerkopf",
+  "item.medievalworlds.steel_hammer_head_raw": "Roher stählerner Hammerkopf",
+  "item.medievalworlds.netherite_hammer_head_raw": "Roher netherit Hammerkopf",
+
+  "item.medievalworlds.heated_iron_hammer_head_raw": "Erhitzter Roher eiserner Hammerkopf",
+  "item.medievalworlds.heated_silver_hammer_head_raw": "Erhitzter Roher silberner Hammerkopf",
+  "item.medievalworlds.heated_steel_hammer_head_raw": "Erhitzter Roher stählerner Hammerkopf",
+  "item.medievalworlds.heated_netherite_hammer_head_raw": "Erhitzter Roher netherit Hammerkopf",
+
+  "item.medievalworlds.iron_long_axe_head": "Eisenstreitaxt Kopf",
+  "item.medievalworlds.silver_long_axe_head": "Silberstreitaxt Kopf",
+  "item.medievalworlds.steel_long_axe_head": "Stahlstreitaxt Kopf",
+  "item.medievalworlds.netherite_long_axe_head": "Netheritstreitaxt Kopf",
+
+  "item.medievalworlds.heated_iron_long_axe_head": "Erhitzter Eisenstreitaxt Kopf",
+  "item.medievalworlds.heated_silver_long_axe_head": "Erhitzter Silberstreitaxt Kopf",
+  "item.medievalworlds.heated_steel_long_axe_head": "Erhitzter Stahlstreitaxt Kopf",
+  "item.medievalworlds.heated_netherite_long_axe_head": "Erhitzter Netheritstreitaxt Kopf",
+
+  "item.medievalworlds.cloak": "Mantel",
+  "item.medievalworlds.dark_cloak": "Dunkler Mantel",
+  "item.medievalworlds.light_cloak": "Heller Mantel",
+
+  "item.medievalworlds.fire_starter": "Feuerstarter",
+
+  "item.medievalworlds.silver_horse_armor": "Silberne Pferderüstung",
+
+  "item.medievalworlds.round_shield": "Round Shield",
 
   "item.medievalworlds.iron_spear": "Eisenspeer",
 
@@ -252,15 +302,26 @@
 
   "itemGroup.MedievalWorlds": "MedievalWorlds",
 
-  "tooltip.usedOnHorse": "Wenn auf Pferd benutzt",
-  "tooltip.minimumAttack": "Minimum Schaden",
-  "tooltip.maximumAttack": "Maximum Schaden",
-  "tooltip.chargeTime": "Ladezeit",
+  "tooltip.medievalworlds.usedOnHorse": "§7Wenn auf Pferd benutzt:",
+  "tooltip.medievalworlds.minimumAttack": "§2Minimum Schaden",
+  "tooltip.medievalworlds.maximumAttack": "§2Maximum Schaden",
+  "tooltip.medievalworlds.chargeTime": "§2Ladezeit",
+  "tooltip.medievalworlds.twohanded": "§6Zweihändig",
+  "tooltip.medievalworlds.press_shift": "[Drücke Umschalt für mehr Infos]",
+  "tooltip.medievalworlds.twohanded_info": " §oFunktioniert nur bei leerer Zweithand gut",
+  "tooltip.medievalworlds.cleansing": "§6Läuterung",
+  "tooltip.medievalworlds.cleansing_info": " §oMacht mehr Schaden gegen Untote",
 
   "gui.recipebook.toggleRecipes.alloyable": "Zeigt Legierbar",
 
-  "itemgroup.medievalworlds.block": "MedievalWorlds Blöcke",
-  "itemgroup.medievalworlds.combat": "MedievalWorlds Combat",
-  "itemgroup.medievalworlds.materials": "MedievalWorlds Materialien",
-  "itemgroup.medievalworlds.tools": "MedievalWorlds Werkzeuge"
+  "itemGroup.medievalworlds.block": "MedievalWorlds Blöcke",
+  "itemGroup.medievalworlds.combat": "MedievalWorlds Combat",
+  "itemGroup.medievalworlds.materials": "MedievalWorlds Materialien",
+  "itemGroup.medievalworlds.tools": "MedievalWorlds Werkzeuge",
+
+  "advancements.medievalworlds.root.title": "Legieren",
+  "advancements.medievalworlds.root.description": "Krafte einen Legierungsofen",
+
+  "advancements.medievalworlds.bronze_age.title": "Bronzezeit!",
+  "advancements.medievalworlds.bronze_age.description": "Legiere Kupfer und Zinn um Bronze zu erhalten"
 }

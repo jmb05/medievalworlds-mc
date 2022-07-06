@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 public class KnightArmorHelmetModel extends CustomArmorModel{
 
 	public KnightArmorHelmetModel(ModelPart root) {
-		super(root, EquipmentSlot.HEAD);
+		super(root);
 	}
 
 	public static LayerDefinition createBodyLayer() {

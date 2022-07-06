@@ -1,8 +1,0 @@
-{
-	"parent": "medievalworlds:item/template_hammer",
-	"texture_size": [32, 32],
-	"textures": {
-		"0": "medievalworlds:item/diamond_hammer",
-		"particle": "medievalworlds:item/diamond_hammer"
-	}
-}

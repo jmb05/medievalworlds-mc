@@ -1,8 +1,8 @@
 {
   "parent": "medievalworlds:item/template_heated_longsword_blade",
   "textures": {
-    "0": "medievalworlds:item/netherite_longsword",
-    "1": "medievalworlds:item/heated_netherite_longsword_blade",
-    "particle": "medievalworlds:item/netherite_longsword"
+    "0": "medievalworlds:item/netherite_weapon",
+    "1": "medievalworlds:item/heated_netherite_weapon",
+    "particle": "medievalworlds:item/netherite_weapon"
   }
 }

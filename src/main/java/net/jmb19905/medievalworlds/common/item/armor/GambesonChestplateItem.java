@@ -1,6 +1,7 @@
 package net.jmb19905.medievalworlds.common.item.armor;
 
 import net.jmb19905.medievalworlds.client.ClientSetup;
+import net.jmb19905.medievalworlds.client.er.GambesonCurioRenderer;
 import net.jmb19905.medievalworlds.client.model.armor.GambesonModel;
 import net.jmb19905.medievalworlds.common.item.tiers.MWArmorMaterials;
 import net.minecraft.client.Minecraft;
@@ -8,18 +9,19 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.IItemRenderProperties;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class GambesonChestplateItem extends ArmorItem {
+public class GambesonChestplateItem extends CurioArmorItem {
 
     public GambesonChestplateItem(Properties properties) {
         super(MWArmorMaterials.GAMBESON_MATERIAL, EquipmentSlot.CHEST, properties);
+        CuriosRendererRegistry.register(this, GambesonCurioRenderer::new);
     }
 
     @Override
