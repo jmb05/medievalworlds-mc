@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:campfire_cooking",
-  "ingredient": {
-    "item": "minecraft:copper_ingot"
-  },
-  "result": "medievalworlds:heated_copper_ingot",
-  "experience": 0.0,
-  "cookingtime": 1800
-}

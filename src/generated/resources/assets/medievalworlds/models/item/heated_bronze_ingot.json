@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "medievalworlds:item/bronze_ingot",
-    "layer1": "medievalworlds:item/redhot_ingot_layer"
-  }
-}

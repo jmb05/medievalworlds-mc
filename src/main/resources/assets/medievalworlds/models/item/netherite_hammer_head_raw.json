@@ -1,7 +1,0 @@
-{
-  "parent": "medievalworlds:item/template_hammer_head_raw",
-  "textures": {
-    "0": "medievalworlds:item/netherite_hammer",
-    "particle": "medievalworlds:item/netherite_hammer"
-  }
-}

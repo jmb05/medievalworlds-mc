@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "medievalworlds:item/bronze_armor_plate",
-    "layer1": "medievalworlds:item/armor_plate"
-  }
-}

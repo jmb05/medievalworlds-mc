@@ -1,7 +1,0 @@
-{
-  "parent": "medievalworlds:item/template_long_axe",
-  "textures": {
-    "1": "medievalworlds:item/silver_weapon",
-    "particle": "medievalworlds:item/silver_weapon"
-  }
-}

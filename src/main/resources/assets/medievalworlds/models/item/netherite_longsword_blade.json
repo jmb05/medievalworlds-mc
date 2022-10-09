@@ -1,7 +1,0 @@
-{
-  "parent": "medievalworlds:item/template_longsword_blade",
-  "textures": {
-    "0": "medievalworlds:item/netherite_weapon",
-    "particle": "medievalworlds:item/netherite_weapon"
-  }
-}

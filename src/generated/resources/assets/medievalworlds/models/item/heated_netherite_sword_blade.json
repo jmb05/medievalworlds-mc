@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "medievalworlds:item/netherite_sword_blade",
-    "layer1": "medievalworlds:item/sword_blade"
-  }
-}

@@ -1,7 +1,0 @@
-{
-	"parent": "medievalworlds:item/template_lance",
-	"textures": {
-		"0": "medievalworlds:item/steel_weapon",
-		"particle": "medievalworlds:item/steel_weapon"
-	}
-}

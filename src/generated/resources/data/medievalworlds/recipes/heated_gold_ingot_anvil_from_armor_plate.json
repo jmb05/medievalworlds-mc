@@ -1,9 +1,0 @@
-{
-  "type": "medievalworlds:anvil",
-  "output": {
-    "item": "medievalworlds:heated_gold_ingot"
-  },
-  "input": {
-    "item": "medievalworlds:heated_gold_armor_plate"
-  }
-}

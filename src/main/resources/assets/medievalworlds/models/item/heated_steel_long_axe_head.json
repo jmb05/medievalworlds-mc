@@ -1,7 +1,0 @@
-{
-  "parent": "medievalworlds:item/template_long_axe_head",
-  "textures": {
-    "0": "medievalworlds:item/heated_steel_weapon",
-    "particle": "medievalworlds:item/heated_steel_weapon"
-  }
-}
