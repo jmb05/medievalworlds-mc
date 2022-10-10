@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.jmb19905.medievalworlds.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "medievalworlds.refmap.json",
+  "mixins": [
+    "FireMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

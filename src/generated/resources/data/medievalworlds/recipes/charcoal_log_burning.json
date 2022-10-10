@@ -1,0 +1,5 @@
+{
+  "type": "medievalworlds:burn",
+  "input": "minecraft:logs_that_burn",
+  "output": "medievalworlds:charcoal_log"
+}

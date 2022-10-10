@@ -1,0 +1,14 @@
+modLoader = "javafml" #mandatory
+loaderVersion = "[43,)" #mandatory
+license = "MIT"
+[[mods]] #mandatory
+modId = "medievalworlds" #mandatory
+version = "${file.jarVersion}" #mandatory
+displayName = "MedievalWorlds" #mandatory
+displayURL="http://https://github.com/jmb05/medievalworlds-mc/" #optional
+#logoFile="medievalworlds.png" #optional
+authors = "jmb19905" #optional
+description = '''
+Did you ever wanted to wield mighty weapons and rule the Minecraft world??
+Well this is your chance!!!
+'''
