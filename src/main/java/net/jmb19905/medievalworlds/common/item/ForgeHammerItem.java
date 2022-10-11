@@ -1,5 +1,6 @@
 package net.jmb19905.medievalworlds.common.item;
 
+import net.jmb19905.medievalworlds.core.registries.MWBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
@@ -27,7 +28,7 @@ public class ForgeHammerItem extends TieredItem {
         assert player != null;
         if(state.is(BlockTags.BASE_STONE_OVERWORLD) && !player.getCooldowns().isOnCooldown(item.getItem())) {
             player.getCooldowns().addCooldown(item.getItem(), 10);
-            //TODO: Add Stone Anvil -> ctx.getLevel().setBlock(pos, MWBlocks.STONE_ANVIL.get().defaultBlockState(), 3);
+            ctx.getLevel().setBlock(pos, MWBlocks.STONE_ANVIL.get().defaultBlockState(), 3);
         }
         return super.useOn(ctx);
     }

@@ -5,32 +5,42 @@ import net.jmb19905.medievalworlds.client.ClientSetup;
 import net.jmb19905.medievalworlds.client.networking.NetworkStartupClientOnly;
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
+import net.jmb19905.medievalworlds.core.compatability.CuriosCompat;
 import net.jmb19905.medievalworlds.core.registries.*;
 import net.jmb19905.medievalworlds.core.tabs.MWBlocksTab;
+import net.jmb19905.medievalworlds.core.tabs.MWCombatTab;
+import net.jmb19905.medievalworlds.core.tabs.MWMaterialsTab;
+import net.jmb19905.medievalworlds.core.tabs.MWToolsTab;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
 @Mod(MedievalWorlds.MOD_ID)
+@Mod.EventBusSubscriber(modid = MedievalWorlds.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MedievalWorlds {
 
     public static final String MOD_ID = "medievalworlds";
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static MWBlocksTab blocksTab = new MWBlocksTab();
+    public static MWCombatTab combatTab = new MWCombatTab();
+    public static MWMaterialsTab materialsTab = new MWMaterialsTab();
+    public static MWToolsTab toolsTab = new MWToolsTab();
 
     public MedievalWorlds() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
 
+        MWItems.ITEMS.register(modEventBus);
         MWBlocks.BLOCKS.register(modEventBus);
         MWBlocks.BLOCK_ITEMS.register(modEventBus);
-        MWItems.ITEMS.register(modEventBus);
         MWBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
         MWMenuTypes.MENU_TYPES.register(modEventBus);
         MWRecipeSerializers.RECIPE_SERIAlIZER.register(modEventBus);
@@ -56,5 +66,10 @@ public class MedievalWorlds {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         MinecraftForge.EVENT_BUS.register(MWCapabilityManager.class);
+    }
+
+    @SubscribeEvent
+    public static void enqueue(InterModEnqueueEvent event) {
+        CuriosCompat.createSlots();
     }
 }
