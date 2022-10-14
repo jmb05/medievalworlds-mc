@@ -46,6 +46,8 @@ public class MedievalWorlds {
         MWBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
         MWMenuTypes.MENU_TYPES.register(modEventBus);
         MWRecipeSerializers.RECIPE_SERIAlIZER.register(modEventBus);
+        MWFeatures.CONFIGURED_FEATURES.register(modEventBus);
+        MWFeatures.PLACED_FEATURES.register(modEventBus);
 
         registerCommonEvents();
         modEventBus.addListener(this::commonSetup);
