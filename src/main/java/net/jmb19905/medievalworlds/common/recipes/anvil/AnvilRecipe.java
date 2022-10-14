@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.recipes.anvil;
 
-import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -14,16 +14,23 @@ public class AnvilRecipe implements IAnvilRecipe{
     private final ResourceLocation id;
     private final ItemStack input;
     private final ItemStack output;
+    private final int minAnvilLevel;
 
-    public AnvilRecipe(ResourceLocation id, ItemStack input, ItemStack output) {
+    public AnvilRecipe(ResourceLocation id, ItemStack input, ItemStack output, int minAnvilLevel) {
         this.id = id;
         this.input = input;
         this.output = output;
+        this.minAnvilLevel = minAnvilLevel;
     }
 
     @Override
     public ItemStack getInput() {
         return input;
+    }
+
+    @Override
+    public int getMinAnvilLevel() {
+        return minAnvilLevel;
     }
 
     public boolean matches(ItemStack input) {

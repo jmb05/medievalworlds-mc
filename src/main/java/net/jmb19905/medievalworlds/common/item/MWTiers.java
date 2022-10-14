@@ -2,6 +2,7 @@ package net.jmb19905.medievalworlds.common.item;
 
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -10,7 +11,8 @@ import java.util.function.Supplier;
 
 public enum MWTiers implements Tier {
 
-    STURDY_WOOD(0, 200, 2.0F, 0.5F, 15, () -> Ingredient.of(ItemTags.PLANKS));
+    STURDY_WOOD(0, 200, 2.0F, 0.5F, 15, () -> Ingredient.of(ItemTags.PLANKS)),
+    IRON_BLOCK_ITEM_TIER(2, 1000, 6f, 3f, 8, () -> Ingredient.of(Items.IRON_BLOCK));
 
     private final int level;
     private final int uses;

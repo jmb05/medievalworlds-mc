@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.ClientSetup;
 import net.jmb19905.medievalworlds.common.capability.hood.Hood;
-import net.jmb19905.medievalworlds.core.registries.MWItems;
+import net.jmb19905.medievalworlds.common.registries.MWItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

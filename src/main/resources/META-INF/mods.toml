@@ -12,3 +12,9 @@ description = '''
 Did you ever wanted to wield mighty weapons and rule the Minecraft world??
 Well this is your chance!!!
 '''
+[[dependencies.medievalworlds]]
+    modId="curios"
+    mandatory=false
+    versionRange="[1.19.2-5.1.1.0,)"
+    ordering="NONE"
+    side="BOTH"

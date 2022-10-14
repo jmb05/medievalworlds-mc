@@ -1,9 +1,10 @@
 package net.jmb19905.medievalworlds.common.blockentities;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.common.block.LeveledAnvilBlock;
 import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
-import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
+import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -67,7 +68,9 @@ public class AnvilBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void setCurrentRecipe(AnvilRecipe currentRecipe) {
-        this.currentRecipe = currentRecipe;
+        if (getAnvilLevel() >= currentRecipe.getMinAnvilLevel()) {
+            this.currentRecipe = currentRecipe;
+        }
     }
 
     public AnvilRecipe getCurrentRecipe() {
@@ -167,5 +170,12 @@ public class AnvilBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     public AbstractContainerMenu createMenu(int windowID, @NotNull Inventory inventory, @NotNull Player player) {
         return new CustomAnvilMenu(windowID, inventory, this);
+    }
+
+    public int getAnvilLevel() {
+        if (state.hasProperty(LeveledAnvilBlock.ANVIL_LEVEL)) {
+            return state.getValue(LeveledAnvilBlock.ANVIL_LEVEL);
+        }
+        return 1;
     }
 }

@@ -4,7 +4,7 @@ import net.jmb19905.medievalworlds.client.screen.AnvilRecipeSelectedPacket;
 import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
 import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
-import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.util.MWUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;

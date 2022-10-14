@@ -36,3 +36,4 @@ forge*changelog.txt
 /src/generated/resources/.cache/
 /src/generated/resources/assets/medievalworlds/
 /src/generated/resources/data/medievalworlds/
+/src/generated/resources/data/

@@ -126,7 +126,6 @@ public class CustomAnvilScreen extends AbstractContainerScreen<CustomAnvilMenu> 
                         assert this.minecraft.gameMode != null;
                         try {
                             NetworkStartupCommon.simpleChannel.send(PacketDistributor.SERVER.noArg(), new AnvilRecipeSelectedPacket(this.menu.containerId, menu.getRecipes().get(l).getId()));
-                            NetworkStartupCommon.simpleChannel.send(PacketDistributor.SERVER.noArg(), new AnvilRecipeSelectedPacket(this.menu.containerId, menu.getRecipes().get(l).getId()));
                         } catch (IndexOutOfBoundsException ignored) {}
                         return true;
                     }

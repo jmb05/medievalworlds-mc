@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.item;
 
-import net.jmb19905.medievalworlds.core.registries.MWBlocks;
+import net.jmb19905.medievalworlds.common.registries.MWBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;

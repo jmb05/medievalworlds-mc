@@ -2,8 +2,8 @@ package net.jmb19905.medievalworlds.common.menus;
 
 import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
-import net.jmb19905.medievalworlds.core.registries.MWMenuTypes;
-import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.jmb19905.medievalworlds.util.MWUtil;
 import net.jmb19905.medievalworlds.util.slots.InputSlot;
@@ -157,6 +157,7 @@ public class CustomAnvilMenu extends AbstractContainerMenu {
             this.recipes = MWUtil.findRecipeByType(MWRecipeSerializers.ANVIL_TYPE, this.level)
                     .stream()
                     .filter(recipe -> ((AnvilRecipe) recipe).matches(this.input))
+                    .filter(recipe -> ((AnvilRecipe) recipe).getMinAnvilLevel() <= blockEntity.getAnvilLevel())
                     .map(recipe -> (AnvilRecipe) recipe)
                     .collect(Collectors.toList());
         }

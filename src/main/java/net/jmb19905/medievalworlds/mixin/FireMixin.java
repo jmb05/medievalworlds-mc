@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.mixin;
 
 import net.jmb19905.medievalworlds.common.recipes.burn.BurnRecipe;
-import net.jmb19905.medievalworlds.core.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.util.MWUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

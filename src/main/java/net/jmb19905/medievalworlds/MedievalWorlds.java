@@ -4,13 +4,13 @@ import com.mojang.logging.LogUtils;
 import net.jmb19905.medievalworlds.client.ClientSetup;
 import net.jmb19905.medievalworlds.client.networking.NetworkStartupClientOnly;
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
+import net.jmb19905.medievalworlds.common.compatability.CuriosCompat;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
-import net.jmb19905.medievalworlds.core.compatability.CuriosCompat;
-import net.jmb19905.medievalworlds.core.registries.*;
-import net.jmb19905.medievalworlds.core.tabs.MWBlocksTab;
-import net.jmb19905.medievalworlds.core.tabs.MWCombatTab;
-import net.jmb19905.medievalworlds.core.tabs.MWMaterialsTab;
-import net.jmb19905.medievalworlds.core.tabs.MWToolsTab;
+import net.jmb19905.medievalworlds.common.registries.*;
+import net.jmb19905.medievalworlds.common.tabs.MWBlocksTab;
+import net.jmb19905.medievalworlds.common.tabs.MWCombatTab;
+import net.jmb19905.medievalworlds.common.tabs.MWMaterialsTab;
+import net.jmb19905.medievalworlds.common.tabs.MWToolsTab;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -38,14 +38,14 @@ public class MedievalWorlds {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
 
+        VanillaOverride.BLOCKS.register(modEventBus);
+        VanillaOverride.ITEMS.register(modEventBus);
         MWItems.ITEMS.register(modEventBus);
         MWBlocks.BLOCKS.register(modEventBus);
         MWBlocks.BLOCK_ITEMS.register(modEventBus);
         MWBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
         MWMenuTypes.MENU_TYPES.register(modEventBus);
         MWRecipeSerializers.RECIPE_SERIAlIZER.register(modEventBus);
-        VanillaOverride.BLOCKS.register(modEventBus);
-        VanillaOverride.ITEMS.register(modEventBus);
 
         registerCommonEvents();
         modEventBus.addListener(this::commonSetup);

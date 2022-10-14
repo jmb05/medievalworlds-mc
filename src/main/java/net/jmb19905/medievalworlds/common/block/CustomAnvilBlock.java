@@ -3,7 +3,7 @@ package net.jmb19905.medievalworlds.common.block;
 import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
 import net.jmb19905.medievalworlds.common.item.ForgeHammerItem;
 import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
-import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
+import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.util.CustomItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;

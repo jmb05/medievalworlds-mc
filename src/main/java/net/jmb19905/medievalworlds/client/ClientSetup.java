@@ -5,9 +5,10 @@ import net.jmb19905.medievalworlds.client.key.MWKeyHandler;
 import net.jmb19905.medievalworlds.client.renderers.blockentity.CustomAnvilRenderer;
 import net.jmb19905.medievalworlds.client.renderers.entity.CloakRenderer;
 import net.jmb19905.medievalworlds.client.screen.CustomAnvilScreen;
-import net.jmb19905.medievalworlds.core.registries.MWBlockEntityTypes;
-import net.jmb19905.medievalworlds.core.registries.MWMenuTypes;
+import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
+import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -22,6 +23,8 @@ public class ClientSetup {
     public static final ModelLayerLocation CUSTOM_ANVIL_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "anvil"), "main");
     public static final ModelLayerLocation CLOAK_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "cloak"), "main");
 
+    public static HumanoidModel.ArmPose CUSTOM;
+
     private static MWBEWLR bewlr;
 
     @SubscribeEvent
@@ -29,6 +32,8 @@ public class ClientSetup {
         MenuScreens.register(MWMenuTypes.ANVIL_MENU.get(), CustomAnvilScreen::new);
 
         bewlr = new MWBEWLR();
+
+        CUSTOM = HumanoidModel.ArmPose.create("CUSTOM", false, new CustomArmPose());
     }
 
     public static MWBEWLR getBEWLR() {
