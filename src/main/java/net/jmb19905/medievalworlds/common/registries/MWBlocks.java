@@ -1,10 +1,7 @@
 package net.jmb19905.medievalworlds.common.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.block.CharcoalLogBlock;
-import net.jmb19905.medievalworlds.common.block.CharcoalPlanksBlock;
-import net.jmb19905.medievalworlds.common.block.SteelAnvil;
-import net.jmb19905.medievalworlds.common.block.StoneAnvil;
+import net.jmb19905.medievalworlds.common.block.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -106,6 +103,8 @@ public class MWBlocks {
                     .strength(5,6)
             ));
 
+    public static final RegistryObject<Block> ALLOY_FURNACE = BLOCKS.register("alloy_furnace", () -> new AlloyFurnaceBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(3.5f).lightLevel(value -> 13)));
+
     public static final RegistryObject<BlockItem> CHARCOAL_LOG_ITEM = registerBlockItem("charcoal_log", () -> new BlockItem(CHARCOAL_LOG.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
     public static final RegistryObject<BlockItem> CHARCOAL_PLANKS_ITEM = registerBlockItem("charcoal_planks", () -> new BlockItem(CHARCOAL_PLANKS.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
     public static final RegistryObject<BlockItem> STONE_ANVIL_ITEM = registerBlockItem("stone_anvil", () -> new BlockItem(STONE_ANVIL.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
@@ -124,6 +123,8 @@ public class MWBlocks {
 
     public static final RegistryObject<BlockItem> RAW_SILVER_ITEM = registerBlockItem("raw_silver_block", () -> new BlockItem(RAW_SILVER_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
     public static final RegistryObject<BlockItem> RAW_TIN_ITEM = registerBlockItem("raw_tin_block", () -> new BlockItem(RAW_TIN_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+
+    public static final RegistryObject<BlockItem> ALLOY_FURNACE_ITEM = registerBlockItem("alloy_furnace", () -> new BlockItem(ALLOY_FURNACE.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
     private static RegistryObject<BlockItem> registerBlockItem(String id, Supplier<BlockItem> itemSupplier) {
         RegistryObject<BlockItem> regObj = BLOCK_ITEMS.register(id, itemSupplier);

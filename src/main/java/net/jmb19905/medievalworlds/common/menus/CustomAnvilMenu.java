@@ -43,7 +43,7 @@ public class CustomAnvilMenu extends AbstractContainerMenu {
     Runnable slotUpdateListener = () -> {};
 
     public CustomAnvilMenu(final int windowID, final Inventory playerInventory, final AnvilBlockEntity tile) {
-        super(MWMenuTypes.ANVIL_MENU.get(), windowID);
+        super(MWMenuTypes.ANVIL.get(), windowID);
         this.blockEntity = tile;
         this.containerLevelAccess = ContainerLevelAccess.create(Objects.requireNonNull(tile.getLevel()), tile.getBlockPos());
         this.level = playerInventory.player.level;

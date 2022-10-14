@@ -2,6 +2,7 @@ package net.jmb19905.medievalworlds.common.datagen;
 
 import com.google.common.collect.ImmutableList;
 import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.common.datagen.custom.AlloyRecipeBuilder;
 import net.jmb19905.medievalworlds.common.datagen.custom.AnvilRecipeBuilder;
 import net.jmb19905.medievalworlds.common.datagen.custom.BurnRecipeBuilder;
 import net.jmb19905.medievalworlds.common.registries.MWBlocks;
@@ -64,6 +65,10 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         oreBlasting(recipeConsumer, SILVER_SMELTABLES, MWItems.SILVER_INGOT.get(), 1.0F, 100, "silver_ingot");
         oreBlasting(recipeConsumer, TIN_SMELTABLES, MWItems.TIN_INGOT.get(), 0.7F, 100, "tin_ingot");
+
+        alloying(recipeConsumer, MWItems.BRONZE_INGOT.get(), 4, Items.COPPER_INGOT, 3, MWItems.TIN_INGOT.get(), 1, "_from_ingot");
+        alloying(recipeConsumer, MWItems.BRONZE_INGOT.get(), 4, Items.RAW_COPPER, 3, MWItems.RAW_TIN.get(), 1, "_from_raw");
+        alloying(recipeConsumer, Items.NETHERITE_INGOT, 1, Items.GOLD_INGOT, 4, Items.NETHERITE_SCRAP, 4, "");
     }
 
     private static void staffRecipe(Consumer<FinishedRecipe> recipeConsumer, ItemLike log, ItemLike staff) {
@@ -88,6 +93,14 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         new AnvilRecipeBuilder(output, input, minAnvilLevel)
                 .unlockedBy("has_input", has(input.getItem()))
                 .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(output.getItem())).getPath() + "_anvil"));
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    protected static void alloying(@NotNull Consumer<FinishedRecipe> recipeConsumer, ItemLike result, int resultCount, ItemLike input1, int input1Count, ItemLike input2, int input2Count, String prefix) {
+        new AlloyRecipeBuilder(new ItemStack(result, resultCount), new ItemStack(input1, input1Count), new ItemStack(input2, input2Count))
+                .unlockedBy(getItemName(input1), has(input1))
+                .unlockedBy(getItemName(input2), has(input2))
+                .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(result.asItem())).getPath() + "_alloying" + prefix));
     }
 
 }

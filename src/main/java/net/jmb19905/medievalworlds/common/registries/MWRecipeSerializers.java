@@ -1,6 +1,8 @@
 package net.jmb19905.medievalworlds.common.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.common.recipes.alloy.AlloyRecipeSerializer;
+import net.jmb19905.medievalworlds.common.recipes.alloy.IAlloyRecipe;
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipeSerializer;
 import net.jmb19905.medievalworlds.common.recipes.anvil.IAnvilRecipe;
 import net.jmb19905.medievalworlds.common.recipes.burn.BurnRecipeSerializer;
@@ -19,11 +21,13 @@ public class MWRecipeSerializers {
 
     public static final RecipeType<IBurnRecipe> BURN_TYPE = new CustomRecipeType<>(IBurnRecipe.ID);
     public static final RecipeType<IAnvilRecipe> ANVIL_TYPE = new CustomRecipeType<>(IAnvilRecipe.ID);
+    public static final RecipeType<IAlloyRecipe> ALLOY_TYPE = new CustomRecipeType<>(IAlloyRecipe.ID);
 
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIAlIZER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MedievalWorlds.MOD_ID);
 
     public static final RegistryObject<RecipeSerializer<?>> BURN_SERIALIZER = RECIPE_SERIAlIZER.register("burn", BurnRecipeSerializer::new);
     public static final RegistryObject<RecipeSerializer<?>> ANVIL_SERIALIZER = RECIPE_SERIAlIZER.register("anvil", AnvilRecipeSerializer::new);
+    public static final RegistryObject<RecipeSerializer<?>> ALLOY_SERIALIZER = RECIPE_SERIAlIZER.register("alloy", AlloyRecipeSerializer::new);
 
     private record CustomRecipeType<T extends Recipe<?>>(ResourceLocation id) implements RecipeType<T> {
         @Override

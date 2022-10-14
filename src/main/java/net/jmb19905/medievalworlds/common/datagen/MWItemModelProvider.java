@@ -1,6 +1,7 @@
 package net.jmb19905.medievalworlds.common.datagen;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.common.registries.MWBlocks;
 import net.jmb19905.medievalworlds.common.registries.MWItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -70,6 +71,9 @@ public class MWItemModelProvider extends ItemModelProvider {
         forgeHammer(MWItems.IRON_FORGE_HAMMER.get(), new ResourceLocation(MedievalWorlds.MOD_ID, "item/iron_forge_hammer"));
         longsword(MWItems.IRON_LONGSWORD.get(), new ResourceLocation(MedievalWorlds.MOD_ID, "item/iron_weapon"));
         longAxe(MWItems.IRON_LONG_AXE.get(), new ResourceLocation(MedievalWorlds.MOD_ID, "item/iron_weapon"));
+
+        withExistingParent(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(MWBlocks.ALLOY_FURNACE_ITEM.get())).toString(),
+                new ResourceLocation(MedievalWorlds.MOD_ID, "block/alloy_furnace"));
     }
 
     @SuppressWarnings("UnusedReturnValue")

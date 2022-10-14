@@ -4,6 +4,7 @@ import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.key.MWKeyHandler;
 import net.jmb19905.medievalworlds.client.renderers.blockentity.CustomAnvilRenderer;
 import net.jmb19905.medievalworlds.client.renderers.entity.CloakRenderer;
+import net.jmb19905.medievalworlds.client.screen.AlloyFurnaceScreen;
 import net.jmb19905.medievalworlds.client.screen.CustomAnvilScreen;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
@@ -29,7 +30,8 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent evt) {
-        MenuScreens.register(MWMenuTypes.ANVIL_MENU.get(), CustomAnvilScreen::new);
+        MenuScreens.register(MWMenuTypes.ANVIL.get(), CustomAnvilScreen::new);
+        MenuScreens.register(MWMenuTypes.ALLOY.get(), AlloyFurnaceScreen::new);
 
         bewlr = new MWBEWLR();
 
