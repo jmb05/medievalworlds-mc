@@ -49,6 +49,18 @@ public class MWItems {
     public static final RegistryObject<Item> IRON_LONG_AXE = registerCombatItem("iron_long_axe", () -> new MWAxeWeapon(MWTiers.IRON_BLOCK_ITEM_TIER, 8, -3, 2, new Item.Properties().tab(MedievalWorlds.combatTab)));
 
     public static final RegistryObject<Item> STEEL_INGOT = registerMaterial("steel_ingot", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
+    public static final RegistryObject<Item> SILVER_INGOT = registerMaterial("silver_ingot", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
+    public static final RegistryObject<Item> BRONZE_INGOT = registerMaterial("bronze_ingot", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
+    public static final RegistryObject<Item> TIN_INGOT = registerMaterial("tin_ingot", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
+
+    public static final RegistryObject<Item> STEEL_NUGGET = registerMaterial("steel_nugget", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
+    public static final RegistryObject<Item> SILVER_NUGGET = registerMaterial("silver_nugget", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
+    public static final RegistryObject<Item> BRONZE_NUGGET = registerMaterial("bronze_nugget", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
+    public static final RegistryObject<Item> TIN_NUGGET = registerMaterial("tin_nugget", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
+
+
+    public static final RegistryObject<Item> RAW_SILVER = registerMaterial("raw_silver", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
+    public static final RegistryObject<Item> RAW_TIN = registerMaterial("raw_tin", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
 
     private static <T extends Item> RegistryObject<T> registerMaterial(String id, Supplier<T> itemSupplier) {
         RegistryObject<T> regObj = ITEMS.register(id, itemSupplier);

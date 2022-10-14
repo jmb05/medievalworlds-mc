@@ -20,6 +20,6 @@ public class MWBlocksTab extends MWSortedTab {
     @Nonnull
     @Override
     public ItemStack makeIcon() {
-        return new ItemStack(MWBlocks.CHARCOAL_LOG.get());
+        return new ItemStack(MWBlocks.BRONZE_BLOCK.get());
     }
 }

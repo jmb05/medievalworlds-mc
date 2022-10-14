@@ -24,6 +24,20 @@ public class MWBlockStateProvider extends BlockStateProvider {
         simpleBlockAndItem(MWBlocks.CHARCOAL_PLANKS.get());
         customSimple(MWBlocks.STONE_ANVIL.get());
         customHorizontal(MWBlocks.STEEL_ANVIL.get());
+
+        simpleBlockAndItem(MWBlocks.STEEL_BLOCK.get());
+        simpleBlockAndItem(MWBlocks.SILVER_BLOCK.get());
+        simpleBlockAndItem(MWBlocks.BRONZE_BLOCK.get());
+        simpleBlockAndItem(MWBlocks.TIN_BLOCK.get());
+
+        simpleBlockAndItem(MWBlocks.SILVER_ORE.get());
+        simpleBlockAndItem(MWBlocks.TIN_ORE.get());
+
+        simpleBlockAndItem(MWBlocks.DEEPSLATE_SILVER_ORE.get());
+        simpleBlockAndItem(MWBlocks.DEEPSLATE_TIN_ORE.get());
+
+        simpleBlockAndItem(MWBlocks.RAW_SILVER_BLOCK.get());
+        simpleBlockAndItem(MWBlocks.RAW_TIN_BLOCK.get());
     }
 
     private void customSimple(Block block) {

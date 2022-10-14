@@ -22,6 +22,17 @@ public class MWItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         simpleItem(MWItems.STEEL_INGOT.get());
+        simpleItem(MWItems.SILVER_INGOT.get());
+        simpleItem(MWItems.BRONZE_INGOT.get());
+        simpleItem(MWItems.TIN_INGOT.get());
+
+        simpleItem(MWItems.STEEL_NUGGET.get());
+        simpleItem(MWItems.SILVER_NUGGET.get());
+        simpleItem(MWItems.BRONZE_NUGGET.get());
+        simpleItem(MWItems.TIN_NUGGET.get());
+
+        simpleItem(MWItems.RAW_SILVER.get());
+        simpleItem(MWItems.RAW_TIN.get());
 
         simpleItem(MWItems.CLOAK.get());
         simpleItem(MWItems.DARK_CLOAK.get());
