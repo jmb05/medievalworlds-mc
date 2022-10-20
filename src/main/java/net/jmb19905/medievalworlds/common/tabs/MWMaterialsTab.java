@@ -20,6 +20,6 @@ public class MWMaterialsTab extends MWSortedTab {
     @Nonnull
     @Override
     public ItemStack makeIcon() {
-        return new ItemStack(MWItems.STEEL_INGOT.get());
+        return new ItemStack(MWItems.HEATED_STEEL_INGOT.get());
     }
 }

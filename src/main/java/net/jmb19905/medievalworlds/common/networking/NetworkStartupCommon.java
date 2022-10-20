@@ -14,7 +14,8 @@ import java.util.Optional;
 
 public class NetworkStartupCommon {
     public static SimpleChannel simpleChannel;
-    public static final byte ANVIL_RECIPE_SELECTED_ID = 1;
+    public static final byte ANVIL_RECIPE_SELECTED_ID = 0;
+    public static final byte STEAM_EFFECT_ID = 1;
 
     public static final String MESSAGE_PROTOCOL_VERSION = "1";
 
@@ -30,6 +31,11 @@ public class NetworkStartupCommon {
                 AnvilRecipeSelectedPacket::encode, AnvilRecipeSelectedPacket::decode,
                 MessageHandlerOnServer::onAnvilRecipeSelectedPacket,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER));
+
+        simpleChannel.registerMessage(STEAM_EFFECT_ID, SteamEffectPacket.class,
+                SteamEffectPacket::encode, SteamEffectPacket::decode,
+                MessageHandlerOnClient::onSteamEffectPacketReceived,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     }
 
 }

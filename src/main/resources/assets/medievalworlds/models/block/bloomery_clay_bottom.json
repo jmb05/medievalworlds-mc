@@ -1,0 +1,7 @@
+{
+  "parent": "medievalworlds:block/bloomery_bottom_template",
+  "textures": {
+    "0": "block/clay",
+    "particle": "block/clay"
+  }
+}

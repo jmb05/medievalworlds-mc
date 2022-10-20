@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "filled=false": {
+      "model": "medievalworlds:block/slack_tub"
+    },
+    "filled=true": {
+      "model": "medievalworlds:block/slack_tub_filled"
+    }
+  }
+}

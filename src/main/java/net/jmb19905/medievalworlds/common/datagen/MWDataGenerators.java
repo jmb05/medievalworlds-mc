@@ -20,6 +20,7 @@ public class MWDataGenerators {
         generator.addProvider(true, new MWBlockStateProvider(generator, existingFileHelper));
         generator.addProvider(true, blockTagsProv);
         generator.addProvider(true, new MWItemTagsProvider(generator, blockTagsProv, existingFileHelper));
+        generator.addProvider(true, new MWLangProvider(generator));
     }
 
 }

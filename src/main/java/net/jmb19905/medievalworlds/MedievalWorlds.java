@@ -42,12 +42,12 @@ public class MedievalWorlds {
         VanillaOverride.ITEMS.register(modEventBus);
         MWItems.ITEMS.register(modEventBus);
         MWBlocks.BLOCKS.register(modEventBus);
-        MWBlocks.BLOCK_ITEMS.register(modEventBus);
         MWBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
         MWMenuTypes.MENU_TYPES.register(modEventBus);
-        MWRecipeSerializers.RECIPE_SERIAlIZER.register(modEventBus);
+        MWRecipeSerializers.RECIPE_SERIALIZER.register(modEventBus);
         MWFeatures.CONFIGURED_FEATURES.register(modEventBus);
         MWFeatures.PLACED_FEATURES.register(modEventBus);
+        MWEnchantments.ENCHANTMENTS.register(modEventBus);
 
         registerCommonEvents();
         modEventBus.addListener(this::commonSetup);

@@ -1,6 +1,7 @@
 package net.jmb19905.medievalworlds.common.tabs;
 
 import net.jmb19905.medievalworlds.common.registries.MWBlocks;
+import net.jmb19905.medievalworlds.common.registries.MWItems;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -14,12 +15,12 @@ public class MWBlocksTab extends MWSortedTab {
 
     @Override
     protected Comparator<ItemStack> getSorter() {
-        return toSortingList(MWBlocks.getBlockItemTabOrder());
+        return toSortingList(MWItems.getBlockItemTabOrder());
     }
 
     @Nonnull
     @Override
     public ItemStack makeIcon() {
-        return new ItemStack(MWBlocks.BRONZE_BLOCK.get());
+        return new ItemStack(MWBlocks.SLACK_TUB_BLOCK.get());
     }
 }

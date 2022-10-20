@@ -2,8 +2,6 @@ package net.jmb19905.medievalworlds.common.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.block.*;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -15,17 +13,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
-
 public class MWBlocks {
 
-    public static List<BlockItem> blockItemOrder;
-    private static final List<RegistryObject<BlockItem>> blockItemRegistryOrder = new ArrayList<>();
-
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MedievalWorlds.MOD_ID);
-    public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MedievalWorlds.MOD_ID);
 
     public static final RegistryObject<RotatedPillarBlock> CHARCOAL_LOG = BLOCKS.register("charcoal_log", () -> new CharcoalLogBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLACK).strength(2.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> CHARCOAL_PLANKS = BLOCKS.register("charcoal_planks", () -> new CharcoalPlanksBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLACK).strength(2.0f).sound(SoundType.WOOD)));
@@ -103,40 +93,17 @@ public class MWBlocks {
                     .strength(5,6)
             ));
 
+    public static final RegistryObject<Block> SIMPLE_BLOOMERY =
+            BLOCKS.register("simple_bloomery", () -> new SimpleBloomery(BlockBehaviour.Properties
+                    .of(Material.CLAY, MaterialColor.CLAY)
+                    .sound(SoundType.GRAVEL)
+                    .strength(0.6f)
+                    .noOcclusion()
+            ));
+
     public static final RegistryObject<Block> ALLOY_FURNACE = BLOCKS.register("alloy_furnace", () -> new AlloyFurnaceBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(3.5f).lightLevel(value -> 13)));
+    public static final RegistryObject<SlackTubBlock> SLACK_TUB_BLOCK = BLOCKS.register("slack_tub", () -> new SlackTubBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
 
-    public static final RegistryObject<BlockItem> CHARCOAL_LOG_ITEM = registerBlockItem("charcoal_log", () -> new BlockItem(CHARCOAL_LOG.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-    public static final RegistryObject<BlockItem> CHARCOAL_PLANKS_ITEM = registerBlockItem("charcoal_planks", () -> new BlockItem(CHARCOAL_PLANKS.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-    public static final RegistryObject<BlockItem> STONE_ANVIL_ITEM = registerBlockItem("stone_anvil", () -> new BlockItem(STONE_ANVIL.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-    public static final RegistryObject<BlockItem> STEEL_ANVIL_ITEM = registerBlockItem("steel_anvil", () -> new BlockItem(STEEL_ANVIL.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
-    public static final RegistryObject<BlockItem> STEEL_BLOCK_ITEM = registerBlockItem("steel_block", () -> new BlockItem(STEEL_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-    public static final RegistryObject<BlockItem> SILVER_BLOCK_ITEM = registerBlockItem("silver_block", () -> new BlockItem(SILVER_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-    public static final RegistryObject<BlockItem> BRONZE_BLOCK_ITEM = registerBlockItem("bronze_block", () -> new BlockItem(BRONZE_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-    public static final RegistryObject<BlockItem> TIN_BLOCK_ITEM = registerBlockItem("tin_block", () -> new BlockItem(TIN_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-
-    public static final RegistryObject<BlockItem> SILVER_ORE_ITEM = registerBlockItem("silver_ore", () -> new BlockItem(SILVER_ORE.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-    public static final RegistryObject<BlockItem> TIN_ORE_ITEM = registerBlockItem("tin_ore", () -> new BlockItem(TIN_ORE.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-
-    public static final RegistryObject<BlockItem> DEEPSLATE_SILVER_ORE_ITEM = registerBlockItem("deepslate_silver_ore", () -> new BlockItem(DEEPSLATE_SILVER_ORE.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-    public static final RegistryObject<BlockItem> DEEPSLATE_TIN_ORE_ITEM = registerBlockItem("deepslate_tin_ore", () -> new BlockItem(DEEPSLATE_TIN_ORE.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-
-    public static final RegistryObject<BlockItem> RAW_SILVER_ITEM = registerBlockItem("raw_silver_block", () -> new BlockItem(RAW_SILVER_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-    public static final RegistryObject<BlockItem> RAW_TIN_ITEM = registerBlockItem("raw_tin_block", () -> new BlockItem(RAW_TIN_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-
-    public static final RegistryObject<BlockItem> ALLOY_FURNACE_ITEM = registerBlockItem("alloy_furnace", () -> new BlockItem(ALLOY_FURNACE.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-
-    private static RegistryObject<BlockItem> registerBlockItem(String id, Supplier<BlockItem> itemSupplier) {
-        RegistryObject<BlockItem> regObj = BLOCK_ITEMS.register(id, itemSupplier);
-        blockItemRegistryOrder.add(regObj);
-        return regObj;
-    }
-
-    public static List<BlockItem> getBlockItemTabOrder() {
-        if(blockItemOrder == null) {
-            blockItemOrder = blockItemRegistryOrder.stream().collect(ArrayList::new, (list, regObj) -> list.add(regObj.get()), ArrayList::addAll);
-        }
-        return blockItemOrder;
-    }
 
 }

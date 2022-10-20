@@ -1,5 +1,6 @@
 package net.jmb19905.medievalworlds.common.item;
 
+import net.jmb19905.medievalworlds.common.registries.MWItems;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.Items;
@@ -12,7 +13,14 @@ import java.util.function.Supplier;
 public enum MWTiers implements Tier {
 
     STURDY_WOOD(0, 200, 2.0F, 0.5F, 15, () -> Ingredient.of(ItemTags.PLANKS)),
-    IRON_BLOCK_ITEM_TIER(2, 1000, 6f, 3f, 8, () -> Ingredient.of(Items.IRON_BLOCK));
+    BRONZE_ITEM_TIER(1, 200, 6f, 3f, 10, () -> Ingredient.of(MWItems.BRONZE_INGOT.get())),
+    SILVER_ITEM_TIER(2, 300, 6f, 4f, 22, () -> Ingredient.of(MWItems.SILVER_INGOT.get())),
+    STEEL_ITEM_TIER(3, 1000, 8f, 4f, 10, () -> Ingredient.of(MWItems.STEEL_INGOT.get())),
+    IRON_BLOCK_ITEM_TIER(2, 1000, 6f, 3f, 8, () -> Ingredient.of(Items.IRON_BLOCK)),
+    NETHERITE_BLOCK_ITEM_TIER(4, 2500, 9f, 7f, 7, () -> Ingredient.of(Items.NETHERITE_BLOCK)),
+    SILVER_BLOCK_ITEM_TIER(2, 750, 7f, 4f, 8, () -> Ingredient.of(MWItems.SILVER_BLOCK.get())),
+    STEEL_BLOCK_ITEM_TIER(3, 1500, 8f, 5f, 8, () -> Ingredient.of(MWItems.STEEL_BLOCK.get()));
+
 
     private final int level;
     private final int uses;
