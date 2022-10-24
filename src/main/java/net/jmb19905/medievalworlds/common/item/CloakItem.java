@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.item;
 
-import net.jmb19905.medievalworlds.client.renderers.entity.CloakRenderer;
+import net.jmb19905.medievalworlds.client.renderers.curio.CloakRenderer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;

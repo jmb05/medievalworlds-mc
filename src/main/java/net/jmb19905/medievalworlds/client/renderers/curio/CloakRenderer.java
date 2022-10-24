@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.client.renderers.entity;
+package net.jmb19905.medievalworlds.client.renderers.curio;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -100,26 +100,28 @@ public class CloakRenderer implements ICurioRenderer {
         });
 
         if(entity instanceof Player player) {
-            double d0 = Mth.lerp(partialTicks, player.xCloakO, player.xCloak) - Mth.lerp(partialTicks, player.xo, player.getX());
-            double d1 = Mth.lerp(partialTicks, player.yCloakO, player.yCloak) - Mth.lerp(partialTicks, player.yo, player.getY());
-            double d2 = Mth.lerp(partialTicks, player.zCloakO, player.zCloak) - Mth.lerp(partialTicks, player.zo, player.getZ());
-            float f = player.yBodyRotO + (player.yBodyRot - player.yBodyRotO);
-            double d3 = Mth.sin(f * ((float) Math.PI / 180F));
-            double d4 = -Mth.cos(f * ((float) Math.PI / 180F));
-            float f1 = (float) d1 * 10.0F;
-            f1 = Mth.clamp(f1, -6.0F, 32.0F);
-            float f2 = (float) (d0 * d3 + d2 * d4) * 100.0F;
+            double deltaX = Mth.lerp(partialTicks, player.xCloakO, player.xCloak) - Mth.lerp(partialTicks, player.xo, player.getX());
+            double deltaY = Mth.lerp(partialTicks, player.yCloakO, player.yCloak) - Mth.lerp(partialTicks, player.yo, player.getY());
+            double deltaZ = Mth.lerp(partialTicks, player.zCloakO, player.zCloak) - Mth.lerp(partialTicks, player.zo, player.getZ());
+            float deltaYRot = player.yBodyRotO + (player.yBodyRot - player.yBodyRotO);
+            double sinDeltaYRot = Mth.sin((float) Math.toRadians(deltaYRot));
+            double negCosDeltaYRot = -Mth.cos((float) Math.toRadians(deltaYRot));
+            float deltaY10 = (float) deltaY * 10.0F;
+            deltaY10 = Mth.clamp(deltaY10, -6.0F, 32.0F);
+            float f2 = (float) (deltaX * sinDeltaYRot + deltaZ * negCosDeltaYRot) * 100.0F;
             f2 = Mth.clamp(f2, 0.0F, 150.0F);
             f2 = Math.max(f2, 0f);
 
-            float f4 = Mth.lerp(partialTicks, player.oBob, player.bob);
-            f1 += Mth.sin(Mth.lerp(partialTicks, player.walkDistO, player.walkDist) * 6.0F) * 32.0F * f4;
+            float bob = Mth.lerp(partialTicks, player.oBob, player.bob);
+            float walkDist = Mth.lerp(partialTicks, player.walkDistO, player.walkDist);
+            deltaY10 += Mth.sin(walkDist * 6.0F) * 32.0F * bob;
             if (player.isCrouching()) {
-                f1 += 25.0F;
+                deltaY10 += 45.0F;
                 matrixStack.translate(0, 0.25, 0);
             }
 
-            this.cape.xRot = (float) Math.toRadians((6f + f2 / 2f + f1) * 0.3f);
+            float capeXRotDeg = Mth.clamp((6f + f2 / 2f + deltaY10) * 0.7f, 0, 40);
+            this.cape.xRot = (float) Math.toRadians(capeXRotDeg);
         }
 
         this.hood.render(matrixStack, vertexConsumer, light, 655360);
