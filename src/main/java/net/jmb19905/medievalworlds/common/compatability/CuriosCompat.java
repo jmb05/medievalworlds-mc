@@ -20,6 +20,7 @@ public class CuriosCompat {
     public static void createSlots() {
         if(MWExternalMods.CURIOS.isLoaded()) {
             InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BODY.getMessageBuilder().build());
+            InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BACK.getMessageBuilder().build());
         }
     }
 

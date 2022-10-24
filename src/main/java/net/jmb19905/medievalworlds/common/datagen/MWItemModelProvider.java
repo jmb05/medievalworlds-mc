@@ -40,23 +40,65 @@ public class MWItemModelProvider extends ItemModelProvider {
         simpleItem(MWItems.DARK_CLOAK.get());
         simpleItem(MWItems.LIGHT_CLOAK.get());
 
-        simpleItem(MWItems.BRONZE_PICKAXE.get());
-        simpleItem(MWItems.BRONZE_AXE.get());
-        simpleItem(MWItems.BRONZE_SHOVEL.get());
-        simpleItem(MWItems.BRONZE_HOE.get());
-        simpleItem(MWItems.BRONZE_SWORD.get());
+        toolItem(MWItems.BRONZE_PICKAXE.get());
+        toolItem(MWItems.BRONZE_AXE.get());
+        toolItem(MWItems.BRONZE_SHOVEL.get());
+        toolItem(MWItems.BRONZE_HOE.get());
+        toolItem(MWItems.BRONZE_SWORD.get());
 
-        simpleItem(MWItems.STEEL_PICKAXE.get());
-        simpleItem(MWItems.STEEL_AXE.get());
-        simpleItem(MWItems.STEEL_SHOVEL.get());
-        simpleItem(MWItems.STEEL_HOE.get());
-        simpleItem(MWItems.STEEL_SWORD.get());
+        toolItem(MWItems.STEEL_PICKAXE.get());
+        toolItem(MWItems.STEEL_AXE.get());
+        toolItem(MWItems.STEEL_SHOVEL.get());
+        toolItem(MWItems.STEEL_HOE.get());
+        toolItem(MWItems.STEEL_SWORD.get());
 
-        simpleItem(MWItems.SILVER_PICKAXE.get());
-        simpleItem(MWItems.SILVER_AXE.get());
-        simpleItem(MWItems.SILVER_SHOVEL.get());
-        simpleItem(MWItems.SILVER_HOE.get());
-        simpleItem(MWItems.SILVER_SWORD.get());
+        toolItem(MWItems.SILVER_PICKAXE.get());
+        toolItem(MWItems.SILVER_AXE.get());
+        toolItem(MWItems.SILVER_SHOVEL.get());
+        toolItem(MWItems.SILVER_HOE.get());
+        toolItem(MWItems.SILVER_SWORD.get());
+
+        simpleItem(MWItems.BRONZE_HELMET.get());
+        simpleItem(MWItems.BRONZE_CHESTPLATE.get());
+        simpleItem(MWItems.BRONZE_LEGGINGS.get());
+        simpleItem(MWItems.BRONZE_BOOTS.get());
+
+        simpleItem(MWItems.SILVER_HELMET.get());
+        simpleItem(MWItems.SILVER_CHESTPLATE.get());
+        simpleItem(MWItems.SILVER_LEGGINGS.get());
+        simpleItem(MWItems.SILVER_BOOTS.get());
+
+        simpleItem(MWItems.STEEL_HELMET.get());
+        simpleItem(MWItems.STEEL_CHESTPLATE.get());
+        simpleItem(MWItems.STEEL_LEGGINGS.get());
+        simpleItem(MWItems.STEEL_BOOTS.get());
+
+        simpleItem(MWItems.IRON_KNIGHT_HELMET.get());
+        simpleItem(MWItems.IRON_KNIGHT_CHESTPLATE.get());
+        simpleItem(MWItems.IRON_KNIGHT_LEGGINGS.get());
+        simpleItem(MWItems.IRON_KNIGHT_BOOTS.get());
+
+        simpleItem(MWItems.STEEL_KNIGHT_HELMET.get());
+        simpleItem(MWItems.STEEL_KNIGHT_CHESTPLATE.get());
+        simpleItem(MWItems.STEEL_KNIGHT_LEGGINGS.get());
+        simpleItem(MWItems.STEEL_KNIGHT_BOOTS.get());
+
+        simpleItem(MWItems.SILVER_KNIGHT_HELMET.get());
+        simpleItem(MWItems.SILVER_KNIGHT_CHESTPLATE.get());
+        simpleItem(MWItems.SILVER_KNIGHT_LEGGINGS.get());
+        simpleItem(MWItems.SILVER_KNIGHT_BOOTS.get());
+
+        simpleItem(MWItems.NETHERITE_KNIGHT_HELMET.get());
+        simpleItem(MWItems.NETHERITE_KNIGHT_CHESTPLATE.get());
+        simpleItem(MWItems.NETHERITE_KNIGHT_LEGGINGS.get());
+        simpleItem(MWItems.NETHERITE_KNIGHT_BOOTS.get());
+
+        simpleItem(MWItems.SILVER_HORSE_ARMOR.get());
+        simpleItem(MWItems.STEEL_HORSE_ARMOR.get());
+        simpleItem(MWItems.NETHERITE_HORSE_ARMOR.get());
+
+        simpleItem(MWItems.COIF.get());
+        simpleItem(MWItems.GAMBESON.get());
 
         simpleItem(MWItems.FIRE_STARTER.get());
 
@@ -172,6 +214,12 @@ public class MWItemModelProvider extends ItemModelProvider {
                 new ResourceLocation(MedievalWorlds.MOD_ID, "item/" + Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath()));
     }
 
+    private ItemModelBuilder toolItem(Item item) {
+        return withExistingParent(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath(),
+                new ResourceLocation("item/handheld")).texture("layer0",
+                new ResourceLocation(MedievalWorlds.MOD_ID, "item/" + Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath()));
+    }
+
     private ItemModelBuilder dagger(Item daggerItem, ResourceLocation texture) {
         return withExistingParent(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(daggerItem)).toString(), new ResourceLocation(MedievalWorlds.MOD_ID, "item/dagger_template"))
                 .texture("0", texture)
@@ -256,5 +304,4 @@ public class MWItemModelProvider extends ItemModelProvider {
                 new ResourceLocation("item/handheld")).texture("layer0",
                 new ResourceLocation(MedievalWorlds.MOD_ID, "item/" + Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath()));
     }
-    
 }

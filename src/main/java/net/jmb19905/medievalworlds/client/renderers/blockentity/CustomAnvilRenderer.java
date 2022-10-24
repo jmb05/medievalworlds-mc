@@ -14,7 +14,9 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.AnvilBlock;
 import org.jetbrains.annotations.NotNull;
 
 public class CustomAnvilRenderer implements BlockEntityRenderer<AnvilBlockEntity> {
@@ -39,6 +41,12 @@ public class CustomAnvilRenderer implements BlockEntityRenderer<AnvilBlockEntity
         ItemStack item = blockEntity.getItemToShow();
         stack.pushPose();
         stack.translate(0.5, 1, 0.5);
+        Direction facing = blockEntity.getBlockState().getValue(AnvilBlock.FACING);
+        if (facing == Direction.NORTH || facing == Direction.SOUTH) {
+            stack.mulPose(Vector3f.YP.rotationDegrees( (facing.get2DDataValue() + 1) * 90));
+        } else {
+            stack.mulPose(Vector3f.YP.rotationDegrees( (facing.get2DDataValue() - 1) * 90));
+        }
         stack.mulPose(Vector3f.XP.rotationDegrees(90));
         stack.scale(.5f, .5f, .5f);
         this.itemRenderer.renderStatic(item, ItemTransforms.TransformType.FIXED, light, overlay, stack, bufferSource, blockEntity.hashCode());

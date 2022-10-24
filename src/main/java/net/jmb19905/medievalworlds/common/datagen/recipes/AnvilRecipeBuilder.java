@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.common.datagen.custom;
+package net.jmb19905.medievalworlds.common.datagen.recipes;
 
 import com.google.gson.JsonObject;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
@@ -11,51 +11,54 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class BurnRecipeBuilder implements RecipeBuilder {
+public class AnvilRecipeBuilder implements RecipeBuilder {
 
-    private final String input;
-    private final String output;
+    private final ItemStack input;
+    private final ItemStack output;
+    private final int minAnvilLevel;
     private final Advancement.Builder advancement = Advancement.Builder.advancement();
 
-    public BurnRecipeBuilder(String output, String input) {
+    public AnvilRecipeBuilder(ItemStack output, ItemStack input, int minAnvilLevel) {
         this.input = input;
         this.output = output;
+        this.minAnvilLevel = minAnvilLevel;
     }
 
     @Override
-    public @Nonnull RecipeBuilder unlockedBy(@Nonnull String name, @Nonnull CriterionTriggerInstance trigger) {
+    public @NotNull RecipeBuilder unlockedBy(@NotNull String name, @NotNull CriterionTriggerInstance trigger) {
         this.advancement.addCriterion(name, trigger);
         return this;
     }
 
     @Override
-    public @Nonnull RecipeBuilder group(@Nullable String group) {
+    public @NotNull RecipeBuilder group(@Nullable String group) {
         return this;
     }
 
     @Override
-    public @Nonnull Item getResult() {
-        return Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(output)));
+    public @NotNull Item getResult() {
+        return output.getItem();
     }
 
     @Override
-    public void save(@Nonnull Consumer<FinishedRecipe> recipeConsumer, @Nonnull ResourceLocation id) {
+    public void save(@NotNull Consumer<FinishedRecipe> recipeConsumer, @NotNull ResourceLocation id) {
         this.ensureValid(id);
         this.advancement.parent(new ResourceLocation("recipes/root"))
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
                 .rewards(AdvancementRewards.Builder.recipe(id))
                 .requirements(RequirementsStrategy.OR);
-
-        recipeConsumer.accept(new BurnRecipeBuilder.Result(id, output, input, advancement, new ResourceLocation(id.getNamespace(), "recipes/" +
-                Objects.requireNonNull(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(output))).getItemCategory()).getRecipeFolderName() + "/" + id.getPath())));
+        assert this.output.getItem().getItemCategory() != null;
+        recipeConsumer.accept(new AnvilRecipeBuilder.Result(id, output, input, minAnvilLevel, advancement, new ResourceLocation(id.getNamespace(), "recipes/" +
+                this.output.getItem().getItemCategory().getRecipeFolderName() + "/" + id.getPath())));
     }
 
     private void ensureValid(ResourceLocation id) {
@@ -66,31 +69,33 @@ public class BurnRecipeBuilder implements RecipeBuilder {
 
     public static final class Result implements FinishedRecipe {
         private final ResourceLocation id;
-        private final String output;
-        private final String input;
+        private final ItemStack output;
+        private final ItemStack input;
+        private final int minAnvilLevel;
         private final Advancement.Builder advancement;
         private final ResourceLocation advancementId;
 
-        public Result(ResourceLocation id, String output, String input, Advancement.Builder advancement, ResourceLocation advancementId) {
+        public Result(ResourceLocation id, ItemStack output, ItemStack input, int minAnvilLevel, Advancement.Builder advancement, ResourceLocation advancementId) {
             this.id = id;
             this.output = output;
             this.input = input;
+            this.minAnvilLevel = minAnvilLevel;
             this.advancement = advancement;
             this.advancementId = advancementId;
         }
 
         @Override
-        public @Nonnull ResourceLocation getId() {
+        public @NotNull ResourceLocation getId() {
             return id;
         }
 
         @Override
-        public @Nonnull RecipeSerializer<?> getType() {
-            return MWRecipeSerializers.BURN_SERIALIZER.get();
+        public @NotNull RecipeSerializer<?> getType() {
+            return MWRecipeSerializers.ANVIL_SERIALIZER.get();
         }
 
         @Override
-        public @Nonnull JsonObject serializeAdvancement() {
+        public @NotNull JsonObject serializeAdvancement() {
             return advancement.serializeToJson();
         }
 
@@ -101,9 +106,19 @@ public class BurnRecipeBuilder implements RecipeBuilder {
         }
 
         @Override
-        public void serializeRecipeData(@Nonnull JsonObject object) {
-            object.addProperty("output", output);
-            object.addProperty("input", input);
+        public void serializeRecipeData(@NotNull JsonObject object) {
+            serializeItemStack(output, "output", object);
+            serializeItemStack(input, "input", object);
+            object.addProperty("minAnvilLevel", minAnvilLevel);
+        }
+
+        private static void serializeItemStack(ItemStack stack, String name, JsonObject parent) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("item", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(stack.getItem())).toString());
+            if (stack.getCount() > 1) {
+                jsonObject.addProperty("count", stack.getCount());
+            }
+            parent.add(name, jsonObject);
         }
     }
 }

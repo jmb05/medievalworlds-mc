@@ -15,10 +15,10 @@ public class BloomRecipe implements IBloomRecipe{
     private final ResourceLocation id;
     private final Ingredient input;
     private final ItemStack primaryOutput;
-    private final ItemStack primaryPacked;
+    private final ItemStack primaryPacked;//The count from this ItemStack is the amount of output needed for one packed
     private final int primaryOffset;
     private final ItemStack secondaryOutput;
-    private final ItemStack secondaryPacked;
+    private final ItemStack secondaryPacked;//The count from this ItemStack is the amount of output needed for one packed
     private final int secondaryOffset;
 
     public BloomRecipe(ResourceLocation id, Ingredient input, ItemStack primaryOutput, ItemStack primaryPacked, int primaryOffset, ItemStack secondaryOutput, ItemStack secondaryPacked, int secondaryOffset){

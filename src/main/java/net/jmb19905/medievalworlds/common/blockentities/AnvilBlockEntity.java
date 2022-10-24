@@ -5,7 +5,7 @@ import net.jmb19905.medievalworlds.common.block.LeveledAnvilBlock;
 import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
-import net.jmb19905.medievalworlds.util.CustomItemHandler;
+import net.jmb19905.medievalworlds.util.MWItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -35,23 +36,44 @@ import java.util.Objects;
 @SuppressWarnings("removal")
 public class AnvilBlockEntity extends BlockEntity implements MenuProvider {
 
-    private final CustomItemHandler inventory;
+    private final MWItemHandler inventory;
     private final BlockState state;
 
     private Component customName;
     private AnvilRecipe currentRecipe;
+    private boolean pressed = false;
+    private int pressedTimer = 0;
 
     public AnvilBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.state = state;
-        this.inventory = new CustomItemHandler(2);
+        this.inventory = new MWItemHandler(2);
     }
 
     public AnvilBlockEntity(BlockPos pos, BlockState state) {
         this(MWBlockEntityTypes.CUSTOM_ANVIL.get(), pos, state);
     }
 
+    public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T entity) {
+        if(!level.isClientSide && entity instanceof AnvilBlockEntity blockEntity) {
+            if (blockEntity.isPressed()) {
+                blockEntity.pressedTimer++;
+                if (blockEntity.pressedTimer >= 10) {
+                    blockEntity.pressed = false;
+                    blockEntity.pressedTimer = 0;
+                }
+                blockEntity.setChanged();
+                level.sendBlockUpdated(pos, state, state, 3);
+            }
+        }
+    }
+
+    public boolean isPressed() {
+        return pressed;
+    }
+
     public void hammer() {
+        pressed = true;
         if(currentRecipe == null || !currentRecipe.matches(inventory.getStackInSlot(0))) {
             currentRecipe = null;
         }else {

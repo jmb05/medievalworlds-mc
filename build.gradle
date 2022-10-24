@@ -16,7 +16,7 @@ plugins {
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'net.jmb19905'
-version = '1.1.4'
+version = '1.2.0'
 
 java {
     archivesBaseName = 'medievalworlds'
@@ -62,6 +62,8 @@ minecraft {
             // property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             property 'forge.enabledGameTestNamespaces', 'medievalworlds'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
             mods {
                 medievalworlds {
@@ -74,6 +76,8 @@ minecraft {
             workingDirectory project.file('run')
             // property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
             args '--mod', 'medievalworlds', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 

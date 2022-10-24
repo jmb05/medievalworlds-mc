@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.common.datagen.custom;
+package net.jmb19905.medievalworlds.common.datagen.recipes;
 
 import com.google.gson.JsonObject;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
@@ -20,17 +20,19 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class AlloyRecipeBuilder implements RecipeBuilder {
+public class SmithingRecipeBuilder implements RecipeBuilder {
 
     private final ItemStack result;
-    private final ItemStack input1;
-    private final ItemStack input2;
+    private final ItemStack base;
+    private final ItemStack addition;
+    private final int cost;
     private final Advancement.Builder advancement = Advancement.Builder.advancement();
 
-    public AlloyRecipeBuilder(ItemStack result, ItemStack input1, ItemStack input2) {
+    public SmithingRecipeBuilder(ItemStack result, ItemStack base, ItemStack addition, int cost) {
         this.result = result;
-        this.input1 = input1;
-        this.input2 = input2;
+        this.base = base;
+        this.addition = addition;
+        this.cost = cost;
     }
 
     @Override
@@ -56,23 +58,25 @@ public class AlloyRecipeBuilder implements RecipeBuilder {
                 .rewards(AdvancementRewards.Builder.recipe(id))
                 .requirements(RequirementsStrategy.OR);
         assert this.result.getItem().getItemCategory() != null;
-        recipeConsumer.accept(new AlloyRecipeBuilder.Result(id, result, input1, input2, advancement, new ResourceLocation(id.getNamespace(), "recipes/" +
+        recipeConsumer.accept(new SmithingRecipeBuilder.Result(id, result, base, addition, cost, advancement, new ResourceLocation(id.getNamespace(), "recipes/" +
                 this.result.getItem().getItemCategory().getRecipeFolderName() + "/" + id.getPath())));
     }
 
     public static final class Result implements FinishedRecipe {
         private final ResourceLocation id;
         private final ItemStack result;
-        private final ItemStack input1;
-        private final ItemStack input2;
+        private final ItemStack base;
+        private final ItemStack addition;
+        private final int cost;
         private final Advancement.Builder advancement;
         private final ResourceLocation advancementId;
 
-        public Result(ResourceLocation id, ItemStack result, ItemStack input1, ItemStack input2, Advancement.Builder advancement, ResourceLocation advancementId) {
+        public Result(ResourceLocation id, ItemStack result, ItemStack base, ItemStack addition, int cost, Advancement.Builder advancement, ResourceLocation advancementId) {
             this.id = id;
             this.result = result;
-            this.input1 = input1;
-            this.input2 = input2;
+            this.base = base;
+            this.addition = addition;
+            this.cost = cost;
             this.advancement = advancement;
             this.advancementId = advancementId;
         }
@@ -84,7 +88,7 @@ public class AlloyRecipeBuilder implements RecipeBuilder {
 
         @Override
         public @NotNull RecipeSerializer<?> getType() {
-            return MWRecipeSerializers.ALLOY_SERIALIZER.get();
+            return MWRecipeSerializers.SMITHING_SERIALIZER.get();
         }
 
         @Override
@@ -100,9 +104,10 @@ public class AlloyRecipeBuilder implements RecipeBuilder {
 
         @Override
         public void serializeRecipeData(@NotNull JsonObject object) {
-            serializeItemStack(result, "output", object);
-            serializeItemStack(input1, "input1", object);
-            serializeItemStack(input2, "input2", object);
+            serializeItemStack(result, "result", object);
+            serializeItemStack(base, "base", object);
+            serializeItemStack(addition, "addition", object);
+            object.addProperty("cost", cost);
         }
 
         private static void serializeItemStack(ItemStack stack, String name, JsonObject parent) {

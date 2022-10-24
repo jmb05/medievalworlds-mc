@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.common.datagen.custom;
+package net.jmb19905.medievalworlds.common.datagen.recipes;
 
 import com.google.gson.JsonObject;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
@@ -12,7 +12,6 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -21,17 +20,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class SlackTubRecipeBuilder implements RecipeBuilder {
+public class AlloyRecipeBuilder implements RecipeBuilder {
 
-    private final Ingredient input;
-    private final int inputCount;
-    private final ItemStack output;
+    private final ItemStack result;
+    private final ItemStack input1;
+    private final ItemStack input2;
     private final Advancement.Builder advancement = Advancement.Builder.advancement();
 
-    public SlackTubRecipeBuilder(ItemStack output, Ingredient input, int inputCount) {
-        this.input = input;
-        this.output = output;
-        this.inputCount = inputCount;
+    public AlloyRecipeBuilder(ItemStack result, ItemStack input1, ItemStack input2) {
+        this.result = result;
+        this.input1 = input1;
+        this.input2 = input2;
     }
 
     @Override
@@ -41,46 +40,39 @@ public class SlackTubRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public @NotNull RecipeBuilder group(@Nullable String group) {
+    public @NotNull RecipeBuilder group(@Nullable String p_176495_) {
         return this;
     }
 
     @Override
     public @NotNull Item getResult() {
-        return output.getItem();
+        return result.getItem();
     }
 
     @Override
     public void save(@NotNull Consumer<FinishedRecipe> recipeConsumer, @NotNull ResourceLocation id) {
-        this.ensureValid(id);
         this.advancement.parent(new ResourceLocation("recipes/root"))
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
                 .rewards(AdvancementRewards.Builder.recipe(id))
                 .requirements(RequirementsStrategy.OR);
-        assert this.output.getItem().getItemCategory() != null;
-        recipeConsumer.accept(new Result(id, output, input, inputCount, advancement, new ResourceLocation(id.getNamespace(), "recipes/" +
-                this.output.getItem().getItemCategory().getRecipeFolderName() + "/" + id.getPath())));
-    }
-
-    private void ensureValid(ResourceLocation id) {
-        if (this.advancement.getCriteria().isEmpty()) {
-            throw new IllegalStateException("No way of obtaining recipe " + id);
-        }
+        assert this.result.getItem().getItemCategory() != null;
+        recipeConsumer.accept(new AlloyRecipeBuilder.Result(id, result, input1, input2, advancement, new ResourceLocation(id.getNamespace(), "recipes/" +
+                this.result.getItem().getItemCategory().getRecipeFolderName() + "/" + id.getPath())));
     }
 
     public static final class Result implements FinishedRecipe {
         private final ResourceLocation id;
-        private final ItemStack output;
-        private final Ingredient input;
-        private final int inputCount;
+        private final ItemStack result;
+        private final ItemStack input1;
+        private final ItemStack input2;
         private final Advancement.Builder advancement;
         private final ResourceLocation advancementId;
 
-        public Result(ResourceLocation id, ItemStack output, Ingredient input, int inputCount, Advancement.Builder advancement, ResourceLocation advancementId) {
+        public Result(ResourceLocation id, ItemStack result, ItemStack input1, ItemStack input2, Advancement.Builder advancement, ResourceLocation advancementId) {
             this.id = id;
-            this.output = output;
-            this.input = input;
-            this.inputCount = inputCount;
+            this.result = result;
+            this.input1 = input1;
+            this.input2 = input2;
             this.advancement = advancement;
             this.advancementId = advancementId;
         }
@@ -92,7 +84,7 @@ public class SlackTubRecipeBuilder implements RecipeBuilder {
 
         @Override
         public @NotNull RecipeSerializer<?> getType() {
-            return MWRecipeSerializers.SLACK_TUB_SERIALIZER.get();
+            return MWRecipeSerializers.ALLOY_SERIALIZER.get();
         }
 
         @Override
@@ -108,18 +100,18 @@ public class SlackTubRecipeBuilder implements RecipeBuilder {
 
         @Override
         public void serializeRecipeData(@NotNull JsonObject object) {
-            serializeOutput(output, object);
-            object.add("input", input.toJson());
-            object.addProperty("inputCount", inputCount);
+            serializeItemStack(result, "output", object);
+            serializeItemStack(input1, "input1", object);
+            serializeItemStack(input2, "input2", object);
         }
 
-        private static void serializeOutput(ItemStack stack, JsonObject parent) {
+        private static void serializeItemStack(ItemStack stack, String name, JsonObject parent) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("item", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(stack.getItem())).toString());
             if (stack.getCount() > 1) {
                 jsonObject.addProperty("count", stack.getCount());
             }
-            parent.add("output", jsonObject);
+            parent.add(name, jsonObject);
         }
     }
 }

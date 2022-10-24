@@ -1,6 +1,5 @@
 package net.jmb19905.medievalworlds.common.item.silver;
 
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -27,11 +26,6 @@ public interface ISilverWeapon {
 
     default void addCleansingTooltip(List<Component> components) {
         components.add(Component.empty());
-        if(!Screen.hasShiftDown()) {
-            components.add(Component.translatable("tooltip.medievalworlds.cleansing").append(" ").append(Component.translatable("tooltip.medievalworlds.press_shift")));
-        } else {
-            components.add(Component.translatable("tooltip.medievalworlds.cleansing"));
-            components.add(Component.translatable("tooltip.medievalworlds.cleansing_info"));
-        }
+        components.add(Component.translatable("tooltip.medievalworlds.cleansing"));
     }
 }

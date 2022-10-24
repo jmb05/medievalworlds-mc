@@ -5,7 +5,7 @@ import net.jmb19905.medievalworlds.common.block.SimpleBloomery;
 import net.jmb19905.medievalworlds.common.recipes.bloom.BloomRecipe;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
-import net.jmb19905.medievalworlds.util.CustomItemHandler;
+import net.jmb19905.medievalworlds.util.MWItemHandler;
 import net.jmb19905.medievalworlds.util.MWUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -39,11 +39,11 @@ public class SimpleBloomeryBlockEntity extends BlockEntity {
     public int currentBurnTime = -1;
     public int currentMaxBurnTime = 0;
     public boolean fuelConsumed = false;
-    private final CustomItemHandler inventory;
+    private final MWItemHandler inventory;
 
     public SimpleBloomeryBlockEntity(BlockPos pos, BlockState state) {
         super(MWBlockEntityTypes.SIMPLE_BLOOMERY.get(), pos, state);
-        this.inventory = new CustomItemHandler(2);
+        this.inventory = new MWItemHandler(2);
     }
 
     public void start() {
@@ -58,7 +58,7 @@ public class SimpleBloomeryBlockEntity extends BlockEntity {
             BlockPos topPos = pos.above();
             BlockState topState = level.getBlockState(topPos);
 
-            CustomItemHandler inventory = (CustomItemHandler) entity.getInventory();
+            MWItemHandler inventory = (MWItemHandler) entity.getInventory();
             ItemStack fuelStack = inventory.getStackInSlot(1);
             ItemStack inputStack = inventory.getStackInSlot(0);
 
@@ -105,18 +105,19 @@ public class SimpleBloomeryBlockEntity extends BlockEntity {
 
                         BloomRecipe recipe = Objects.requireNonNull(getRecipe(level, inputStack));
                         ItemStack primaryOutput = recipe.getPrimaryOutput().copy();
-                        int primaryAddition = level.random.nextIntBetweenInclusive(-recipe.getPrimaryOffset(), recipe.getPrimaryOffset());
-                        primaryOutput.grow(primaryAddition);
+                        ItemStack secondaryOutput = recipe.getSecondaryOutput().copy();
+
                         primaryOutput.setCount(primaryOutput.getCount() * multiplier);
+                        secondaryOutput.setCount(secondaryOutput.getCount() * multiplier);
+                        for (int i=0;i<multiplier;i++) {
+                            int primaryAddition = level.random.nextIntBetweenInclusive(-recipe.getPrimaryOffset(), recipe.getPrimaryOffset());
+                            primaryOutput.grow(primaryAddition);
+                            int secondaryAddition = level.random.nextIntBetweenInclusive(-recipe.getSecondaryOffset(), recipe.getSecondaryOffset());
+                            secondaryOutput.grow(secondaryAddition);
+                        }
 
                         ItemStack primaryPacked = recipe.getPrimaryOutputPacked().copy();
                         createDrops(level, pos, primaryOutput, primaryPacked);
-
-                        ItemStack secondaryOutput = recipe.getSecondaryOutput().copy();
-                        int secondaryAddition = level.random.nextIntBetweenInclusive(-recipe.getSecondaryOffset(), recipe.getSecondaryOffset());
-                        secondaryOutput.grow(secondaryAddition);
-                        secondaryOutput.setCount(secondaryOutput.getCount() * multiplier);
-
                         ItemStack secondaryPacked = recipe.getSecondaryOutputPacked().copy();
                         createDrops(level, pos, secondaryOutput, secondaryPacked);
                     }
@@ -132,15 +133,15 @@ public class SimpleBloomeryBlockEntity extends BlockEntity {
         }
     }
 
-    private static void createDrops(Level level, BlockPos pos, ItemStack primaryOutput, ItemStack primaryPacked) {
-        if(primaryPacked.getCount() != 0) {
-            int divisorPrimary = primaryPacked.getCount();
-            primaryPacked.setCount(primaryOutput.getCount() / divisorPrimary);
-            primaryOutput.setCount(primaryOutput.getCount() % divisorPrimary);
+    private static void createDrops(Level level, BlockPos pos, ItemStack output, ItemStack outputPacked) {
+        if(outputPacked.getCount() != 0) {
+            int divisorPrimary = outputPacked.getCount();
+            outputPacked.setCount(output.getCount() / divisorPrimary);
+            output.setCount(output.getCount() % divisorPrimary);
         }
 
-        if(!primaryOutput.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), primaryOutput);
-        if(!primaryPacked.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), primaryPacked);
+        if(!output.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), output);
+        if(!outputPacked.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), outputPacked);
     }
 
     @Nullable

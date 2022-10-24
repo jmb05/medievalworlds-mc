@@ -12,15 +12,12 @@ import java.util.function.Supplier;
 
 public enum MWTiers implements Tier {
 
-    STURDY_WOOD(0, 200, 2.0F, 0.5F, 15, () -> Ingredient.of(ItemTags.PLANKS)),
-    BRONZE_ITEM_TIER(1, 200, 6f, 3f, 10, () -> Ingredient.of(MWItems.BRONZE_INGOT.get())),
-    SILVER_ITEM_TIER(2, 300, 6f, 4f, 22, () -> Ingredient.of(MWItems.SILVER_INGOT.get())),
-    STEEL_ITEM_TIER(3, 1000, 8f, 4f, 10, () -> Ingredient.of(MWItems.STEEL_INGOT.get())),
-    IRON_BLOCK_ITEM_TIER(2, 1000, 6f, 3f, 8, () -> Ingredient.of(Items.IRON_BLOCK)),
-    NETHERITE_BLOCK_ITEM_TIER(4, 2500, 9f, 7f, 7, () -> Ingredient.of(Items.NETHERITE_BLOCK)),
-    SILVER_BLOCK_ITEM_TIER(2, 750, 7f, 4f, 8, () -> Ingredient.of(MWItems.SILVER_BLOCK.get())),
-    STEEL_BLOCK_ITEM_TIER(3, 1500, 8f, 5f, 8, () -> Ingredient.of(MWItems.STEEL_BLOCK.get()));
-
+    STURDY_WOOD(0, 200, 2F, 0.5F, 15, () -> Ingredient.of(ItemTags.PLANKS)),
+    BRONZE(1, 200, 6f, 1.5f, 10, () -> Ingredient.of(MWItems.BRONZE_INGOT.get())),
+    SILVER(1, 150, 8f, 1.5f, 24, () -> Ingredient.of(MWItems.SILVER_INGOT.get())),
+    STEEL(3, 1500, 8f, 3f, 12, () -> Ingredient.of(MWItems.STEEL_INGOT.get())),
+    CUSTOM_STONE(0, 131, 4F, 1F, 5, () -> Ingredient.of(Items.COBBLESTONE, Items.COBBLED_DEEPSLATE, Items.BLACKSTONE)),
+    CUSTOM_DIAMOND(3, 131, 8F, 3F, 10, () -> Ingredient.of(Items.DIAMOND));
 
     private final int level;
     private final int uses;

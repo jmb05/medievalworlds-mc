@@ -2,7 +2,7 @@ package net.jmb19905.medievalworlds.common.block;
 
 import net.jmb19905.medievalworlds.common.blockentities.AlloyFurnaceBlockEntity;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
-import net.jmb19905.medievalworlds.util.CustomItemHandler;
+import net.jmb19905.medievalworlds.util.MWItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -132,7 +132,7 @@ public class AlloyFurnaceBlock extends Block implements EntityBlock {
     public void onRemove(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos, @Nonnull BlockState newState, boolean isMoving) {
         BlockEntity entity = level.getBlockEntity(pos);
         if(entity instanceof AlloyFurnaceBlockEntity alloyFurnaceBlockEntity && state.getBlock() != newState.getBlock()){
-            ((CustomItemHandler) alloyFurnaceBlockEntity.getInventory()).toNonNullList().forEach(stack -> {
+            ((MWItemHandler) alloyFurnaceBlockEntity.getInventory()).toNonNullList().forEach(stack -> {
                 ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack);
                 level.addFreshEntity(itemEntity);
             });

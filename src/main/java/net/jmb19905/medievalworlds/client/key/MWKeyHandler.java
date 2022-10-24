@@ -1,9 +1,12 @@
 package net.jmb19905.medievalworlds.client.key;
 
+import net.jmb19905.medievalworlds.client.networking.HoodChangePacket;
 import net.jmb19905.medievalworlds.common.capability.hood.Hood;
+import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 public class MWKeyHandler {
@@ -17,6 +20,7 @@ public class MWKeyHandler {
                 if(player != null) {
                     player.getCapability(Hood.HOOD_CAPABILITY).ifPresent(iHood -> {
                         Hood hood = (Hood) iHood;
+                        NetworkStartupCommon.simpleChannel.send(PacketDistributor.SERVER.noArg(), new HoodChangePacket.ToServer(!hood.isHoodDown(), player.getUUID()));
                         hood.setHoodDown(!hood.isHoodDown());
                     });
                 }

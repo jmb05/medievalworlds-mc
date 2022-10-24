@@ -4,18 +4,16 @@ import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.block.AlloyFurnaceBlock;
 import net.jmb19905.medievalworlds.common.menus.AlloyFurnaceMenu;
 import net.jmb19905.medievalworlds.common.recipes.alloy.AlloyRecipe;
-import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
-import net.jmb19905.medievalworlds.util.CustomItemHandler;
+import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
+import net.jmb19905.medievalworlds.util.MWItemHandler;
 import net.jmb19905.medievalworlds.util.MWUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -45,12 +43,12 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
     public int currentBurnTime = 0;
     public int currentMaxBurnTime = 0;
     public boolean fuelConsumed = false;
-    private final CustomItemHandler inventory;
+    private final MWItemHandler inventory;
     private Component customName;
 
     public AlloyFurnaceBlockEntity(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
         super(tileEntityTypeIn, pos, state);
-        this.inventory = new CustomItemHandler(4);
+        this.inventory = new MWItemHandler(4);
     }
 
     public AlloyFurnaceBlockEntity(BlockPos pos, BlockState state){
@@ -75,7 +73,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
                 boolean dirty = false;
 
                 //Get the recipe instance for the items in the slots
-                CustomItemHandler inventory = alloyFurnaceBlockEntity.inventory;
+                MWItemHandler inventory = alloyFurnaceBlockEntity.inventory;
                 AlloyRecipeWrapper recipeWrapper = getRecipe(alloyFurnaceBlockEntity, inventory);
                 AlloyRecipe recipe = recipeWrapper.recipe();
                 boolean flipped = recipeWrapper.flipped();
@@ -165,7 +163,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         }
     }
 
-    private static AlloyRecipeWrapper getRecipe(AlloyFurnaceBlockEntity blockEntity, CustomItemHandler inventory){
+    private static AlloyRecipeWrapper getRecipe(AlloyFurnaceBlockEntity blockEntity, MWItemHandler inventory){
         boolean flipped = false;
         ItemStack inv0 = inventory.getStackInSlot(0);
         ItemStack inv1 = inventory.getStackInSlot(1);
@@ -198,32 +196,27 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
     }
 
     @Override
-    public void load(@Nonnull CompoundTag nbt) {
-        super.load(nbt);
-        if(nbt.contains("CustomName", Tag.TAG_STRING)) {
-            this.customName = Component.Serializer.fromJson(nbt.getString("CustomName"));
+    public void load(@Nonnull CompoundTag tag) {
+        super.load(tag);
+        if(tag.contains("CustomName", Tag.TAG_STRING)) {
+            this.customName = Component.Serializer.fromJson(tag.getString("CustomName"));
         }
-
-        NonNullList<ItemStack> inventoryAsList = NonNullList.withSize(this.inventory.getSlots(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(nbt, inventoryAsList);
-        inventory.setNonNullList(inventoryAsList);
-
-        this.currentAlloyTime = nbt.getInt("CurrentAlloyTime");
-        this.currentBurnTime = nbt.getInt("CurrentBurnTime");
-        this.currentMaxBurnTime = nbt.getInt("CurrentMaxBurnTime");
+        inventory.loadFromTag(tag);
+        this.currentAlloyTime = tag.getInt("CurrentAlloyTime");
+        this.currentBurnTime = tag.getInt("CurrentBurnTime");
+        this.currentMaxBurnTime = tag.getInt("CurrentMaxBurnTime");
     }
 
     @Override
-    public void saveAdditional(@Nonnull CompoundTag nbt) {
-        super.saveAdditional(nbt);
+    public void saveAdditional(@Nonnull CompoundTag tag) {
+        super.saveAdditional(tag);
         if(this.customName != null) {
-            nbt.putString("CustomName", Component.Serializer.toJson(customName));
+            tag.putString("CustomName", Component.Serializer.toJson(customName));
         }
-        ContainerHelper.saveAllItems(nbt, this.inventory.toNonNullList());
-
-        nbt.putInt("CurrentAlloyTime", currentAlloyTime);
-        nbt.putInt("CurrentBurnTime", currentBurnTime);
-        nbt.putInt("CurrentMaxBurnTime", currentMaxBurnTime);
+        this.inventory.saveToTag(tag);
+        tag.putInt("CurrentAlloyTime", currentAlloyTime);
+        tag.putInt("CurrentBurnTime", currentBurnTime);
+        tag.putInt("CurrentMaxBurnTime", currentMaxBurnTime);
     }
 
     @Nullable

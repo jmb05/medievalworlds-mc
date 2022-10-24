@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "medievalworlds:item/quiver_empty"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "medievalworlds:filled": 0.0000001
+      },
+      "model": "medievalworlds:item/quiver_filled"
+    }
+  ]
+}

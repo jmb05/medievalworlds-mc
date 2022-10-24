@@ -24,6 +24,7 @@ public class MWBlockTagsProvider extends BlockTagsProvider {
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(
+                        MWBlocks.STEEL_ANVIL.get(),
                         MWBlocks.STEEL_BLOCK.get(),
                         MWBlocks.SILVER_BLOCK.get(),
                         MWBlocks.BRONZE_BLOCK.get(),
@@ -82,19 +83,12 @@ public class MWBlockTagsProvider extends BlockTagsProvider {
 
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(
+                        MWBlocks.STEEL_ANVIL.get(),
                         MWBlocks.SILVER_BLOCK.get(),
                         MWBlocks.SILVER_ORE.get(),
                         MWBlocks.RAW_SILVER_BLOCK.get(),
                         MWBlocks.STEEL_BLOCK.get(),
                         MWBlocks.DEEPSLATE_SILVER_ORE.get()
-                );
-
-        tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(
-                        MWBlocks.BRONZE_BLOCK.get(),
-                        MWBlocks.TIN_BLOCK.get(),
-                        MWBlocks.TIN_ORE.get(),
-                        MWBlocks.DEEPSLATE_TIN_ORE.get()
                 );
 
         tag(Tags.Blocks.ORE_RATES_SINGULAR)

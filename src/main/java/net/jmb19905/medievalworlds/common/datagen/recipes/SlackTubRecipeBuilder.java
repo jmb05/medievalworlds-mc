@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.common.datagen.custom;
+package net.jmb19905.medievalworlds.common.datagen.recipes;
 
 import com.google.gson.JsonObject;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
@@ -12,6 +12,7 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -20,17 +21,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class AnvilRecipeBuilder implements RecipeBuilder {
+public class SlackTubRecipeBuilder implements RecipeBuilder {
 
-    private final ItemStack input;
+    private final Ingredient input;
+    private final int inputCount;
     private final ItemStack output;
-    private final int minAnvilLevel;
     private final Advancement.Builder advancement = Advancement.Builder.advancement();
 
-    public AnvilRecipeBuilder(ItemStack output, ItemStack input, int minAnvilLevel) {
+    public SlackTubRecipeBuilder(ItemStack output, Ingredient input, int inputCount) {
         this.input = input;
         this.output = output;
-        this.minAnvilLevel = minAnvilLevel;
+        this.inputCount = inputCount;
     }
 
     @Override
@@ -57,7 +58,7 @@ public class AnvilRecipeBuilder implements RecipeBuilder {
                 .rewards(AdvancementRewards.Builder.recipe(id))
                 .requirements(RequirementsStrategy.OR);
         assert this.output.getItem().getItemCategory() != null;
-        recipeConsumer.accept(new AnvilRecipeBuilder.Result(id, output, input, minAnvilLevel, advancement, new ResourceLocation(id.getNamespace(), "recipes/" +
+        recipeConsumer.accept(new Result(id, output, input, inputCount, advancement, new ResourceLocation(id.getNamespace(), "recipes/" +
                 this.output.getItem().getItemCategory().getRecipeFolderName() + "/" + id.getPath())));
     }
 
@@ -70,16 +71,16 @@ public class AnvilRecipeBuilder implements RecipeBuilder {
     public static final class Result implements FinishedRecipe {
         private final ResourceLocation id;
         private final ItemStack output;
-        private final ItemStack input;
-        private final int minAnvilLevel;
+        private final Ingredient input;
+        private final int inputCount;
         private final Advancement.Builder advancement;
         private final ResourceLocation advancementId;
 
-        public Result(ResourceLocation id, ItemStack output, ItemStack input, int minAnvilLevel, Advancement.Builder advancement, ResourceLocation advancementId) {
+        public Result(ResourceLocation id, ItemStack output, Ingredient input, int inputCount, Advancement.Builder advancement, ResourceLocation advancementId) {
             this.id = id;
             this.output = output;
             this.input = input;
-            this.minAnvilLevel = minAnvilLevel;
+            this.inputCount = inputCount;
             this.advancement = advancement;
             this.advancementId = advancementId;
         }
@@ -91,7 +92,7 @@ public class AnvilRecipeBuilder implements RecipeBuilder {
 
         @Override
         public @NotNull RecipeSerializer<?> getType() {
-            return MWRecipeSerializers.ANVIL_SERIALIZER.get();
+            return MWRecipeSerializers.SLACK_TUB_SERIALIZER.get();
         }
 
         @Override
@@ -107,18 +108,18 @@ public class AnvilRecipeBuilder implements RecipeBuilder {
 
         @Override
         public void serializeRecipeData(@NotNull JsonObject object) {
-            serializeItemStack(output, "output", object);
-            serializeItemStack(input, "input", object);
-            object.addProperty("minAnvilLevel", minAnvilLevel);
+            serializeOutput(output, object);
+            object.add("input", input.toJson());
+            object.addProperty("inputCount", inputCount);
         }
 
-        private static void serializeItemStack(ItemStack stack, String name, JsonObject parent) {
+        private static void serializeOutput(ItemStack stack, JsonObject parent) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("item", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(stack.getItem())).toString());
             if (stack.getCount() > 1) {
                 jsonObject.addProperty("count", stack.getCount());
             }
-            parent.add(name, jsonObject);
+            parent.add("output", jsonObject);
         }
     }
 }

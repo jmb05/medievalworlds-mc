@@ -37,7 +37,7 @@ public class AnvilRecipeSelectedPacket {
             packet.containerId = buffer.readInt();
             packet.recipeId = buffer.readResourceLocation();
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-            LOGGER.warn("Exception while reading SteamEffectPacket: " + e);
+            LOGGER.warn("Exception while reading AnvilRecipeSelectedPacket: " + e);
             return packet;
         }
         packet.valid = true;

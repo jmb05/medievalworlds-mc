@@ -27,7 +27,6 @@ public class SilverHammer extends HammerItem implements ISilverWeapon {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> components, @NotNull TooltipFlag flag) {
-        super.appendHoverText(stack, level, components, flag);
         addCleansingTooltip(components);
     }
 }

@@ -26,23 +26,34 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
 public class StaffItem extends MWSwordWeapon {
-    private final Multimap<Attribute, AttributeModifier> additionalModifiers;
+    private final Multimap<Attribute, AttributeModifier> additionalMainhandModifiers;
+    private final Multimap<Attribute, AttributeModifier> additionalOffhandModifiers;
 
     public StaffItem() {
-        this(MWTiers.STURDY_WOOD, 2, -2.4f, 3.0f, new Properties().tab(MedievalWorlds.combatTab).stacksTo(1));
+        this(MWTiers.STURDY_WOOD, 1, -2.4f, 3.0f, new Properties().tab(MedievalWorlds.combatTab).stacksTo(1));
     }
 
     public StaffItem(Tier tier, int attackDamage, float attackSpeed, float reachBonus, Properties properties) {
         super(tier, attackDamage, attackSpeed, reachBonus, properties);
-        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier("Walking speed modifier", 0.01, AttributeModifier.Operation.ADDITION));
-        builder.putAll(super.getDefaultAttributeModifiers(EquipmentSlot.MAINHAND));
-        this.additionalModifiers = builder.build();
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> mainhandBuilder = ImmutableMultimap.builder();
+        mainhandBuilder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier("Walking speed modifier", 0.01, AttributeModifier.Operation.ADDITION));
+        mainhandBuilder.putAll(super.getDefaultAttributeModifiers(EquipmentSlot.MAINHAND));
+        this.additionalMainhandModifiers = mainhandBuilder.build();
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> offhandBuilder = ImmutableMultimap.builder();
+        offhandBuilder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier("Walking speed modifier", 0.01, AttributeModifier.Operation.ADDITION));
+        offhandBuilder.putAll(super.getDefaultAttributeModifiers(EquipmentSlot.OFFHAND));
+        this.additionalOffhandModifiers = offhandBuilder.build();
     }
 
     @Override
     public @NotNull Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(@NotNull EquipmentSlot slot) {
-        return slot == EquipmentSlot.OFFHAND || slot == EquipmentSlot.MAINHAND ? this.additionalModifiers : super.getDefaultAttributeModifiers(slot);
+        if (slot == EquipmentSlot.MAINHAND) {
+            return this.additionalMainhandModifiers;
+        } else if (slot == EquipmentSlot.OFFHAND) {
+            return this.additionalOffhandModifiers;
+        } else {
+            return super.getDefaultAttributeModifiers(slot);
+        }
     }
 
     @Override

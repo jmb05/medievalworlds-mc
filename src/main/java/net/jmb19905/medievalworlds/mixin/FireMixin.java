@@ -9,10 +9,11 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -21,8 +22,10 @@ import java.util.Set;
 
 @Mixin(value = FireBlock.class, remap = false)
 public abstract class FireMixin {
-    @Shadow protected abstract BlockState getStateWithAge(LevelAccessor p_53438_, BlockPos p_53439_, int p_53440_);
-
+    private BlockState getStateWithAge(LevelAccessor p_53438_, BlockPos p_53439_, int p_53440_) {
+        BlockState blockstate = BaseFireBlock.getState(p_53438_, p_53439_);
+        return blockstate.is(Blocks.FIRE) ? blockstate.setValue(FireBlock.AGE, p_53440_) : blockstate;
+    }
     @Inject(method = "tryCatchFire", at = @At("HEAD"), cancellable = true)
     private void tryCatchFire(Level level, BlockPos pos, int flammability, RandomSource random, int burnability, Direction face, CallbackInfo info) {
         int flamm = level.getBlockState(pos).getFlammability(level, pos, face);

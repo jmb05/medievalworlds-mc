@@ -4,7 +4,7 @@ import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
 import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
 import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
-import net.jmb19905.medievalworlds.util.CustomItemHandler;
+import net.jmb19905.medievalworlds.util.MWItemHandler;
 import net.jmb19905.medievalworlds.util.MWUtil;
 import net.jmb19905.medievalworlds.util.slots.InputSlot;
 import net.jmb19905.medievalworlds.util.slots.OutputSlot;
@@ -68,7 +68,7 @@ public class CustomAnvilMenu extends AbstractContainerMenu {
         }
 
         //Input
-        ((CustomItemHandler) tile.getInventory()).setContentsChangedListener(0, () -> {
+        ((MWItemHandler) tile.getInventory()).setContentsChangedListener(0, () -> {
             slotsChanged();
             slotUpdateListener.run();
         });

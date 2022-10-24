@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.common.datagen.custom;
+package net.jmb19905.medievalworlds.common.datagen.recipes;
 
 import com.google.gson.JsonObject;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
@@ -33,13 +33,13 @@ public class BloomRecipeBuilder implements RecipeBuilder {
     private final int secondaryOffset;
     private final Advancement.Builder advancement = Advancement.Builder.advancement();
 
-    public BloomRecipeBuilder(Ingredient input, ItemLike primaryOutput, int primaryOutCount, ItemLike primaryPacked, int primaryPackedCount, int primaryOffset, ItemLike secondaryOutput, int secondaryOutCount, ItemLike secondaryPacked, int secondaryPackedCount, int secondaryOffset) {
+    public BloomRecipeBuilder(Ingredient input, ItemStack primaryOutput, ItemLike primaryPacked, int primaryPackedRatio, int primaryOffset, ItemStack secondaryOutput, ItemLike secondaryPacked, int secondaryPackedRatio, int secondaryOffset) {
         this.input = input;
-        this.primaryOutput = new ItemStack(primaryOutput, primaryOutCount);
-        this.primaryPacked = new ItemStack(primaryPacked, primaryPackedCount);
+        this.primaryOutput = primaryOutput;
+        this.primaryPacked = new ItemStack(primaryPacked, primaryPackedRatio);
         this.primaryOffset = primaryOffset;
-        this.secondaryOutput = new ItemStack(secondaryOutput, secondaryOutCount);
-        this.secondaryPacked = new ItemStack(secondaryPacked, secondaryPackedCount);
+        this.secondaryOutput = secondaryOutput;
+        this.secondaryPacked = new ItemStack(secondaryPacked, secondaryPackedRatio);
         this.secondaryOffset = secondaryOffset;
     }
 

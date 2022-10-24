@@ -2,7 +2,7 @@ package net.jmb19905.medievalworlds.common.block;
 
 import net.jmb19905.medievalworlds.common.blockentities.bloomery.SimpleBloomeryBlockEntity;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
-import net.jmb19905.medievalworlds.util.CustomItemHandler;
+import net.jmb19905.medievalworlds.util.MWItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -153,15 +153,16 @@ public class SimpleBloomery extends Block implements EntityBlock {
                                 return InteractionResult.SUCCESS;
                             }
                         }
-                    }else if (playerStack.getItem() instanceof FlintAndSteelItem && (state.getValue(CLAY) || isItemStackBloomable(level, inputStack))) {
+                    } else if (playerStack.getItem() instanceof FlintAndSteelItem && (state.getValue(CLAY) || isItemStackBloomable(level, inputStack))) {
                         if(fuelStack.getCount() * 8 < inputStack.getCount()) {
                             player.displayClientMessage(Component.literal("Not enough charcoal"), true);
-                            return InteractionResult.FAIL;
+                            return InteractionResult.SUCCESS;
                         }
                         entity.start();
                         playerStack.hurtAndBreak(1, player, (living) -> living.broadcastBreakEvent(hand));
-                        return InteractionResult.CONSUME;
-                    }else if(!state.getValue(CLAY) && isItemStackBloomable(level, playerStack)){
+                        level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.PLAYERS, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
+                        return InteractionResult.SUCCESS;
+                    } else if(!state.getValue(CLAY) && isItemStackBloomable(level, playerStack)){
                         if(inputStack.isEmpty()) {
                             entity.getInventory().setStackInSlot(0, playerStack.copy());
                             player.setItemInHand(hand, new ItemStack(Items.AIR));
@@ -180,7 +181,7 @@ public class SimpleBloomery extends Block implements EntityBlock {
                 }
             }
         }
-        return InteractionResult.PASS;
+        return InteractionResult.SUCCESS;
     }
 
     private boolean isItemStackBloomable(Level level, ItemStack itemStack) {
@@ -233,7 +234,7 @@ public class SimpleBloomery extends Block implements EntityBlock {
     public void onRemove(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos, @Nonnull BlockState newState, boolean isMoving) {
         BlockEntity entity = level.getBlockEntity(pos);
         if(entity instanceof SimpleBloomeryBlockEntity simpleBloomeryBlockEntity && state.getBlock() != newState.getBlock()) {
-            ((CustomItemHandler) simpleBloomeryBlockEntity.getInventory()).toNonNullList().forEach(stack -> {
+            ((MWItemHandler) simpleBloomeryBlockEntity.getInventory()).toNonNullList().forEach(stack -> {
                 ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack);
                 level.addFreshEntity(itemEntity);
             });
