@@ -5,6 +5,7 @@ import net.minecraftforge.fml.ModList;
 public enum MWExternalMods {
 
     CURIOS("curios"),
+    BETTER_COMBAT("bettercombat"),
     JEI("jei");
 
     private final boolean loaded;

@@ -1,6 +1,7 @@
 package net.jmb19905.medievalworlds.client;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.client.armPoses.StaffArmPose;
 import net.jmb19905.medievalworlds.client.key.MWKeyHandler;
 import net.jmb19905.medievalworlds.client.renderers.armor.GambesonModel;
 import net.jmb19905.medievalworlds.client.renderers.armor.KnightArmorHelmetModel;
@@ -10,8 +11,10 @@ import net.jmb19905.medievalworlds.client.renderers.curio.QuiverRenderer;
 import net.jmb19905.medievalworlds.client.screen.AlloyFurnaceScreen;
 import net.jmb19905.medievalworlds.client.screen.CustomAnvilScreen;
 import net.jmb19905.medievalworlds.client.screen.CustomSmithingScreen;
+import net.jmb19905.medievalworlds.client.tooltip.ClientQuiverTooltip;
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
 import net.jmb19905.medievalworlds.common.capability.quiverInv.QuiverInv;
+import net.jmb19905.medievalworlds.common.item.quiver.QuiverTooltip;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.common.registries.MWItems;
 import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
@@ -22,6 +25,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -47,7 +51,7 @@ public class ClientSetup {
 
         bewlr = new MWBEWLR();
 
-        CUSTOM = HumanoidModel.ArmPose.create("CUSTOM", false, new CustomArmPose());
+        CUSTOM = HumanoidModel.ArmPose.create("CUSTOM", false, new StaffArmPose());
 
         evt.enqueueWork(
                 () -> ItemProperties.register(MWItems.QUIVER.get(), new ResourceLocation(MedievalWorlds.MOD_ID, "filled"),
@@ -55,6 +59,11 @@ public class ClientSetup {
                     QuiverInv inv = MWCapabilityManager.retrieveCapability(stack, QuiverInv.QUIVER_INV_CAPABILITY);
                     return inv == null ? 0 : inv.getFillLevel();
                 }));
+    }
+
+    @SubscribeEvent
+    public static void registerTooltipFactories(RegisterClientTooltipComponentFactoriesEvent event) {
+        event.register(QuiverTooltip.class, ClientQuiverTooltip::new);
     }
 
     public static MWBEWLR getBEWLR() {

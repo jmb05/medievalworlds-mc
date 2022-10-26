@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.common.item;
+package net.jmb19905.medievalworlds.common.item.quiver;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.renderers.curio.QuiverRenderer;
@@ -20,7 +20,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.tooltip.BundleTooltip;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -142,14 +141,13 @@ public class QuiverItem extends Item implements ICurioItem {
     }
 
     public @NotNull Optional<TooltipComponent> getTooltipImage(@NotNull ItemStack quiverStack) {
-        if (!Minecraft.getInstance().hasSingleplayerServer()) return Optional.empty();
         QuiverInv inv = MWCapabilityManager.retrieveCapability(quiverStack, QuiverInv.QUIVER_INV_CAPABILITY);
         if (inv == null) return Optional.empty();
-        return Optional.of(new BundleTooltip(inv.toNonNullList(), 1));
+        return Optional.of(new QuiverTooltip(inv.toNonNullList()));
     }
 
     public void appendHoverText(@NotNull ItemStack quiverStack, @Nullable Level level, @NotNull List<Component> components, @NotNull TooltipFlag flag) {
-        if (level != null && level.isClientSide && !Minecraft.getInstance().hasSingleplayerServer()) {
+        if (level != null && level.isClientSide && !Minecraft.getInstance().isLocalServer() && Minecraft.getInstance().player != null && Minecraft.getInstance().player.getAbilities().instabuild) {
             components.add(Component.translatable("item." + MedievalWorlds.MOD_ID + ".quiver.creative_broken").withStyle(ChatFormatting.RED));
             return;
         }

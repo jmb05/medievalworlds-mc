@@ -3,7 +3,7 @@ package net.jmb19905.medievalworlds.common;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
 import net.jmb19905.medievalworlds.common.capability.quiverInv.QuiverInv;
-import net.jmb19905.medievalworlds.common.item.QuiverItem;
+import net.jmb19905.medievalworlds.common.item.quiver.QuiverItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;

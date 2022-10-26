@@ -39,7 +39,7 @@ public class MWLangProvider extends LanguageProvider {
 
         add(MWItems.QUIVER.get(), "Quiver");
         add("item." + MedievalWorlds.MOD_ID + ".quiver.fullness", "%s/%s");
-        add("item." + MedievalWorlds.MOD_ID + ".quiver.creative_broken", "Interaction with the quiver in Creative is currently broken!");
+        add("item." + MedievalWorlds.MOD_ID + ".quiver.creative_broken", "Interaction with the quiver in creative when on a server is currently broken!");
 
         add(MWItems.OAK_STAFF.get(), "Oak Staff");
         add(MWItems.SPRUCE_STAFF.get(), "Spruce Staff");

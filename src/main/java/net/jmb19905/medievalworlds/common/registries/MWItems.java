@@ -5,6 +5,7 @@ import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.item.*;
 import net.jmb19905.medievalworlds.common.item.armor.*;
 import net.jmb19905.medievalworlds.common.item.heated.HeatedItem;
+import net.jmb19905.medievalworlds.common.item.quiver.QuiverItem;
 import net.jmb19905.medievalworlds.common.item.silver.*;
 import net.jmb19905.medievalworlds.common.item.weapon.MWAxeWeapon;
 import net.jmb19905.medievalworlds.common.item.weapon.MWSwordWeapon;
@@ -37,9 +38,9 @@ public class MWItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MedievalWorlds.MOD_ID);
 
-    public static final RegistryObject<CloakItem> CLOAK = registerTool("cloak", () -> new CloakItem(new Item.Properties().tab(MedievalWorlds.toolsTab).stacksTo(1)));
-    public static final RegistryObject<CloakItem> DARK_CLOAK = registerTool("dark_cloak", () -> new CloakItem(new Item.Properties().tab(MedievalWorlds.toolsTab).stacksTo(1)));
-    public static final RegistryObject<CloakItem> LIGHT_CLOAK = registerTool("light_cloak", () -> new CloakItem(new Item.Properties().tab(MedievalWorlds.toolsTab).stacksTo(1)));
+    public static final RegistryObject<CloakItem> CLOAK = registerTool("cloak", () -> new CloakItem(CloakItem.NORMAL_TEXTURE, new Item.Properties().tab(MedievalWorlds.toolsTab).stacksTo(1)));
+    public static final RegistryObject<CloakItem> DARK_CLOAK = registerTool("dark_cloak", () -> new CloakItem(CloakItem.DARK_TEXTURE, new Item.Properties().tab(MedievalWorlds.toolsTab).stacksTo(1)));
+    public static final RegistryObject<CloakItem> LIGHT_CLOAK = registerTool("light_cloak", () -> new CloakItem(CloakItem.LIGHT_TEXTURE, new Item.Properties().tab(MedievalWorlds.toolsTab).stacksTo(1)));
 
     public static final RegistryObject<Item> QUIVER = registerTool("quiver", () -> new QuiverItem(3, new Item.Properties().stacksTo(1).tab(MedievalWorlds.toolsTab)));
 
@@ -98,7 +99,7 @@ public class MWItems {
     public static Map<String, RegistryObject<Item>> addWeaponParts() {
         Map<String, RegistryObject<Item>> weaponParts = new HashMap<>();
         String[] weaponMaterials = {"iron", "steel", "silver"};
-        String[] weaponPartNames = {"longsword_blade", "hammer_head", "hammer_head_raw", "long_axe_head"};
+        String[] weaponPartNames = {"longsword_blade", "hammer_head", "hammer_head_raw", "long_axe_head", "dagger_blade"};
         fillPartsMap(weaponParts, weaponMaterials, weaponPartNames);
         return weaponParts;
     }
@@ -149,20 +150,20 @@ public class MWItems {
     public static final RegistryObject<Item> STEEL_HAMMER = registerCombatItem("steel_hammer", () -> new HammerItem(MWTiers.STEEL, 8, -3.3f, new Item.Properties().tab(MedievalWorlds.combatTab)));
     public static final RegistryObject<Item> NETHERITE_HAMMER = registerCombatItem("netherite_hammer", () -> new HammerItem(Tiers.NETHERITE, 8, -3.3f, new Item.Properties().tab(MedievalWorlds.combatTab).fireResistant()));
 
-    public static final RegistryObject<Item> IRON_LONG_AXE = registerCombatItem("iron_long_axe", () -> new MWAxeWeapon(Tiers.IRON, 4, -3, 2, new Item.Properties().tab(MedievalWorlds.combatTab)));
-    public static final RegistryObject<Item> SILVER_LONG_AXE = registerCombatItem("silver_long_axe", () -> new SilverLongAxe(MWTiers.SILVER, 4, -3, 2, new Item.Properties().tab(MedievalWorlds.combatTab)));
-    public static final RegistryObject<Item> STEEL_LONG_AXE = registerCombatItem("steel_long_axe", () -> new MWAxeWeapon(MWTiers.STEEL, 4, -3, 2, new Item.Properties().tab(MedievalWorlds.combatTab)));
-    public static final RegistryObject<Item> NETHERITE_LONG_AXE = registerCombatItem("netherite_long_axe", () -> new MWAxeWeapon(Tiers.NETHERITE, 4, -3f, 2, new Item.Properties().tab(MedievalWorlds.combatTab).fireResistant()));
+    public static final RegistryObject<Item> IRON_LONG_AXE = registerCombatItem("iron_long_axe", () -> new MWAxeWeapon(Tiers.IRON, 3, -3, 2, new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<Item> SILVER_LONG_AXE = registerCombatItem("silver_long_axe", () -> new SilverLongAxe(MWTiers.SILVER, 3, -3, 2, new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<Item> STEEL_LONG_AXE = registerCombatItem("steel_long_axe", () -> new MWAxeWeapon(MWTiers.STEEL, 3, -3, 2, new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<Item> NETHERITE_LONG_AXE = registerCombatItem("netherite_long_axe", () -> new MWAxeWeapon(Tiers.NETHERITE, 3, -3f, 2, new Item.Properties().tab(MedievalWorlds.combatTab).fireResistant()));
 
-    public static final RegistryObject<Item> IRON_LONGSWORD = registerCombatItem("iron_longsword", () -> new MWSwordWeapon(Tiers.IRON, 6, -2.8f, 0.5f, new Item.Properties().tab(MedievalWorlds.combatTab)));
-    public static final RegistryObject<Item> SILVER_LONGSWORD = registerCombatItem("silver_longsword", () -> new SilverCustomSword(MWTiers.STEEL, 6, -2.8f, 0.5f, new Item.Properties().tab(MedievalWorlds.combatTab)));
-    public static final RegistryObject<Item> STEEL_LONGSWORD = registerCombatItem("steel_longsword", () -> new MWSwordWeapon(MWTiers.STEEL, 6, -2.8f, 0.5f, new Item.Properties().tab(MedievalWorlds.combatTab)));
-    public static final RegistryObject<Item> NETHERITE_LONGSWORD = registerCombatItem("netherite_longsword", () -> new MWSwordWeapon(Tiers.NETHERITE, 6, -2.7f, 0.5f, new Item.Properties().tab(MedievalWorlds.combatTab).fireResistant()));
+    public static final RegistryObject<Item> IRON_LONGSWORD = registerCombatItem("iron_longsword", () -> new MWSwordWeapon(Tiers.IRON, 4, -2.8f, 0.5f, new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<Item> SILVER_LONGSWORD = registerCombatItem("silver_longsword", () -> new SilverCustomSword(MWTiers.STEEL, 4, -2.8f, 0.5f, new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<Item> STEEL_LONGSWORD = registerCombatItem("steel_longsword", () -> new MWSwordWeapon(MWTiers.STEEL, 4, -2.8f, 0.5f, new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<Item> NETHERITE_LONGSWORD = registerCombatItem("netherite_longsword", () -> new MWSwordWeapon(Tiers.NETHERITE, 4, -2.7f, 0.5f, new Item.Properties().tab(MedievalWorlds.combatTab).fireResistant()));
 
-    public static final RegistryObject<Item> IRON_DAGGER = registerCombatItem("iron_dagger", () -> new MWSwordWeapon(Tiers.IRON, 1, 0, -1.5f, new Item.Properties().tab(MedievalWorlds.combatTab)));
-    public static final RegistryObject<Item> SILVER_DAGGER = registerCombatItem("silver_dagger", () -> new SilverCustomSword(MWTiers.SILVER, 1, 0, -1.5f, new Item.Properties().tab(MedievalWorlds.combatTab)));
-    public static final RegistryObject<Item> STEEL_DAGGER = registerCombatItem("steel_dagger", () -> new MWSwordWeapon(MWTiers.STEEL, 1, 0, -1.5f, new Item.Properties().tab(MedievalWorlds.combatTab)));
-    public static final RegistryObject<Item> NETHERITE_DAGGER = registerCombatItem("netherite_dagger", () -> new MWSwordWeapon(Tiers.NETHERITE, 1, 0, -1.5f, new Item.Properties().tab(MedievalWorlds.combatTab).fireResistant()));
+    public static final RegistryObject<Item> IRON_DAGGER = registerCombatItem("iron_dagger", () -> new MWSwordWeapon(Tiers.IRON, 1, -0.5f, -1f, new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<Item> SILVER_DAGGER = registerCombatItem("silver_dagger", () -> new SilverCustomSword(MWTiers.SILVER, 1, -0.5f, -1f, new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<Item> STEEL_DAGGER = registerCombatItem("steel_dagger", () -> new MWSwordWeapon(MWTiers.STEEL, 1, -0.5f, -1f, new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<Item> NETHERITE_DAGGER = registerCombatItem("netherite_dagger", () -> new MWSwordWeapon(Tiers.NETHERITE, 1, -0.5f, -1f, new Item.Properties().tab(MedievalWorlds.combatTab).fireResistant()));
 
     //Armor
     public static final RegistryObject<Item> BRONZE_HELMET = registerCombatItem("bronze_helmet", () -> new ArmorItem(MWArmorMaterials.BRONZE_MATERIAL, EquipmentSlot.HEAD, new Item.Properties().tab(MedievalWorlds.combatTab)));

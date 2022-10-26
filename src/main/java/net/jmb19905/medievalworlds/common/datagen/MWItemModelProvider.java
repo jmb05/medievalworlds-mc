@@ -164,25 +164,15 @@ public class MWItemModelProvider extends ItemModelProvider {
 
         MWItems.TOOL_PARTS.forEach(createPartModel());
 
-        createWeaponPart("iron", "hammer_head", "iron_hammer", "heated_iron_hammer_head");
-        createWeaponPart("iron", "hammer_head_raw", "iron_hammer", "heated_iron_hammer_head");
-        createWeaponPart("iron", "long_axe_head", "iron_weapon", "heated_iron_weapon");
-        createWeaponPart("iron", "longsword_blade", "iron_weapon", "heated_iron_weapon");
+        String[] materialNames = {"iron", "steel", "silver", "netherite"};
 
-        createWeaponPart("steel", "hammer_head", "steel_hammer", "heated_steel_hammer_head");
-        createWeaponPart("steel", "hammer_head_raw", "steel_hammer", "heated_steel_hammer_head");
-        createWeaponPart("steel", "long_axe_head", "steel_weapon", "heated_steel_weapon");
-        createWeaponPart("steel", "longsword_blade", "steel_weapon", "heated_steel_weapon");
-
-        createWeaponPart("silver", "hammer_head", "silver_hammer", "heated_silver_hammer_head");
-        createWeaponPart("silver", "hammer_head_raw", "silver_hammer", "heated_silver_hammer_head");
-        createWeaponPart("silver", "long_axe_head", "silver_weapon", "heated_silver_weapon");
-        createWeaponPart("silver", "longsword_blade", "silver_weapon", "heated_silver_weapon");
-
-        createWeaponPart("netherite", "hammer_head", "netherite_hammer", "heated_netherite_hammer_head");
-        createWeaponPart("netherite", "hammer_head_raw", "netherite_hammer", "heated_netherite_hammer_head");
-        createWeaponPart("netherite", "long_axe_head", "netherite_weapon", "heated_netherite_weapon");
-        createWeaponPart("netherite", "longsword_blade", "netherite_weapon", "heated_netherite_weapon");
+        for(String material : materialNames) {
+            createWeaponPart(material, "hammer_head", material + "_hammer", "heated_" + material + "_hammer_head");
+            createWeaponPart(material, "hammer_head_raw", material + "_hammer", "heated_" + material + "_hammer_head");
+            createWeaponPart(material, "long_axe_head", material + "_weapon", "heated_" + material + "_weapon");
+            createWeaponPart(material, "longsword_blade", material + "_weapon", "heated_" + material + "_weapon");
+            createWeaponPart(material, "dagger_blade", material + "_weapon", "heated_" + material + "_weapon");
+        }
     }
 
     private BiConsumer<? super String, ? super RegistryObject<Item>> createPartModel() {

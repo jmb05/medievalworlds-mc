@@ -116,10 +116,6 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         forgeHammer(recipeConsumer, ItemTags.STONE_TOOL_MATERIALS, MWItems.STONE_FORGE_HAMMER.get(), "stone_tag");
         forgeHammer(recipeConsumer, Blocks.IRON_BLOCK, MWItems.IRON_FORGE_HAMMER.get());
         forgeHammer(recipeConsumer, MWBlocks.STEEL_BLOCK.get(), MWItems.STEEL_FORGE_HAMMER.get());
-
-        daggerRecipe(recipeConsumer, Items.IRON_NUGGET, MWItems.IRON_DAGGER.get());
-        daggerRecipe(recipeConsumer, MWItems.SILVER_NUGGET.get(), MWItems.SILVER_DAGGER.get());
-        daggerRecipe(recipeConsumer, MWItems.STEEL_NUGGET.get(), MWItems.STEEL_DAGGER.get());
     }
 
     protected void buildSlackTubRecipes(@NotNull Consumer<FinishedRecipe> recipeConsumer) {
@@ -299,117 +295,46 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
     protected void buildAnvilRecipes(@NotNull Consumer<FinishedRecipe> recipeConsumer) {
         anvilRecipe(recipeConsumer, new ItemStack(Items.IRON_BARS, 3), new ItemStack(Items.IRON_INGOT, 1), "", 0);
 
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_armor_plate").get(), 1),    new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 1), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_axe_head").get(), 1),       new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 3), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_hoe_head").get(), 1),       new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 2), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_pickaxe_head").get(), 1),   new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 3), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_shovel_head").get(), 1),    new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 1), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_sword_blade").get(), 1),    new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 2), "", 0);
+        String[] toolMaterialNames = {"bronze", "iron", "gold", "silver", "steel"};
 
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_armor_plate").get(), 1), "_from_armor_plate", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_axe_head").get(), 1), "_from_axe_head", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_hoe_head").get(), 1), "_from_hoe_head", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_pickaxe_head").get(), 1), "_from_pickaxe_head", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_shovel_head").get(), 1), "_from_shovel_head", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_sword_blade").get(), 1), "_from_sword_blade", 0);
+        for (String material : toolMaterialNames) {
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material + "_armor_plate").get(), 1),    new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 1), "", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material + "_axe_head").get(), 1),       new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 3), "", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material + "_hoe_head").get(), 1),       new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 2), "", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material + "_pickaxe_head").get(), 1),   new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 3), "", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material + "_shovel_head").get(), 1),    new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 1), "", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material + "_sword_blade").get(), 1),    new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 2), "", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material + "_arrow_head").get(), 8),     new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 1), "", 0);
 
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_armor_plate").get(), 1),  new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 1), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_axe_head").get(), 1),     new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 3), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_hoe_head").get(), 1),     new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 2), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_pickaxe_head").get(), 1), new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 3), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_shovel_head").get(), 1),  new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 1), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_sword_blade").get(), 1),  new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 2), "", 1);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material +"_armor_plate").get(), 1), "_from_armor_plate", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material +"_axe_head").get(), 1), "_from_axe_head", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material +"_hoe_head").get(), 1), "_from_hoe_head", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material +"_pickaxe_head").get(), 1), "_from_pickaxe_head", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material +"_shovel_head").get(), 1), "_from_shovel_head", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material +"_sword_blade").get(), 1), "_from_sword_blade", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_" + material + "_arrow_head").get(), 8), "", 0);
+        }
 
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_armor_plate").get(), 1), "_from_armor_plate", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_axe_head").get(), 1), "_from_axe_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_hoe_head").get(), 1), "_from_hoe_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_pickaxe_head").get(), 1), "_from_pickaxe_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_shovel_head").get(), 1), "_from_shovel_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_sword_blade").get(), 1), "_from_sword_blade", 1);
+        String[] weaponMaterialNames = {"iron", "steel", "silver"};
 
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_armor_plate").get(), 1),  new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 1), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_axe_head").get(), 1),     new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 3), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_hoe_head").get(), 1),     new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 2), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_pickaxe_head").get(), 1), new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 3), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_shovel_head").get(), 1),  new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 1), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_sword_blade").get(), 1),  new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 2), "", 0);
+        for (String material : weaponMaterialNames) {
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_" + material + "_hammer_head_raw").get(), 1), new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 10),   "", 2);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_" + material + "_long_axe_head").get(), 1),   new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 10),   "", 2);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_" + material + "_longsword_blade").get(), 1), new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 10),   "", 2);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_" + material + "_dagger_blade").get(), 2),    new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 1), "", 0);
 
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_armor_plate").get(), 1), "_from_armor_plate", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_axe_head").get(), 1), "_from_axe_head", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_hoe_head").get(), 1), "_from_hoe_head", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_pickaxe_head").get(), 1), "_from_pickaxe_head", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_shovel_head").get(), 1), "_from_shovel_head", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_sword_blade").get(), 1), "_from_sword_blade", 0);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_armor_plate").get(), 1),    new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 1), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_axe_head").get(), 1),       new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 3), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_hoe_head").get(), 1),       new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 2), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_pickaxe_head").get(), 1),   new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 3), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_shovel_head").get(), 1),    new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 1), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_sword_blade").get(), 1),    new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 2), "", 1);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_armor_plate").get(), 1), "_from_armor_plate", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_axe_head").get(), 1), "_from_axe_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_hoe_head").get(), 1), "_from_hoe_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_pickaxe_head").get(), 1), "_from_pickaxe_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_shovel_head").get(), 1), "_from_shovel_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_sword_blade").get(), 1), "_from_sword_blade", 1);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_armor_plate").get(), 1),     new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 1), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_axe_head").get(), 1),        new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 3), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_hoe_head").get(), 1),        new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 2), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_pickaxe_head").get(), 1),    new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 3), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_shovel_head").get(), 1),     new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 1), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_sword_blade").get(), 1),     new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 2), "", 1);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_armor_plate").get(), 1), "_from_armor_plate", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_axe_head").get(), 1), "_from_axe_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_hoe_head").get(), 1), "_from_hoe_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 3), new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_pickaxe_head").get(), 1), "_from_pickaxe_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_shovel_head").get(), 1), "_from_shovel_head", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 2), new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_sword_blade").get(), 1), "_from_sword_blade", 1);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_iron_hammer_head_raw").get(), 1), new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 10),   "", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_iron_long_axe_head").get(), 1),   new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 10),   "", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_iron_longsword_blade").get(), 1), new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 10),   "", 2);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_silver_hammer_head_raw").get(), 1), new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 10), "", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_silver_long_axe_head").get(), 1),   new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 10), "", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_silver_longsword_blade").get(), 1), new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 10), "", 2);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_steel_hammer_head_raw").get(), 1), new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 10), "", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_steel_long_axe_head").get(), 1),   new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 10), "", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.WEAPON_PARTS.get("heated_steel_longsword_blade").get(), 1), new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 10), "", 2);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_iron_hammer_head_raw").get(), 1), "_from_iron_hammer_head_raw", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_iron_long_axe_head").get(), 1),   "_from_iron_long_axe_head", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_iron_longsword_blade").get(), 1), "_from_iron_longsword_blade", 2);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_silver_hammer_head_raw").get(), 1), "_from_silver_hammer_head_raw", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_silver_long_axe_head").get(), 1),   "_from_silver_long_axe_head", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_silver_longsword_blade").get(), 1), "_from_silver_longsword_blade", 2);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_steel_hammer_head_raw").get(), 1), "_from_steel_hammer_head_raw", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_steel_long_axe_head").get(), 1),   "_from_steel_long_axe_head", 2);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_steel_longsword_blade").get(), 1), "_from_steel_longsword_blade", 2);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_arrow_head").get(), 8), new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 1), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_arrow_head").get(), 8), new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 1), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_arrow_head").get(), 8), new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 1), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_arrow_head").get(), 8), new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 1), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_arrow_head").get(), 8), new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 1), "", 1);
-
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_BRONZE_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_bronze_arrow_head").get(), 8), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_IRON_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_arrow_head").get(), 8), "", 0);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_GOLD_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_gold_arrow_head").get(), 8), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_SILVER_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_arrow_head").get(), 8), "", 1);
-        anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_STEEL_INGOT.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_arrow_head").get(), 8), "", 0);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_" + material + "_hammer_head_raw").get(), 1), "_from_" + material + "_hammer_head_raw", 2);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_" + material + "_long_axe_head").get(), 1),   "_from_" + material + "_long_axe_head", 2);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 10), new ItemStack(MWItems.WEAPON_PARTS.get("heated_" + material + "_longsword_blade").get(), 1), "_from_" + material + "_longsword_blade", 2);
+            anvilRecipe(recipeConsumer, new ItemStack(MWItems.HEATED_INGOTS.get(material).get(), 1), new ItemStack(MWItems.WEAPON_PARTS.get("heated_" + material + "_dagger_blade").get(), 2), "_from_" + material + "_dagger_blade", 0);
+        }
     }
 
     protected void buildSmithingRecipes(@NotNull Consumer<FinishedRecipe> recipeConsumer) {
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("iron_hammer_head").get(), MWItems.IRON_HAMMER.get());
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("iron_long_axe_head").get(), MWItems.IRON_LONG_AXE.get());
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("iron_longsword_blade").get(), MWItems.IRON_LONGSWORD.get());
+        toolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("iron_dagger_blade").get(), MWItems.IRON_DAGGER.get());
         smithingRecipe(recipeConsumer, new ItemStack(Items.IRON_BOOTS, 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_armor_plate").get(), 8), new ItemStack(MWItems.IRON_KNIGHT_BOOTS.get(), 1), "");
         smithingRecipe(recipeConsumer, new ItemStack(Items.IRON_LEGGINGS, 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_armor_plate").get(), 8), new ItemStack(MWItems.IRON_KNIGHT_LEGGINGS.get(), 1), "");
         smithingRecipe(recipeConsumer, new ItemStack(Items.IRON_CHESTPLATE, 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_iron_armor_plate").get(), 8), new ItemStack(MWItems.IRON_KNIGHT_CHESTPLATE.get(), 1), "");
@@ -422,6 +347,7 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("silver_hammer_head").get(), MWItems.SILVER_HAMMER.get());
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("silver_long_axe_head").get(), MWItems.SILVER_LONG_AXE.get());
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("silver_longsword_blade").get(), MWItems.SILVER_LONGSWORD.get());
+        toolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("silver_dagger_blade").get(), MWItems.SILVER_DAGGER.get());
         smithingRecipe(recipeConsumer, new ItemStack(MWItems.SILVER_BOOTS.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_armor_plate").get(), 8), new ItemStack(MWItems.SILVER_KNIGHT_BOOTS.get(), 1), "");
         smithingRecipe(recipeConsumer, new ItemStack(MWItems.SILVER_LEGGINGS.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_armor_plate").get(), 8), new ItemStack(MWItems.SILVER_KNIGHT_LEGGINGS.get(), 1), "");
         smithingRecipe(recipeConsumer, new ItemStack(MWItems.SILVER_CHESTPLATE.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_silver_armor_plate").get(), 8), new ItemStack(MWItems.SILVER_KNIGHT_CHESTPLATE.get(), 1), "");
@@ -430,6 +356,7 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_hammer_head").get(), MWItems.STEEL_HAMMER.get());
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_long_axe_head").get(), MWItems.STEEL_LONG_AXE.get());
         bigToolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_longsword_blade").get(), MWItems.STEEL_LONGSWORD.get());
+        toolSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_dagger_blade").get(), MWItems.STEEL_DAGGER.get());
         smithingRecipe(recipeConsumer, new ItemStack(MWItems.STEEL_BOOTS.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_armor_plate").get(), 8), new ItemStack(MWItems.STEEL_KNIGHT_BOOTS.get(), 1), "");
         smithingRecipe(recipeConsumer, new ItemStack(MWItems.STEEL_LEGGINGS.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_armor_plate").get(), 8), new ItemStack(MWItems.STEEL_KNIGHT_LEGGINGS.get(), 1), "");
         smithingRecipe(recipeConsumer, new ItemStack(MWItems.STEEL_CHESTPLATE.get(), 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_steel_armor_plate").get(), 8), new ItemStack(MWItems.STEEL_KNIGHT_CHESTPLATE.get(), 1), "");
@@ -484,9 +411,14 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         netheriteBigSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_longsword_blade").get(), MWItems.WEAPON_PARTS.get("netherite_longsword_blade").get());
         netheriteBigSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_hammer_head").get(), MWItems.WEAPON_PARTS.get("netherite_hammer_head").get());
         netheriteBigSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_hammer_head_raw").get(), MWItems.WEAPON_PARTS.get("netherite_hammer_head_raw").get());
+        netheriteSmithing(recipeConsumer, MWItems.WEAPON_PARTS.get("steel_dagger_blade").get(), MWItems.WEAPON_PARTS.get("netherite_dagger_blade").get());
 
         netheriteSmithing(recipeConsumer, MWItems.STEEL_HORSE_ARMOR.get(), MWItems.NETHERITE_HORSE_ARMOR.get());
         netheriteSmithing(recipeConsumer, MWItems.STEEL_FORGE_HAMMER.get(), MWItems.NETHERITE_FORGE_HAMMER.get());
+        netheriteSmithing(recipeConsumer, MWItems.STEEL_BOOTS.get(), Items.NETHERITE_BOOTS);
+        netheriteSmithing(recipeConsumer, MWItems.STEEL_LEGGINGS.get(), Items.NETHERITE_LEGGINGS);
+        netheriteSmithing(recipeConsumer, MWItems.STEEL_CHESTPLATE.get(), Items.NETHERITE_CHESTPLATE);
+        netheriteSmithing(recipeConsumer, MWItems.STEEL_HELMET.get(), Items.NETHERITE_HELMET);
         netheriteSmithing(recipeConsumer, MWItems.STEEL_KNIGHT_BOOTS.get(), MWItems.NETHERITE_KNIGHT_BOOTS.get());
         netheriteSmithing(recipeConsumer, MWItems.STEEL_KNIGHT_LEGGINGS.get(), MWItems.NETHERITE_KNIGHT_LEGGINGS.get());
         netheriteSmithing(recipeConsumer, MWItems.STEEL_KNIGHT_CHESTPLATE.get(), MWItems.NETHERITE_KNIGHT_CHESTPLATE.get());
@@ -499,7 +431,7 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         netheriteBigSmithing(recipeConsumer, MWItems.STEEL_LONGSWORD.get(), MWItems.NETHERITE_LONGSWORD.get());
         netheriteBigSmithing(recipeConsumer, MWItems.STEEL_LONG_AXE.get(), MWItems.NETHERITE_LONG_AXE.get());
         netheriteBigSmithing(recipeConsumer, MWItems.STEEL_HAMMER.get(), MWItems.NETHERITE_HAMMER.get());
-        //netheriteSmithing(recipeConsumer, MWItems.STEEL_LANCE.get(), MWItems.NETHERITE_LANCE.get());
+        netheriteSmithing(recipeConsumer, MWItems.STEEL_DAGGER.get(), MWItems.NETHERITE_DAGGER.get());
 
         smithingRecipe(recipeConsumer, new ItemStack(MWItems.TOOL_PARTS.get("steel_arrow_head").get(), 16), new ItemStack(Items.NETHERITE_INGOT, 1), new ItemStack(MWItems.TOOL_PARTS.get("heated_netherite_arrow_head").get(), 16), "_from_smithing");
     }

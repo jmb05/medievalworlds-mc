@@ -1,11 +1,11 @@
-package net.jmb19905.medievalworlds.client;
+package net.jmb19905.medievalworlds.client.armPoses;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.client.IArmPoseTransformer;
 
-public class CustomArmPose implements IArmPoseTransformer {
+public class StaffArmPose implements IArmPoseTransformer {
     @Override
     public void applyTransform(HumanoidModel<?> model, LivingEntity entity, HumanoidArm arm) {
         if (entity.isBlocking()) {

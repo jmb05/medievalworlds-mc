@@ -30,7 +30,7 @@ public class StaffItem extends MWSwordWeapon {
     private final Multimap<Attribute, AttributeModifier> additionalOffhandModifiers;
 
     public StaffItem() {
-        this(MWTiers.STURDY_WOOD, 1, -2.4f, 3.0f, new Properties().tab(MedievalWorlds.combatTab).stacksTo(1));
+        this(MWTiers.STURDY_WOOD, 1, -2.4f, 2.5f, new Properties().tab(MedievalWorlds.combatTab).stacksTo(1));
     }
 
     public StaffItem(Tier tier, int attackDamage, float attackSpeed, float reachBonus, Properties properties) {
