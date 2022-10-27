@@ -3,7 +3,7 @@ package net.jmb19905.medievalworlds.common.datagen;
 import com.google.common.collect.ImmutableList;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.datagen.recipes.*;
-import net.jmb19905.medievalworlds.common.item.heated.HeatedItem;
+import net.jmb19905.medievalworlds.common.item.HeatedItem;
 import net.jmb19905.medievalworlds.common.registries.MWBlocks;
 import net.jmb19905.medievalworlds.common.registries.MWItems;
 import net.jmb19905.medievalworlds.common.registries.MWTags;

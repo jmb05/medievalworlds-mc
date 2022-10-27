@@ -6,7 +6,7 @@ modId = "medievalworlds" #mandatory
 version = "${file.jarVersion}" #mandatory
 displayName = "MedievalWorlds" #mandatory
 displayURL="http://https://github.com/jmb05/medievalworlds-mc/" #optional
-#logoFile="medievalworlds.png" #optional
+logoFile="medievalworlds.png" #optional
 authors = "jmb19905" #optional
 description = '''
 Did you ever wanted to wield mighty weapons and rule the Minecraft world??
@@ -14,7 +14,13 @@ Well this is your chance!!!
 '''
 [[dependencies.medievalworlds]]
     modId="curios"
-    mandatory=false
+    mandatory=true
     versionRange="[1.19.2-5.1.1.0,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.medievalworlds]]
+    modId="bettercombat"
+    mandatory=false
+    versionRange="[1.4.5+1.19-forge,)"
     ordering="NONE"
     side="BOTH"

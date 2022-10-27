@@ -20,6 +20,8 @@ import java.util.function.Supplier;
 
 public class MessageHandlerOnClient {
 
+    //private static Random random = new Random();
+
     public static boolean isThisProtocolAcceptedByClient(String protocolVersion) {
         return NetworkStartupCommon.MESSAGE_PROTOCOL_VERSION.equals(protocolVersion);
     }
@@ -51,7 +53,7 @@ public class MessageHandlerOnClient {
         BlockPos coords = packet.getTargetCoords();
         float spread = packet.getSpread();
         for(int i = 0; i < 8; ++i) {
-            level.addParticle(ParticleTypes.CLOUD, coords.getX() + random.nextDouble() * spread, coords.getY() + 1.2D * spread, coords.getZ() + random.nextDouble() * spread, random.nextDouble() * .1, 0.1D, Math.abs(random.nextDouble()) * .05);
+            level.addAlwaysVisibleParticle(ParticleTypes.POOF, coords.getX() + random.nextDouble() * spread, coords.getY() + 1.2D * spread, coords.getZ() + random.nextDouble() * spread, (random.nextDouble() - 0.5) * 0.05, 0.03D, (random.nextDouble() - 0.5) * 0.05);
         }
     }
 

@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.common.item.heated;
+package net.jmb19905.medievalworlds.common.item;
 
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.networking.SteamEffectPacket;

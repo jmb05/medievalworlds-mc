@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.item.*;
 import net.jmb19905.medievalworlds.common.item.armor.*;
-import net.jmb19905.medievalworlds.common.item.heated.HeatedItem;
+import net.jmb19905.medievalworlds.common.item.HeatedItem;
 import net.jmb19905.medievalworlds.common.item.quiver.QuiverItem;
 import net.jmb19905.medievalworlds.common.item.silver.*;
 import net.jmb19905.medievalworlds.common.item.weapon.MWAxeWeapon;
