@@ -1,0 +1,39 @@
+{
+  "parent": "builtin/entity",
+  "textures": {
+    "particle": "block/stripped_spruce_log"
+  },
+  "gui_light": "front",
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, -180, 0],
+      "translation": [0, -8.5, 5.25]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, -180, 0],
+      "translation": [0, -8.5, 5.25]
+    },
+    "firstperson_righthand": {
+      "rotation": [20, -180, 0],
+      "translation": [0, -4, 3]
+    },
+    "firstperson_lefthand": {
+      "rotation": [20, -180, 0],
+      "translation": [0, -4, 3]
+    },
+    "ground": {
+      "rotation": [90, 90, 0],
+      "translation": [-1.25, -4, -6.5]
+    },
+    "gui": {
+      "rotation": [33, -112, 31],
+      "translation": [-0.5, -3.25, 0],
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "fixed": {
+      "rotation": [0, 90, 0],
+      "translation": [0.5, -4, 0],
+      "scale": [0.6, 0.6, 0.6]
+    }
+  }
+}

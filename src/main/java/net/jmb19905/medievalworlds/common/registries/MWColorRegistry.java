@@ -14,7 +14,7 @@ public class MWColorRegistry {
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
         event.register((state, tintGetter, pos, tint)
                         -> tintGetter != null && pos != null ? BiomeColors.getAverageWaterColor(tintGetter, pos) : -1,
-                MWBlocks.SLACK_TUB_BLOCK.get());
+                MWBlocks.SLACK_TUB.get());
     }
 
     @SubscribeEvent

@@ -61,10 +61,10 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
     }
 
     public AlloyFurnaceMenu(final int windowID, final Inventory playerInventory, final FriendlyByteBuf data) {
-        this(windowID, playerInventory, getTileEntity(playerInventory, data));
+        this(windowID, playerInventory, getBlockEntity(playerInventory, data));
     }
 
-    private static AlloyFurnaceBlockEntity getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
+    private static AlloyFurnaceBlockEntity getBlockEntity(final Inventory playerInv, final FriendlyByteBuf data) {
         Objects.requireNonNull(playerInv, "playerInv cannot be null");
         Objects.requireNonNull(data, "data cannot be null");
         final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());

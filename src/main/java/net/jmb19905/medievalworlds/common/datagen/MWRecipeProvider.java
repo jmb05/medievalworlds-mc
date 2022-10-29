@@ -103,13 +103,19 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     protected void buildBlastHeatingRecipes(@NotNull Consumer<FinishedRecipe> recipeConsumer) {
-        heatingBlasting(recipeConsumer, MWItems.HEATED_COPPER_INGOT.get());
-        heatingBlasting(recipeConsumer, MWItems.HEATED_BRONZE_INGOT.get());
-        heatingBlasting(recipeConsumer, MWItems.HEATED_GOLD_INGOT.get());
-        heatingBlasting(recipeConsumer, MWItems.HEATED_IRON_INGOT.get());
-        heatingBlasting(recipeConsumer, MWItems.HEATED_SILVER_INGOT.get());
-        heatingBlasting(recipeConsumer, MWItems.HEATED_STEEL_INGOT.get());
-        heatingBlasting(recipeConsumer, MWItems.HEATED_NETHERITE_INGOT.get());
+        for (RegistryObject<HeatedItem> regOb : MWItems.HEATED_INGOTS.values()) {
+            heatingBlasting(recipeConsumer, regOb.get());
+        }
+        for (RegistryObject<Item> regOb : MWItems.WEAPON_PARTS.values()) {
+            if (regOb.get() instanceof HeatedItem) {
+                heatingBlasting(recipeConsumer, (HeatedItem) regOb.get());
+            }
+        }
+        for (RegistryObject<Item> regOb : MWItems.TOOL_PARTS.values()) {
+            if (regOb.get() instanceof HeatedItem) {
+                heatingBlasting(recipeConsumer, (HeatedItem) regOb.get());
+            }
+        }
     }
 
     protected void buildToolAndWeaponRecipes(@NotNull Consumer<FinishedRecipe> recipeConsumer) {
@@ -187,7 +193,7 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         cloakRecipe(recipeConsumer, Blocks.BROWN_WOOL, Items.RED_DYE, MWItems.CLOAK.get());
         cloakRecipe(recipeConsumer, Blocks.BLACK_WOOL, Items.BLUE_DYE, MWItems.DARK_CLOAK.get());
-        cloakRecipe(recipeConsumer, Blocks.WHITE_WOOL, Items.LIME_DYE, MWItems.LIGHT_CLOAK.get());
+        cloakRecipe(recipeConsumer, Blocks.WHITE_WOOL, Items.YELLOW_DYE, MWItems.LIGHT_CLOAK.get());
 
         ShapedRecipeBuilder.shaped(Blocks.BLAST_FURNACE)
                 .define('S', Blocks.SMOOTH_STONE)
@@ -279,12 +285,23 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("leather_and_string", has(Tags.Items.LEATHER, Tags.Items.STRING))
                 .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, "quiver"));
 
-        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("gold_arrow_head").get(), 4);
-        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("silver_arrow_head").get(), 4);
-        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("bronze_arrow_head").get(), 6);
-        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("iron_arrow_head").get(), 8);
-        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("steel_arrow_head").get(), 10);
-        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("netherite_arrow_head").get(), 12);
+        ShapedRecipeBuilder.shaped(MWItems.LONGBOW.get())
+                .define('I', Tags.Items.RODS_WOODEN)
+                .define('#', MWTags.Items.INGOTS_STEEL)
+                .define('S', Tags.Items.STRING)
+                .pattern("IIS")
+                .pattern("# S")
+                .pattern("IIS")
+                .unlockedBy("has_steel_ingot", has(MWTags.Items.INGOTS_STEEL))
+                .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, "longbow"));
+
+        arrowCrafting(recipeConsumer, Items.FLINT, Items.ARROW);
+        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("gold_arrow_head").get(), MWItems.GOLD_ARROW.get());
+        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("silver_arrow_head").get(), MWItems.SILVER_ARROW.get());
+        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("bronze_arrow_head").get(), MWItems.BRONZE_ARROW.get());
+        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("iron_arrow_head").get(), MWItems.IRON_ARROW.get());
+        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("steel_arrow_head").get(), MWItems.STEEL_ARROW.get());
+        arrowCrafting(recipeConsumer, MWItems.TOOL_PARTS.get("netherite_arrow_head").get(), MWItems.NETHERITE_ARROW.get());
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -472,14 +489,8 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         removeRecipe(recipeConsumer, new ResourceLocation("netherite_helmet_smithing"), Items.NETHERITE_HELMET);
     }
 
-    protected static void arrowCrafting(@NotNull Consumer<FinishedRecipe> recipeConsumer, @NotNull Item arrowHead, int yield) {
-        ShapedRecipeBuilder.shaped(Items.ARROW, yield)
-                .define('A', Ingredient.of(arrowHead))
-                .define('I', Ingredient.of(Tags.Items.RODS_WOODEN))
-                .define('F', Ingredient.of(Tags.Items.FEATHERS))
-                .pattern("A")
-                .pattern("I")
-                .pattern("F")
+    protected static void arrowCrafting(@NotNull Consumer<FinishedRecipe> recipeConsumer, @NotNull Item arrowHead, @NotNull Item arrowItem) {
+        new FletchingRecipeBuilder(new ItemStack(arrowItem, 4), Ingredient.of(arrowHead), Ingredient.of(Tags.Items.RODS_WOODEN), Ingredient.of(MWTags.Items.FLETCHING))
                 .unlockedBy("has_arrow_head", has(arrowHead))
                 .save(recipeConsumer, "arrow_from_" + getItemName(arrowHead));
     }
@@ -518,16 +529,6 @@ public class MWRecipeProvider extends RecipeProvider implements IConditionBuilde
         new SlackTubRecipeBuilder(new ItemStack(output, outputCount), input, inputCount)
                 .unlockedBy(getHasName(output), has(output))
                 .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, getItemName(output) + "_quenching"));
-    }
-
-    protected static void daggerRecipe(Consumer<FinishedRecipe> recipeConsumer, ItemLike nugget, ItemLike dagger) {
-        ShapedRecipeBuilder.shaped(dagger)
-                .define('I', Items.STICK)
-                .define('#', nugget)
-                .pattern("#")
-                .pattern("I")
-                .unlockedBy(getItemName(nugget), has(nugget))
-                .save(recipeConsumer, new ResourceLocation(MedievalWorlds.MOD_ID, getItemName(dagger)));
     }
 
     @SuppressWarnings("SameParameterValue")

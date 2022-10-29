@@ -1,12 +1,15 @@
 package net.jmb19905.medievalworlds.common.datagen;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.common.item.MWArrowItem;
 import net.jmb19905.medievalworlds.common.registries.MWItems;
 import net.jmb19905.medievalworlds.common.registries.MWTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 
 public class MWItemTagsProvider extends ItemTagsProvider {
 
@@ -36,6 +39,8 @@ public class MWItemTagsProvider extends ItemTagsProvider {
                         MWItems.OAK_STAFF.get(),
                         MWItems.SPRUCE_STAFF.get()
                 );
+        tag(MWTags.Items.FLETCHING)
+                .addTag(Tags.Items.FEATHERS);
         tag(MWTags.Items.INGOTS_STEEL)
                 .add(MWItems.STEEL_INGOT.get());
         tag(MWTags.Items.INGOTS_SILVER)
@@ -52,6 +57,9 @@ public class MWItemTagsProvider extends ItemTagsProvider {
                 .add(MWItems.BRONZE_NUGGET.get());
         tag(MWTags.Items.NUGGETS_TIN)
                 .add(MWItems.TIN_NUGGET.get());
+
+        tag(ItemTags.ARROWS)
+                .add(MWItems.ARROWS.values().stream().map(RegistryObject::get).toArray(MWArrowItem[]::new));
 
         copy(MWTags.Blocks.ORES_SILVER, MWTags.Items.ORES_SILVER);
         copy(MWTags.Blocks.ORES_TIN, MWTags.Items.ORES_TIN);

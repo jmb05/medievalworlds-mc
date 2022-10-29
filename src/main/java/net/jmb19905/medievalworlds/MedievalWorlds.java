@@ -42,6 +42,7 @@ public class MedievalWorlds {
         VanillaOverride.ITEMS.register(modEventBus);
         MWItems.ITEMS.register(modEventBus);
         MWBlocks.BLOCKS.register(modEventBus);
+        MWEntityTypes.ENTITIES.register(modEventBus);
         MWBlockEntityTypes.BLOCK_ENTITIES.register(modEventBus);
         MWMenuTypes.MENU_TYPES.register(modEventBus);
         MWRecipeSerializers.RECIPE_SERIALIZER.register(modEventBus);

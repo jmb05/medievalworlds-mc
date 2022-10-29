@@ -4,8 +4,10 @@ import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.registries.MWBlocks;
 import net.jmb19905.medievalworlds.common.registries.MWEnchantments;
 import net.jmb19905.medievalworlds.common.registries.MWItems;
+import net.jmb19905.medievalworlds.util.MWUtil;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -131,6 +133,8 @@ public class MWLangProvider extends LanguageProvider {
         add(MWItems.STEEL_HORSE_ARMOR.get(), "Steel Horse Armor");
         add(MWItems.NETHERITE_HORSE_ARMOR.get(), "Netherite Horse Armor");
 
+        add(MWItems.LONGBOW.get(), "Longbow");
+
         add(MWItems.COIF.get(), "Coif");
         add(MWItems.GAMBESON.get(), "Gambeson");
 
@@ -140,9 +144,16 @@ public class MWLangProvider extends LanguageProvider {
         MWItems.WEAPON_PARTS.forEach(addPart());
 
         MWItems.HEATED_INGOTS.forEach((material, regOb) -> {
-            String upperCaseMaterial = material.substring(0, 1).toUpperCase() + material.substring(1);
+            String upperCaseMaterial = MWUtil.upperCaseFirstChar(material);
             add(regOb.get(), "Heated " + upperCaseMaterial + " Ingot");
         });
+
+        MWItems.ARROWS.forEach((material, regOb) -> {
+            String upperCaseMaterial = MWUtil.upperCaseFirstChar(material);
+            add(regOb.get(), upperCaseMaterial + " Arrow");
+        });
+
+        add(Items.ARROW, "Flint Arrow");
 
         //Blocks
         add(MWBlocks.CHARCOAL_LOG.get(), "Charcoal Log");
@@ -165,7 +176,7 @@ public class MWLangProvider extends LanguageProvider {
         add(MWBlocks.RAW_TIN_BLOCK.get(), "Raw Tin Block");
 
         add(MWBlocks.ALLOY_FURNACE.get(), "Alloy Furnace");
-        add(MWBlocks.SLACK_TUB_BLOCK.get(), "Slack Tub");
+        add(MWBlocks.SLACK_TUB.get(), "Slack Tub");
         add(MWBlocks.SIMPLE_BLOOMERY.get(), "Simple Bloomery");
 
         //Enchantments

@@ -8,14 +8,18 @@ import net.jmb19905.medievalworlds.client.renderers.armor.KnightArmorHelmetModel
 import net.jmb19905.medievalworlds.client.renderers.blockentity.CustomAnvilRenderer;
 import net.jmb19905.medievalworlds.client.renderers.curio.CloakRenderer;
 import net.jmb19905.medievalworlds.client.renderers.curio.QuiverRenderer;
+import net.jmb19905.medievalworlds.client.renderers.entity.MWArrowRenderer;
+import net.jmb19905.medievalworlds.client.renderers.item.LongbowModel;
 import net.jmb19905.medievalworlds.client.screen.AlloyFurnaceScreen;
 import net.jmb19905.medievalworlds.client.screen.CustomAnvilScreen;
+import net.jmb19905.medievalworlds.client.screen.CustomFletchingScreen;
 import net.jmb19905.medievalworlds.client.screen.CustomSmithingScreen;
 import net.jmb19905.medievalworlds.client.tooltip.ClientQuiverTooltip;
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
 import net.jmb19905.medievalworlds.common.capability.quiverInv.QuiverInv;
 import net.jmb19905.medievalworlds.common.item.quiver.QuiverTooltip;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
+import net.jmb19905.medievalworlds.common.registries.MWEntityTypes;
 import net.jmb19905.medievalworlds.common.registries.MWItems;
 import net.jmb19905.medievalworlds.common.registries.MWMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -38,6 +42,7 @@ public class ClientSetup {
     public static final ModelLayerLocation QUIVER_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "quiver"),"main");
     public static final ModelLayerLocation KNIGHT_HELMET_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "knight_armor_helmet"), "main");
     public static final ModelLayerLocation GAMBESON_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "gambeson"), "main");
+    public static final ModelLayerLocation LONGBOW_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "longbow"), "main");
 
     public static HumanoidModel.ArmPose CUSTOM;
 
@@ -45,20 +50,23 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent evt) {
-        MenuScreens.register(MWMenuTypes.ANVIL.get(), CustomAnvilScreen::new);
-        MenuScreens.register(MWMenuTypes.ALLOY.get(), AlloyFurnaceScreen::new);
-        MenuScreens.register(MWMenuTypes.SMITHING.get(), CustomSmithingScreen::new);
-
-        bewlr = new MWBEWLR();
-
-        CUSTOM = HumanoidModel.ArmPose.create("CUSTOM", false, new StaffArmPose());
 
         evt.enqueueWork(
-                () -> ItemProperties.register(MWItems.QUIVER.get(), new ResourceLocation(MedievalWorlds.MOD_ID, "filled"),
-                (stack, level, living, id) -> {
-                    QuiverInv inv = MWCapabilityManager.retrieveCapability(stack, QuiverInv.QUIVER_INV_CAPABILITY);
-                    return inv == null ? 0 : inv.getFillLevel();
-                }));
+                () -> {
+                    MenuScreens.register(MWMenuTypes.ANVIL.get(), CustomAnvilScreen::new);
+                    MenuScreens.register(MWMenuTypes.ALLOY.get(), AlloyFurnaceScreen::new);
+                    MenuScreens.register(MWMenuTypes.SMITHING.get(), CustomSmithingScreen::new);
+                    MenuScreens.register(MWMenuTypes.FLETCHING.get(), CustomFletchingScreen::new);
+
+                    bewlr = new MWBEWLR();
+                    CUSTOM = HumanoidModel.ArmPose.create("CUSTOM", false, new StaffArmPose());
+
+                    ItemProperties.register(MWItems.QUIVER.get(), new ResourceLocation(MedievalWorlds.MOD_ID, "filled"),
+                            (stack, level, living, id) -> {
+                                QuiverInv inv = MWCapabilityManager.retrieveCapability(stack, QuiverInv.QUIVER_INV_CAPABILITY);
+                                return inv == null ? 0 : inv.getFillLevel();
+                            });
+                });
     }
 
     @SubscribeEvent
@@ -71,12 +79,18 @@ public class ClientSetup {
     }
 
     @SubscribeEvent
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(MWEntityTypes.ARROW.get(), MWArrowRenderer::new);
+    }
+
+    @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(CUSTOM_ANVIL_LAYER, CustomAnvilRenderer::createBodyLayer);
         event.registerLayerDefinition(CLOAK_LAYER, CloakRenderer::createCloakLayer);
         event.registerLayerDefinition(QUIVER_LAYER, QuiverRenderer::createQuiverLayer);
         event.registerLayerDefinition(KNIGHT_HELMET_LAYER, KnightArmorHelmetModel::createBodyLayer);
         event.registerLayerDefinition(GAMBESON_LAYER, GambesonModel::createGambesonLayer);
+        event.registerLayerDefinition(LONGBOW_LAYER, LongbowModel::createLongbowLayer);
     }
 
     @Mod.EventBusSubscriber(modid = MedievalWorlds.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

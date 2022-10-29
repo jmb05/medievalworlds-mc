@@ -15,8 +15,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -28,6 +26,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
@@ -38,23 +37,16 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-public class CustomSmithingMenu extends AbstractContainerMenu {
+public class CustomSmithingMenu extends MWCraftingMenu<SmithingTableBlockEntity> {
 
-    private final Level level;
-    private final ContainerLevelAccess access;
     @Nullable
     private Recipe<?> selectedRecipe;
     private final List<Recipe<?>> allRecipes;
 
-    private final Player player;
-
-    private final InputSlot baseSlot;
-    private final InputSlot additionSlot;
-    private final OutputSlot outputSlot;
-
-    private final SmithingTableBlockEntity blockEntity;
+    private InputSlot baseSlot;
+    private InputSlot additionSlot;
+    private OutputSlot outputSlot;
 
     public int repairItemCountCost;
     private String itemName;
@@ -62,56 +54,39 @@ public class CustomSmithingMenu extends AbstractContainerMenu {
     private final DataSlot smithing = DataSlot.standalone();
 
     public CustomSmithingMenu(int windowId, Inventory inventory, SmithingTableBlockEntity blockEntity) {
-        super(MWMenuTypes.SMITHING.get(), windowId);
-        this.level = inventory.player.level;
-        this.player = inventory.player;
-        this.access = ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()), blockEntity.getBlockPos());
+        super(MWMenuTypes.SMITHING.get(), windowId, inventory, blockEntity);
         this.allRecipes = new ArrayList<>();
         allRecipes.addAll(this.level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING));
         allRecipes.addAll(this.level.getRecipeManager().getAllRecipesFor(MWRecipeSerializers.SMITHING_TYPE));
         setSmithing(false);
 
-        this.blockEntity = blockEntity;
+        this.addDataSlot(this.cost);
+        this.addDataSlot(this.smithing);
+    }
 
+    public CustomSmithingMenu(int windowId, Inventory inventory, FriendlyByteBuf byteBuf) {
+        this(windowId, inventory, getSmithingTableBlockEntity(inventory, byteBuf));
+    }
+
+    @Override
+    protected int addInputSlots() {
         baseSlot = new InputSlot(blockEntity.getInventory(), 0, 27, 47);
         this.addSlot(baseSlot);
         additionSlot = new InputSlot(blockEntity.getInventory(), 1, 76, 47);
         this.addSlot(additionSlot);
-        outputSlot = new OutputSlot(blockEntity.getInventory(), 2, 134, 47) {
-            @Override
-            public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
-                CustomSmithingMenu.this.onTake(player, stack);
-                setSmithing(false);
-            }
-
-            @Override
-            public boolean mayPickup(Player playerIn) {
-                return ((selectedRecipe != null && matchesSelected(level)) && (player.getAbilities().instabuild || player.experienceLevel >= cost.get())) || ((player.getAbilities().instabuild || player.experienceLevel >= cost.get()) && cost.get() > 0);
-            }
-        };
-        this.addSlot(outputSlot);
-
-
-        //Player Inventory
-        for(int i = 0; i < 3; ++i) {
-            for(int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-            }
-        }
-
-        //Hotbar
-        for(int k = 0; k < 9; ++k) {
-            this.addSlot(new Slot(inventory, k, 8 + k * 18, 142));
-        }
-
-        ((MWItemHandler) blockEntity.getInventory()).setContentsChangedListener(0, this::inputSlotsChanged);
-        ((MWItemHandler) blockEntity.getInventory()).setContentsChangedListener(1, this::inputSlotsChanged);
-
-        this.addDataSlot(this.cost);
+        return 2;
     }
 
-    public CustomSmithingMenu(int windowId, Inventory inventory, FriendlyByteBuf byteBuf) {
-        this(windowId, inventory, getBlockEntity(inventory, byteBuf));
+    @Override
+    public int addOutputSlots() {
+        outputSlot = new OutputSlot(blockEntity.getInventory(), 2, 134, 47, this::mayPickup, this::onTake);
+        this.addSlot(outputSlot);
+        return 1;
+    }
+
+    @Override
+    public boolean validBlockState(BlockState state) {
+        return state.getBlock() instanceof CustomSmithingTable;
     }
 
     private boolean matchesSelected(Level level) {
@@ -124,44 +99,52 @@ public class CustomSmithingMenu extends AbstractContainerMenu {
         return false;
     }
 
-    private void inputSlotsChanged() {
-        List<Recipe<?>> currentRecipes = getRecipes();
-        if(currentRecipes.isEmpty()) {
-            createRepairResult();
-        } else {
-            setSmithing(true);
-            selectedRecipe = currentRecipes.get(0);
-            ItemStack stack = ItemStack.EMPTY;
-            int recipeCost = 0;
-            if(selectedRecipe instanceof UpgradeRecipe upgradeRecipe) {
-                stack = upgradeRecipe.assemble(getSlotsAsContainer());
-            } else if(selectedRecipe instanceof SmithingRecipe smithingRecipe) {
-                recipeCost = smithingRecipe.getCost();
-                stack = smithingRecipe.assemble(new RecipeWrapper(blockEntity.getInventory()));
-            }
-
-            int nameRepairCost = 0;
-            ItemStack baseStack = baseSlot.getItem();
-            if(StringUtils.isBlank(this.itemName)) {
-                if(stack.hasCustomHoverName()) {
-                    nameRepairCost = 1;
-                    stack.resetHoverName();
-                }if(baseStack.hasCustomHoverName()) {
-                    nameRepairCost = 1;
-                    stack.resetHoverName();
+    @Override
+    protected void slotsChanged(int slotIndex) {
+        if (slotIndex == 0 || slotIndex == 1) {
+            List<Recipe<?>> currentRecipes = getRecipes();
+            if (currentRecipes.isEmpty()) {
+                createRepairResult();
+            } else {
+                setSmithing(true);
+                selectedRecipe = currentRecipes.get(0);
+                ItemStack stack = ItemStack.EMPTY;
+                int recipeCost = 0;
+                if (selectedRecipe instanceof UpgradeRecipe upgradeRecipe) {
+                    stack = upgradeRecipe.assemble(getSlotsAsContainer());
+                } else if (selectedRecipe instanceof SmithingRecipe smithingRecipe) {
+                    recipeCost = smithingRecipe.getCost();
+                    stack = smithingRecipe.assemble(new RecipeWrapper(blockEntity.getInventory()));
                 }
-            } else if (!this.itemName.equals(baseStack.getHoverName().getString())) {
-                nameRepairCost = 1;
-                stack.setHoverName(Component.literal(this.itemName));
-            }
 
-            cost.set(recipeCost + nameRepairCost);
-            outputSlot.set(stack);
-            broadcastChanges();
+                int nameRepairCost = 0;
+                ItemStack baseStack = baseSlot.getItem();
+                if (StringUtils.isBlank(this.itemName)) {
+                    if (stack.hasCustomHoverName()) {
+                        nameRepairCost = 1;
+                        stack.resetHoverName();
+                    }
+                    if (baseStack.hasCustomHoverName()) {
+                        nameRepairCost = 1;
+                        stack.resetHoverName();
+                    }
+                } else if (!this.itemName.equals(baseStack.getHoverName().getString())) {
+                    nameRepairCost = 1;
+                    stack.setHoverName(Component.literal(this.itemName));
+                }
+
+                cost.set(recipeCost + nameRepairCost);
+                outputSlot.set(stack);
+                broadcastChanges();
+            }
         }
     }
 
-    protected void  onTake(Player player, ItemStack stack) {
+    protected boolean mayPickup(Player player) {
+        return ((selectedRecipe != null && matchesSelected(level)) && (player.getAbilities().instabuild || player.experienceLevel >= cost.get())) || ((player.getAbilities().instabuild || player.experienceLevel >= cost.get()) && cost.get() > 0);
+    }
+
+    protected void onTake(Player player, ItemStack stack) {
         if(!player.getAbilities().instabuild) {
             player.giveExperienceLevels(-this.cost.get());
         }
@@ -176,7 +159,8 @@ public class CustomSmithingMenu extends AbstractContainerMenu {
             }
             baseSlot.getItem().shrink(shrinkAmountInput);
             additionSlot.getItem().shrink(shrinkAmountAddition);
-            inputSlotsChanged();
+            slotsChanged(0);
+            slotsChanged(1);
         } else {
             baseSlot.set(ItemStack.EMPTY);
             if(repairItemCountCost > 0) {
@@ -348,6 +332,7 @@ public class CustomSmithingMenu extends AbstractContainerMenu {
             outputSlot.set(outputStack);
             broadcastChanges();
         }
+        setSmithing(false);
     }
 
     public void setItemName(String name) {
@@ -360,22 +345,15 @@ public class CustomSmithingMenu extends AbstractContainerMenu {
                 itemstack.setHoverName(Component.literal(this.itemName));
             }
         }
-        this.inputSlotsChanged();
+        this.slotsChanged(0);
     }
 
-    private static SmithingTableBlockEntity getBlockEntity(final Inventory playerInv, final FriendlyByteBuf data) {
-        Objects.requireNonNull(playerInv, "playerInv cannot be null");
-        Objects.requireNonNull(data, "data cannot be null");
-        final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
+    private static SmithingTableBlockEntity getSmithingTableBlockEntity(final Inventory playerInv, final FriendlyByteBuf data) {
+        final BlockEntity tileAtPos = getBlockEntity(playerInv, data);
         if (tileAtPos instanceof SmithingTableBlockEntity) {
             return (SmithingTableBlockEntity) tileAtPos;
         }
         throw new IllegalStateException("BlockEntity is not correct " + tileAtPos);
-    }
-
-    @Override
-    public boolean stillValid(@NotNull Player player) {
-        return this.access.evaluate((level, pos) -> level.getBlockState(pos).getBlock() instanceof CustomSmithingTable && player.distanceToSqr((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D) <= 64.0D, true);
     }
 
     private List<Recipe<?>> getRecipes() {
@@ -411,20 +389,20 @@ public class CustomSmithingMenu extends AbstractContainerMenu {
     }
 
     @NotNull
-    public ItemStack quickMoveStack(@NotNull Player player, int slotIndex) {
+    public ItemStack quickMoveStack(@NotNull Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = getSlot(slotIndex);
+        Slot slot = getSlot(index);
         if (slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
-            if (slotIndex == 2) {
+            if (index == 2) {
                 if (!this.moveItemStackTo(itemstack1, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }
 
                 slot.onQuickCraft(itemstack1, itemstack);
-            } else if (slotIndex != 0 && slotIndex != 1) {
-                if (slotIndex >= 3 && slotIndex < 39) {
+            } else if (index != 0 && index != 1) {
+                if (index >= 3 && index < 39) {
                     int i = this.shouldQuickMoveToAdditionalSlot(itemstack) ? 1 : 0;
                     if (!this.moveItemStackTo(itemstack1, i, 2, false)) {
                         return ItemStack.EMPTY;
@@ -466,5 +444,4 @@ public class CustomSmithingMenu extends AbstractContainerMenu {
     public void setSmithing(boolean b) {
         this.smithing.set(b ? 1 : 0);
     }
-
 }

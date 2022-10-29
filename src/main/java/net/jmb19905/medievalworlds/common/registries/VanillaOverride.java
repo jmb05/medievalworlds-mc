@@ -1,6 +1,7 @@
 package net.jmb19905.medievalworlds.common.registries;
 
 import net.jmb19905.medievalworlds.common.block.CustomAnvilBlock;
+import net.jmb19905.medievalworlds.common.block.CustomFletchingTable;
 import net.jmb19905.medievalworlds.common.block.CustomSmithingTable;
 import net.jmb19905.medievalworlds.common.item.MWTiers;
 import net.jmb19905.medievalworlds.common.item.armor.CustomHorseArmorItem;
@@ -25,11 +26,13 @@ public class VanillaOverride {
     public static final RegistryObject<Block> CHIPPED_ANVIL = BLOCKS.register("chipped_anvil", () -> new CustomAnvilBlock(DAMAGED_ANVIL.get().defaultBlockState(), .01f, BlockBehaviour.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.ANVIL)));
     public static final RegistryObject<Block> ANVIL = BLOCKS.register("anvil", () -> new CustomAnvilBlock(CHIPPED_ANVIL.get().defaultBlockState(), .01f, BlockBehaviour.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.ANVIL)));
     public static final RegistryObject<Block> SMITHING_TABLE = BLOCKS.register("smithing_table", () -> new CustomSmithingTable(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5f).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> FLETCHING_TABLE = BLOCKS.register("fletching_table", () -> new CustomFletchingTable(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
 
     public static final RegistryObject<BlockItem> ANVIL_ITEM = ITEMS.register("anvil", () -> new BlockItem(ANVIL.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final RegistryObject<BlockItem> CHIPPED_ANVIL_ITEM = ITEMS.register("chipped_anvil", () -> new BlockItem(CHIPPED_ANVIL.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final RegistryObject<BlockItem> DAMAGED_ANVIL_ITEM = ITEMS.register("damaged_anvil", () -> new BlockItem(DAMAGED_ANVIL.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final RegistryObject<BlockItem> SMITHING_TABLE_ITEM = ITEMS.register("smithing_table", () -> new BlockItem(SMITHING_TABLE.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+    public static final RegistryObject<BlockItem> FLETCHING_TABLE_ITEM = ITEMS.register("fletching_table", () -> new BlockItem(FLETCHING_TABLE.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 
     public static final RegistryObject<Item> GOLDEN_HORSE_ARMOR = ITEMS.register("golden_horse_armor", () -> new CustomHorseArmorItem(5, "gold", (new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
     public static final RegistryObject<Item> IRON_HORSE_ARMOR = ITEMS.register("iron_horse_armor", () -> new CustomHorseArmorItem(7, "iron", (new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_MISC)));

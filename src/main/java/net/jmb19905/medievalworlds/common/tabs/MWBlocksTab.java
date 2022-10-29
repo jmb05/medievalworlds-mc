@@ -21,6 +21,6 @@ public class MWBlocksTab extends MWSortedTab {
     @Nonnull
     @Override
     public ItemStack makeIcon() {
-        return new ItemStack(MWBlocks.SLACK_TUB_BLOCK.get());
+        return new ItemStack(MWBlocks.SLACK_TUB.get());
     }
 }

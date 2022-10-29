@@ -162,6 +162,8 @@ public class MWItemModelProvider extends ItemModelProvider {
                 (material, regOb) -> layeredTextureChildItem(regOb.get(), regOb.get().getBaseItem(), "redhot_ingot_layer")
         );
 
+        MWItems.ARROWS.values().forEach(regOb -> simpleItem(regOb.get()));
+
         MWItems.TOOL_PARTS.forEach(createPartModel());
 
         String[] materialNames = {"iron", "steel", "silver", "netherite"};

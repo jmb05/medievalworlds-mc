@@ -104,6 +104,22 @@ public class MWItems {
         return weaponParts;
     }
 
+    public static final RegistryObject<MWArrowItem> BRONZE_ARROW = registerCombatItem("bronze_arrow", () -> new MWArrowItem(1, "bronze", new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<MWArrowItem> SILVER_ARROW = registerCombatItem("silver_arrow", () -> new MWArrowItem(0, "silver", new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<MWArrowItem> GOLD_ARROW = registerCombatItem("gold_arrow", () -> new MWArrowItem(0, "gold", new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<MWArrowItem> IRON_ARROW = registerCombatItem("iron_arrow", () -> new MWArrowItem(2, "iron", new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<MWArrowItem> STEEL_ARROW = registerCombatItem("steel_arrow", () -> new MWArrowItem(3, "steel", new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<MWArrowItem> NETHERITE_ARROW = registerCombatItem("netherite_arrow", () -> new MWArrowItem(4, "netherite", new Item.Properties().tab(MedievalWorlds.combatTab).fireResistant()));
+
+    public static Map<String, RegistryObject<MWArrowItem>> ARROWS = ImmutableMap.of(
+            "bronze", BRONZE_ARROW,
+            "silver", SILVER_ARROW,
+            "gold", GOLD_ARROW,
+            "iron", IRON_ARROW,
+            "steel", STEEL_ARROW,
+            "netherite", NETHERITE_ARROW
+    );
+
     private static void fillPartsMap(Map<String, RegistryObject<Item>> parts, String[] materials, String[] partNames) {
         for (String part : partNames) {
             for (String material : materials) {
@@ -207,6 +223,7 @@ public class MWItems {
 
     public static final RegistryObject<Item> COIF = registerCombatItem("coif", () -> new CoifHelmetItem(MWArmorMaterials.GAMBESON_MATERIAL, new Item.Properties().tab(MedievalWorlds.combatTab)));
     public static final RegistryObject<Item> GAMBESON = registerCombatItem("gambeson", () -> new GambesonChestplateItem(MWArmorMaterials.GAMBESON_MATERIAL, new Item.Properties().tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<Item> LONGBOW = registerCombatItem("longbow", () -> new LongbowItem(new Item.Properties().tab(MedievalWorlds.combatTab).durability(750)));
 
     //Block Items
     public static final RegistryObject<BlockItem> CHARCOAL_LOG = registerBlockItem("charcoal_log", () -> new BlockItem(MWBlocks.CHARCOAL_LOG.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
@@ -229,7 +246,7 @@ public class MWItems {
     public static final RegistryObject<BlockItem> RAW_TIN_BLOCK = registerBlockItem("raw_tin_block", () -> new BlockItem(MWBlocks.RAW_TIN_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
     public static final RegistryObject<BlockItem> ALLOY_FURNACE = registerBlockItem("alloy_furnace", () -> new BlockItem(MWBlocks.ALLOY_FURNACE.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
-    public static final RegistryObject<BlockItem> SLACK_TUB = registerBlockItem("slack_tub", () -> new BlockItem(MWBlocks.SLACK_TUB_BLOCK.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+    public static final RegistryObject<BlockItem> SLACK_TUB = registerBlockItem("slack_tub", () -> new BlockItem(MWBlocks.SLACK_TUB.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
     public static final RegistryObject<BlockItem> SIMPLE_BLOOMERY = registerBlockItem("simple_bloomery", () -> new BlockItem(MWBlocks.SIMPLE_BLOOMERY.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
     private static RegistryObject<BlockItem> registerBlockItem(String id, Supplier<BlockItem> itemSupplier) {

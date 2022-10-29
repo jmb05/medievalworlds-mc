@@ -69,7 +69,7 @@ public class CustomAnvilBlock extends AnvilBlock implements EntityBlock {
                 }
             }
         }
-        return InteractionResult.PASS;
+        return InteractionResult.SUCCESS;
     }
 
     public BlockState getDamagedBlockState() {

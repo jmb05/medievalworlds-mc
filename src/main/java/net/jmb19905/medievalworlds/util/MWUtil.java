@@ -26,6 +26,10 @@ import java.util.stream.Collectors;
 
 public class MWUtil {
 
+    public static String upperCaseFirstChar(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+
     public static List<Recipe<?>> findRecipeByTypeAsList(RecipeType<?> type, Level level) {
         return new ArrayList<>(MWUtil.findRecipeByType(type, level));
     }

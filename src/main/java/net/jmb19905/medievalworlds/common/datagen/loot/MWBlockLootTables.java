@@ -26,7 +26,7 @@ public class MWBlockLootTables extends BlockLoot {
         this.dropSelf(MWBlocks.RAW_TIN_BLOCK.get());
 
         this.dropSelf(MWBlocks.ALLOY_FURNACE.get());
-        this.dropSelf(MWBlocks.SLACK_TUB_BLOCK.get());
+        this.dropSelf(MWBlocks.SLACK_TUB.get());
 
         this.add(MWBlocks.SILVER_ORE.get(), (block) -> createOreDrop(block, MWItems.RAW_SILVER.get()));
         this.add(MWBlocks.DEEPSLATE_SILVER_ORE.get(), (block) -> createOreDrop(block, MWItems.RAW_SILVER.get()));

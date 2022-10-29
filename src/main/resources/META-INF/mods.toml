@@ -21,6 +21,12 @@ Well this is your chance!!!
 [[dependencies.medievalworlds]]
     modId="bettercombat"
     mandatory=false
-    versionRange="[1.4.5+1.19-forge,)"
+    versionRange="[1.4.5+1.19,)"
     ordering="NONE"
     side="BOTH"
+[[dependencies.medievalworlds]]
+    modId="jei"
+    mandatory=false
+    versionRange="[11.4.0.274,)"
+    ordering="NONE"
+    side="CLIENT"
