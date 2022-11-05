@@ -20,6 +20,12 @@ public class StaffArmPose implements IArmPoseTransformer {
                 model.leftArm.zRot = (float) Math.toRadians(-35);
                 model.rightArm.xRot = (float) Math.toRadians(-75);
             }
+        } else {
+            if (arm == HumanoidArm.RIGHT) {
+                model.rightArm.xRot -= (float) Math.toRadians(70);
+            } else {
+                model.leftArm.xRot -= (float) Math.toRadians(70);
+            }
         }
     }
 }

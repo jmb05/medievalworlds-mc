@@ -1,5 +1,6 @@
 package net.jmb19905.medievalworlds.common.registries;
 
+import com.google.common.collect.ImmutableSet;
 import net.jmb19905.medievalworlds.common.block.CustomAnvilBlock;
 import net.jmb19905.medievalworlds.common.block.CustomFletchingTable;
 import net.jmb19905.medievalworlds.common.block.CustomSmithingTable;
@@ -7,20 +8,25 @@ import net.jmb19905.medievalworlds.common.item.MWTiers;
 import net.jmb19905.medievalworlds.common.item.armor.CustomHorseArmorItem;
 import net.jmb19905.medievalworlds.common.item.armor.MWArmorMaterials;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Set;
+
 public class VanillaOverride {
 
     public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, "minecraft");
     public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, "minecraft");
+    public static DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, "minecraft");
 
     public static final RegistryObject<Block> DAMAGED_ANVIL = BLOCKS.register("damaged_anvil", () -> new CustomAnvilBlock(null, .01f, BlockBehaviour.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.ANVIL)));
     public static final RegistryObject<Block> CHIPPED_ANVIL = BLOCKS.register("chipped_anvil", () -> new CustomAnvilBlock(DAMAGED_ANVIL.get().defaultBlockState(), .01f, BlockBehaviour.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.ANVIL)));
@@ -53,5 +59,12 @@ public class VanillaOverride {
     public static final RegistryObject<Item> DIAMOND_CHESTPLATE = ITEMS.register("diamond_chestplate", () -> new ArmorItem(MWArmorMaterials.CUSTOM_DIAMOND, EquipmentSlot.CHEST, (new Item.Properties().tab(CreativeModeTab.TAB_COMBAT))));
     public static final RegistryObject<Item> DIAMOND_LEGGINGS = ITEMS.register("diamond_leggings", () -> new ArmorItem(MWArmorMaterials.CUSTOM_DIAMOND, EquipmentSlot.LEGS, (new Item.Properties().tab(CreativeModeTab.TAB_COMBAT))));
     public static final RegistryObject<Item> DIAMOND_BOOTS = ITEMS.register("diamond_boots", () -> new ArmorItem(MWArmorMaterials.CUSTOM_DIAMOND, EquipmentSlot.FEET, (new Item.Properties().tab(CreativeModeTab.TAB_COMBAT))));
+
+    public static final RegistryObject<PoiType> FLETCHER = POI_TYPES.register("fletcher", () -> new PoiType(getBlockStates(VanillaOverride.FLETCHING_TABLE.get()), 1, 1));
+    public static final RegistryObject<PoiType> TOOLSMITH = POI_TYPES.register("toolsmith", () -> new PoiType(getBlockStates(VanillaOverride.SMITHING_TABLE.get()), 1, 1));
+
+    private static Set<BlockState> getBlockStates(Block block) {
+        return ImmutableSet.copyOf(block.getStateDefinition().getPossibleStates());
+    }
 
 }

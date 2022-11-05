@@ -12,14 +12,14 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.jmb19905.medievalworlds.common.compatability.jei.MWJEIRecipeTypes;
-import net.jmb19905.medievalworlds.common.recipes.alloy.IAlloyRecipe;
+import net.jmb19905.medievalworlds.common.recipes.AlloyRecipe;
 import net.jmb19905.medievalworlds.common.registries.MWBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class AlloyRecipeCategory extends MWRecipeCategory<IAlloyRecipe> {
+public class AlloyRecipeCategory extends MWRecipeCategory<AlloyRecipe> {
     protected final IDrawableStatic staticFlame;
     protected final IDrawableAnimated animatedFlame;
     private final LoadingCache<Integer, IDrawableAnimated> cachedArrows;
@@ -40,7 +40,7 @@ public class AlloyRecipeCategory extends MWRecipeCategory<IAlloyRecipe> {
     }
 
     @Override
-    public void draw(@NotNull IAlloyRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull PoseStack stack, double mouseX, double mouseY) {
+    public void draw(@NotNull AlloyRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull PoseStack stack, double mouseX, double mouseY) {
         animatedFlame.draw(stack, 20, 20);
 
         IDrawableAnimated arrow = cachedArrows.getUnchecked(298);
@@ -60,12 +60,12 @@ public class AlloyRecipeCategory extends MWRecipeCategory<IAlloyRecipe> {
     }
 
     @Override
-    public boolean isHandled(IAlloyRecipe recipe) {
+    public boolean isHandled(AlloyRecipe recipe) {
         return !recipe.isSpecial();
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, IAlloyRecipe recipe, @NotNull IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, AlloyRecipe recipe, @NotNull IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.OUTPUT, 97, 20).addItemStack(recipe.getResultItem());
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addItemStack(recipe.getInput1());
         builder.addSlot(RecipeIngredientRole.INPUT, 37, 1).addItemStack(recipe.getInput2());

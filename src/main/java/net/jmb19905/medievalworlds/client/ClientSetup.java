@@ -16,7 +16,7 @@ import net.jmb19905.medievalworlds.client.screen.CustomFletchingScreen;
 import net.jmb19905.medievalworlds.client.screen.CustomSmithingScreen;
 import net.jmb19905.medievalworlds.client.tooltip.ClientQuiverTooltip;
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
-import net.jmb19905.medievalworlds.common.capability.quiverInv.QuiverInv;
+import net.jmb19905.medievalworlds.common.capability.QuiverInv;
 import net.jmb19905.medievalworlds.common.item.quiver.QuiverTooltip;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.common.registries.MWEntityTypes;
@@ -27,6 +27,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
@@ -34,6 +35,7 @@ import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ClientSetup {
 
@@ -44,13 +46,12 @@ public class ClientSetup {
     public static final ModelLayerLocation GAMBESON_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "gambeson"), "main");
     public static final ModelLayerLocation LONGBOW_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "longbow"), "main");
 
-    public static HumanoidModel.ArmPose CUSTOM;
+    public static HumanoidModel.ArmPose STAFF_POSE;
 
     private static MWBEWLR bewlr;
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent evt) {
-
         evt.enqueueWork(
                 () -> {
                     MenuScreens.register(MWMenuTypes.ANVIL.get(), CustomAnvilScreen::new);
@@ -59,13 +60,18 @@ public class ClientSetup {
                     MenuScreens.register(MWMenuTypes.FLETCHING.get(), CustomFletchingScreen::new);
 
                     bewlr = new MWBEWLR();
-                    CUSTOM = HumanoidModel.ArmPose.create("CUSTOM", false, new StaffArmPose());
+                    STAFF_POSE = HumanoidModel.ArmPose.create("STAFF", true, new StaffArmPose());
 
                     ItemProperties.register(MWItems.QUIVER.get(), new ResourceLocation(MedievalWorlds.MOD_ID, "filled"),
                             (stack, level, living, id) -> {
                                 QuiverInv inv = MWCapabilityManager.retrieveCapability(stack, QuiverInv.QUIVER_INV_CAPABILITY);
                                 return inv == null ? 0 : inv.getFillLevel();
                             });
+
+                    for (RegistryObject<Item> regOb : MWItems.STAFFS) {
+                        ItemProperties.register(regOb.get(), new ResourceLocation(MedievalWorlds.MOD_ID, "blocking"),
+                                (stack, level, living, id) -> living != null && living.isBlocking() ? 1 : 0);
+                    }
                 });
     }
 

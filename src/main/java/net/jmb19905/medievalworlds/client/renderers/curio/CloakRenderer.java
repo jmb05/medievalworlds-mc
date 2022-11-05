@@ -3,7 +3,7 @@ package net.jmb19905.medievalworlds.client.renderers.curio;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.jmb19905.medievalworlds.client.ClientSetup;
-import net.jmb19905.medievalworlds.common.capability.hood.Hood;
+import net.jmb19905.medievalworlds.common.capability.Hood;
 import net.jmb19905.medievalworlds.common.item.CloakItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;

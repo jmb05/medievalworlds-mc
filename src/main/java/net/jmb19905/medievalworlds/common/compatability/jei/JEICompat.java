@@ -9,11 +9,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.compatability.jei.categories.*;
-import net.jmb19905.medievalworlds.common.recipes.alloy.IAlloyRecipe;
-import net.jmb19905.medievalworlds.common.recipes.anvil.IAnvilRecipe;
-import net.jmb19905.medievalworlds.common.recipes.bloom.IBloomRecipe;
-import net.jmb19905.medievalworlds.common.recipes.slacktub.ISlackTubRecipe;
-import net.jmb19905.medievalworlds.common.recipes.smithing.ISmithingRecipe;
+import net.jmb19905.medievalworlds.common.recipes.*;
 import net.jmb19905.medievalworlds.common.registries.MWBlocks;
 import net.jmb19905.medievalworlds.common.registries.VanillaOverride;
 import net.minecraft.client.Minecraft;
@@ -46,11 +42,11 @@ public class JEICompat implements IModPlugin {
     @Override
     public void registerRecipes(@NotNull IRecipeRegistration registration) {
         RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
-        registration.addRecipes(new RecipeType<>(IAlloyRecipe.ID, IAlloyRecipe.class), recipeManager.getRecipes().stream().filter(rec -> rec instanceof IAlloyRecipe).toList());
-        registration.addRecipes(new RecipeType<>(IAnvilRecipe.ID, IAnvilRecipe.class), recipeManager.getRecipes().stream().filter(rec -> rec instanceof IAnvilRecipe).toList());
-        registration.addRecipes(new RecipeType<>(ISlackTubRecipe.ID, ISlackTubRecipe.class), recipeManager.getRecipes().stream().filter(rec -> rec instanceof ISlackTubRecipe).toList());
-        registration.addRecipes(new RecipeType<>(ISmithingRecipe.ID, ISmithingRecipe.class), recipeManager.getRecipes().stream().filter(rec -> rec instanceof ISmithingRecipe).toList());
-        registration.addRecipes(new RecipeType<>(IBloomRecipe.ID, IBloomRecipe.class), recipeManager.getRecipes().stream().filter(rec -> rec instanceof IBloomRecipe).toList());
+        registration.addRecipes(new RecipeType<>(AlloyRecipe.ID, AlloyRecipe.class), recipeManager.getRecipes().stream().filter(rec -> rec instanceof AlloyRecipe).toList());
+        registration.addRecipes(new RecipeType<>(AnvilRecipe.ID, AnvilRecipe.class), recipeManager.getRecipes().stream().filter(rec -> rec instanceof AnvilRecipe).toList());
+        registration.addRecipes(new RecipeType<>(SlackTubRecipe.ID, SlackTubRecipe.class), recipeManager.getRecipes().stream().filter(rec -> rec instanceof SlackTubRecipe).toList());
+        registration.addRecipes(new RecipeType<>(SmithingRecipe.ID, SmithingRecipe.class), recipeManager.getRecipes().stream().filter(rec -> rec instanceof SmithingRecipe).toList());
+        registration.addRecipes(new RecipeType<>(BloomRecipe.ID, BloomRecipe.class), recipeManager.getRecipes().stream().filter(rec -> rec instanceof BloomRecipe).toList());
     }
 
     @Override

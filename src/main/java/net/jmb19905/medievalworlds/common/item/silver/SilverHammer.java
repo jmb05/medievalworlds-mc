@@ -1,6 +1,6 @@
 package net.jmb19905.medievalworlds.common.item.silver;
 
-import net.jmb19905.medievalworlds.common.item.HammerItem;
+import net.jmb19905.medievalworlds.common.item.weapon.HammerItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;

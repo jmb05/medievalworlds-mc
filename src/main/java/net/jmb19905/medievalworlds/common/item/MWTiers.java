@@ -2,7 +2,6 @@ package net.jmb19905.medievalworlds.common.item;
 
 import net.jmb19905.medievalworlds.common.registries.MWItems;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -24,17 +23,15 @@ public enum MWTiers implements Tier {
     private final float speed;
     private final float damage;
     private final int enchantmentValue;
-    @SuppressWarnings("deprecation")
-    private final LazyLoadedValue<Ingredient> repairIngredient;
+    private final Supplier<Ingredient> repairIngredient;
 
-    @SuppressWarnings("deprecation")
     MWTiers(int level, int uses, float speed, float damage, int enchantmentValue, Supplier<Ingredient> ingredient) {
         this.level = level;
         this.uses = uses;
         this.speed = speed;
         this.damage = damage;
         this.enchantmentValue = enchantmentValue;
-        this.repairIngredient = new LazyLoadedValue<>(ingredient);
+        this.repairIngredient = ingredient;
     }
 
     public int getUses() {

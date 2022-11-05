@@ -2,9 +2,7 @@ package net.jmb19905.medievalworlds.common.block;
 
 import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
 import net.jmb19905.medievalworlds.common.item.ForgeHammerItem;
-import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
-import net.jmb19905.medievalworlds.util.MWItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,20 +49,19 @@ public class CustomAnvilBlock extends AnvilBlock implements EntityBlock {
             if (entity instanceof AnvilBlockEntity blockEntity) {
                 if (itemInHand.getItem() instanceof ForgeHammerItem) {
                     if (!player.getCooldowns().isOnCooldown(itemInHand.getItem())) {
-                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
-                        player.getCooldowns().addCooldown(itemInHand.getItem(), 10);
-                        blockEntity.hammer();
-                        tryDamage(level, pos);
-                        itemInHand.hurtAndBreak(1, player, (living) -> living.broadcastBreakEvent(hand));
-                        return InteractionResult.CONSUME;
+                        boolean hammered = blockEntity.hammer();
+                        if (hammered) {
+                            level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
+                            player.getCooldowns().addCooldown(itemInHand.getItem(), 10);
+                            tryDamage(level, pos);
+                            itemInHand.hurtAndBreak(1, player, (living) -> living.broadcastBreakEvent(hand));
+                            return InteractionResult.CONSUME;
+                        } else {
+                            return InteractionResult.FAIL;
+                        }
                     }
                 } else if (!blockEntity.isPressed()) {
                     NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) entity, pos);
-                    if (player.containerMenu instanceof CustomAnvilMenu anvilMenu)
-                        if (blockEntity.getCurrentRecipe() != null)
-                            anvilMenu.setSelectedRecipeIndexByRecipe(blockEntity.getCurrentRecipe());
-                        else
-                            anvilMenu.setSelectedRecipeIndexByRecipe(null);
                     return InteractionResult.CONSUME;
                 }
             }
@@ -83,7 +80,7 @@ public class CustomAnvilBlock extends AnvilBlock implements EntityBlock {
         if(Math.abs(random.nextFloat()) < damageFactor) {
             NonNullList<ItemStack> items = null;
             if(entity instanceof AnvilBlockEntity blockEntity)
-                items = ((MWItemHandler) blockEntity.getInventory()).toNonNullList();
+                items = blockEntity.getInventory().toNonNullList();
             if(damaged == null) {
                 level.destroyBlock(pos, false);
                 level.playSound(null, pos, SoundEvents.ANVIL_BREAK, SoundSource.BLOCKS, 1.0F, random.nextFloat() * 0.1F + 0.9F);
@@ -91,7 +88,7 @@ public class CustomAnvilBlock extends AnvilBlock implements EntityBlock {
                 level.setBlockAndUpdate(pos, damaged.setValue(FACING, state.getValue(FACING)));
                 entity = level.getBlockEntity(pos);
                 if(entity instanceof AnvilBlockEntity blockEntity && items != null) {
-                    ((MWItemHandler) blockEntity.getInventory()).setNonNullList(items);
+                    blockEntity.getInventory().setNonNullList(items);
                 }
             }
         }

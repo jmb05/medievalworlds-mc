@@ -6,11 +6,13 @@
   "refmap": "medievalworlds.refmap.json",
   "mixins": [
     "AbstractArrowMixin",
+    "CraftingMenuMixin",
     "FireMixin",
-    "HumanoidModelMixin",
+    "LivingEntityMixin",
     "PlayerMixin"
   ],
   "client": [
+    "HumanoidModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1

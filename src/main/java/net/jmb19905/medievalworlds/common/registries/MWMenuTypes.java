@@ -1,10 +1,7 @@
 package net.jmb19905.medievalworlds.common.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.menus.AlloyFurnaceMenu;
-import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
-import net.jmb19905.medievalworlds.common.menus.CustomFletchingMenu;
-import net.jmb19905.medievalworlds.common.menus.CustomSmithingMenu;
+import net.jmb19905.medievalworlds.common.menus.*;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -15,9 +12,10 @@ public class MWMenuTypes {
 
     public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, MedievalWorlds.MOD_ID);
 
-    public static final RegistryObject<MenuType<CustomAnvilMenu>> ANVIL = MENU_TYPES.register("anvil", () -> IForgeMenuType.create(CustomAnvilMenu::new));
+    public static final RegistryObject<MenuType<MWAnvilMenu>> ANVIL = MENU_TYPES.register("anvil", () -> IForgeMenuType.create(MWAnvilMenu::new));
     public static final RegistryObject<MenuType<AlloyFurnaceMenu>> ALLOY = MENU_TYPES.register("alloy", () -> IForgeMenuType.create(AlloyFurnaceMenu::new));
-    public static final RegistryObject<MenuType<CustomSmithingMenu>> SMITHING = MENU_TYPES.register("smithing", () -> IForgeMenuType.create(CustomSmithingMenu::new));
-    public static final RegistryObject<MenuType<CustomFletchingMenu>> FLETCHING = MENU_TYPES.register("fletching", () -> IForgeMenuType.create(CustomFletchingMenu::new));
+    public static final RegistryObject<MenuType<MWSmithingMenu>> SMITHING = MENU_TYPES.register("smithing", () -> IForgeMenuType.create(MWSmithingMenu::new));
+    public static final RegistryObject<MenuType<MWFletchingMenu>> FLETCHING = MENU_TYPES.register("fletching", () -> IForgeMenuType.create(MWFletchingMenu::new));
+    public static final RegistryObject<MenuType<SmelteryMenu>> SMELTERY = MENU_TYPES.register("smeltery", () -> IForgeMenuType.create(SmelteryMenu::new));
 
 }

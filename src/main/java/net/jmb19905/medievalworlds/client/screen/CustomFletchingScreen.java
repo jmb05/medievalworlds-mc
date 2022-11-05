@@ -3,18 +3,18 @@ package net.jmb19905.medievalworlds.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.menus.CustomFletchingMenu;
+import net.jmb19905.medievalworlds.common.menus.MWFletchingMenu;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 
-public class CustomFletchingScreen extends AbstractContainerScreen<CustomFletchingMenu> {
+public class CustomFletchingScreen extends AbstractContainerScreen<MWFletchingMenu> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(MedievalWorlds.MOD_ID, "textures/gui/fletching.png");
 
-    public CustomFletchingScreen(CustomFletchingMenu menu, Inventory playerInv, Component component) {
+    public CustomFletchingScreen(MWFletchingMenu menu, Inventory playerInv, Component component) {
         super(menu, playerInv, component);
 
         this.imageWidth = 176;

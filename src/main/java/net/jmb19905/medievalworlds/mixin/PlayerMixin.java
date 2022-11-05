@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.mixin;
 
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
-import net.jmb19905.medievalworlds.common.capability.quiverInv.QuiverInv;
+import net.jmb19905.medievalworlds.common.capability.QuiverInv;
 import net.jmb19905.medievalworlds.common.item.quiver.QuiverItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

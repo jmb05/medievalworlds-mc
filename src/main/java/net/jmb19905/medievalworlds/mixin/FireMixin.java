@@ -1,8 +1,8 @@
 package net.jmb19905.medievalworlds.mixin;
 
-import net.jmb19905.medievalworlds.common.recipes.burn.BurnRecipe;
+import net.jmb19905.medievalworlds.common.recipes.MWRecipeHelper;
+import net.jmb19905.medievalworlds.common.recipes.BurnRecipe;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
-import net.jmb19905.medievalworlds.util.MWUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Set;
 
 @Mixin(value = FireBlock.class, remap = false)
-public abstract class FireMixin {
+public class FireMixin {
     private BlockState getStateWithAge(LevelAccessor p_53438_, BlockPos p_53439_, int p_53440_) {
         BlockState blockstate = BaseFireBlock.getState(p_53438_, p_53439_);
         return blockstate.is(Blocks.FIRE) ? blockstate.setValue(FireBlock.AGE, p_53440_) : blockstate;
@@ -58,7 +58,7 @@ public abstract class FireMixin {
         if(block == null){
             return null;
         }
-        Set<Recipe<?>> recipes = MWUtil.findRecipeByType(MWRecipeSerializers.BURN_TYPE, level);
+        Set<Recipe<?>> recipes = MWRecipeHelper.findRecipeByType(MWRecipeSerializers.BURN_TYPE, level);
         for(Recipe<?> iRecipe : recipes){
             BurnRecipe recipe = (BurnRecipe)iRecipe;
             if(recipe.matches(block)) return recipe;

@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.common.datagen;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.item.MWArrowItem;
+import net.jmb19905.medievalworlds.common.item.weapon.MWArrowItem;
 import net.jmb19905.medievalworlds.common.registries.MWItems;
 import net.jmb19905.medievalworlds.common.registries.MWTags;
 import net.minecraft.data.DataGenerator;

@@ -1,10 +1,11 @@
 package net.jmb19905.medievalworlds.common.datagen;
 
+import com.mojang.datafixers.util.Pair;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.registries.MWBlocks;
 import net.jmb19905.medievalworlds.common.registries.MWEnchantments;
 import net.jmb19905.medievalworlds.common.registries.MWItems;
-import net.jmb19905.medievalworlds.util.MWUtil;
+import net.jmb19905.medievalworlds.common.registries.MWMobEffects;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -141,15 +142,14 @@ public class MWLangProvider extends LanguageProvider {
         add(MWItems.FIRE_STARTER.get(), "Fire Starter");
 
         MWItems.TOOL_PARTS.forEach(addPart());
-        MWItems.WEAPON_PARTS.forEach(addPart());
 
         MWItems.HEATED_INGOTS.forEach((material, regOb) -> {
-            String upperCaseMaterial = MWUtil.upperCaseFirstChar(material);
+            String upperCaseMaterial = upperCaseFirstChar(material);
             add(regOb.get(), "Heated " + upperCaseMaterial + " Ingot");
         });
 
         MWItems.ARROWS.forEach((material, regOb) -> {
-            String upperCaseMaterial = MWUtil.upperCaseFirstChar(material);
+            String upperCaseMaterial = upperCaseFirstChar(material);
             add(regOb.get(), upperCaseMaterial + " Arrow");
         });
 
@@ -183,6 +183,8 @@ public class MWLangProvider extends LanguageProvider {
         add(MWEnchantments.LIGHTNING_STRIKE.get(), "Lightning Strike");
         add(MWEnchantments.MEGA_MINER.get(), "Mega Miner");
 
+        add(MWMobEffects.CLEANSING.get(), "Cleansing");
+
         add("container.medievalworlds.smithing", "Smithing");
         add("container.medievalworlds.alloy_furnace", "Alloy Furnace");
         add("container.medievalworlds.anvil", "Anvil");
@@ -194,8 +196,8 @@ public class MWLangProvider extends LanguageProvider {
         add("itemGroup.medievalworlds.tools", "MedievalWorlds Tools");
     }
 
-    private BiConsumer<? super String, ? super RegistryObject<Item>> addPart() {
-        return (key, regOb) -> {
+    private BiConsumer<? super String, ? super Pair<RegistryObject<Item>, Boolean>> addPart() {
+        return (key, pair) -> {
             StringBuilder builder = new StringBuilder();
             String[] parts = key.split("_");
             for (String part : parts) {
@@ -203,8 +205,12 @@ public class MWLangProvider extends LanguageProvider {
                 builder.append(part);
                 builder.append(" ");
             }
-            add(regOb.get(), builder.toString().trim());
+            add(pair.getFirst().get(), builder.toString().trim());
         };
+    }
+
+    public static String upperCaseFirstChar(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
 }

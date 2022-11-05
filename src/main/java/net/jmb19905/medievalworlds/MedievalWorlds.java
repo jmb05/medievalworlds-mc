@@ -2,7 +2,6 @@ package net.jmb19905.medievalworlds;
 
 import com.mojang.logging.LogUtils;
 import net.jmb19905.medievalworlds.client.ClientSetup;
-import net.jmb19905.medievalworlds.client.networking.NetworkStartupClientOnly;
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
 import net.jmb19905.medievalworlds.common.compatability.CuriosCompat;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
@@ -34,12 +33,15 @@ public class MedievalWorlds {
     public static MWMaterialsTab materialsTab = new MWMaterialsTab();
     public static MWToolsTab toolsTab = new MWToolsTab();
 
+    @SuppressWarnings("deprecation")
     public MedievalWorlds() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(MWFluids::registerFluids);
 
         VanillaOverride.BLOCKS.register(modEventBus);
         VanillaOverride.ITEMS.register(modEventBus);
+        VanillaOverride.POI_TYPES.register(modEventBus);
         MWItems.ITEMS.register(modEventBus);
         MWBlocks.BLOCKS.register(modEventBus);
         MWEntityTypes.ENTITIES.register(modEventBus);
@@ -49,10 +51,13 @@ public class MedievalWorlds {
         MWFeatures.CONFIGURED_FEATURES.register(modEventBus);
         MWFeatures.PLACED_FEATURES.register(modEventBus);
         MWEnchantments.ENCHANTMENTS.register(modEventBus);
+        MWMobEffects.MOB_EFFECTS.register(modEventBus);
+        MWPotions.POTIONS.register(modEventBus);
+        MWFluids.FLUIDS.register(modEventBus);
+        MWFluids.FLUID_TYPES.register(modEventBus);
 
         registerCommonEvents();
         modEventBus.addListener(this::commonSetup);
-        //noinspection deprecation
         DistExecutor.runWhenOn(Dist.CLIENT, () -> MedievalWorlds::registerClientOnlyEvents);
     }
 
@@ -63,7 +68,6 @@ public class MedievalWorlds {
 
     public static void registerClientOnlyEvents(){
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.register(NetworkStartupClientOnly.class);
         modEventBus.register(ClientSetup.class);
     }
 

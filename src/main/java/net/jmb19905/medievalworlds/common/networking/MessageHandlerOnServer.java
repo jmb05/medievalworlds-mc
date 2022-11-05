@@ -1,14 +1,13 @@
 package net.jmb19905.medievalworlds.common.networking;
 
-import net.jmb19905.medievalworlds.client.networking.HoodChangePacket;
 import net.jmb19905.medievalworlds.client.screen.AnvilRecipeSelectedPacket;
 import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
-import net.jmb19905.medievalworlds.common.capability.hood.Hood;
-import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
-import net.jmb19905.medievalworlds.common.menus.CustomSmithingMenu;
-import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
+import net.jmb19905.medievalworlds.common.capability.Hood;
+import net.jmb19905.medievalworlds.common.menus.MWAnvilMenu;
+import net.jmb19905.medievalworlds.common.menus.MWSmithingMenu;
+import net.jmb19905.medievalworlds.common.recipes.MWRecipeHelper;
+import net.jmb19905.medievalworlds.common.recipes.AnvilRecipe;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
-import net.jmb19905.medievalworlds.util.MWUtil;
 import net.minecraft.SharedConstants;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -51,11 +50,11 @@ public class MessageHandlerOnServer {
 
     static void processAnvilRecipeSelectedPacket(AnvilRecipeSelectedPacket packet, ServerPlayer sendingPlayer) {
         if(sendingPlayer.containerMenu.containerId == packet.getContainerId()) {
-            CustomAnvilMenu menu = (CustomAnvilMenu) sendingPlayer.containerMenu;
+            MWAnvilMenu menu = (MWAnvilMenu) sendingPlayer.containerMenu;
             Level level = sendingPlayer.getLevel();
             AnvilBlockEntity entity = (AnvilBlockEntity) level.getBlockEntity(menu.getBlockEntityPos());
             if(entity != null) {
-                List<AnvilRecipe> recipes = MWUtil.findRecipeByType(MWRecipeSerializers.ANVIL_TYPE, level)
+                List<AnvilRecipe> recipes = MWRecipeHelper.findRecipeByType(MWRecipeSerializers.ANVIL_TYPE, level)
                         .stream()
                         .filter(recipe -> ((AnvilRecipe) recipe).matches(entity.getInventory().getStackInSlot(0)))
                         .map(recipe -> (AnvilRecipe) recipe)
@@ -89,7 +88,7 @@ public class MessageHandlerOnServer {
     }
 
     static void processRename(final MWServerboundRenameItemPacket packet, ServerPlayer player) {
-        if (player.containerMenu instanceof CustomSmithingMenu smithingMenu) {
+        if (player.containerMenu instanceof MWSmithingMenu smithingMenu) {
             String s = SharedConstants.filterText(packet.getName());
             if (s.length() <= 50) {
                 smithingMenu.setItemName(s);
@@ -122,8 +121,8 @@ public class MessageHandlerOnServer {
 
     static void processHoodChange(HoodChangePacket.ToServer packet, Player player) {
         if (player.getUUID().equals(packet.getPlayerId())) {
-            player.getCapability(Hood.HOOD_CAPABILITY).ifPresent(iHood -> {
-                ((Hood) iHood).setHoodDown(packet.isHoodDown());
+            player.getCapability(Hood.HOOD_CAPABILITY).ifPresent(hood -> {
+                hood.setHoodDown(packet.isHoodDown());
                 NetworkStartupCommon.simpleChannel.send(PacketDistributor.DIMENSION.with(player.level::dimension), new HoodChangePacket.ToClient(packet.isHoodDown(), player.getUUID()));
             });
         } else {

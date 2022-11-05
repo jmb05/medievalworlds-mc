@@ -40,6 +40,7 @@ public class MWBlockLootTables extends BlockLoot {
                 (block) -> createSingleItemTableWithSilkTouch(block, Items.CHARCOAL, ConstantValue.exactly(4.0F)));
 
         this.dropOther(MWBlocks.SIMPLE_BLOOMERY.get(), Items.AIR);
+        this.dropOther(MWBlocks.SIMPLE_SMELTERY.get(), Items.AIR);
     }
 
     protected static LootTable.Builder empty() {

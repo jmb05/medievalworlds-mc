@@ -2,10 +2,7 @@ package net.jmb19905.medievalworlds.common.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.block.*;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DropExperienceBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -22,6 +19,14 @@ public class MWBlocks {
 
     public static final RegistryObject<StoneAnvil> STONE_ANVIL = BLOCKS.register("stone_anvil", StoneAnvil::new);
     public static final RegistryObject<Block> STEEL_ANVIL = BLOCKS.register("steel_anvil", SteelAnvil::new);
+
+    public static final RegistryObject<Block> SIMPLE_SMELTERY =
+            BLOCKS.register("simple_smeltery", () -> new SmelteryBlock(BlockBehaviour.Properties
+                .of(Material.CLAY, MaterialColor.CLAY)
+                .sound(SoundType.GRAVEL)
+                .strength(0.6f)
+                .noOcclusion()
+            ));
 
     public static final RegistryObject<Block> STEEL_BLOCK =
             BLOCKS.register("steel_block", () -> new Block(BlockBehaviour.Properties
@@ -104,6 +109,6 @@ public class MWBlocks {
     public static final RegistryObject<Block> ALLOY_FURNACE = BLOCKS.register("alloy_furnace", () -> new AlloyFurnaceBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(3.5f).lightLevel(value -> 13)));
     public static final RegistryObject<SlackTubBlock> SLACK_TUB = BLOCKS.register("slack_tub", () -> new SlackTubBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD)));
 
-
+    public static final RegistryObject<LiquidBlock> TEST_LIQUID = BLOCKS.register("test", () -> new LiquidBlock(MWFluids.TEST_MOLTEN_METAL, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100).noLootTable()));
 
 }

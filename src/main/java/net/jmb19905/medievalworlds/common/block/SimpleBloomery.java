@@ -1,8 +1,8 @@
 package net.jmb19905.medievalworlds.common.block;
 
-import net.jmb19905.medievalworlds.common.blockentities.bloomery.SimpleBloomeryBlockEntity;
+import net.jmb19905.medievalworlds.common.blockentities.SimpleBloomeryBlockEntity;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
-import net.jmb19905.medievalworlds.util.MWItemHandler;
+import net.jmb19905.medievalworlds.common.inv.MWItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;

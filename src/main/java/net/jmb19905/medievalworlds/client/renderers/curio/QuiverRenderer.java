@@ -5,7 +5,7 @@ import com.mojang.math.Vector3f;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.ClientSetup;
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
-import net.jmb19905.medievalworlds.common.capability.quiverInv.QuiverInv;
+import net.jmb19905.medievalworlds.common.capability.QuiverInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

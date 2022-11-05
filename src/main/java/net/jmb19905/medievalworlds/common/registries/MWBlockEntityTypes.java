@@ -1,11 +1,8 @@
 package net.jmb19905.medievalworlds.common.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.blockentities.AlloyFurnaceBlockEntity;
-import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
-import net.jmb19905.medievalworlds.common.blockentities.FletchingTableBlockEntity;
-import net.jmb19905.medievalworlds.common.blockentities.SmithingTableBlockEntity;
-import net.jmb19905.medievalworlds.common.blockentities.bloomery.SimpleBloomeryBlockEntity;
+import net.jmb19905.medievalworlds.common.blockentities.*;
+import net.jmb19905.medievalworlds.common.blockentities.SimpleBloomeryBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -21,5 +18,6 @@ public class MWBlockEntityTypes {
     public static final RegistryObject<BlockEntityType<SimpleBloomeryBlockEntity>> SIMPLE_BLOOMERY = BLOCK_ENTITIES.register("simple_bloomery", () -> BlockEntityType.Builder.of(SimpleBloomeryBlockEntity::new, MWBlocks.SIMPLE_BLOOMERY.get()).build(null));
     public static final RegistryObject<BlockEntityType<SmithingTableBlockEntity>> SMITHING_TABLE = BLOCK_ENTITIES.register("smithing_table", () -> BlockEntityType.Builder.of(SmithingTableBlockEntity::new, VanillaOverride.SMITHING_TABLE.get()).build(null));
     public static final RegistryObject<BlockEntityType<FletchingTableBlockEntity>> FLETCHING_TABLE = BLOCK_ENTITIES.register("fletching_table", () -> BlockEntityType.Builder.of(FletchingTableBlockEntity::new, VanillaOverride.FLETCHING_TABLE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SmelteryBlockEntity>> SMELTERY = BLOCK_ENTITIES.register("smeltery", () -> BlockEntityType.Builder.of(SmelteryBlockEntity::new, MWBlocks.SIMPLE_SMELTERY.get()).build(null));
 
 }

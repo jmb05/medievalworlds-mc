@@ -2,19 +2,16 @@ package net.jmb19905.medievalworlds.common.blockentities;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.block.AlloyFurnaceBlock;
+import net.jmb19905.medievalworlds.common.blockentities.abstr.MWNamedInventoryBlockEntity;
+import net.jmb19905.medievalworlds.common.inv.MWItemHandler;
 import net.jmb19905.medievalworlds.common.menus.AlloyFurnaceMenu;
-import net.jmb19905.medievalworlds.common.recipes.alloy.AlloyRecipe;
+import net.jmb19905.medievalworlds.common.recipes.MWRecipeHelper;
+import net.jmb19905.medievalworlds.common.recipes.AlloyRecipe;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
-import net.jmb19905.medievalworlds.util.MWItemHandler;
-import net.jmb19905.medievalworlds.util.MWUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -26,9 +23,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nonnull;
@@ -36,29 +30,20 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.Set;
 
-public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider {
+public class AlloyFurnaceBlockEntity extends MWNamedInventoryBlockEntity {
 
     public int currentAlloyTime = 0;
     public final int maxAlloyTime = 200 - 2;
     public int currentBurnTime = 0;
     public int currentMaxBurnTime = 0;
     public boolean fuelConsumed = false;
-    private final MWItemHandler inventory;
-    private Component customName;
 
     public AlloyFurnaceBlockEntity(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
-        super(tileEntityTypeIn, pos, state);
-        this.inventory = new MWItemHandler(4);
+        super(tileEntityTypeIn, 4, pos, state);
     }
 
     public AlloyFurnaceBlockEntity(BlockPos pos, BlockState state){
         this(MWBlockEntityTypes.ALLOY_FURNACE.get(), pos, state);
-    }
-
-    @Nonnull
-    @Override
-    public Component getDisplayName() {
-        return this.getName();
     }
 
     @Nullable
@@ -178,30 +163,9 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         return new AlloyRecipeWrapper(recipe, flipped);
     }
 
-    public void setCustomName(Component name){
-        this.customName = name;
-    }
-
-    @Nullable
-    public Component getCustomName() {
-        return customName;
-    }
-
-    public Component getName() {
-        return customName != null ? customName : this.getDefaultName();
-    }
-
-    private Component getDefaultName() {
-        return Component.translatable("container." + MedievalWorlds.MOD_ID + ".alloy_furnace");
-    }
-
     @Override
     public void load(@Nonnull CompoundTag tag) {
         super.load(tag);
-        if(tag.contains("CustomName", Tag.TAG_STRING)) {
-            this.customName = Component.Serializer.fromJson(tag.getString("CustomName"));
-        }
-        inventory.loadFromTag(tag);
         this.currentAlloyTime = tag.getInt("CurrentAlloyTime");
         this.currentBurnTime = tag.getInt("CurrentBurnTime");
         this.currentMaxBurnTime = tag.getInt("CurrentMaxBurnTime");
@@ -210,13 +174,14 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
     @Override
     public void saveAdditional(@Nonnull CompoundTag tag) {
         super.saveAdditional(tag);
-        if(this.customName != null) {
-            tag.putString("CustomName", Component.Serializer.toJson(customName));
-        }
-        this.inventory.saveToTag(tag);
         tag.putInt("CurrentAlloyTime", currentAlloyTime);
         tag.putInt("CurrentBurnTime", currentBurnTime);
         tag.putInt("CurrentMaxBurnTime", currentMaxBurnTime);
+    }
+
+    @Override
+    protected Component getDefaultName() {
+        return Component.translatable("container." + MedievalWorlds.MOD_ID + ".alloy_furnace");
     }
 
     @Nullable
@@ -224,7 +189,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         if(input1 == null || input2 == null){
             return null;
         }
-        Set<Recipe<?>> recipes = MWUtil.findRecipeByType(MWRecipeSerializers.ALLOY_TYPE, this.level);
+        Set<Recipe<?>> recipes = MWRecipeHelper.findRecipeByType(MWRecipeSerializers.ALLOY_TYPE, this.level);
         for(Recipe<?> iRecipe : recipes){
             AlloyRecipe recipe = (AlloyRecipe)iRecipe;
             assert this.level != null;
@@ -233,43 +198,6 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
             }
         }
         return null;
-    }
-
-    public final IItemHandlerModifiable getInventory(){
-        return this.inventory;
-    }
-
-    @Nullable
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbt = new CompoundTag();
-        this.saveAdditional(nbt);
-        return ClientboundBlockEntityDataPacket.create(this, blockEntity -> nbt);
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(Objects.requireNonNull(pkt.getTag()));
-    }
-
-    @Nonnull
-    @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag nbt = new CompoundTag();
-        this.saveAdditional(nbt);
-        return nbt;
-    }
-
-    @Override
-    public void handleUpdateTag(CompoundTag nbt) {
-        this.load(nbt);
-    }
-
-    @SuppressWarnings("removal")
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
-        return net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of(() -> this.inventory));
     }
 
     private boolean itemsAvailable(){

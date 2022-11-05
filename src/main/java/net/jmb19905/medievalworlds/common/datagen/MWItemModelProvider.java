@@ -1,5 +1,6 @@
 package net.jmb19905.medievalworlds.common.datagen;
 
+import com.mojang.datafixers.util.Pair;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.registries.MWItems;
 import net.minecraft.data.DataGenerator;
@@ -7,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -23,6 +25,8 @@ public class MWItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        simpleItem(MWItems.TEST_MOLTEN_METAL_BUCKET.get());
+
         simpleItem(MWItems.STEEL_INGOT.get());
         simpleItem(MWItems.SILVER_INGOT.get());
         simpleItem(MWItems.BRONZE_INGOT.get());
@@ -40,23 +44,23 @@ public class MWItemModelProvider extends ItemModelProvider {
         simpleItem(MWItems.DARK_CLOAK.get());
         simpleItem(MWItems.LIGHT_CLOAK.get());
 
-        toolItem(MWItems.BRONZE_PICKAXE.get());
-        toolItem(MWItems.BRONZE_AXE.get());
-        toolItem(MWItems.BRONZE_SHOVEL.get());
-        toolItem(MWItems.BRONZE_HOE.get());
-        toolItem(MWItems.BRONZE_SWORD.get());
+        handheldItem(MWItems.BRONZE_PICKAXE.get());
+        handheldItem(MWItems.BRONZE_AXE.get());
+        handheldItem(MWItems.BRONZE_SHOVEL.get());
+        handheldItem(MWItems.BRONZE_HOE.get());
+        handheldItem(MWItems.BRONZE_SWORD.get());
 
-        toolItem(MWItems.STEEL_PICKAXE.get());
-        toolItem(MWItems.STEEL_AXE.get());
-        toolItem(MWItems.STEEL_SHOVEL.get());
-        toolItem(MWItems.STEEL_HOE.get());
-        toolItem(MWItems.STEEL_SWORD.get());
+        handheldItem(MWItems.STEEL_PICKAXE.get());
+        handheldItem(MWItems.STEEL_AXE.get());
+        handheldItem(MWItems.STEEL_SHOVEL.get());
+        handheldItem(MWItems.STEEL_HOE.get());
+        handheldItem(MWItems.STEEL_SWORD.get());
 
-        toolItem(MWItems.SILVER_PICKAXE.get());
-        toolItem(MWItems.SILVER_AXE.get());
-        toolItem(MWItems.SILVER_SHOVEL.get());
-        toolItem(MWItems.SILVER_HOE.get());
-        toolItem(MWItems.SILVER_SWORD.get());
+        handheldItem(MWItems.SILVER_PICKAXE.get());
+        handheldItem(MWItems.SILVER_AXE.get());
+        handheldItem(MWItems.SILVER_SHOVEL.get());
+        handheldItem(MWItems.SILVER_HOE.get());
+        handheldItem(MWItems.SILVER_SWORD.get());
 
         simpleItem(MWItems.BRONZE_HELMET.get());
         simpleItem(MWItems.BRONZE_CHESTPLATE.get());
@@ -175,10 +179,16 @@ public class MWItemModelProvider extends ItemModelProvider {
             createWeaponPart(material, "longsword_blade", material + "_weapon", "heated_" + material + "_weapon");
             createWeaponPart(material, "dagger_blade", material + "_weapon", "heated_" + material + "_weapon");
         }
+
+        createWeaponPart("steel", "forge_hammer_head", "steel_forge_hammer", "heated_steel_forge_hammer_head");
+        createWeaponPart("iron", "forge_hammer_head", "iron_forge_hammer", "heated_iron_forge_hammer_head");
+        createWeaponPart("netherite", "forge_hammer_head", "netherite_forge_hammer", "heated_netherite_forge_hammer_head");
     }
 
-    private BiConsumer<? super String, ? super RegistryObject<Item>> createPartModel() {
-        return (key, regOb) -> {
+    private BiConsumer<? super String, ? super Pair<RegistryObject<Item>, Boolean>> createPartModel() {
+        return (key, pair) -> {
+            if (pair.getSecond()) return;
+            RegistryObject<Item> regOb = pair.getFirst();
             if (key.startsWith("heated")) {
                 String[] parts = key.split("_");
                 String layer1 = parts[parts.length - 2] + "_" + parts[parts.length - 1];
@@ -203,12 +213,6 @@ public class MWItemModelProvider extends ItemModelProvider {
     private ItemModelBuilder simpleItem(Item item) {
         return withExistingParent(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(MedievalWorlds.MOD_ID, "item/" + Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath()));
-    }
-
-    private ItemModelBuilder toolItem(Item item) {
-        return withExistingParent(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath(),
-                new ResourceLocation("item/handheld")).texture("layer0",
                 new ResourceLocation(MedievalWorlds.MOD_ID, "item/" + Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath()));
     }
 
@@ -243,10 +247,20 @@ public class MWItemModelProvider extends ItemModelProvider {
     }
 
     private ItemModelBuilder staff(Item staffItem, ResourceLocation logSide, ResourceLocation logTop) {
-        return withExistingParent(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(staffItem)).toString(), new ResourceLocation(MedievalWorlds.MOD_ID, "item/staff_template"))
+        String location = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(staffItem)).getPath();
+        withExistingParent(MedievalWorlds.MOD_ID + ":" + location + "_blocking", new ResourceLocation(MedievalWorlds.MOD_ID, "item/staff_blocking_template"))
                 .texture("0", logSide)
                 .texture("1", logTop)
                 .texture("particle", logSide);
+
+        return withExistingParent(MedievalWorlds.MOD_ID + ":" + location, new ResourceLocation(MedievalWorlds.MOD_ID, "item/staff_template"))
+                .texture("0", logSide)
+                .texture("1", logTop)
+                .texture("particle", logSide)
+                .override()
+                .predicate(new ResourceLocation(MedievalWorlds.MOD_ID, "blocking"), 1f)
+                .model(new ModelFile.UncheckedModelFile(new ResourceLocation(MedievalWorlds.MOD_ID, "item/" + location + "_blocking")))
+                .end();
     }
 
     private ItemModelBuilder layeredTextureChildItem(Item item, Item parent, String... textures) {
@@ -259,34 +273,10 @@ public class MWItemModelProvider extends ItemModelProvider {
         return builder;
     }
 
-    private ItemModelBuilder layeredTextureChildItem(Item item, String parent, String... textures) {
-        ItemModelBuilder builder = withExistingParent(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath(), new ResourceLocation(parent));
-        for(int i=0;i<textures.length;i++) {
-            builder = builder.texture(String.valueOf(i), new ResourceLocation(MedievalWorlds.MOD_ID, "item/" + textures[i]));
-        }
-        return builder;
-    }
-
-    private ItemModelBuilder layeredTextureChildItem(Item item, ResourceLocation parent, ResourceLocation... textures) {
-        ItemModelBuilder builder = withExistingParent(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath(), parent);
-        for(int i=0;i<textures.length;i++) {
-            builder = builder.texture(String.valueOf(i), textures[i]);
-        }
-        return builder;
-    }
-
     private ItemModelBuilder layeredTextureItem(Item item, String... textures) {
         ItemModelBuilder builder = withExistingParent(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath(), new ResourceLocation("item/generated"));
         for(int i=0;i<textures.length;i++) {
             builder = builder.texture("layer" + i, new ResourceLocation(MedievalWorlds.MOD_ID, "item/" + textures[i]));
-        }
-        return builder;
-    }
-
-    private ItemModelBuilder layeredTextureItem(Item item, ResourceLocation... textures) {
-        ItemModelBuilder builder = withExistingParent(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)).getPath(), new ResourceLocation("item/generated"));
-        for(int i=0;i<textures.length;i++) {
-            builder = builder.texture("layer" + i, textures[i]);
         }
         return builder;
     }

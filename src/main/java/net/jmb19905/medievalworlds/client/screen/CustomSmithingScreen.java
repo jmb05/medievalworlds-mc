@@ -3,7 +3,7 @@ package net.jmb19905.medievalworlds.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.menus.CustomSmithingMenu;
+import net.jmb19905.medievalworlds.common.menus.MWSmithingMenu;
 import net.jmb19905.medievalworlds.common.networking.MWServerboundRenameItemPacket;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.minecraft.client.Minecraft;
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 @OnlyIn(Dist.CLIENT)
-public class CustomSmithingScreen extends AbstractContainerScreen<CustomSmithingMenu> implements ContainerListener {
+public class CustomSmithingScreen extends AbstractContainerScreen<MWSmithingMenu> implements ContainerListener {
     private static final ResourceLocation SMITHING_LOCATION = new ResourceLocation(MedievalWorlds.MOD_ID, "textures/gui/smithing.png");
     private static final Component TOO_EXPENSIVE_TEXT = Component.translatable("container.repair.expensive");
     private EditBox name;
@@ -35,7 +35,7 @@ public class CustomSmithingScreen extends AbstractContainerScreen<CustomSmithing
     private static final int GREEN = 0x80FF20;
     private static final int RED = 0xFF6060;
 
-    public CustomSmithingScreen(CustomSmithingMenu menu, Inventory inv, Component component) {
+    public CustomSmithingScreen(MWSmithingMenu menu, Inventory inv, Component component) {
         super(menu, inv, component);
         this.player = inv.player;
         this.titleLabelX = 60;

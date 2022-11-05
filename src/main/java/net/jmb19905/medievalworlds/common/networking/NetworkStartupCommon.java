@@ -1,8 +1,7 @@
 package net.jmb19905.medievalworlds.common.networking;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.client.networking.HoodChangePacket;
-import net.jmb19905.medievalworlds.client.networking.MessageHandlerOnClient;
+import net.jmb19905.medievalworlds.client.MessageHandlerOnClient;
 import net.jmb19905.medievalworlds.client.screen.AnvilRecipeSelectedPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

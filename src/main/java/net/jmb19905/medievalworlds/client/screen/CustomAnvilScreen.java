@@ -3,9 +3,9 @@ package net.jmb19905.medievalworlds.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.menus.CustomAnvilMenu;
+import net.jmb19905.medievalworlds.common.menus.MWAnvilMenu;
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
-import net.jmb19905.medievalworlds.common.recipes.anvil.AnvilRecipe;
+import net.jmb19905.medievalworlds.common.recipes.AnvilRecipe;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -19,16 +19,16 @@ import net.minecraftforge.network.PacketDistributor;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class CustomAnvilScreen extends AbstractContainerScreen<CustomAnvilMenu> {
+public class CustomAnvilScreen extends AbstractContainerScreen<MWAnvilMenu> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(MedievalWorlds.MOD_ID, "textures/gui/anvil.png");
-    private final CustomAnvilMenu menu;
+    private final MWAnvilMenu menu;
     private float scrollOffs;
     private boolean scrolling;
     private int startIndex;
     private boolean displayRecipes;
 
-    public CustomAnvilScreen(CustomAnvilMenu menu, Inventory inventory, Component title) {
+    public CustomAnvilScreen(MWAnvilMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
         this.menu = menu;
         this.menu.registerUpdateListener(this::containerChanged);

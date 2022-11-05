@@ -2,7 +2,6 @@ package net.jmb19905.medievalworlds.common.item;
 
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.networking.SteamEffectPacket;
-import net.jmb19905.medievalworlds.util.MWUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -40,7 +39,7 @@ public class HeatedItem extends Item {
     public InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if(!level.isClientSide) {
-            BlockHitResult hitResult = MWUtil.rayTraceBlocks(level, player, ClipContext.Fluid.ANY, Objects.requireNonNull(player.getAttribute(ForgeMod.REACH_DISTANCE.get())).getValue());
+            BlockHitResult hitResult = MWItemHelper.rayTraceBlocks(level, player, ClipContext.Fluid.ANY, Objects.requireNonNull(player.getAttribute(ForgeMod.REACH_DISTANCE.get())).getValue());
             BlockPos pos = hitResult.getBlockPos();
             BlockState state = level.getBlockState(pos);
             if (state.getBlock() == Blocks.WATER) {

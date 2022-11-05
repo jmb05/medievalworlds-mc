@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.common.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
-import net.jmb19905.medievalworlds.common.item.HammerItem;
+import net.jmb19905.medievalworlds.common.item.weapon.HammerItem;
 import net.jmb19905.medievalworlds.common.item.entchantment.LightningStrikeEnchantment;
 import net.jmb19905.medievalworlds.common.item.entchantment.MegaMinerEnchantment;
 import net.minecraft.world.entity.EquipmentSlot;

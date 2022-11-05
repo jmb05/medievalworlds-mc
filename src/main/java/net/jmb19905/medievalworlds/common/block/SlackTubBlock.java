@@ -2,7 +2,7 @@ package net.jmb19905.medievalworlds.common.block;
 
 import net.jmb19905.medievalworlds.common.networking.NetworkStartupCommon;
 import net.jmb19905.medievalworlds.common.networking.SteamEffectPacket;
-import net.jmb19905.medievalworlds.common.recipes.slacktub.ISlackTubRecipe;
+import net.jmb19905.medievalworlds.common.recipes.SlackTubRecipe;
 import net.jmb19905.medievalworlds.common.registries.MWRecipeSerializers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -123,8 +123,8 @@ public class SlackTubBlock extends Block {
         }else if(stack.getItem() instanceof BucketItem bucketItem && bucketItem.getFluid() == Fluids.EMPTY) {
             return fillBucket(state, level, pos, player, hand, stack);
         }else {
-            List<ISlackTubRecipe> recipes = level.getRecipeManager().getAllRecipesFor(MWRecipeSerializers.SLACK_TUB_TYPE);
-            for(ISlackTubRecipe recipe : recipes) {
+            List<SlackTubRecipe> recipes = level.getRecipeManager().getAllRecipesFor(MWRecipeSerializers.SLACK_TUB_TYPE);
+            for(SlackTubRecipe recipe : recipes) {
                 if(recipe.getInput().test(stack)) {
                     return quenchItem(level, pos, player, hand, recipe, stack.getCount(), state);
                 }
@@ -161,7 +161,7 @@ public class SlackTubBlock extends Block {
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    protected InteractionResult quenchItem(Level level, BlockPos pos, Player player, InteractionHand hand, ISlackTubRecipe recipe, int count, BlockState state) {
+    protected InteractionResult quenchItem(Level level, BlockPos pos, Player player, InteractionHand hand, SlackTubRecipe recipe, int count, BlockState state) {
         if(isEmpty(state)) {
             return InteractionResult.PASS;
         } else {

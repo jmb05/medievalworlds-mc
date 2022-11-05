@@ -3,8 +3,7 @@ package net.jmb19905.medievalworlds.common.item.quiver;
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.client.renderers.curio.QuiverRenderer;
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
-import net.jmb19905.medievalworlds.common.capability.QuiverInvProvider;
-import net.jmb19905.medievalworlds.common.capability.quiverInv.QuiverInv;
+import net.jmb19905.medievalworlds.common.capability.QuiverInv;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -79,7 +78,7 @@ public class QuiverItem extends Item implements ICurioItem {
 
     @Override
     public @Nullable ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-        return new QuiverInvProvider(capacity);
+        return new QuiverInv.Provider(capacity);
     }
 
     @Override

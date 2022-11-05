@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class StaffItem extends MWSwordWeapon {
+public class StaffItem extends MWSwordWeapon implements IMWShieldItem {
     private final Multimap<Attribute, AttributeModifier> additionalMainhandModifiers;
     private final Multimap<Attribute, AttributeModifier> additionalOffhandModifiers;
 
@@ -83,7 +83,12 @@ public class StaffItem extends MWSwordWeapon {
     static class ClientExtension implements IClientItemExtensions {
         @Override
         public HumanoidModel.@Nullable ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
-            return ClientSetup.CUSTOM;
+            return ClientSetup.STAFF_POSE;
         }
+    }
+
+    @Override
+    public double getBlockAngle() {
+        return 40;
     }
 }

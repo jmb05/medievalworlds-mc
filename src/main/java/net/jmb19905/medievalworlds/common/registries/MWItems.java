@@ -1,15 +1,15 @@
 package net.jmb19905.medievalworlds.common.registries;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.mojang.datafixers.util.Pair;
 import net.jmb19905.medievalworlds.MedievalWorlds;
+import net.jmb19905.medievalworlds.common.item.MoltenMetalBucketItem;
 import net.jmb19905.medievalworlds.common.item.*;
 import net.jmb19905.medievalworlds.common.item.armor.*;
-import net.jmb19905.medievalworlds.common.item.HeatedItem;
 import net.jmb19905.medievalworlds.common.item.quiver.QuiverItem;
 import net.jmb19905.medievalworlds.common.item.silver.*;
-import net.jmb19905.medievalworlds.common.item.weapon.MWAxeWeapon;
-import net.jmb19905.medievalworlds.common.item.weapon.MWSwordWeapon;
-import net.jmb19905.medievalworlds.common.item.weapon.StaffItem;
+import net.jmb19905.medievalworlds.common.item.weapon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unchecked", "SameParameterValue"})
+@SuppressWarnings({"unchecked", "SameParameterValue", "unused"})
 public class MWItems {
 
     private static List<? extends Item> toolItemOrder;
@@ -51,6 +51,10 @@ public class MWItems {
     public static final RegistryObject<Item> BIRCH_STAFF = registerCombatItem("birch_staff", StaffItem::new);
     public static final RegistryObject<Item> JUNGLE_STAFF = registerCombatItem("jungle_staff", StaffItem::new);
     public static final RegistryObject<Item> MANGROVE_STAFF = registerCombatItem("mangrove_staff", StaffItem::new);
+
+    public static final List<RegistryObject<Item>> STAFFS = ImmutableList.of(
+            OAK_STAFF, SPRUCE_STAFF, DARK_OAK_STAFF, ACACIA_STAFF, BIRCH_STAFF, JUNGLE_STAFF, MANGROVE_STAFF
+    );
 
     public static final RegistryObject<Item> STEEL_INGOT = registerMaterial("steel_ingot", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
     public static final RegistryObject<Item> SILVER_INGOT = registerMaterial("silver_ingot", () -> new Item(new Item.Properties().stacksTo(64).tab(MedievalWorlds.materialsTab)));
@@ -84,24 +88,36 @@ public class MWItems {
             "netherite", HEATED_NETHERITE_INGOT
     );
 
-    public static final Map<String, RegistryObject<Item>> TOOL_PARTS = addToolParts();
+    public static final Map<String, Pair<RegistryObject<Item>, Boolean>> TOOL_PARTS = addToolParts();
 
-    public static Map<String, RegistryObject<Item>> addToolParts() {
-        Map<String, RegistryObject<Item>> toolParts = new HashMap<>();
-        String[] toolMaterials = {"iron", "steel", "bronze", "silver", "gold"};//excluding netherite
-        String[] toolPartNames = {"pickaxe_head", "shovel_head", "axe_head", "hoe_head", "sword_blade", "armor_plate", "arrow_head"};
-        fillPartsMap(toolParts, toolMaterials, toolPartNames);
+    public static RegistryObject<Item> getToolPart(String key) {
+        return TOOL_PARTS.get(key).getFirst();
+    }
+
+    public static Map<String, Pair<RegistryObject<Item>, Boolean>> addToolParts() {
+        Map<String, Pair<RegistryObject<Item>, Boolean>> toolParts = new HashMap<>();
+        MWToolPartMaterial[] toolMaterials = {MWToolPartMaterial.IRON, MWToolPartMaterial.STEEL, MWToolPartMaterial.BRONZE, MWToolPartMaterial.SILVER, MWToolPartMaterial.GOLD, MWToolPartMaterial.NETHERITE};
+        String[] toolPartNames = {"pickaxe_head", "shovel_head", "axe_head", "hoe_head", "sword_blade"};
+        addParts(toolParts, toolMaterials, toolPartNames, false, false);
+        String[] stackablePartNames = {"armor_plate", "arrow_head"};
+        addParts(toolParts, toolMaterials, stackablePartNames, true, false);
+        MWToolPartMaterial[] forgeHammerMaterials = {MWToolPartMaterial.IRON, MWToolPartMaterial.STEEL, MWToolPartMaterial.NETHERITE};
+        String[] forgeHammerPartName = {"forge_hammer_head"};
+        addParts(toolParts, forgeHammerMaterials, forgeHammerPartName, false, true);
+        MWToolPartMaterial[] weaponMaterials = {MWToolPartMaterial.IRON, MWToolPartMaterial.STEEL, MWToolPartMaterial.SILVER, MWToolPartMaterial.NETHERITE};
+        String[] weaponPartNames = {"longsword_blade", "hammer_head", "hammer_head_raw", "long_axe_head", "dagger_blade"};
+        addParts(toolParts, weaponMaterials, weaponPartNames, false, true);
         return toolParts;
     }
 
-    public static final Map<String, RegistryObject<Item>> WEAPON_PARTS = addWeaponParts();
-
-    public static Map<String, RegistryObject<Item>> addWeaponParts() {
-        Map<String, RegistryObject<Item>> weaponParts = new HashMap<>();
-        String[] weaponMaterials = {"iron", "steel", "silver"};
-        String[] weaponPartNames = {"longsword_blade", "hammer_head", "hammer_head_raw", "long_axe_head", "dagger_blade"};
-        fillPartsMap(weaponParts, weaponMaterials, weaponPartNames);
-        return weaponParts;
+    private static void addParts(Map<String, Pair<RegistryObject<Item>, Boolean>> parts, MWToolPartMaterial[] materials, String[] partNames, boolean stackable, boolean customModel) {
+        for (String part : partNames) {
+            for (MWToolPartMaterial material : materials) {
+                RegistryObject<Item> normalItem = ITEMS.register(material.getName() + "_" + part, () -> new Item(material.createProperties(stackable)));
+                parts.put(material.getName() + "_" + part, Pair.of(normalItem, customModel));
+                parts.put("heated_" + material.getName() + "_" + part, Pair.of(ITEMS.register("heated_" + material.getName() + "_" + part, () -> new HeatedItem(normalItem.get(), material.createProperties(stackable))), customModel));
+            }
+        }
     }
 
     public static final RegistryObject<MWArrowItem> BRONZE_ARROW = registerCombatItem("bronze_arrow", () -> new MWArrowItem(1, "bronze", new Item.Properties().tab(MedievalWorlds.combatTab)));
@@ -119,19 +135,6 @@ public class MWItems {
             "steel", STEEL_ARROW,
             "netherite", NETHERITE_ARROW
     );
-
-    private static void fillPartsMap(Map<String, RegistryObject<Item>> parts, String[] materials, String[] partNames) {
-        for (String part : partNames) {
-            for (String material : materials) {
-                RegistryObject<Item> normalItem = ITEMS.register(material + "_" + part, () -> new Item(new Item.Properties().tab(MedievalWorlds.materialsTab).stacksTo(16)));
-                parts.put(material + "_" + part, normalItem);
-                parts.put("heated_" + material + "_" + part, ITEMS.register("heated_" + material + "_" + part, () -> new HeatedItem(normalItem.get(), new Item.Properties().tab(MedievalWorlds.materialsTab).stacksTo(16))));
-            }
-            RegistryObject<Item> normalItem = ITEMS.register("netherite_" + part, () -> new Item(new Item.Properties().tab(MedievalWorlds.materialsTab).stacksTo(16).fireResistant()));
-            parts.put("netherite_" + part, normalItem);
-            parts.put("heated_netherite_" + part, ITEMS.register("heated_netherite_" + part, () -> new HeatedItem(normalItem.get(), new Item.Properties().tab(MedievalWorlds.materialsTab).stacksTo(16).fireResistant())));
-        }
-    }
 
     //Tools
     public static final RegistryObject<Item> BRONZE_PICKAXE = registerTool("bronze_pickaxe", () -> new PickaxeItem(MWTiers.BRONZE, -1, -2.8f, new Item.Properties().tab(MedievalWorlds.toolsTab)));
@@ -217,13 +220,15 @@ public class MWItems {
     public static final RegistryObject<Item> STEEL_LEGGINGS = registerCombatItem("steel_leggings", () -> new ArmorItem(MWArmorMaterials.STEEL_MATERIAL, EquipmentSlot.LEGS, new Item.Properties().tab(MedievalWorlds.combatTab)));
     public static final RegistryObject<Item> STEEL_BOOTS = registerCombatItem("steel_boots", () -> new ArmorItem(MWArmorMaterials.STEEL_MATERIAL, EquipmentSlot.FEET, new Item.Properties().tab(MedievalWorlds.combatTab)));
 
-    public static final RegistryObject<Item> SILVER_HORSE_ARMOR = registerCombatItem("silver_horse_armor", () -> new CustomHorseArmorItem(6, new ResourceLocation(MedievalWorlds.MOD_ID, "textures/entity/horse/armor/horse_armor_netherite.png"), (new Item.Properties()).stacksTo(1).tab(MedievalWorlds.combatTab)));
+    public static final RegistryObject<Item> SILVER_HORSE_ARMOR = registerCombatItem("silver_horse_armor", () -> new CustomHorseArmorItem(6, new ResourceLocation(MedievalWorlds.MOD_ID, "textures/entity/horse/armor/horse_armor_silver.png"), (new Item.Properties()).stacksTo(1).tab(MedievalWorlds.combatTab)));
     public static final RegistryObject<Item> STEEL_HORSE_ARMOR = registerCombatItem("steel_horse_armor", () -> new CustomHorseArmorItem(12, new ResourceLocation(MedievalWorlds.MOD_ID, "textures/entity/horse/armor/horse_armor_steel.png"), (new Item.Properties()).stacksTo(1).tab(MedievalWorlds.combatTab)));
     public static final RegistryObject<Item> NETHERITE_HORSE_ARMOR = registerCombatItem("netherite_horse_armor", () -> new CustomHorseArmorItem(15, new ResourceLocation(MedievalWorlds.MOD_ID, "textures/entity/horse/armor/horse_armor_netherite.png"), (new Item.Properties()).stacksTo(1).tab(MedievalWorlds.combatTab).fireResistant()));
 
     public static final RegistryObject<Item> COIF = registerCombatItem("coif", () -> new CoifHelmetItem(MWArmorMaterials.GAMBESON_MATERIAL, new Item.Properties().tab(MedievalWorlds.combatTab)));
     public static final RegistryObject<Item> GAMBESON = registerCombatItem("gambeson", () -> new GambesonChestplateItem(MWArmorMaterials.GAMBESON_MATERIAL, new Item.Properties().tab(MedievalWorlds.combatTab)));
     public static final RegistryObject<Item> LONGBOW = registerCombatItem("longbow", () -> new LongbowItem(new Item.Properties().tab(MedievalWorlds.combatTab).durability(750)));
+
+    public static final RegistryObject<Item> TEST_MOLTEN_METAL_BUCKET = ITEMS.register("test_bucket", () -> new MoltenMetalBucketItem(MWFluids.TEST_MOLTEN_METAL));
 
     //Block Items
     public static final RegistryObject<BlockItem> CHARCOAL_LOG = registerBlockItem("charcoal_log", () -> new BlockItem(MWBlocks.CHARCOAL_LOG.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
@@ -248,6 +253,8 @@ public class MWItems {
     public static final RegistryObject<BlockItem> ALLOY_FURNACE = registerBlockItem("alloy_furnace", () -> new BlockItem(MWBlocks.ALLOY_FURNACE.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
     public static final RegistryObject<BlockItem> SLACK_TUB = registerBlockItem("slack_tub", () -> new BlockItem(MWBlocks.SLACK_TUB.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
     public static final RegistryObject<BlockItem> SIMPLE_BLOOMERY = registerBlockItem("simple_bloomery", () -> new BlockItem(MWBlocks.SIMPLE_BLOOMERY.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
+
+    public static final RegistryObject<BlockItem> SIMPLE_SMELTERY = registerBlockItem("simple_smeltery", () -> new BlockItem(MWBlocks.SIMPLE_SMELTERY.get(), new Item.Properties().tab(MedievalWorlds.blocksTab)));
 
     private static RegistryObject<BlockItem> registerBlockItem(String id, Supplier<BlockItem> itemSupplier) {
         RegistryObject<BlockItem> regObj = ITEMS.register(id, itemSupplier);
