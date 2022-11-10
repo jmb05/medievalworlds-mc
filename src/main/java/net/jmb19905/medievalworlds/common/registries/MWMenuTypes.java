@@ -17,5 +17,6 @@ public class MWMenuTypes {
     public static final RegistryObject<MenuType<MWSmithingMenu>> SMITHING = MENU_TYPES.register("smithing", () -> IForgeMenuType.create(MWSmithingMenu::new));
     public static final RegistryObject<MenuType<MWFletchingMenu>> FLETCHING = MENU_TYPES.register("fletching", () -> IForgeMenuType.create(MWFletchingMenu::new));
     public static final RegistryObject<MenuType<SmelteryMenu>> SMELTERY = MENU_TYPES.register("smeltery", () -> IForgeMenuType.create(SmelteryMenu::new));
+    public static final RegistryObject<MenuType<HearthMenu>> HEARTH = MENU_TYPES.register("hearth", () -> IForgeMenuType.create(HearthMenu::new));
 
 }

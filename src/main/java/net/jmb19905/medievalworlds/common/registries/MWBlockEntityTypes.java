@@ -19,5 +19,6 @@ public class MWBlockEntityTypes {
     public static final RegistryObject<BlockEntityType<SmithingTableBlockEntity>> SMITHING_TABLE = BLOCK_ENTITIES.register("smithing_table", () -> BlockEntityType.Builder.of(SmithingTableBlockEntity::new, VanillaOverride.SMITHING_TABLE.get()).build(null));
     public static final RegistryObject<BlockEntityType<FletchingTableBlockEntity>> FLETCHING_TABLE = BLOCK_ENTITIES.register("fletching_table", () -> BlockEntityType.Builder.of(FletchingTableBlockEntity::new, VanillaOverride.FLETCHING_TABLE.get()).build(null));
     public static final RegistryObject<BlockEntityType<SmelteryBlockEntity>> SMELTERY = BLOCK_ENTITIES.register("smeltery", () -> BlockEntityType.Builder.of(SmelteryBlockEntity::new, MWBlocks.SIMPLE_SMELTERY.get()).build(null));
+    public static final RegistryObject<BlockEntityType<HearthBlockEntity>> HEARTH = BLOCK_ENTITIES.register("hearth", () -> BlockEntityType.Builder.of(HearthBlockEntity::new, MWBlocks.HEARTH.get()).build(null));
 
 }

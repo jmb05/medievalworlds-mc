@@ -2,6 +2,8 @@ package net.jmb19905.medievalworlds.common.registries;
 
 import net.jmb19905.medievalworlds.MedievalWorlds;
 import net.jmb19905.medievalworlds.common.block.*;
+import net.jmb19905.medievalworlds.common.block.bloomery.SimpleBloomery;
+import net.jmb19905.medievalworlds.common.block.hearth.HearthBlock;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -20,12 +22,15 @@ public class MWBlocks {
     public static final RegistryObject<StoneAnvil> STONE_ANVIL = BLOCKS.register("stone_anvil", StoneAnvil::new);
     public static final RegistryObject<Block> STEEL_ANVIL = BLOCKS.register("steel_anvil", SteelAnvil::new);
 
+    public static final RegistryObject<Block> HEARTH = BLOCKS.register("hearth", () -> new HearthBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(2.0F, 6.0F).noOcclusion()));
+
     public static final RegistryObject<Block> SIMPLE_SMELTERY =
             BLOCKS.register("simple_smeltery", () -> new SmelteryBlock(BlockBehaviour.Properties
                 .of(Material.CLAY, MaterialColor.CLAY)
                 .sound(SoundType.GRAVEL)
                 .strength(0.6f)
                 .noOcclusion()
+                .noLootTable()
             ));
 
     public static final RegistryObject<Block> STEEL_BLOCK =
@@ -104,6 +109,7 @@ public class MWBlocks {
                     .sound(SoundType.GRAVEL)
                     .strength(0.6f)
                     .noOcclusion()
+                    .noLootTable()
             ));
 
     public static final RegistryObject<Block> ALLOY_FURNACE = BLOCKS.register("alloy_furnace", () -> new AlloyFurnaceBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(3.5f).lightLevel(value -> 13)));

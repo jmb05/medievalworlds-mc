@@ -1,11 +1,19 @@
 package net.jmb19905.medievalworlds.common.datagen.loot;
 
+import net.jmb19905.medievalworlds.common.block.hearth.HearthBlock;
+import net.jmb19905.medievalworlds.common.block.hearth.HearthPartProperty;
 import net.jmb19905.medievalworlds.common.registries.MWBlocks;
 import net.jmb19905.medievalworlds.common.registries.MWItems;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
@@ -39,8 +47,12 @@ public class MWBlockLootTables extends BlockLoot {
         this.add(MWBlocks.CHARCOAL_PLANKS.get(),
                 (block) -> createSingleItemTableWithSilkTouch(block, Items.CHARCOAL, ConstantValue.exactly(4.0F)));
 
-        this.dropOther(MWBlocks.SIMPLE_BLOOMERY.get(), Items.AIR);
-        this.dropOther(MWBlocks.SIMPLE_SMELTERY.get(), Items.AIR);
+        LootItemCondition.Builder hoodCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(MWBlocks.HEARTH.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(HearthBlock.PART, HearthPartProperty.HOOD));
+        this.add(MWBlocks.HEARTH.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(Blocks.BRICK_SLAB)
+                                .when(hoodCondition)
+                                .otherwise(LootItem.lootTableItem(Blocks.BRICKS)))));
     }
 
     protected static LootTable.Builder empty() {

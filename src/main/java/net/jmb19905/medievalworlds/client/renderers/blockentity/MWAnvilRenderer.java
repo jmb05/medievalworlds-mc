@@ -2,13 +2,8 @@ package net.jmb19905.medievalworlds.client.renderers.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import net.jmb19905.medievalworlds.client.ClientSetup;
 import net.jmb19905.medievalworlds.common.blockentities.AnvilBlockEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -19,21 +14,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.AnvilBlock;
 import org.jetbrains.annotations.NotNull;
 
-public class CustomAnvilRenderer implements BlockEntityRenderer<AnvilBlockEntity> {
-
-    private final ModelPart root;
+public class MWAnvilRenderer implements BlockEntityRenderer<AnvilBlockEntity> {
     private final ItemRenderer itemRenderer;
 
-    public CustomAnvilRenderer(BlockEntityRendererProvider.Context context) {
-        root = context.bakeLayer(ClientSetup.CUSTOM_ANVIL_LAYER);
+    public MWAnvilRenderer(BlockEntityRendererProvider.Context context) {
         this.itemRenderer = Minecraft.getInstance().getItemRenderer();
-    }
-
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshDefinition = new MeshDefinition();
-        PartDefinition partDefinition = meshDefinition.getRoot();
-
-        return LayerDefinition.create(meshDefinition, 32, 32);
     }
 
     @Override

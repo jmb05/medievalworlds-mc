@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.common.block;
+package net.jmb19905.medievalworlds.common.block.bloomery;
 
 import net.jmb19905.medievalworlds.common.blockentities.SimpleBloomeryBlockEntity;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;

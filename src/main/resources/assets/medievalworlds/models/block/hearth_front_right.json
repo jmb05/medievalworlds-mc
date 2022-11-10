@@ -1,0 +1,39 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "block/bricks",
+		"1": "block/smooth_stone",
+		"particle": "block/bricks"
+	},
+	"elements": [
+		{
+			"from": [8, 0, 0],
+			"to": [16, 3, 16],
+			"shade": false,
+			"rotation": {"angle": 0, "axis": "y", "origin": [24, 0, -8]},
+			"faces": {
+				"north": {"uv": [8, 0, 16, 3], "texture": "#1"},
+				"west": {"uv": [0, 0, 16, 3], "texture": "#1"},
+				"down": {"uv": [16, 0, 8, 16], "texture": "#1"}
+			}
+		},
+		{
+			"from": [8, 3, 0],
+			"to": [16, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [24, 0, -8]},
+			"faces": {
+				"north": {"uv": [16, 0, 8, 11], "texture": "#0"},
+				"west": {"uv": [16, 0, 0, 11], "texture": "#0"},
+				"up": {"uv": [8, 16, 16, 0], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "front_left",
+			"origin": [24, 0, 8],
+			"color": 0,
+			"children": [0, 1]
+		}
+	]
+}

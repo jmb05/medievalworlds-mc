@@ -1,12 +1,10 @@
 package net.jmb19905.medievalworlds.common.block;
 
 import net.jmb19905.medievalworlds.common.blockentities.abstr.MWNamedInventoryBlockEntity;
-import net.jmb19905.medievalworlds.common.inv.MWItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -59,13 +57,7 @@ public class MWCraftingBlock<T extends MWNamedInventoryBlockEntity> extends Bloc
     public void onRemove(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos, @Nonnull BlockState newState, boolean isMoving) {
         BlockEntity entity = level.getBlockEntity(pos);
         if(entity instanceof MWNamedInventoryBlockEntity blockEntity && state.getBlock() != newState.getBlock()){
-            MWItemHandler inventory = blockEntity.getInventory();
-            for (int i=0;i<inventory.getSlots();i++) {
-                if(blockEntity.isDropSlot().test(i)) {
-                    ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), inventory.getStackInSlot(i));
-                    level.addFreshEntity(itemEntity);
-                }
-            }
+            BlockHelper.dropBlockEntityContents(level, pos, blockEntity);
         }
 
         if(state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {

@@ -1,4 +1,4 @@
-package net.jmb19905.medievalworlds.common.block;
+package net.jmb19905.medievalworlds.common.block.bloomery;
 
 import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.NotNull;

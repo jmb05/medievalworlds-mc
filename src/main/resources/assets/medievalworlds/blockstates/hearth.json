@@ -1,0 +1,38 @@
+{
+  "variants": {
+    "facing=north,part=main": {"model": "medievalworlds:block/hearth_main", "y": 180},
+    "facing=east,part=main": {"model": "medievalworlds:block/hearth_main", "y": 270},
+    "facing=south,part=main": {"model": "medievalworlds:block/hearth_main"},
+    "facing=west,part=main": {"model": "medievalworlds:block/hearth_main", "y": 90},
+
+    "facing=north,part=hood": {"model": "medievalworlds:block/hearth_hood", "y": 180},
+    "facing=east,part=hood": {"model": "medievalworlds:block/hearth_hood", "y": 270},
+    "facing=south,part=hood": {"model": "medievalworlds:block/hearth_hood"},
+    "facing=west,part=hood": {"model": "medievalworlds:block/hearth_hood", "y": 90},
+
+    "facing=north,part=front_left": {"model": "medievalworlds:block/hearth_front_left", "y": 180},
+    "facing=east,part=front_left": {"model": "medievalworlds:block/hearth_front_left", "y": 270},
+    "facing=south,part=front_left": {"model": "medievalworlds:block/hearth_front_left"},
+    "facing=west,part=front_left": {"model": "medievalworlds:block/hearth_front_left", "y": 90},
+
+    "facing=north,part=front_right": {"model": "medievalworlds:block/hearth_front_right", "y": 180},
+    "facing=east,part=front_right": {"model": "medievalworlds:block/hearth_front_right", "y": 270},
+    "facing=south,part=front_right": {"model": "medievalworlds:block/hearth_front_right"},
+    "facing=west,part=front_right": {"model": "medievalworlds:block/hearth_front_right", "y": 90},
+
+    "facing=north,part=back_middle": {"model": "medievalworlds:block/hearth_back_middle", "y": 180},
+    "facing=east,part=back_middle": {"model": "medievalworlds:block/hearth_back_middle", "y": 270},
+    "facing=south,part=back_middle": {"model": "medievalworlds:block/hearth_back_middle"},
+    "facing=west,part=back_middle": {"model": "medievalworlds:block/hearth_back_middle", "y": 90},
+
+    "facing=north,part=top_middle": {"model": "medievalworlds:block/hearth_top_middle", "y": 180},
+    "facing=east,part=top_middle": {"model": "medievalworlds:block/hearth_top_middle", "y": 270},
+    "facing=south,part=top_middle": {"model": "medievalworlds:block/hearth_top_middle"},
+    "facing=west,part=top_middle": {"model": "medievalworlds:block/hearth_top_middle", "y": 90},
+
+    "part=back_right": {"model": "medievalworlds:block/hearth_back"},
+    "part=back_left": {"model": "medievalworlds:block/hearth_back"},
+    "part=top_left": {"model": "block/bricks"},
+    "part=top_right": {"model": "block/bricks"}
+  }
+}

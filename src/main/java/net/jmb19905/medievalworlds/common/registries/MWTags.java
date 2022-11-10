@@ -13,6 +13,7 @@ public class MWTags {
     public static class Items {
         public static final TagKey<Item> STAFFS = ItemTags.create(new ResourceLocation(MedievalWorlds.MOD_ID, "staffs"));
         public static final TagKey<Item> FLETCHING = ItemTags.create(new ResourceLocation(MedievalWorlds.MOD_ID, "fletching"));
+        public static final TagKey<Item> HEATED_PARTS = ItemTags.create(new ResourceLocation(MedievalWorlds.MOD_ID, "heated_parts"));
         public static final TagKey<Item> INGOTS_STEEL = ItemTags.create(new ResourceLocation("forge", "ingots/steel"));
         public static final TagKey<Item> INGOTS_SILVER = ItemTags.create(new ResourceLocation("forge", "ingots/silver"));
         public static final TagKey<Item> INGOTS_BRONZE = ItemTags.create(new ResourceLocation("forge", "ingots/bronze"));

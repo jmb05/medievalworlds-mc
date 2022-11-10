@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,7 +21,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-public abstract class MWInventoryBlockEntity extends BlockEntity implements IMWInventoryHandler {
+public abstract class MWInventoryBlockEntity extends BlockEntity implements IMWInventoryHandler, MenuProvider {
 
     protected final MWItemHandler inventory;
     private final LazyOptional<IItemHandler> holder;

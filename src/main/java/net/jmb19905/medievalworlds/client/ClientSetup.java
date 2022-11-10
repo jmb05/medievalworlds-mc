@@ -5,15 +5,13 @@ import net.jmb19905.medievalworlds.client.armPoses.StaffArmPose;
 import net.jmb19905.medievalworlds.client.key.MWKeyHandler;
 import net.jmb19905.medievalworlds.client.renderers.armor.GambesonModel;
 import net.jmb19905.medievalworlds.client.renderers.armor.KnightArmorHelmetModel;
-import net.jmb19905.medievalworlds.client.renderers.blockentity.CustomAnvilRenderer;
+import net.jmb19905.medievalworlds.client.renderers.blockentity.HearthRenderer;
+import net.jmb19905.medievalworlds.client.renderers.blockentity.MWAnvilRenderer;
 import net.jmb19905.medievalworlds.client.renderers.curio.CloakRenderer;
 import net.jmb19905.medievalworlds.client.renderers.curio.QuiverRenderer;
 import net.jmb19905.medievalworlds.client.renderers.entity.MWArrowRenderer;
 import net.jmb19905.medievalworlds.client.renderers.item.LongbowModel;
-import net.jmb19905.medievalworlds.client.screen.AlloyFurnaceScreen;
-import net.jmb19905.medievalworlds.client.screen.CustomAnvilScreen;
-import net.jmb19905.medievalworlds.client.screen.CustomFletchingScreen;
-import net.jmb19905.medievalworlds.client.screen.CustomSmithingScreen;
+import net.jmb19905.medievalworlds.client.screen.*;
 import net.jmb19905.medievalworlds.client.tooltip.ClientQuiverTooltip;
 import net.jmb19905.medievalworlds.common.capability.MWCapabilityManager;
 import net.jmb19905.medievalworlds.common.capability.QuiverInv;
@@ -40,6 +38,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class ClientSetup {
 
     public static final ModelLayerLocation CUSTOM_ANVIL_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "anvil"), "main");
+    public static final ModelLayerLocation HEARTH_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "hearth"), "main");
     public static final ModelLayerLocation CLOAK_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "cloak"), "main");
     public static final ModelLayerLocation QUIVER_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "quiver"),"main");
     public static final ModelLayerLocation KNIGHT_HELMET_LAYER = new ModelLayerLocation(new ResourceLocation(MedievalWorlds.MOD_ID, "knight_armor_helmet"), "main");
@@ -58,6 +57,7 @@ public class ClientSetup {
                     MenuScreens.register(MWMenuTypes.ALLOY.get(), AlloyFurnaceScreen::new);
                     MenuScreens.register(MWMenuTypes.SMITHING.get(), CustomSmithingScreen::new);
                     MenuScreens.register(MWMenuTypes.FLETCHING.get(), CustomFletchingScreen::new);
+                    MenuScreens.register(MWMenuTypes.HEARTH.get(), HearthScreen::new);
 
                     bewlr = new MWBEWLR();
                     STAFF_POSE = HumanoidModel.ArmPose.create("STAFF", true, new StaffArmPose());
@@ -91,7 +91,7 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(CUSTOM_ANVIL_LAYER, CustomAnvilRenderer::createBodyLayer);
+        event.registerLayerDefinition(HEARTH_LAYER, HearthRenderer::createHearthLayer);
         event.registerLayerDefinition(CLOAK_LAYER, CloakRenderer::createCloakLayer);
         event.registerLayerDefinition(QUIVER_LAYER, QuiverRenderer::createQuiverLayer);
         event.registerLayerDefinition(KNIGHT_HELMET_LAYER, KnightArmorHelmetModel::createBodyLayer);
@@ -104,7 +104,8 @@ public class ClientSetup {
 
         @SubscribeEvent
         public static void registerERs(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerBlockEntityRenderer(MWBlockEntityTypes.CUSTOM_ANVIL.get(), CustomAnvilRenderer::new);
+            event.registerBlockEntityRenderer(MWBlockEntityTypes.CUSTOM_ANVIL.get(), MWAnvilRenderer::new);
+            event.registerBlockEntityRenderer(MWBlockEntityTypes.HEARTH.get(), HearthRenderer::new);
         }
 
         @SubscribeEvent

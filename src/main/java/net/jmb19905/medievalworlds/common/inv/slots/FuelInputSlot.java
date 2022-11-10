@@ -10,7 +10,11 @@ import javax.annotation.Nonnull;
 
 public class FuelInputSlot extends SlotItemHandler {
 
-    private final RecipeType<?> type;
+    private RecipeType<?> type = RecipeType.BLASTING;
+
+    public FuelInputSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+        super(itemHandler, index, xPosition, yPosition);
+    }
 
     public FuelInputSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, RecipeType<?> type) {
         super(itemHandler, index, xPosition, yPosition);

@@ -1,7 +1,7 @@
 package net.jmb19905.medievalworlds.common.blockentities;
 
-import net.jmb19905.medievalworlds.common.block.BloomeryActivationProperty;
-import net.jmb19905.medievalworlds.common.block.SimpleBloomery;
+import net.jmb19905.medievalworlds.common.block.bloomery.BloomeryActivationProperty;
+import net.jmb19905.medievalworlds.common.block.bloomery.SimpleBloomery;
 import net.jmb19905.medievalworlds.common.recipes.MWRecipeHelper;
 import net.jmb19905.medievalworlds.common.recipes.BloomRecipe;
 import net.jmb19905.medievalworlds.common.registries.MWBlockEntityTypes;
